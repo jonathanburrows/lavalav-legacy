@@ -1,6 +1,6 @@
 # lavalav Roadmap
 
-Below is the roadmap of lavalav. 
+Below is the roadmap of lavalav. The order of these plans are subject to change.
 
 ##Current version: 0.0
 
@@ -37,14 +37,22 @@ A set of components which may be used for hosting a git server.
 #### Build server
 A set of components which may be used for hosting a build server.
 
-### 0.8
+### 0.7
 #### Deployment server
 A set of components which may be used for a deployment server.
 
-### 0.7
+### 0.8
+#### Semantic Versioning API
+An executable used to version code in accordance to SemVer 2.0.
+
+### 0.9
 #### Agile Management Application
 A set of components for managing sprints.
 
-### 0.8
+### 0.10
+#### Change Management Application
+A set of components to track changes made to software.
+
+### 0.11
 #### Portfolio
 A set of components which highlight the work done.
