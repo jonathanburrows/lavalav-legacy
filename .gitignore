@@ -1,1 +1,6 @@
-ECHO is on.
+vs/
+bin/
+obj/
+node_modules/
+*.xproj.user
+project.lock.json
