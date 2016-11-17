@@ -1,9 +1,9 @@
 {
-  "version": "1.0.0-*",
+  "version": "0.0.0-*",
 
   "dependencies": {
-    "lvl.Repositories": "1.0.0-*",
-    "NETStandard.Library": "1.6.0"
+    "lvl.Repositories": "0.0.0-*",
+    "NETStandard.Library": "1.6.1"
   },
 
   "frameworks": {

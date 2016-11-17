@@ -1,8 +1,7 @@
-{
+﻿{
   "version": "0.0.0-*",
 
   "dependencies": {
-    "lvl.Ontology": "0.0.0-*",
     "NETStandard.Library": "1.6.1"
   },
 
