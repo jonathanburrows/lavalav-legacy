@@ -40,5 +40,29 @@ namespace lvl.Ontology.Tests
         {
             Assert.True(false);
         }
+
+        [Fact]
+        public void IfNoConnectionString_WhenAddingDomain_SqlLiteIsConfigured()
+        {
+            Assert.True(false);
+        }
+
+        [Fact]
+        public void IfSqlServerConnectionString_WhenAddingDomain_SqlServerIsConfigured()
+        {
+            Assert.True(false);
+        }
+
+        [Fact]
+        public void IfOracleConnectionString_WhenAddingDomain_OracleIsConfigured()
+        {
+            Assert.True(false);
+        }
+
+        [Fact]
+        public void IfInvalidCOnnectionString_WhenAddingDomain_ArgumentExceptionIsThrown()
+        {
+            Assert.True(false);
+        }
     }
 }
