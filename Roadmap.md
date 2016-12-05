@@ -40,31 +40,40 @@ A set of gulp tasks which will aid in building, testing, and minifying angular c
 A set of components which may be used for hosting a git server.
 
 
-### 0.6
+### 0.6 Package Manager Server
+A set of components for hosting npm, nuget, and chocolately packages
+
+
+### 0.7
 #### Build server
 A set of components which may be used for hosting a build server.
 
 
-### 0.7
+### 0.8
 #### Deployment server
 A set of components which may be used for a deployment server.
 
 
-### 0.8
+### 0.9
 #### Semantic Versioning API
 An executable used to version code in accordance to SemVer 2.0.
 
 
-### 0.9
+### 0.10
 #### Agile Management Application
 A set of components for managing sprints.
 
 
-### 0.10
+### 0.11
 #### Change Management Application
 A set of components to track changes made to software.
 
 
-### 0.11
+### 0.12
+#### Environment Management Application
+A set of components for distrubuting and virtualizing environments
+
+
+### 0.13
 #### Portfolio
 A set of components which highlight the work done.
