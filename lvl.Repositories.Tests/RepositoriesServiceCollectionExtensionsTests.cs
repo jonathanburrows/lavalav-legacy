@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
+using lvl.TestDomain;
 
 namespace lvl.Repositories.Tests
 {
@@ -30,7 +31,11 @@ namespace lvl.Repositories.Tests
         [Fact]
         public void AfterAddingRepositories_WhenResolvingRepositoryForMappedType_ValueIsReturned()
         {
-            Assert.False(true);
+            var mappedType = typeof(Moon);
+
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+
+            Assert.NotNull(repository);
         }
 
         [Fact]
