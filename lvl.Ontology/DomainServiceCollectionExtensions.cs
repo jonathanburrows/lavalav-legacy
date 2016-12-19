@@ -1,5 +1,7 @@
-﻿using FluentNHibernate.Cfg;
+﻿using FluentNHibernate.Automapping;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
 using System;
 using System.Linq;
@@ -12,35 +14,22 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, string connectionString = null)
         {
-            var assemblies = Assembly
-                .GetCallingAssembly()
-                .GetReferencedAssemblies()
-                .AsParallel()
-                .Select(Assembly.Load);
+            var callingAssembly = Assembly.GetCallingAssembly();
 
-            var baseModel = typeof(IEntity);
-            var domainModels = assemblies
-                .SelectMany(a => a.ExportedTypes)
-                .Where(t => baseModel.IsAssignableFrom(t))
-                .Where(entityType => entityType.GetConstructor(Type.EmptyTypes) != null);
+            var config = Fluently
+                .Configure()
+                .Database(ConstructDatabaseConnection(connectionString))
+                .AddReferencedEntities(callingAssembly);
 
-            serviceCollection.AddSingleton(provider =>
-            {
-                var config = Fluently
-                    .Configure()
-                    .Database(SQLiteConfiguration.Standard.InMemory)
-                    .Mappings(mapping => domainModels.ForAll(domainModel => mapping.FluentMappings.Add(domainModel)));
-                config.BuildSessionFactory();
-                return config;
-            });
+            serviceCollection.AddSingleton(provider => config.BuildConfiguration());
 
             return serviceCollection;
         }
 
         private static IPersistenceConfigurer ConstructDatabaseConnection(string connectionString)
         {
-            var sqlServerPattern = new Regex(@"");
-            var oraclePattern = new Regex(@"");
+            var sqlServerPattern = new Regex(@"(i?)(database)|(initial catalog)", RegexOptions.IgnoreCase);
+            var oraclePattern = new Regex(@"(i?)(data source)", RegexOptions.IgnoreCase);
 
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -58,6 +47,31 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 throw new ArgumentException($"Connection string does not have an associated database provider");
             }
+        }
+
+        private static FluentConfiguration AddReferencedEntities(this FluentConfiguration fluentConfiguration, Assembly callingAssembly)
+        {
+            var baseType = typeof(IEntity);
+            var assemblies = callingAssembly
+                .GetReferencedAssemblies()
+                .AsParallel()
+                .Select(Assembly.Load)
+                .Where(a => a.ExportedTypes.Any(t => baseType.IsAssignableFrom(t)))
+                .ToList();
+            assemblies.Add(callingAssembly);
+
+            var assemblyMapping = AutoMap
+                .Assemblies(assemblies.ToArray())
+                .Where(t => baseType.IsAssignableFrom(t))
+                .IgnoreBase<IEntity>();
+
+            var conventions = assemblyMapping.Conventions;
+            conventions.Add(DefaultCascade.All());
+            conventions.Add(LazyLoad.Never());
+
+            fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
+
+            return fluentConfiguration;
         }
     }
 }

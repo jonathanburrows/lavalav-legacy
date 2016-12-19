@@ -6,13 +6,21 @@
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0",
     "NETStandard.Library": "1.6.1",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
-    "System.Data.SQLite": "1.0.103",
-    "SQLite.Interop": "*"
+    "System.Data.SQLite": "1.0.103"
   },
 
   "frameworks": {
     "net461": {
       "imports": "dnxcore50"
+    }
+  },
+
+  "buildOptions": {
+    "copyToOutput": {
+      "include": [
+        "x86",
+        "x64"
+      ]
     }
   }
 }

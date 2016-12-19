@@ -1,67 +1,124 @@
-﻿using FluentNHibernate.Cfg;
+﻿using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
+using NHibernate.Cfg;
+using NHibernate.Driver;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace lvl.Ontology.Tests
 {
-    public class DomainServiceCollectionExtensionsTests
+    public class DomainServiceCollectionExtensionsTests : IClassFixture<InMemoryTestFixture>
     {
-        private IServiceProvider ServiceProvider { get; }
+        private IServiceProvider Services { get; }
 
-        public DomainServiceCollectionExtensionsTests()
+        public DomainServiceCollectionExtensionsTests(InMemoryTestFixture inMemoryTestFixture)
         {
-            ServiceProvider = new ServiceCollection().AddDomains().BuildServiceProvider();
+            Services = inMemoryTestFixture.Services;
         }
 
         [Fact]
         public void AfterAddingDomains_WhenResolvingNHibernateConfig_ValueIsReturned()
         {
-            var options = ServiceProvider.GetRequiredService<FluentConfiguration>();
+            var configuration = Services.GetRequiredService<Configuration>();
 
-            Assert.True(false);
+            Assert.NotNull(configuration);
         }
 
         [Fact]
         public void ModelsInReferencedAssemblies_WhenAddingDomains_AreAddedToNHibernateConfig()
         {
-            Assert.True(false);
+            var configuration = Services.GetRequiredService<Configuration>();
+            var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
+            var referencedType = typeof(Moon);
+
+            Assert.Contains(referencedType, mappedTypes);
         }
 
         [Fact]
         public void ModelsInExecutingAssembly_WhenAddingDomains_AreAddedToNHibernateConfig()
         {
-            Assert.True(false);
+            var configuration = Services.GetRequiredService<Configuration>();
+            var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
+            var modelInExecutingClass = typeof(ModelInExecutingClass);
+
+            Assert.Contains(modelInExecutingClass, mappedTypes);
         }
 
         [Fact]
         public void ModelsAlreadyAdded_WhenAddingDomains_AreNotAddedAgain()
         {
-            Assert.True(false);
+            var services = new ServiceCollection()
+                .AddDomains()
+                .AddDomains()
+                .BuildServiceProvider();
+
+            var configuration = services.GetRequiredService<Configuration>();
+            var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
+            var moonType = typeof(Moon);
+
+            Assert.Contains(moonType, mappedTypes);
         }
 
         [Fact]
         public void IfNoConnectionString_WhenAddingDomain_SqlLiteIsConfigured()
         {
-            Assert.True(false);
+            var services = new ServiceCollection().AddDomains().BuildServiceProvider();
+            var configuration = services.GetRequiredService<Configuration>();
+
+            var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
+            var driver = configuration.GetProperty(driverKey);
+
+            var sqlLiteDriver = typeof(SQLite20Driver).AssemblyQualifiedName;
+            Assert.Equal(sqlLiteDriver, driver);
         }
 
-        [Fact]
-        public void IfSqlServerConnectionString_WhenAddingDomain_SqlServerIsConfigured()
+        [Theory]
+        [InlineData(@"Server=.;Database=lvl;User Id=admin;Password=password;")]
+        [InlineData(@"Server=.;Database=lvl;Trusted_Connection=True;")]
+        [InlineData(@"Data Source=.;Initial Catalog=lvl;Integrated Security=SSPI;User ID=.\admin;Password=password;")]
+        public void IfSqlServerConnectionString_WhenAddingDomain_SqlServerIsConfigured(string sqlServerConnectionString)
         {
-            Assert.True(false);
+            var services = new ServiceCollection()
+                .AddDomains(sqlServerConnectionString)
+                .BuildServiceProvider();
+            var configuration = services.GetRequiredService<Configuration>();
+
+            var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
+            var driver = configuration.GetProperty(driverKey);
+
+            var sqlServerDriver = typeof(SqlClientDriver).AssemblyQualifiedName;
+            Assert.Equal(sqlServerDriver, driver);
         }
 
-        [Fact]
-        public void IfOracleConnectionString_WhenAddingDomain_OracleIsConfigured()
+        [Theory]
+        [InlineData(@"Data Source=lvl;Integrated Security=yes;")]
+        [InlineData(@"Data Source=lvl;User Id=admin;Password=password;Integrated Security=no;")]
+        public void IfOracleConnectionString_WhenAddingDomain_OracleIsConfigured(string oracleConnectionString)
         {
-            Assert.True(false);
+            var services = new ServiceCollection()
+                .AddDomains(oracleConnectionString)
+                .BuildServiceProvider();
+            var configuration = services.GetRequiredService<Configuration>();
+
+            var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
+            var driver = configuration.GetProperty(driverKey);
+
+            var oracleDriver = typeof(OracleClientDriver).AssemblyQualifiedName;
+            Assert.Equal(oracleDriver, driver);
         }
 
-        [Fact]
-        public void IfInvalidCOnnectionString_WhenAddingDomain_ArgumentExceptionIsThrown()
+        [Theory]
+        [InlineData("not a connection string")]
+        public void IfInvalidConnectionString_WhenAddingDomain_ArgumentExceptionIsThrown(string invalidConnectionString)
         {
-            Assert.True(false);
+            var serviceCollection = new ServiceCollection();
+            Assert.Throws<ArgumentException>(() => serviceCollection.AddDomains(invalidConnectionString));
+        }
+
+        /// <summary>Used to test classes embedded in application</summary>
+        public class ModelInExecutingClass : IEntity {
+            public int Id { get; set; }
         }
     }
 }
