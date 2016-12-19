@@ -10,8 +10,9 @@ Below is the roadmap of lavalav. The order of these plans are subject to change.
 
 ### 0.1
 #### Repositories & Ontology
-This will aim to set up the repository pattern and the ability to register domains:
-- Registering an assembly with models for querying
+This will aim to set up the repository pattern and the ability to:
+- Automatically register entities inheriting from a base class
+- Connect to SQLite, Oracle, and MsSql databases based on connection string
 - Safely fetching a registered C# type from a string
 - Resolving a repository of a given type from the Service Provider
 - A factory for constructing repositories

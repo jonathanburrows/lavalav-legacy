@@ -10,18 +10,33 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// Provides functions for registering repositories in a service provider
+    /// </summary>
     public static class DomainServiceCollectionExtensions
     {
+        /// <summary>
+        /// Registers a database configuration based on the connection string, 
+        /// and maps all models inheriting from IEntity
+        /// </summary>
+        /// <param name="serviceCollection">The services the configuration will be registered to.</param>
+        /// <param name="connectionString">The connection string to the database</param>
+        /// <returns>The original service collection, with a configuration registered.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/></exception>
+        /// <remarks>If the connection string is null, then it will use SQLite</remarks>
         public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, string connectionString = null)
         {
+            if (serviceCollection == null) throw new ArgumentNullException(nameof(serviceCollection));
+
             var callingAssembly = Assembly.GetCallingAssembly();
 
-            var config = Fluently
+            var configuration = Fluently
                 .Configure()
                 .Database(ConstructDatabaseConnection(connectionString))
-                .AddReferencedEntities(callingAssembly);
+                .AddReferencedEntities(callingAssembly)
+                .BuildConfiguration();
 
-            serviceCollection.AddSingleton(provider => config.BuildConfiguration());
+            serviceCollection.AddSingleton(_ => configuration);
 
             return serviceCollection;
         }
