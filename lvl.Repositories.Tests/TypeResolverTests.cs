@@ -8,11 +8,11 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public class TypeResolverTests : IClassFixture<InMemoryRepositoriesFixture>
+    public abstract class TypeResolverTests
     {
         private IServiceProvider Services { get; }
 
-        public TypeResolverTests(InMemoryRepositoriesFixture inMemoryRepositoriesFixture)
+        public TypeResolverTests(RepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -33,8 +33,10 @@ namespace lvl.Repositories.Tests
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             var moonType = typeof(Moon);
             var mangedName = new StringBuilder(moonType.FullName);
-            for (var i = 0; i < mangedName.Length; i++) {
-                if (i % 2 == 0) {
+            for (var i = 0; i < mangedName.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
                     mangedName[i] = mangedName[i].ToString().ToUpper().ToCharArray().Single();
                 }
             }
@@ -97,8 +99,24 @@ namespace lvl.Repositories.Tests
         }
 
         /// <summary>Dulpicate named class</summary>
-        public class Planet : IEntity {
+        public class Planet : IEntity
+        {
             public int Id { get; set; }
         }
     }
+
+    public class SQLiteTypeResolverTests : TypeResolverTests, IClassFixture<SQLiteRepositoryFixture>
+    {
+        public SQLiteTypeResolverTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+    }
+
+    //public class MsSqlTypeResolverTests : TypeResolverTests, IClassFixture<MsSqlRepositoryFixture>
+    //{
+    //    public MsSqlTypeResolverTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+    //}
+
+    //public class OracleTypeResolverTests : TypeResolverTests, IClassFixture<OracleRepositoryFixture>
+    //{
+    //    public OracleTypeResolverTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+    //}
 }

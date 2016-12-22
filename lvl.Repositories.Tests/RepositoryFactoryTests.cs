@@ -1,13 +1,17 @@
-﻿using System;
+﻿using lvl.Ontology;
+using lvl.TestDomain;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Reflection;
 using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public class RepositoryFactoryTests : IClassFixture<InMemoryRepositoriesFixture>
+    public abstract class RepositoryFactoryTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
-        public RepositoryFactoryTests(InMemoryRepositoriesFixture inMemoryRepositoriesFixture)
+        public RepositoryFactoryTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -15,36 +19,71 @@ namespace lvl.Repositories.Tests
         [Fact]
         public void WhenConstructingGenerically_CreatesRepositoryForEntityType()
         {
-            Assert.True(false);
+            var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
+            var repository = repositoryFactory.Construct<Moon>();
+            Assert.NotNull(repository);
         }
 
         [Fact]
         public void WhenConstructing_CreatesRepositoryForEntityType()
         {
-            Assert.True(false);
+            var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
+            var repository = repositoryFactory.Construct(typeof(Moon));
+            Assert.IsAssignableFrom<IRepository<Moon>>(repository);
         }
 
         [Fact]
         public void WhenConstructing_AndNullTypeGiven_ArgumentNullIsThrown()
         {
-            Assert.True(false);
+            var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
+            Assert.Throws<ArgumentNullException>(() => repositoryFactory.Construct(null));
         }
 
         [Fact]
         public void WhenConstructing_AndTypeIsntEntity_ArgumentExceptionIsThrown()
         {
-            Assert.True(false);
+            var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
+            Assert.Throws<ArgumentException>(() => repositoryFactory.Construct(typeof(NonEntity)));
         }
 
         [Fact]
         public void WhenConstructingGenerically_AndEntityTypeIsntMapped_ArgumentExceptionIsThrow()
         {
-            Assert.True(false);
+            var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
+            Assert.Throws<InvalidOperationException>(() => repositoryFactory.Construct<UnmappedEntity>());
         }
 
         [Fact]
-        public void WhenConstructing_AndEntityTypeIsNotMapped_ArgumentExceptionIsThrown() {
-            Assert.True(false);
+        public void WhenConstructing_AndEntityTypeIsNotMapped_TargetInvocationExceptionIsThrown()
+        {
+            var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
+
+            Assert.Throws<TargetInvocationException>(() => repositoryFactory.Construct(typeof(UnmappedEntity)));
         }
+
+        private class UnmappedEntity : IEntity
+        {
+            public int Id { get; set; }
+        }
+
+        private class NonEntity { }
+    }
+
+    [Collection(nameof(SQLiteRepositoryFactoryTests))]
+    public class SQLiteRepositoryFactoryTests : RepositoryFactoryTests<SQLiteRepositoryFixture>
+    {
+        public SQLiteRepositoryFactoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+    }
+
+    [Collection(nameof(MsSqlRepositoryFactoryTests))]
+    public class MsSqlRepositoryFactoryTests : RepositoryFactoryTests<MsSqlRepositoryFixture>
+    {
+        public MsSqlRepositoryFactoryTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+    }
+
+    [Collection(nameof(OracleRepositoryFactoryTests))]
+    public class OracleRepositoryFactoryTests : RepositoryFactoryTests<OracleRepositoryFixture>
+    {
+        public OracleRepositoryFactoryTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 }

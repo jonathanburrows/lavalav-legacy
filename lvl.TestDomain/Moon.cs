@@ -10,7 +10,6 @@ namespace lvl.TestDomain
         public decimal OrbitalDistance { get; set; }
         public decimal Mass { get; set; }
 
-        public int PlanetId { get; set; }
         public Planet Planet { get; set; }
     }
 }

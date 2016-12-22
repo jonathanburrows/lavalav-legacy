@@ -4,9 +4,9 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -43,37 +43,34 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static IPersistenceConfigurer ConstructDatabaseConnection(string connectionString)
         {
-            var sqlServerPattern = new Regex(@"(i?)(database)|(initial catalog)", RegexOptions.IgnoreCase);
-            var oraclePattern = new Regex(@"(i?)(data source)", RegexOptions.IgnoreCase);
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                return SQLiteConfiguration.Standard.InMemory();
-            }
-            else if (sqlServerPattern.IsMatch(connectionString))
-            {
-                return MsSqlConfiguration.MsSql2012;
-            }
-            else if (oraclePattern.IsMatch(connectionString))
-            {
-                return OracleClientConfiguration.Oracle10;
-            }
-            else
-            {
-                throw new ArgumentException($"Connection string does not have an associated database provider");
+            var databaseDetector = new DatabaseDetector();
+            switch (databaseDetector.GetConnectionStringsVendor(connectionString)) {
+                case DatabaseVendor.SQLite:
+                    WriteSQLiteInterop();
+                    return SQLiteConfiguration.Standard.InMemory();
+                case DatabaseVendor.MsSql:
+                    return MsSqlConfiguration.MsSql2012.ConnectionString(connectionString);
+                case DatabaseVendor.Oracle:
+                    return OracleClientConfiguration.Oracle10.ConnectionString(connectionString);
+                default:
+                    throw new ArgumentException("Database vendor doesnt have nhibernate support");
             }
         }
 
         private static FluentConfiguration AddReferencedEntities(this FluentConfiguration fluentConfiguration, Assembly callingAssembly)
         {
             var baseType = typeof(IEntity);
-            var assemblies = callingAssembly
+            callingAssembly
                 .GetReferencedAssemblies()
                 .AsParallel()
-                .Select(Assembly.Load)
-                .Where(a => a.ExportedTypes.Any(t => baseType.IsAssignableFrom(t)))
-                .ToList();
-            assemblies.Add(callingAssembly);
+                .ForAll(a => Assembly.Load(a));
+
+            var assemblies = AppDomain
+                .CurrentDomain
+                .GetAssemblies()
+                .AsParallel()
+                .Where(a => !a.IsDynamic)
+                .Where(a => a.ExportedTypes.Any(t => baseType.IsAssignableFrom(t))).ToList();
 
             var assemblyMapping = AutoMap
                 .Assemblies(assemblies.ToArray())
@@ -87,6 +84,35 @@ namespace Microsoft.Extensions.DependencyInjection
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 
             return fluentConfiguration;
+        }
+
+        private static void WriteSQLiteInterop()
+        {
+            var currentAssembly = typeof(DomainServiceCollectionExtensions).Assembly;
+
+            var x86Info = currentAssembly.GetManifestResourceStream("lvl.Ontology.x86.SQLite.Interop.dll");
+            var x86File = new FileInfo("x86/SQLite.Interop.dll");
+            x86File.Directory.Create();
+            if (!x86File.Exists)
+            {
+                using (var x86Stream = x86File.Create())
+                {
+                    x86Info.Seek(0, SeekOrigin.Begin);
+                    x86Info.CopyTo(x86Stream);
+                }
+            }
+
+            var x64Info = currentAssembly.GetManifestResourceStream("lvl.Ontology.x64.SQLite.Interop.dll");
+            var x64File = new FileInfo("x64/SQLite.Interop.dll");
+            if (!x64File.Exists)
+            {
+                x64File.Directory.Create();
+                using (var x64Stream = x64File.Create())
+                {
+                    x64Info.Seek(0, SeekOrigin.Begin);
+                    x64Info.CopyTo(x64Stream);
+                }
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using NHibernate.Cfg;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace lvl.Repositories

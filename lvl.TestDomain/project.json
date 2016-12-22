@@ -3,12 +3,20 @@
 
   "dependencies": {
     "lvl.Ontology": "0.0.0-*",
-    "NETStandard.Library": "1.6.1"
+    "NETStandard.Library": "1.6.1",
+    "Newtonsoft.Json": "7.0.1"
   },
 
   "frameworks": {
     "net461": {
       "imports": "dnxcore50"
     }
+  },
+
+  "buildOptions": {
+    "embed": [
+      "config.json",
+      "config.*.json"
+    ]
   }
 }

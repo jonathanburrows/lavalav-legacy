@@ -8,7 +8,7 @@ namespace lvl.Repositories
     /// Manages persistence f0r a set of entities of a certain type.
     /// </summary>
     /// <typeparam name="TEntity">The type of all entities in the repository.</typeparam>
-    public interface IRepository<TEntity> where TEntity : IEntity
+    public interface IRepository<TEntity> where TEntity : class, IEntity
     {
         /// <summary>
         /// Gets all entities in the repository.

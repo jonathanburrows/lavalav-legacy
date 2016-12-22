@@ -1,0 +1,6 @@
+﻿{
+  "connections": {
+    "oracle": "test-oracle",
+    "ms-sql": "Server=.;Database=lvl;Trusted_Connection=True;"
+  }
+}

@@ -8,11 +8,11 @@ using Xunit;
 
 namespace lvl.Ontology.Tests
 {
-    public class DomainServiceCollectionExtensionsTests : IClassFixture<InMemoryTestFixture>
+    public class DomainServiceCollectionExtensionsTests : IClassFixture<InMemoryDomainFixture>
     {
         private IServiceProvider Services { get; }
 
-        public DomainServiceCollectionExtensionsTests(InMemoryTestFixture inMemoryTestFixture)
+        public DomainServiceCollectionExtensionsTests(InMemoryDomainFixture inMemoryTestFixture)
         {
             Services = inMemoryTestFixture.Services;
         }
@@ -117,7 +117,8 @@ namespace lvl.Ontology.Tests
         }
 
         /// <summary>Used to test classes embedded in application</summary>
-        public class ModelInExecutingClass : IEntity {
+        public class ModelInExecutingClass : IEntity
+        {
             public int Id { get; set; }
         }
     }

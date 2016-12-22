@@ -1,0 +1,6 @@
+﻿{
+  "connections": {
+    "oracle": "hello",
+    "ms-sql": "world"
+  }
+}

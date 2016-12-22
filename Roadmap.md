@@ -9,7 +9,7 @@ Below is the roadmap of lavalav. The order of these plans are subject to change.
 ## Release Features
 
 ### 0.1
-#### Repositories & Ontology
+#### Repositories, Ontology, and Database Generation Executable
 This will aim to set up the repository pattern and the ability to:
 - Automatically register entities inheriting from a base class
 - Connect to SQLite, Oracle, and MsSql databases based on connection string
@@ -20,10 +20,16 @@ This will aim to set up the repository pattern and the ability to:
 - Configuration on which database to use
 - A sample domain for test purposes
 
+The database generator aims to set up a programatic way of deploying databases, and the ability to:
+- Register classes needed to create and migrate a database
+- Create SQLite, MsSql, and Oracle database Generation
+- Launch an executable to construct a database from a given dll and connection string
+- Make updates to an existing database without changing any Database
+- Ability to run scripts before and after the automatic generation
+- Ability to report on any potential issues a deployment could have
 
-### 0.2
-#### Database Generation Executable
-Provides a way to generate databases from scratch based on registered domains, or to patch them.
+Amendment: due to dependencies of SQLite on database generation, Database Generation was merged in with this release.
+
 
 
 ### 0.3
