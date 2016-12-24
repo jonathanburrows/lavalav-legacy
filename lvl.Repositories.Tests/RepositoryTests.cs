@@ -411,6 +411,38 @@ namespace lvl.Repositories.Tests
 
             await Assert.ThrowsAnyAsync<Exception>(async () => await repository.DeleteAsync(unmatchedElement));
         }
+
+        [Fact]
+        public async Task WhenDeleting_WhenReferencingChild_ChildStillExists()
+        {
+            var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
+            var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
+            var deleting = new Moon { Planet = new Planet { } };
+            await moonRepository.CreateAsync(deleting);
+
+            await moonRepository.DeleteAsync(deleting);
+
+            var child = planetRepository.GetAsync(deleting.Planet.Id);
+            Assert.NotNull(child);
+        }
+
+        [Fact]
+        public async Task WhenDeleting_WhenReferencingChildCollection_ChildrenAreRemoved()
+        {
+            var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
+            var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
+            var child = new Moon { };
+            var parent = new Planet
+            {
+                Moons = new[] { child }
+            };
+            await planetRepository.CreateAsync(parent);
+
+            await planetRepository.DeleteAsync(parent);
+
+            var deletedChild = await planetRepository.GetAsync(child.Id);
+            Assert.Null(deletedChild);
+        }
     }
 
     [Collection(nameof(SQLiteRepositoryTests))]
@@ -419,12 +451,14 @@ namespace lvl.Repositories.Tests
         public SQLiteRepositoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(MsSqlRepositoryTests))]
     public class MsSqlRepositoryTests : RepositoryTests, IClassFixture<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(OracleRepositoryTests))]
     public class OracleRepositoryTests : RepositoryTests, IClassFixture<OracleRepositoryFixture>
     {

@@ -55,7 +55,7 @@ namespace lvl.Repositories.Tests
 
         [Fact]
         public void WhenConstructing_AndEntityTypeIsNotMapped_TargetInvocationExceptionIsThrown()
-        {
+            {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
 
             Assert.Throws<TargetInvocationException>(() => repositoryFactory.Construct(typeof(UnmappedEntity)));

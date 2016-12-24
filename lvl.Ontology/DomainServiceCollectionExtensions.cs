@@ -51,7 +51,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 case DatabaseVendor.MsSql:
                     return MsSqlConfiguration.MsSql2012.ConnectionString(connectionString);
                 case DatabaseVendor.Oracle:
-                    return OracleClientConfiguration.Oracle10.ConnectionString(connectionString);
+                    return OracleManagedDataClientConfiguration.Oracle10.ConnectionString(connectionString);
                 default:
                     throw new ArgumentException("Database vendor doesnt have nhibernate support");
             }
@@ -70,7 +70,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .GetAssemblies()
                 .AsParallel()
                 .Where(a => !a.IsDynamic)
-                .Where(a => a.ExportedTypes.Any(t => baseType.IsAssignableFrom(t))).ToList();
+                .Where(a => a.ExportedTypes.Any(t => baseType.IsAssignableFrom(t)));
 
             var assemblyMapping = AutoMap
                 .Assemblies(assemblies.ToArray())
@@ -80,6 +80,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var conventions = assemblyMapping.Conventions;
             conventions.Add(DefaultCascade.All());
             conventions.Add(LazyLoad.Never());
+            conventions.Add(ForeignKey.EndsWith("Id"));
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 

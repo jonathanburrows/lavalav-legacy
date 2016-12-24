@@ -8,11 +8,11 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public abstract class TypeResolverTests
+    public abstract class TypeResolverTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
-        public TypeResolverTests(RepositoryFixture inMemoryRepositoriesFixture)
+        public TypeResolverTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -97,6 +97,12 @@ namespace lvl.Repositories.Tests
 
             Assert.True(resolveMethod.IsVirtual);
         }
+    }
+
+    [Collection(nameof(SQLiteTypeResolverTests))]
+    public class SQLiteTypeResolverTests : TypeResolverTests<SQLiteRepositoryFixture>
+    {
+        public SQLiteTypeResolverTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
 
         /// <summary>Dulpicate named class</summary>
         public class Planet : IEntity
@@ -105,18 +111,15 @@ namespace lvl.Repositories.Tests
         }
     }
 
-    public class SQLiteTypeResolverTests : TypeResolverTests, IClassFixture<SQLiteRepositoryFixture>
+    [Collection(nameof(MsSqlTypeResolverTests))]
+    public class MsSqlTypeResolverTests : TypeResolverTests<MsSqlRepositoryFixture>
     {
-        public SQLiteTypeResolverTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+        public MsSqlTypeResolverTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
-    //public class MsSqlTypeResolverTests : TypeResolverTests, IClassFixture<MsSqlRepositoryFixture>
-    //{
-    //    public MsSqlTypeResolverTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
-    //}
-
-    //public class OracleTypeResolverTests : TypeResolverTests, IClassFixture<OracleRepositoryFixture>
-    //{
-    //    public OracleTypeResolverTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
-    //}
+    [Collection(nameof(OracleTypeResolverTests))]
+    public class OracleTypeResolverTests : TypeResolverTests<OracleRepositoryFixture>
+    {
+        public OracleTypeResolverTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
+    }
 }

@@ -6,12 +6,16 @@
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0",
     "NETStandard.Library": "1.6.1",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
-    "System.Data.SQLite": "1.0.103"
+    "System.Data.SQLite": "1.0.103",
+    "dotConnect.Express.for.Oracle": "9.2.172",
+    "Oracle.ManagedDataAccess": "12.1.24160719"
   },
 
   "frameworks": {
     "net461": {
-      "imports": "dnxcore50"
+      "imports": "dnxcore50",
+      "frameworkAssemblies": {
+      }
     }
   },
 

@@ -125,12 +125,14 @@ namespace lvl.Repositories.Tests
         }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(MsSqlRepositoryServicesTests))]
     public class MsSqlRepositoryServicesTests : RepositoriesServicesTests<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryServicesTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(OracleRepositoryServicesTests))]
     public class OracleRepositoryServicesTests : RepositoriesServicesTests<OracleRepositoryFixture>
     {

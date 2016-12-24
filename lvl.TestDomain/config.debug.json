@@ -1,6 +1,6 @@
 ﻿{
   "connections": {
-    "oracle": "test-oracle",
-    "ms-sql": "Server=.;Database=lvl;Trusted_Connection=True;"
+    "oracle": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=pdborcl)));User Id=LvlTest;Password=LvlTest;",
+    "ms-sql": "Server=.;Database=LvlTest;Trusted_Connection=True;"
   }
 }

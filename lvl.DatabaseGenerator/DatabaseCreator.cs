@@ -1,5 +1,4 @@
-﻿using lvl.Ontology;
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using System;
@@ -12,6 +11,7 @@ namespace lvl.DatabaseGenerator
     /// </summary>
     public class DatabaseCreator
     {
+        private static object CreateLock { get; } = new object();
         private Configuration Configuration { get; }
 
         public DatabaseCreator(Configuration configuration)
@@ -25,7 +25,10 @@ namespace lvl.DatabaseGenerator
         public void Create()
         {
             var exporter = new SchemaExport(Configuration);
-            exporter.Create(true, true);
+            lock (CreateLock)
+            {
+                exporter.Execute(true, true, false);
+            }
         }
 
         /// <summary>

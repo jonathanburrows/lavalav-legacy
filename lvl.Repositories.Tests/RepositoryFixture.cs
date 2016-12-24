@@ -35,9 +35,10 @@ namespace lvl.Repositories.Tests
 
     public class OracleRepositoryFixture : RepositoryFixture
     {
-        public OracleRepositoryFixture() : base(TestConnections.Oracle()) {
-            var databaseCreator = ServiceProvider.GetRequiredService<DatabaseCreator>();
-            databaseCreator.Create();
+        public OracleRepositoryFixture() : base(TestConnections.Oracle())
+        {
+            var databaseMigrator = ServiceProvider.GetRequiredService<DatabaseCreator>();
+            databaseMigrator.Create();
         }
     }
 }

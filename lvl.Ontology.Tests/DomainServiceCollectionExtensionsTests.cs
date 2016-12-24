@@ -104,7 +104,7 @@ namespace lvl.Ontology.Tests
             var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
             var driver = configuration.GetProperty(driverKey);
 
-            var oracleDriver = typeof(OracleClientDriver).AssemblyQualifiedName;
+            var oracleDriver = typeof(OracleManagedDataClientDriver).AssemblyQualifiedName;
             Assert.Equal(oracleDriver, driver);
         }
 

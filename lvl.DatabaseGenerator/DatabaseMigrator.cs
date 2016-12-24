@@ -11,6 +11,7 @@ namespace lvl.DatabaseGenerator
     /// </summary>
     public class DatabaseMigrator
     {
+        private static object MigrationLock { get; } = new object();
         private Configuration Configuration { get; }
 
         public DatabaseMigrator(Configuration configuration)
@@ -25,7 +26,11 @@ namespace lvl.DatabaseGenerator
         public void Migrate()
         {
             var migrator = new SchemaUpdate(Configuration);
-            migrator.Execute(true, true);
+
+            lock (MigrationLock)
+            {
+                migrator.Execute(true, true);
+            }
 
             if (migrator.Exceptions.Any())
             {
