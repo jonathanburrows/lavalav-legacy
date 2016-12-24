@@ -32,55 +32,59 @@ Amendment: due to dependencies of SQLite on database generation, Database Genera
 
 
 
-### 0.3
+### 0.2
 #### Web Library
 This will be a set of generic web functions, not specific to any domain, and used across all APIs.
+- RestFUL API endpoints for all registered models
+- OData endpoints for all registered models
+- Tracing and Logging for errors
+- Logging and change tracking for entities
 
 
-### 0.4
+### 0.3
 #### Angular 2 Gulp Packaging
 A set of gulp tasks which will aid in building, testing, and minifying angular components.
 
 
-### 0.5
+### 0.4
 #### Git Server
 A set of components which may be used for hosting a git server.
 
 
-### 0.6 Package Manager Server
+### 0.5 Package Manager Server
 A set of components for hosting npm, nuget, and chocolately packages
 
 
-### 0.7
+### 0.6
 #### Build server
 A set of components which may be used for hosting a build server.
 
 
-### 0.8
+### 0.7
 #### Deployment server
 A set of components which may be used for a deployment server.
 
 
-### 0.9
+### 0.8
 #### Semantic Versioning API
 An executable used to version code in accordance to SemVer 2.0.
 
 
-### 0.10
+### 0.9
 #### Agile Management Application
 A set of components for managing sprints.
 
 
-### 0.11
+### 0.10
 #### Change Management Application
 A set of components to track changes made to software.
 
 
-### 0.12
+### 0.11
 #### Environment Management Application
 A set of components for distrubuting and virtualizing environments
 
 
-### 0.13
+### 0.12
 #### Portfolio
 A set of components which highlight the work done.
