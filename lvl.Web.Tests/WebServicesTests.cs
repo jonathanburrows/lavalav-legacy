@@ -6,6 +6,7 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
+    [Collection(nameof(WebServicesTests))]
     public class WebServicesTests : IClassFixture<WebServiceProviderFixture>
     {
         private IServiceProvider Services { get; }

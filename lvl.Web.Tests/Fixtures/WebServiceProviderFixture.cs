@@ -11,6 +11,7 @@ namespace lvl.Web.Tests.Fixtures
         {
             ServiceProvider = new ServiceCollection()
                 .AddDomains()
+                .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb()
                 .BuildServiceProvider();

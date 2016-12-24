@@ -7,7 +7,8 @@
     {
         public static IApplicationBuilder UseWeb(this IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseMvc();
+
+            applicationBuilder.UseMvcWithDefaultRoute();
 
             return applicationBuilder;
         }

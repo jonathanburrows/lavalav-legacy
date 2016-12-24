@@ -18,7 +18,12 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             if (serviceCollection == null) throw new ArgumentNullException(nameof(serviceCollection));
 
-            serviceCollection.AddMvcCore();
+            serviceCollection
+                .AddLogging()
+                .AddMvcCore()
+                .AddJsonFormatters()
+                .AddApplicationPart(typeof(WebServiceCollectionExtensions).Assembly)
+                .AddControllersAsServices();
 
             return serviceCollection;
         }

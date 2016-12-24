@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using lvl.TestDomain;
+using lvl.Web.Controllers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 
 namespace lvl.TestWebSite
 {
@@ -10,6 +14,7 @@ namespace lvl.TestWebSite
         {
             services
                 .AddDomains()
+                .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb();
         }
@@ -23,10 +28,13 @@ namespace lvl.TestWebSite
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
             host.Run();
         }
+        
+        public Type[] AssemblyReferences => new[] { typeof(Moon) };
     }
 }
