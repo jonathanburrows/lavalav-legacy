@@ -5,3 +5,5 @@ node_modules/
 *.xproj.user
 project.lock.json
 
+lvl.TestWebSite/x86/
+lvl.TestWebSite/x64/
