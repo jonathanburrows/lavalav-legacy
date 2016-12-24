@@ -39,6 +39,7 @@ This will be a set of generic web functions, not specific to any domain, and use
 - OData endpoints for all registered models
 - Tracing and Logging for errors
 - Logging and change tracking for entities
+- Ability to register all the above functionality
 
 
 ### 0.3

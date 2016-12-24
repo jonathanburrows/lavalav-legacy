@@ -1,4 +1,5 @@
-﻿using lvl.TestDomain;
+﻿using lvl.Repositories.Tests.Fixtures;
+using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -7,7 +8,7 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public abstract class RepositoryTests
+    public abstract class RepositoryTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture>  where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
@@ -446,21 +447,21 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(nameof(SQLiteRepositoryTests))]
-    public class SQLiteRepositoryTests : RepositoryTests, IClassFixture<SQLiteRepositoryFixture>
+    public class SQLiteRepositoryTests : RepositoryTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
     /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(MsSqlRepositoryTests))]
-    public class MsSqlRepositoryTests : RepositoryTests, IClassFixture<MsSqlRepositoryFixture>
+    public class MsSqlRepositoryTests : RepositoryTests<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
     /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(OracleRepositoryTests))]
-    public class OracleRepositoryTests : RepositoryTests, IClassFixture<OracleRepositoryFixture>
+    public class OracleRepositoryTests : RepositoryTests<OracleRepositoryFixture>
     {
         public OracleRepositoryTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }

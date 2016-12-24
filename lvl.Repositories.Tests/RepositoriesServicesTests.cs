@@ -3,6 +3,7 @@ using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using lvl.TestDomain;
 using lvl.Ontology;
+using lvl.Repositories.Tests.Fixtures;
 
 namespace lvl.Repositories.Tests
 {

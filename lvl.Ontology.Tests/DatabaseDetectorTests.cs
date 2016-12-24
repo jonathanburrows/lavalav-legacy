@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
-using System;
 using Xunit;
 
 namespace lvl.Ontology.Tests

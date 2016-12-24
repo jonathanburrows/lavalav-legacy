@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace lvl.DatabaseGenerator.Tests
+namespace lvl.Repositories.Tests.Fixtures
 {
-    public class InMemoryDatabaseGenerationFixture
+    public abstract class RepositoryFixture
     {
         public IServiceProvider ServiceProvider { get; }
 
-        public InMemoryDatabaseGenerationFixture()
+        public RepositoryFixture(string connectionString)
         {
             ServiceProvider = new ServiceCollection()
-                .AddDomains()
+                .AddDomains(connectionString)
                 .AddDatabaseGeneration()
+                .AddRepositories()
                 .BuildServiceProvider();
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace lvl.Ontology.Tests
+namespace lvl.Ontology.Tests.Fixtures
 {
     public abstract class DomainFixture
     {
@@ -13,10 +13,5 @@ namespace lvl.Ontology.Tests
                 .AddDomains()
                 .BuildServiceProvider();
         }
-    }
-
-    public class InMemoryDomainFixture : DomainFixture
-    {
-        public InMemoryDomainFixture() : base(null) { }
     }
 }

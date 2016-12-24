@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Repositories.Tests.Fixtures;
 using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
 using System;

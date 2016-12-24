@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "lvl.Ontology": "0.0.0-*",
+    "lvl.Repositories": "0.0.0-*",
+    "lvl.TestDomain": "0.0.0-*",
+    "lvl.Web": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection": "1.1.0",
+    "Microsoft.AspNetCore.Hosting": "1.1.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0"
+  },
+
+  "frameworks": {
+    "net461": {
+      "imports": "dnxcore50",
+      "frameworkAssemblies": {
+      }
+    }
+  }
+}

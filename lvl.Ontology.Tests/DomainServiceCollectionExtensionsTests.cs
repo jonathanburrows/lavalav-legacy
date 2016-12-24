@@ -1,4 +1,5 @@
-﻿using lvl.TestDomain;
+﻿using lvl.Ontology.Tests.Fixtures;
+using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using NHibernate.Driver;

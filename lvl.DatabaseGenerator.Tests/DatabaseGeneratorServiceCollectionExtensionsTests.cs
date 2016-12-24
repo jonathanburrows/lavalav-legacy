@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using lvl.DatabaseGenerator.Tests.Fixtures;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
 
