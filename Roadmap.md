@@ -3,7 +3,7 @@
 
 Below is the roadmap of lavalav. The order of these plans are subject to change.
 
-### Current version: 0.0
+### Current version: 0.1
 
 
 ## Release Features
