@@ -44,7 +44,8 @@ namespace Microsoft.Extensions.DependencyInjection
         private static IPersistenceConfigurer ConstructDatabaseConnection(string connectionString)
         {
             var databaseDetector = new DatabaseDetector();
-            switch (databaseDetector.GetConnectionStringsVendor(connectionString)) {
+            switch (databaseDetector.GetConnectionStringsVendor(connectionString))
+            {
                 case DatabaseVendor.SQLite:
                     WriteSQLiteInterop();
                     return SQLiteConfiguration.Standard.InMemory();
