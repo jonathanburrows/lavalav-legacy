@@ -19,9 +19,10 @@ Adds an element to the repository, updates the properties with any generated val
 1. If successful, the model is added to the repository, updated with any generated properties, and returned
 2. Throws an ArgumentNullException if the given element is null
 3. Throws an ArgumentException if the given element is not of the repository type
-4. The create action is wrapped in a transaction
-5. Any child items which have been added will be created
-6. Any child items which have been edited will be updated
+4. Throws an InvalidOperationException if the given element already has an identifier
+5. The create action is wrapped in a transaction
+6. Any child items which have been added will be created
+7. Any child items which have been edited will be updated
 
 Update:
 Updates an entity in the repository with an id matching the given element, with the given entities properties:

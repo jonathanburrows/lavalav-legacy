@@ -3,7 +3,7 @@ Provide a single controller which serves restful endpoints for all entities.
 
 
 ## Requirements
-Provides 5 methods: get single, get collection, create, update, and delete
+Provides 5 methods: get single, get collection, post, put, and delete
 
 ### Get collection
 Provides a method which retreives all entities of a given type:
@@ -20,6 +20,16 @@ Provides a method which retreives an entity from a given ID:
 5. If the request is a delete, then a 404 is returned
 6. If an entity is returned, then the entity is returned as a json object
 7. If the given entity type is not registered, a 500 status code is returned
+
+### Post
+Provide a method which adds an entity:
+1. After calling the method, the entity is stored persistently
+2. If the entity is null, an ArgumentNullException is thrown
+3. If the entity type is null, an ArgumentNullException is thrown
+4. If the entity type is not mapped, an InvalidOperationException is thrown
+5. If the entity cannot deserialize to the entity type, an ArgumentException is thrown
+6. If the entity already has an identifier, an InvalidOperationException is thrown
+7. The returned entity has a populated identifier
 
 
 ## Performance Considerations

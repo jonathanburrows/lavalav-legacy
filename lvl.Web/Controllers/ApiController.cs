@@ -1,5 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories;
+using lvl.Web.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace lvl.Web.Controllers
     {
         private TypeResolver TypeResolver { get; }
         private RepositoryFactory RepositoryFactory { get; }
+        private EntityDeserializer EntityDeserializer { get; }
 
-        public ApiController(TypeResolver typeResolver, RepositoryFactory repositoryFactory)
+        public ApiController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, EntityDeserializer entityDeserializer)
         {
             TypeResolver = typeResolver;
             RepositoryFactory = repositoryFactory;
+            EntityDeserializer = entityDeserializer;
         }
 
         /// <summary>
@@ -30,7 +33,8 @@ namespace lvl.Web.Controllers
         /// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
         /// <exception cref="InvalidOperationException"><paramref name="entityName"/> is not a mapped type.</exception>
         [HttpGet("{entityName}")]
-        public async Task<IEnumerable<IEntity>> Get(string entityName) {
+        public async Task<IEnumerable<IEntity>> Get(string entityName)
+        {
             if (entityName == null) throw new ArgumentNullException(nameof(entityName));
 
             var type = TypeResolver.Resolve(entityName);
@@ -63,6 +67,30 @@ namespace lvl.Web.Controllers
             }
 
             return entity;
+        }
+
+        /// <summary>
+        /// Adds a given entity to the persistent collection.
+        /// </summary>
+        /// <param name="entityName">The type of the entity to be added.</param>
+        /// <returns>The entity with a populated id.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null</exception>
+        /// <exception cref="ArgumentNullException">The entity to be created is null.</exception>
+        /// <exception cref="InvalidOperationException">The given entity type is not mapped.</exception>
+        /// <exception cref="Newtonsoft.Json.JsonSerializationException">The given entity could not be deserialized as the given type.</exception>
+        /// <exception cref="InvalidOperationException">The given entity already has an identifier.</exception>
+        /// <remarks>The entity to be created must be attached to the body.</remarks>
+        [HttpPost("{entityName}")]
+        public async Task<IEntity> Post(string entityName)
+        {
+            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+
+            var entityType = TypeResolver.Resolve(entityName);
+            var creating = EntityDeserializer.Deserialize(Request.Body, entityType);
+            var repository = RepositoryFactory.Construct(entityType);
+            await repository.CreateAsync(creating);
+
+            return creating;
         }
     }
 }

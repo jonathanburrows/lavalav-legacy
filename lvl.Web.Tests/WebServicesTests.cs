@@ -1,4 +1,5 @@
-﻿using lvl.Web.Tests.Fixtures;
+﻿using lvl.Web.Serialization;
+using lvl.Web.Tests.Fixtures;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +15,14 @@ namespace lvl.Web.Tests
         public WebServicesTests(WebServiceProviderFixture webServiceProviderFixture)
         {
             Services = webServiceProviderFixture.ServiceProvider;
+        }
+
+        [Fact]
+        public void AfterAddingWeb_ResolvingEntityDeserializer_ReturnsValue()
+        {
+            var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
+
+            Assert.NotNull(entityDeserializer);
         }
 
         [Fact]

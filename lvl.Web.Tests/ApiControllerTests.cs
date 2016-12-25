@@ -1,4 +1,5 @@
-﻿using lvl.Repositories;
+﻿using lvl.Ontology;
+using lvl.Repositories;
 using lvl.TestDomain;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,8 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntities_AllReturnedEntitiesAreOfGivenType() {
+        public async Task WhenRequestingEntities_AllReturnedEntitiesAreOfGivenType()
+        {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon { });
             await repository.CreateAsync(new Moon { });
@@ -40,7 +42,8 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntities_IfTypeIsntMapped_ThrowsInvalidOperationException() {
+        public async Task WhenRequestingEntities_IfTypeIsntMapped_ThrowsInvalidOperationException()
+        {
             var getUrl = $"/api/madeUpEntity";
 
             await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
@@ -102,6 +105,69 @@ namespace lvl.Web.Tests
             var getUrl = "/api/madeUpEntity/1";
 
             await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
+        }
+
+        [Fact]
+        public async Task WhenPosting_EntityIsStoredPersistently()
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var postUrl = $"/api/{nameof(Moon)}";
+            var posting = new Moon { };
+            var postingSerialized = JsonConvert.SerializeObject(posting);
+            var postingContent = new StringContent(postingSerialized);
+
+            var postResult = await Client.PostAsync(postUrl, postingContent);
+            var resultSerialized = await postResult.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<Moon>(resultSerialized);
+            var posted = await repository.GetAsync(result.Id);
+
+            Assert.NotNull(posted);
+        }
+
+        [Fact]
+        public async Task WhenPosting_AndEntityIsNull_ArgumentNullExceptionIsThrown()
+        {
+            var postUrl = $"/api/{nameof(Moon)}";
+            var nullContent = new StringContent("");
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => Client.PostAsync(postUrl, nullContent));
+        }
+
+        [Fact]
+        public async Task WhenPosting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
+        {
+            var postUrl = $"/api/{nameof(UnmappedEntity)}";
+            var posting = new Moon { };
+            var postingSerialized = JsonConvert.SerializeObject(posting);
+            var postingContent = new StringContent(postingSerialized);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PostAsync(postUrl, postingContent));
+        }
+
+        [Fact]
+        public async Task WhenPosting_AndEntityCantBeDeserializedToType_JsonSerializationExceptionIsThrown()
+        {
+            var postUrl = $"/api/{nameof(Moon)}";
+            var postingContent = new StringContent(@"{invalid: ""true""}");
+
+            await Assert.ThrowsAsync<JsonSerializationException>(() => Client.PostAsync(postUrl, postingContent));
+        }
+
+        [Fact]
+        public async Task WhenPosting_AndEntityAlreadyHasId_InvalidOperationExceptionIsThrown()
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var postUrl = $"/api/{nameof(Moon)}";
+            var posting = new Moon { Id = 1 };
+            var postingSerialized = JsonConvert.SerializeObject(posting);
+            var postingContent = new StringContent(postingSerialized);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PostAsync(postUrl, postingContent));
+        }
+
+        private class UnmappedEntity : IEntity
+        {
+            public int Id { get; set; }
         }
     }
 }

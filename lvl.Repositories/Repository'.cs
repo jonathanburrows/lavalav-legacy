@@ -47,6 +47,7 @@ namespace lvl.Repositories
         public virtual Task<TEntity> CreateAsync(TEntity creating)
         {
             if (creating == null) throw new ArgumentNullException(nameof(creating));
+            if (creating.Id > 0) throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} as it already has an id: {creating.Id}");
 
             using (var session = SessionManager.OpenSession())
             using (var transaction = session.BeginTransaction())

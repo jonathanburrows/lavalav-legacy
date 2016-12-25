@@ -8,7 +8,7 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public abstract class RepositoryTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture>  where TRepositoryFixture : RepositoryFixture
+    public abstract class RepositoryTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
@@ -128,6 +128,15 @@ namespace lvl.Repositories.Tests
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
             await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAsync(new Planet { }));
+        }
+
+        [Fact]
+        public async Task WhenGenericallyCreating_EntityWithIdentifier_InvalidOperationExceptionIsThrown()
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var entityWithIdentifier = new Moon { Id = 1 };
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => repository.CreateAsync(entityWithIdentifier));
         }
 
         [Fact]

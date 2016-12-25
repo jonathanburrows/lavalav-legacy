@@ -1,4 +1,6 @@
-﻿using System;
+﻿using lvl.Web.Serialization;
+using Newtonsoft.Json;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,10 +22,22 @@ namespace Microsoft.Extensions.DependencyInjection
 
             serviceCollection
                 .AddLogging()
+                .AddScoped<EntityDeserializer>()
+                .AddOptions()
+                .ConfigureJsonOptions()
                 .AddMvcCore()
                 .AddJsonFormatters()
                 .AddApplicationPart(typeof(WebServiceCollectionExtensions).Assembly)
                 .AddControllersAsServices();
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection ConfigureJsonOptions(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.Configure<JsonSerializerSettings>(options => {
+                options.MissingMemberHandling = MissingMemberHandling.Error;
+            });
 
             return serviceCollection;
         }
