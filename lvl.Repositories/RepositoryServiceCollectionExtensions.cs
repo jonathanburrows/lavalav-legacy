@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var configuration = services.GetRequiredService<NHibernate.Cfg.Configuration>();
             if (configuration == null)
             {
-                throw new InvalidOperationException($"{nameof(DomainServiceCollectionExtensions.AddDomains)} has not been called.");
+                throw new InvalidOperationException($"{nameof(DomainServiceCollectionExtensions.AddDomains)} has not been called");
             }
 
             var databaseDetector = new DatabaseDetector();
