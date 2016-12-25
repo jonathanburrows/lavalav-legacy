@@ -54,9 +54,9 @@ namespace lvl.Ontology
             }
             else if (driver == typeof(SqlClientDriver).AssemblyQualifiedName)
             {
-                return DatabaseVendor.Oracle;
+                return DatabaseVendor.MsSql;
             }
-            else if (driver == typeof(OracleClientDriver).AssemblyQualifiedName)
+            else if (driver == typeof(OracleManagedDataClientDriver).AssemblyQualifiedName)
             {
                 return DatabaseVendor.Oracle;
             }

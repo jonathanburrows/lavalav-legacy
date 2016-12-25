@@ -48,6 +48,7 @@ namespace lvl.Ontology.Tests
             Assert.Equal(databaseVendor, DatabaseVendor.Unsupported);
         }
 
+        [Fact]
         public void WhenDetecting_WhenSQLiteIsConfigured_SQLiteIsReturned()
         {
             var services = new ServiceCollection().AddDomains().BuildServiceProvider();
@@ -58,6 +59,7 @@ namespace lvl.Ontology.Tests
             Assert.Equal(databaseVendor, DatabaseVendor.SQLite);
         }
 
+        [Fact]
         public void WhenDetecting_WhenMsSqlIsConfigured_MsSqlIsReturned()
         {
             var msSqlConnectionString = @"Server=.;Database=lvl;Trusted_Connection=True;";
@@ -66,9 +68,10 @@ namespace lvl.Ontology.Tests
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
 
-            Assert.Equal(databaseVendor, DatabaseVendor.MsSql);
+            Assert.Equal(DatabaseVendor.MsSql, databaseVendor);
         }
 
+        [Fact]
         public void WhenDetecting_WhenOracleIsConfigured_OracleIsReturned()
         {
             var oracleConnectionString = @"Data Source=lvl;Integrated Security=yes;";
