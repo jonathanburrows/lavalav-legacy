@@ -1,8 +1,8 @@
 ﻿using lvl.Repositories;
 using lvl.TestDomain;
 using lvl.Web.Tests.Fixtures;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -35,34 +35,50 @@ namespace lvl.Web.Tests
             Assert.Equal(getResponse.StatusCode, HttpStatusCode.OK);
         }
 
-        //[Fact]
-        //public async Task WhenRequestingEntity_WithNoMatchingId_Returns500()
-        //{
-        //    var url = $"/api/{nameof(Moon)}/{int.MaxValue}";
+        [Fact]
+        public async Task WhenRequestingEntity_WithNoMatchingId_Returns500()
+        {
+            var getUrl = $"{Client.BaseAddress}api/{nameof(Moon)}/{int.MaxValue}";
 
-        //    var getResponse = await Client.GetAsync(url);
+            await Assert.ThrowsAsync<InvalidOperationException>(async() => await Client.GetAsync(getUrl));
+        }
 
-        //    Assert.Equal(getResponse.StatusCode, HttpStatusCode.InternalServerError);
-        //}
+        [Theory]
+        [InlineData("POST")]
+        [InlineData("PUT")]
+        [InlineData("DELETE")]
+        public async Task WhenRequestingEntity_WithoutGet_Returns404(string httpMethod)
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var fetching = await repository.CreateAsync(new Moon { });
+            var getUrl = $"/api/{nameof(Moon)}/{fetching.Id}";
+            var getMessage = new HttpRequestMessage(new HttpMethod(httpMethod), getUrl);
 
-        //[Theory]
-        //[InlineData("POST")]
-        //[InlineData("PUT")]
-        //[InlineData("DELETE")]
-        //public void WhenRequestingEntity_WithoutGet_Returns404(string httpMethod)
-        //{
-        //    Assert.True(false);
-        //}
+            var getResponse = await Client.SendAsync(getMessage);
 
-        //public void WhenRequestingEntity_AndMatchingEntity_SerializedObjectIsReturned()
-        //{
-        //    Assert.True(false);
-        //}
+            Assert.Equal(getResponse.StatusCode, HttpStatusCode.NotFound);
+        }
 
-        //[Fact]
-        //public void WhenRequestingEntity_AndTypeIsntMapped_Returns500()
-        //{
+        [Fact]
+        public async Task WhenRequestingEntity_AndMatchingEntity_SerializedObjectIsReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var fetching = await repository.CreateAsync(new Moon { });
+            var getUrl = $"/api/{nameof(Moon)}/{fetching.Id}";
 
-        //}
+            var fetched = await Client.GetAsync(getUrl);
+            var serialized = await fetched.Content.ReadAsStringAsync();
+            var deserialized = JsonConvert.DeserializeObject<Moon>(serialized);
+
+            Assert.Equal(fetching.Id, deserialized.Id);
+        }
+
+        [Fact]
+        public async Task WhenRequestingEntity_AndTypeIsntMapped_Returns500()
+        {
+            var getUrl = "/api/madeUpEntity/1";
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
+        }
     }
 }
