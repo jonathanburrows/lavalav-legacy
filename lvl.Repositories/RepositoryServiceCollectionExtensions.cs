@@ -1,7 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories;
 using NHibernate;
-using NHibernate.Dialect;
 using System;
 using System.Linq;
 
@@ -24,23 +23,26 @@ namespace Microsoft.Extensions.DependencyInjection
             if (serviceCollection == null) throw new ArgumentNullException();
 
             var services = serviceCollection.BuildServiceProvider();
-            var configuration = services.GetService<NHibernate.Cfg.Configuration>();
+            var configuration = services.GetRequiredService<NHibernate.Cfg.Configuration>();
             if (configuration == null)
             {
-                throw new InvalidOperationException($"{nameof(ServiceCollection)} has not had {nameof(DomainServiceCollectionExtensions.AddDomains)} called before {nameof(RepositoryServiceCollectionExtensions.AddRepositories)}");
+                throw new InvalidOperationException($"{nameof(DomainServiceCollectionExtensions.AddDomains)} has not been called.");
             }
-
-            serviceCollection.AddScoped<TypeResolver>();
-            serviceCollection.AddScoped<RepositoryFactory>();
-            serviceCollection.AddScoped<ISessionFactory>(_ => configuration.BuildSessionFactory());
-
-            var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
-            serviceCollection.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             var databaseDetector = new DatabaseDetector();
             var databaseVendor = databaseDetector.GetConfigurationsVendor(configuration);
-            var sessionManager = databaseVendor == DatabaseVendor.SQLite? typeof(SQLitePersistentSessionManager) : typeof(SessionManager);
-            serviceCollection.AddScoped(typeof(SessionManager), sessionManager);
+            var sessionManager = databaseVendor == DatabaseVendor.SQLite ? typeof(SQLitePersistentSessionManager) : typeof(SessionManager);
+            
+            serviceCollection
+                .AddScoped<TypeResolver>()
+                .AddScoped<RepositoryFactory>()
+                .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+                .AddScoped(typeof(SessionManager), sessionManager)
+                .AddScoped<ISessionFactory>(provider =>
+                {
+                    var config = provider.GetRequiredService<NHibernate.Cfg.Configuration>();
+                    return config.BuildSessionFactory();
+                });
 
             return serviceCollection;
         }
