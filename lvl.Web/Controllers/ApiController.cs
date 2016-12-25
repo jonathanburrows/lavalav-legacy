@@ -116,5 +116,29 @@ namespace lvl.Web.Controllers
 
             return updating;
         }
+
+        /// <summary>
+        /// Removes an entity from the persistent collection.
+        /// </summary>
+        /// <param name="entityName">The type of the entity to be deleted.</param>
+        /// <returns>A copy of the entity which was removed.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null</exception>
+        /// <exception cref="ArgumentNullException">The entity to be deleted is null.</exception>
+        /// <exception cref="InvalidOperationException">The given entity type is not mapped.</exception>
+        /// <exception cref="Newtonsoft.Json.JsonSerializationException">The given entity could not be deserialized as the given type.</exception>
+        /// <exception cref="InvalidOperationException">There exist no entity with that identifier.</exception>
+        /// <remarks>The entity to be deleted must be attached to the body.</remarks>
+        [HttpDelete("{entityName}")]
+        public async Task<IEntity> Delete(string entityName)
+        {
+            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+
+            var entityType = TypeResolver.Resolve(entityName);
+            var deleting = EntityDeserializer.Deserialize(Request.Body, entityType);
+            var repository = RepositoryFactory.Construct(entityType);
+            await repository.DeleteAsync(deleting);
+
+            return deleting;
+        }
     }
 }

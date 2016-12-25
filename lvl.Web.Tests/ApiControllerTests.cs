@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -221,6 +222,86 @@ namespace lvl.Web.Tests
             var puttingContent = new StringContent(puttingSerialized);
 
             await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PutAsync(putUrl, puttingContent));
+        }
+
+        [Fact]
+        public async Task WhenDeleted_EntityRemoval_IsPersistent()
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var deleting = await repository.CreateAsync(new Moon { });
+            var deletingSerialized = JsonConvert.SerializeObject(deleting);
+            var deletingContent = new StringContent(deletingSerialized);
+            var deletingMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{Client.BaseAddress}api/{nameof(Moon)}"),
+                Method = HttpMethod.Delete,
+                Content = deletingContent
+            };
+
+            var deleteResult = await Client.SendAsync(deletingMessage);
+            var deleteSerialized = await deleteResult.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<Moon>(deleteSerialized);
+            var deleted = await repository.GetAsync(result.Id);
+
+            Assert.Null(deleted);
+        }
+
+        [Fact]
+        public async Task WhenDeleting_AndEntityIsNull_ArgumentNullExceptionIsThrown()
+        {
+            var deletingMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{Client.BaseAddress}api/{nameof(Moon)}"),
+                Method = HttpMethod.Delete,
+                Content = new StringContent(string.Empty)
+            };
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => Client.SendAsync(deletingMessage));
+        }
+
+        [Fact]
+        public async Task WhenDeleting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
+        {
+            var deleting = new Moon { };
+            var deletingSerialized = JsonConvert.SerializeObject(deleting);
+            var deletingContent = new StringContent(deletingSerialized);
+            var deletingMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{Client.BaseAddress}api/{nameof(Moon)}"),
+                Method = HttpMethod.Delete,
+                Content = deletingContent
+            };
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.SendAsync(deletingMessage));
+        }
+
+        [Fact]
+        public async Task WhenDelete_AndEntityCantBeDeserializedToType_JsonSerializationExceptionIsThrown()
+        {
+            var deletingMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{Client.BaseAddress}api/{nameof(Moon)}"),
+                Method = HttpMethod.Delete,
+                Content = new StringContent(@"{invalid: ""true""}")
+            };
+
+            await Assert.ThrowsAsync<JsonSerializationException>(() => Client.SendAsync(deletingMessage));
+        }
+
+        [Fact]
+        public async Task WhenDeleting_AndEntityDoesNotExist_InvalidOperationExceptionIsThrown()
+        {
+            var deleting = new Moon { Id = int.MaxValue };
+            var deletingSerialized = JsonConvert.SerializeObject(deleting);
+            var deletingContent = new StringContent(deletingSerialized);
+            var deletingMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"{Client.BaseAddress}api/{nameof(Moon)}"),
+                Method = HttpMethod.Delete,
+                Content = deletingContent
+            };
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.SendAsync(deletingMessage));
         }
 
         private class UnmappedEntity : IEntity
