@@ -5,6 +5,12 @@ Provide a single controller which serves restful endpoints for all entities.
 ## Requirements
 Provides 5 methods: get single, get collection, create, update, and delete
 
+### Get collection
+Provides a method which retreives all entities of a given type:
+1. All entities returned are of the given type
+2. If the type is not mapped, a 500 status code is returned
+3. If a null value is given for the type, a 500 status code is returned
+
 ### Get single
 Provides a method which retreives an entity from a given ID:
 1. If there is an entity with a matching ID, that entity is returned

@@ -2,6 +2,7 @@
 using lvl.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace lvl.Web.Controllers
@@ -19,6 +20,23 @@ namespace lvl.Web.Controllers
         {
             TypeResolver = typeResolver;
             RepositoryFactory = repositoryFactory;
+        }
+
+        /// <summary>
+        /// Retreives all entities of a given type.
+        /// </summary>
+        /// <param name="entityName">The type of entities to be retreived.</param>
+        /// <returns>All entities of the given type.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="entityName"/> is not a mapped type.</exception>
+        [HttpGet("{entityName}")]
+        public async Task<IEnumerable<IEntity>> Get(string entityName) {
+            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+
+            var type = TypeResolver.Resolve(entityName);
+            var repository = RepositoryFactory.Construct(type);
+
+            return await repository.GetAsync();
         }
 
         /// <summary>

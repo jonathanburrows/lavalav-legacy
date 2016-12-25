@@ -4,6 +4,7 @@ using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,13 +25,35 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
+        public async Task WhenRequestingEntities_AllReturnedEntitiesAreOfGivenType() {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon { });
+            var getUrl = $"/api/{nameof(Moon)}";
+
+            var getResult = await Client.GetAsync(getUrl);
+            var serialized = await getResult.Content.ReadAsStringAsync();
+            var entities = JsonConvert.DeserializeObject<List<Moon>>(serialized);
+
+            Assert.Equal(entities.Count, 3);
+        }
+
+        [Fact]
+        public async Task WhenRequestingEntities_IfTypeIsntMapped_ThrowsInvalidOperationException() {
+            var getUrl = $"/api/madeUpEntity";
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
+        }
+
+        [Fact]
         public async Task WhenRequestingEntity_WithMatchingId_Returns200()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var entity = await repository.CreateAsync(new Moon { });
-            var url = $"/api/{nameof(Moon)}/{entity.Id}";
+            var getUrl = $"/api/{nameof(Moon)}/{entity.Id}";
 
-            var getResponse = await Client.GetAsync(url);
+            var getResponse = await Client.GetAsync(getUrl);
 
             Assert.Equal(getResponse.StatusCode, HttpStatusCode.OK);
         }
