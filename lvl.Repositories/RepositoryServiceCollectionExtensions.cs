@@ -1,4 +1,5 @@
-﻿using lvl.Repositories;
+﻿using lvl.Ontology;
+using lvl.Repositories;
 using NHibernate;
 using NHibernate.Dialect;
 using System;
@@ -34,19 +35,11 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.AddScoped<ISessionFactory>(_ => configuration.BuildSessionFactory());
 
             var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
-            var genericIRepositoryType = typeof(IRepository<>);
-            var genericRepositoryType = typeof(Repository<>);
-            foreach (var mappedType in mappedTypes)
-            {
-                var castedIRepositoryType = genericIRepositoryType.MakeGenericType(mappedType);
-                var castedRepositoryType = genericRepositoryType.MakeGenericType(mappedType);
-                serviceCollection.AddScoped(castedIRepositoryType, castedRepositoryType);
-            }
+            serviceCollection.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            var dialectKey = NHibernate.Cfg.Environment.Dialect;
-            var dialect = configuration.GetProperty(dialectKey);
-            var isSqlLite = dialect.Equals(typeof(SQLiteDialect).AssemblyQualifiedName);
-            var sessionManager = isSqlLite ? typeof(SQLitePersistentSessionManager) : typeof(SessionManager);
+            var databaseDetector = new DatabaseDetector();
+            var databaseVendor = databaseDetector.GetConfigurationsVendor(configuration);
+            var sessionManager = databaseVendor == DatabaseVendor.SQLite? typeof(SQLitePersistentSessionManager) : typeof(SessionManager);
             serviceCollection.AddScoped(typeof(SessionManager), sessionManager);
 
             return serviceCollection;
