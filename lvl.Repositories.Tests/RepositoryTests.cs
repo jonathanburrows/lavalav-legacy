@@ -100,7 +100,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<ArgumentNullException>(async () => await repository.CreateAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => repository.CreateAsync(null));
         }
 
         [Fact]
@@ -127,7 +127,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<ArgumentException>(async () => await repository.CreateAsync(new Planet { }));
+            await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAsync(new Planet { }));
         }
 
         [Fact]
@@ -224,7 +224,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<ArgumentNullException>(async () => await repository.UpdateAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => repository.UpdateAsync(null));
         }
 
         [Fact]
@@ -232,7 +232,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await repository.UpdateAsync(null));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(null));
         }
 
         [Fact]
@@ -240,7 +240,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await repository.UpdateAsync(new Planet { }));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Planet { }));
         }
 
         [Fact]
@@ -248,7 +248,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await repository.UpdateAsync(new Moon { }));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => repository.UpdateAsync(new Moon { }));
         }
 
         [Fact]
@@ -256,7 +256,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await repository.UpdateAsync(new Moon { }));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Moon { }));
         }
 
         [Fact]
@@ -376,7 +376,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<ArgumentNullException>(async () => await repository.DeleteAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => repository.DeleteAsync(null));
         }
 
         [Fact]
@@ -384,7 +384,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await repository.DeleteAsync(null));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(null));
         }
 
         [Fact]
@@ -393,7 +393,7 @@ namespace lvl.Repositories.Tests
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
             var planet = new Planet { };
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await repository.DeleteAsync(planet));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(planet));
         }
 
         [Fact]
@@ -401,7 +401,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await repository.DeleteAsync(new Moon()));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => repository.DeleteAsync(new Moon()));
         }
 
         [Fact]
@@ -410,7 +410,7 @@ namespace lvl.Repositories.Tests
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
             var unmatchedElement = new Moon { Id = int.MaxValue };
 
-            await Assert.ThrowsAnyAsync<Exception>(async () => await repository.DeleteAsync(unmatchedElement));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(unmatchedElement));
         }
 
         [Fact]

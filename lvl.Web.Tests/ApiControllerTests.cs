@@ -36,7 +36,7 @@ namespace lvl.Web.Tests
             var serialized = await getResult.Content.ReadAsStringAsync();
             var entities = JsonConvert.DeserializeObject<List<Moon>>(serialized);
 
-            Assert.Equal(entities.Count, 3);
+            Assert.IsAssignableFrom<IEnumerable<Moon>>(entities);
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace lvl.Web.Tests
         {
             var getUrl = $"{Client.BaseAddress}api/{nameof(Moon)}/{int.MaxValue}";
 
-            await Assert.ThrowsAsync<InvalidOperationException>(async() => await Client.GetAsync(getUrl));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
         }
 
         [Theory]
