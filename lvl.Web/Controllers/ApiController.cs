@@ -92,5 +92,29 @@ namespace lvl.Web.Controllers
 
             return creating;
         }
+
+        /// <summary>
+        /// Updates an existing entity to have matching fields.
+        /// </summary>
+        /// <param name="entityName">The type of the entity to be updated.</param>
+        /// <returns>A copy of the updated entity, with any generated fields updated.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null</exception>
+        /// <exception cref="ArgumentNullException">The entity to be updated is null.</exception>
+        /// <exception cref="InvalidOperationException">The given entity type is not mapped.</exception>
+        /// <exception cref="Newtonsoft.Json.JsonSerializationException">The given entity could not be deserialized as the given type.</exception>
+        /// <exception cref="InvalidOperationException">There exist no entity with that identifier.</exception>
+        /// <remarks>The entity to be updated must be attached to the body.</remarks>
+        [HttpPut("{entityName}")]
+        public async Task<IEntity> Put(string entityName)
+        {
+            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+
+            var entityType = TypeResolver.Resolve(entityName);
+            var updating = EntityDeserializer.Deserialize(Request.Body, entityType);
+            var repository = RepositoryFactory.Construct(entityType);
+            await repository.UpdateAsync(updating);
+
+            return updating;
+        }
     }
 }
