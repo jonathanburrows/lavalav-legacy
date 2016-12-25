@@ -88,6 +88,8 @@ namespace Microsoft.Extensions.DependencyInjection
             return fluentConfiguration;
         }
 
+        private static object x86Lock { get; } = new object();
+        private static object x64Lock { get; } = new object();
         private static void WriteSQLiteInterop()
         {
             var currentAssembly = typeof(DomainServiceCollectionExtensions).Assembly;
@@ -97,10 +99,16 @@ namespace Microsoft.Extensions.DependencyInjection
             x86File.Directory.Create();
             if (!x86File.Exists)
             {
-                using (var x86Stream = x86File.Create())
+                lock (x86Lock)
                 {
-                    x86Info.Seek(0, SeekOrigin.Begin);
-                    x86Info.CopyTo(x86Stream);
+                    if (!x86File.Exists)
+                    {
+                        using (var x86Stream = x86File.Create())
+                        {
+                            x86Info.Seek(0, SeekOrigin.Begin);
+                            x86Info.CopyTo(x86Stream);
+                        }
+                    }
                 }
             }
 
@@ -108,11 +116,17 @@ namespace Microsoft.Extensions.DependencyInjection
             var x64File = new FileInfo("x64/SQLite.Interop.dll");
             if (!x64File.Exists)
             {
-                x64File.Directory.Create();
-                using (var x64Stream = x64File.Create())
+                lock (x64Lock)
                 {
-                    x64Info.Seek(0, SeekOrigin.Begin);
-                    x64Info.CopyTo(x64Stream);
+                    if (x64File.Exists)
+                    {
+                        x64File.Directory.Create();
+                        using (var x64Stream = x64File.Create())
+                        {
+                            x64Info.Seek(0, SeekOrigin.Begin);
+                            x64Info.CopyTo(x64Stream);
+                        }
+                    }
                 }
             }
         }
