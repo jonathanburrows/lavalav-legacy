@@ -2,7 +2,6 @@
 using lvl.Repositories;
 using NHibernate;
 using System;
-using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -38,11 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<RepositoryFactory>()
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped(typeof(SessionManager), sessionManager)
-                .AddScoped<ISessionFactory>(provider =>
-                {
-                    var config = provider.GetRequiredService<NHibernate.Cfg.Configuration>();
-                    return config.BuildSessionFactory();
-                });
+                .AddScoped<ISessionFactory>(_ => configuration.BuildSessionFactory());
 
             return serviceCollection;
         }
