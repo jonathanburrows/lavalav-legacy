@@ -119,7 +119,7 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(nameof(OracleTypeResolverTests))]
-    public class OracleTypeResolverTests : TypeResolverTests<OracleRepositoryFixture>
+    internal class OracleTypeResolverTests : TypeResolverTests<OracleRepositoryFixture>
     {
         public OracleTypeResolverTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }

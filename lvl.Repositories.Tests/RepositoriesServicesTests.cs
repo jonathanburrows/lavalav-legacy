@@ -135,7 +135,7 @@ namespace lvl.Repositories.Tests
 
     /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(OracleRepositoryServicesTests))]
-    public class OracleRepositoryServicesTests : RepositoriesServicesTests<OracleRepositoryFixture>
+    internal class OracleRepositoryServicesTests : RepositoriesServicesTests<OracleRepositoryFixture>
     {
         public OracleRepositoryServicesTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }

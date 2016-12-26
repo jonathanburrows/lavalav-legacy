@@ -83,7 +83,7 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(nameof(OracleRepositoryFactoryTests))]
-    public class OracleRepositoryFactoryTests : RepositoryFactoryTests<OracleRepositoryFixture>
+    internal class OracleRepositoryFactoryTests : RepositoryFactoryTests<OracleRepositoryFixture>
     {
         public OracleRepositoryFactoryTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
