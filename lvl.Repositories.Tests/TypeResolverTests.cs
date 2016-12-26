@@ -112,14 +112,16 @@ namespace lvl.Repositories.Tests
         }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(MsSqlTypeResolverTests))]
     public class MsSqlTypeResolverTests : TypeResolverTests<MsSqlRepositoryFixture>
     {
         public MsSqlTypeResolverTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(OracleTypeResolverTests))]
-    internal class OracleTypeResolverTests : TypeResolverTests<OracleRepositoryFixture>
+    public class OracleTypeResolverTests : TypeResolverTests<OracleRepositoryFixture>
     {
         public OracleTypeResolverTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }

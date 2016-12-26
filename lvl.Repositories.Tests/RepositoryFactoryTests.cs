@@ -76,14 +76,16 @@ namespace lvl.Repositories.Tests
         public SQLiteRepositoryFactoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(MsSqlRepositoryFactoryTests))]
     public class MsSqlRepositoryFactoryTests : RepositoryFactoryTests<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryFactoryTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    /// <remarks>To disable, make internal</remarks>
     [Collection(nameof(OracleRepositoryFactoryTests))]
-    internal class OracleRepositoryFactoryTests : RepositoryFactoryTests<OracleRepositoryFixture>
+    public class OracleRepositoryFactoryTests : RepositoryFactoryTests<OracleRepositoryFixture>
     {
         public OracleRepositoryFactoryTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
