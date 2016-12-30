@@ -64,7 +64,7 @@ namespace lvl.Web.Logging
             {
                 MachineName = Environment.MachineName,
                 Logged = DateTime.Now,
-                Level = logLevel.ToString(),
+                LogLevel = logLevel.ToString(),
                 Message = message
             };
 

@@ -8,19 +8,18 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace lvl.Web.Tests
 {
     [Collection(nameof(ApiControllerTests))]
-    public class ApiControllerTests : IClassFixture<WebHostFixture>
+    public class ApiControllerTests : IClassFixture<WebHostFixture<TestWebSite.Startup>>
     {
         private HttpClient Client { get; }
         private IServiceProvider Services { get; }
 
-        public ApiControllerTests(WebHostFixture webHostFixture)
+        public ApiControllerTests(WebHostFixture<TestWebSite.Startup> webHostFixture)
         {
             Client = webHostFixture.Client;
             Services = webHostFixture.Services;

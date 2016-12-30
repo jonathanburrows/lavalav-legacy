@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 
 namespace lvl.Ontology
 {
@@ -8,44 +9,35 @@ namespace lvl.Ontology
     /// </summary>
     internal class SQLiteInteropCopier
     {
-        private object x86Lock { get; } = new object();
-        private object x64Lock { get; } = new object();
+        private static object resourceLock { get; } = new object { };
 
         public void Copy()
         {
+            CopyResourceToFile("lvl.Ontology.x86.SQLite.Interop.dll", "x86/SQLite.Interop.dll");
+            CopyResourceToFile("lvl.Ontology.x64.SQLite.Interop.dll", "x64/SQLite.Interop.dll");
+        }
+        
+        private void CopyResourceToFile(string resourceName, string outputName)
+        {
             var currentAssembly = GetType().Assembly;
 
-            var x86Info = currentAssembly.GetManifestResourceStream("lvl.Ontology.x86.SQLite.Interop.dll");
-            var x86File = new FileInfo("x86/SQLite.Interop.dll");
-            x86File.Directory.Create();
-            if (!x86File.Exists)
-            {
-                lock (x86Lock)
-                {
-                    if (!x86File.Exists)
-                    {
-                        using (var x86Stream = x86File.Create())
-                        {
-                            x86Info.Seek(0, SeekOrigin.Begin);
-                            x86Info.CopyTo(x86Stream);
-                        }
-                    }
-                }
-            }
+            var executingPath = Assembly.GetExecutingAssembly().Location;
+            var executingDirectory = new FileInfo(executingPath).Directory.FullName;
 
-            var x64Info = currentAssembly.GetManifestResourceStream("lvl.Ontology.x64.SQLite.Interop.dll");
-            var x64File = new FileInfo("x64/SQLite.Interop.dll");
-            if (!x64File.Exists)
+            var resourceContent = currentAssembly.GetManifestResourceStream(resourceName);
+            var outputPath = Path.Combine(executingDirectory, outputName);
+            var outputFile = new FileInfo(outputPath);
+            if (!outputFile.Exists)
             {
-                lock (x64Lock)
+                lock (resourceLock)
                 {
-                    if (x64File.Exists)
+                    if (!outputFile.Exists)
                     {
-                        x64File.Directory.Create();
-                        using (var x64Stream = x64File.Create())
+                        outputFile.Directory.Create();
+                        using (var outputStream = outputFile.Create())
                         {
-                            x64Info.Seek(0, SeekOrigin.Begin);
-                            x64Info.CopyTo(x64Stream);
+                            resourceContent.Seek(0, SeekOrigin.Begin);
+                            resourceContent.CopyTo(outputStream);
                         }
                     }
                 }

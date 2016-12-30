@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,7 +19,7 @@ namespace lvl.Web.Logging
         public DateTime Logged { get; set; }
 
         [Required]
-        public string Level { get; set; }
+        public string LogLevel { get; set; }
 
         [Required]
         public string Message { get; set; }

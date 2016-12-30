@@ -9,7 +9,12 @@ using System.Net.Http;
 
 namespace lvl.Web.Tests.Fixtures
 {
-    public class WebHostFixture : IDisposable
+    /// <summary>
+    /// Starts a website for testing.
+    /// </summary>
+    /// <typeparam name="TStartup">The startup class of the website.</typeparam>
+    /// <remarks>Didnt use MvcTest fixture as the services should be exposed for testing.</remarks>
+    public class WebHostFixture<TStartup> : IDisposable where TStartup : class
     {
         private TestServer Server { get; }
         public IServiceProvider Services => Server.Host.Services;
@@ -19,7 +24,7 @@ namespace lvl.Web.Tests.Fixtures
         {
             var webHostBuilder = new WebHostBuilder()
                 .ConfigureServices(InitializeServices)
-                .UseStartup<TestWebSite.Startup>();
+                .UseStartup<TStartup>();
 
             Server = new TestServer(webHostBuilder);
 
@@ -34,7 +39,7 @@ namespace lvl.Web.Tests.Fixtures
         }
         protected virtual void InitializeServices(IServiceCollection services)
         {
-            var startupAssembly = typeof(TestWebSite.Startup).Assembly;
+            var startupAssembly = typeof(TStartup).Assembly;
 
             // Inject a custom application part manager. Overrides AddMvcCore() because that uses TryAdd().
             var manager = new ApplicationPartManager();

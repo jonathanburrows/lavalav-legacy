@@ -30,12 +30,12 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenLogging_AndLogLevelIsntEnabled_LogEntryIsNotInserted()
         {
-            var services = GetLoggerServicesWithLogLevel(LogLevel.Debug);
+            var services = GetLoggerServicesWithLogLevel(LogLevel.Error);
             var databaseLogger = services.GetRequiredService<ILogger<DatabaseLoggerTests>>();
             var repository = services.GetRequiredService<IRepository<LogEntry>>();
             var countBefore = (await repository.GetAsync()).Count();
 
-            databaseLogger.LogTrace("hello, world!");
+            databaseLogger.LogDebug("hello, world!");
 
             var countAfter = (await repository.GetAsync()).Count();
             Assert.False(countBefore < countAfter);
