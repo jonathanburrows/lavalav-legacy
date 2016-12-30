@@ -27,8 +27,8 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsDebug_LogEntryIsAdded()
         {
-            var loggerSettings = Services.GetRequiredService<LoggerSettings>();
-            loggerSettings.LogLevel = LogLevel.Debug;
+            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            loggingSettings.LogLevel = LogLevel.Debug;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
             var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Debug.ToString()).Count();
@@ -42,8 +42,8 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanDebug_LogEntryIsNotAdded()
         {
-            var loggerSettings = Services.GetRequiredService<LoggerSettings>();
-            loggerSettings.LogLevel = LogLevel.Information;
+            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            loggingSettings.LogLevel = LogLevel.Information;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
             var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Debug.ToString()).Count();
@@ -57,8 +57,8 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsInformation_LogEntryIsAdded()
         {
-            var loggerSettings = Services.GetRequiredService<LoggerSettings>();
-            loggerSettings.LogLevel = LogLevel.Information;
+            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            loggingSettings.LogLevel = LogLevel.Information;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
             var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Information.ToString()).Count();
@@ -72,8 +72,8 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanInformation_LogEntryIsNotAdded()
         {
-            var loggerSettings = Services.GetRequiredService<LoggerSettings>();
-            loggerSettings.LogLevel = LogLevel.Warning;
+            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            loggingSettings.LogLevel = LogLevel.Warning;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
             var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Information.ToString()).Count();
@@ -87,8 +87,8 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanTrace_LogEntryIsNotAdded()
         {
-            var loggerSettings = Services.GetRequiredService<LoggerSettings>();
-            loggerSettings.LogLevel = LogLevel.Debug;
+            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            loggingSettings.LogLevel = LogLevel.Debug;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
             var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Trace.ToString()).Count();

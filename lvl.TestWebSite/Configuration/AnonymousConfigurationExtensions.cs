@@ -1,4 +1,4 @@
-﻿using lvl.Web.Configuration;
+﻿using lvl.TestWebSite.Configuration;
 using System;
 
 namespace Microsoft.Extensions.Configuration

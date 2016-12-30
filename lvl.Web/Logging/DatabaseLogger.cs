@@ -10,18 +10,18 @@ namespace lvl.Web.Logging
     internal class DatabaseLogger : ILogger
     {
         private string Name { get; }
-        private LoggerSettings LoggerSettings { get; }
+        private LoggingSettings LoggingSettings { get; }
         private IRepository<LogEntry> LogEntryRepository { get; }
 
-        public DatabaseLogger(string name, LoggerSettings loggerSettings, IRepository<LogEntry> logEntryRepository)
+        public DatabaseLogger(string name, LoggingSettings loggingSettings, IRepository<LogEntry> logEntryRepository)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (loggerSettings == null)
+            if (loggingSettings == null)
             {
-                throw new ArgumentNullException(nameof(loggerSettings));
+                throw new ArgumentNullException(nameof(loggingSettings));
             }
             if (logEntryRepository == null)
             {
@@ -29,7 +29,7 @@ namespace lvl.Web.Logging
             }
 
             Name = name;
-            LoggerSettings = loggerSettings;
+            LoggingSettings = loggingSettings;
             LogEntryRepository = logEntryRepository;
         }
 
@@ -45,7 +45,7 @@ namespace lvl.Web.Logging
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return LoggerSettings.LogLevel <= logLevel;
+            return LoggingSettings.LogLevel <= logLevel;
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)

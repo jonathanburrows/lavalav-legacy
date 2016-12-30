@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace lvl.Web.Configuration
+namespace lvl.TestWebSite.Configuration
 {
     /// <summary>
     /// Parses a variable into a configuration file.

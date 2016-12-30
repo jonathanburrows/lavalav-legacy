@@ -9,9 +9,9 @@ namespace lvl.Web.Logging
     {
         private RequestDelegate Next { get; }
         private ILoggerFactory LoggerFactory { get; }
-        private LoggerSettings LoggerSettings { get; }
+        private LoggingSettings LoggingSettings { get; }
 
-        public ErrorLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, LoggerSettings loggerSettings)
+        public ErrorLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, LoggingSettings loggingSettings)
         {
             if (next == null)
             {
@@ -21,14 +21,14 @@ namespace lvl.Web.Logging
             {
                 throw new ArgumentNullException(nameof(loggerFactory));
             }
-            if (loggerSettings == null)
+            if (loggingSettings == null)
             {
-                throw new ArgumentNullException(nameof(loggerSettings));
+                throw new ArgumentNullException(nameof(loggingSettings));
             }
 
             Next = next;
             LoggerFactory = loggerFactory;
-            LoggerSettings = loggerSettings;
+            LoggingSettings = loggingSettings;
         }
 
         public async Task Invoke(HttpContext httpContext)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace lvl.Web.Configuration
+namespace lvl.TestWebSite.Configuration
 {
     /// <summary>
     /// Represents an anonymous object that can be used as a configuration file.

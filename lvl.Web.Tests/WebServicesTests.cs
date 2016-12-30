@@ -52,11 +52,11 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingLoggerSettings_ReturnsValue()
+        public void AfterAddingWeb_ResolvingLoggingSettings_ReturnsValue()
         {
-            var loggerSettings = Services.GetRequiredService<LoggerSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
 
-            Assert.NotNull(loggerSettings);
+            Assert.NotNull(loggingSettings);
         }
 
         [Fact]
@@ -68,12 +68,12 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenAddingWeb_AndLoggerSettingsIsNull_ArgumentNullExceptionIsThrown()
+        public void WhenAddingWeb_AndLoggingSettingsIsNull_ArgumentNullExceptionIsThrown()
         {
             var serviceCollection = new ServiceCollection().AddDomains().AddRepositories();
             var webSettings = new WebSettings
             {
-                LoggerSettings = null
+                Logging = null
             };
 
             Assert.Throws<ArgumentNullException>(() => serviceCollection.AddWeb(webSettings));

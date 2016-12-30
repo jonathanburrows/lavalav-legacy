@@ -1,4 +1,5 @@
 ﻿using lvl.Web.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace lvl.Web
 {
@@ -7,6 +8,14 @@ namespace lvl.Web
     /// </summary>
     public class WebSettings
     {
-        public LoggerSettings LoggerSettings { get; set; }
+        public LoggingSettings Logging { get; set; }
+
+        public WebSettings() { }
+
+        public WebSettings(IConfiguration configuration)
+        {
+            Logging = new LoggingSettings { };
+            configuration.GetSection("logging").Bind(Logging);
+        }
     }
 }

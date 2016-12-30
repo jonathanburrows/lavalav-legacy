@@ -32,9 +32,9 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 throw new ArgumentNullException(nameof(webSettings));
             }
-            if (webSettings.LoggerSettings == null)
+            if (webSettings.Logging == null)
             {
-                throw new ArgumentNullException(nameof(webSettings.LoggerSettings));
+                throw new ArgumentNullException(nameof(webSettings.Logging));
             }
 
             var registeredServices = serviceCollection.Select(s => s.ServiceType);
@@ -50,7 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection
                 .AddLogging()
                 .AddScoped<EntityDeserializer>()
-                .AddSingleton(webSettings.LoggerSettings)
+                .AddSingleton(webSettings.Logging)
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()
                 .AddOptions()
@@ -74,7 +74,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var webSettings = new WebSettings
             {
-                LoggerSettings = new LoggerSettings { }
+                Logging = new LoggingSettings { }
             };
             return AddWeb(serviceCollection, webSettings);
         }
