@@ -17,7 +17,10 @@ namespace lvl.Ontology
         /// <exception cref="FileNotFoundException">There was no assembly found at the given path</exception>
         public void Load(string assemblyPath)
         {
-            if (assemblyPath == null) throw new ArgumentNullException(assemblyPath);
+            if (assemblyPath == null)
+            {
+                throw new ArgumentNullException(assemblyPath);
+            }
 
             var assemblyFile = new FileInfo(assemblyPath);
             if (!assemblyFile.Exists)

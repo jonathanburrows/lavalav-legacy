@@ -32,7 +32,10 @@ namespace lvl.Repositories
         /// </remarks>
         public virtual Type Resolve(string entityType)
         {
-            if (entityType == null) throw new ArgumentNullException(nameof(entityType));
+            if (entityType == null)
+            {
+                throw new ArgumentNullException(nameof(entityType));
+            }
 
             var types = Configuration.ClassMappings.Select(c => c.MappedClass);
 

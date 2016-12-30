@@ -35,14 +35,20 @@ namespace lvl.DatabaseGenerator
         /// <exception cref="ArgumentException">An optional argument flag was provided with no value</exception>
         public GenerationOptions Parse(string[] args)
         {
-            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (args == null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
 
             var requiredParameters = new HashSet<string>(new[] { ConnectionStringKey, AssemblyPathKey });
             var booleanParameters = new HashSet<string>(new[] { MigrateKey, DryRunKey });
             var optionalParameters = new HashSet<string>(new[] { PreGenerationScriptKey, PostGenerationScriptKey });
             var allParameters = new HashSet<string>(requiredParameters.Union(booleanParameters).Union(optionalParameters));
 
-            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (args == null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
 
             foreach (var requiredParameter in requiredParameters)
             {

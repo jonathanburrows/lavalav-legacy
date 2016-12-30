@@ -55,7 +55,10 @@ namespace lvl.Web.Logging
                 return;
             }
 
-            if (formatter == null) throw new ArgumentNullException(nameof(formatter));
+            if (formatter == null)
+            {
+                throw new ArgumentNullException(nameof(formatter));
+            }
 
 
             var message = formatter(state, exception);

@@ -35,7 +35,10 @@ namespace lvl.Web.Controllers
         [HttpGet("{entityName}")]
         public async Task<IEnumerable<IEntity>> Get(string entityName)
         {
-            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
 
             var type = TypeResolver.Resolve(entityName);
             var repository = RepositoryFactory.Construct(type);
@@ -55,7 +58,10 @@ namespace lvl.Web.Controllers
         [HttpGet("{entityName}/{id}")]
         public async Task<IEntity> Get(string entityName, int id)
         {
-            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
 
             var entityType = TypeResolver.Resolve(entityName);
             var repository = RepositoryFactory.Construct(entityType);
@@ -83,7 +89,10 @@ namespace lvl.Web.Controllers
         [HttpPost("{entityName}")]
         public async Task<IEntity> Post(string entityName)
         {
-            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
 
             var entityType = TypeResolver.Resolve(entityName);
             var creating = EntityDeserializer.Deserialize(Request.Body, entityType);
@@ -107,7 +116,10 @@ namespace lvl.Web.Controllers
         [HttpPut("{entityName}")]
         public async Task<IEntity> Put(string entityName)
         {
-            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
 
             var entityType = TypeResolver.Resolve(entityName);
             var updating = EntityDeserializer.Deserialize(Request.Body, entityType);
@@ -131,7 +143,10 @@ namespace lvl.Web.Controllers
         [HttpDelete("{entityName}")]
         public async Task<IEntity> Delete(string entityName)
         {
-            if (entityName == null) throw new ArgumentNullException(nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
 
             var entityType = TypeResolver.Resolve(entityName);
             var deleting = EntityDeserializer.Deserialize(Request.Body, entityType);

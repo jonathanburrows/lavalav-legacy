@@ -25,7 +25,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <remarks>If the connection string is null, then it will use SQLite</remarks>
         public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, string connectionString = null)
         {
-            if (serviceCollection == null) throw new ArgumentNullException(nameof(serviceCollection));
+            if (serviceCollection == null)
+            {
+                throw new ArgumentNullException(nameof(serviceCollection));
+            }
 
             var callingAssembly = Assembly.GetCallingAssembly();
 

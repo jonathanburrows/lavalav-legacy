@@ -46,8 +46,14 @@ namespace lvl.Repositories
 
         public virtual Task<TEntity> CreateAsync(TEntity creating)
         {
-            if (creating == null) throw new ArgumentNullException(nameof(creating));
-            if (creating.Id > 0) throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} as it already has an id: {creating.Id}");
+            if (creating == null)
+            {
+                throw new ArgumentNullException(nameof(creating));
+            }
+            if (creating.Id > 0)
+            {
+                throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} as it already has an id: {creating.Id}");
+            }
 
             using (var session = SessionManager.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -62,15 +68,24 @@ namespace lvl.Repositories
         async Task<IEntity> IRepository.CreateAsync(IEntity creating)
         {
             var boxed = creating as TEntity;
-            if (creating == null) throw new ArgumentNullException(nameof(creating));
-            if (boxed == null) throw new ArgumentException($"Cant create {creating.GetType().FullName} as a {typeof(TEntity).FullName}");
+            if (creating == null)
+            {
+                throw new ArgumentNullException(nameof(creating));
+            }
+            if (boxed == null)
+            {
+                throw new ArgumentException($"Cant create {creating.GetType().FullName} as a {typeof(TEntity).FullName}");
+            }
 
             return await CreateAsync(boxed);
         }
 
         public virtual Task<TEntity> UpdateAsync(TEntity updating)
         {
-            if (updating == null) throw new ArgumentNullException(nameof(updating));
+            if (updating == null)
+            {
+                throw new ArgumentNullException(nameof(updating));
+            }
 
             using (var session = SessionManager.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -89,15 +104,24 @@ namespace lvl.Repositories
         async Task<IEntity> IRepository.UpdateAsync(IEntity updating)
         {
             var boxed = updating as TEntity;
-            if (updating == null) throw new ArgumentNullException(nameof(updating));
-            if (boxed == null) throw new ArgumentException($"Cant update {updating.GetType().FullName} as a {typeof(TEntity).FullName}");
+            if (updating == null)
+            {
+                throw new ArgumentNullException(nameof(updating));
+            }
+            if (boxed == null)
+            {
+                throw new ArgumentException($"Cant update {updating.GetType().FullName} as a {typeof(TEntity).FullName}");
+            }
 
             return await UpdateAsync(boxed);
         }
 
         public virtual Task<TEntity> DeleteAsync(TEntity deleting)
         {
-            if (deleting == null) throw new ArgumentNullException(nameof(deleting));
+            if (deleting == null)
+            {
+                throw new ArgumentNullException(nameof(deleting));
+            }
 
             using (var session = SessionManager.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -117,8 +141,14 @@ namespace lvl.Repositories
         async Task<IEntity> IRepository.DeleteAsync(IEntity deleting)
         {
             var boxed = deleting as TEntity;
-            if (deleting == null) throw new ArgumentNullException(nameof(deleting));
-            if (boxed == null) throw new ArgumentException($"Cant delete {deleting.GetType().FullName} as a {typeof(TEntity).FullName}");
+            if (deleting == null)
+            {
+                throw new ArgumentNullException(nameof(deleting));
+            }
+            if (boxed == null)
+            {
+                throw new ArgumentException($"Cant delete {deleting.GetType().FullName} as a {typeof(TEntity).FullName}");
+            }
 
             return await DeleteAsync(boxed);
         }

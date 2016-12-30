@@ -19,7 +19,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <exception cref="InvalidOperationException"><paramref name="serviceCollection"/> hasnt had AddDomains called.</exception>
         public static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
         {
-            if (serviceCollection == null) throw new ArgumentNullException();
+            if (serviceCollection == null)
+            {
+                throw new ArgumentNullException();
+            }
 
             var services = serviceCollection.BuildServiceProvider();
             var configuration = services.GetRequiredService<NHibernate.Cfg.Configuration>();
