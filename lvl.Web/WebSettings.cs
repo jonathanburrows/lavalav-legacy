@@ -10,7 +10,7 @@ namespace lvl.Web
     public class WebSettings
     {
         public LoggingSettings Logging { get; set; }
-        public CorsSettings Cors { get; }
+        public CorsSettings Cors { get; set; }
 
         public WebSettings() { }
 

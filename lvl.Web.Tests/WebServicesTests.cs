@@ -69,26 +69,6 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenAddingWeb_AndWebSettingsIsNull_ArgumentNullExceptionIsThrown()
-        {
-            var serviceCollection = new ServiceCollection().AddDomains().AddRepositories();
-
-            Assert.Throws<ArgumentNullException>(() => serviceCollection.AddWeb(null));
-        }
-
-        [Fact]
-        public void WhenAddingWeb_AndLoggingSettingsIsNull_ArgumentNullExceptionIsThrown()
-        {
-            var serviceCollection = new ServiceCollection().AddDomains().AddRepositories();
-            var webSettings = new WebSettings
-            {
-                Logging = null
-            };
-
-            Assert.Throws<ArgumentNullException>(() => serviceCollection.AddWeb(webSettings));
-        }
-
-        [Fact]
         public void WhenAddingWeb_WithoutDomains_InvalidOperationExceptionIsThrown()
         {
             var serviceCollection = new ServiceCollection();
