@@ -1,7 +1,7 @@
 ﻿using lvl.Repositories;
 using lvl.TestDomain;
+using lvl.TestWebSite.Tests.Fixtures;
 using lvl.Web.Logging;
-using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;

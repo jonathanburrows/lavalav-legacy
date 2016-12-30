@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 
-namespace lvl.Web.Tests.Fixtures
+namespace lvl.TestWebSite.Tests.Fixtures
 {
     /// <summary>
     /// Starts a website for testing.

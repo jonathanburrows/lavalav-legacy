@@ -1,7 +1,7 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories;
 using lvl.TestDomain;
-using lvl.Web.Tests.Fixtures;
+using lvl.TestWebSite.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;

@@ -5,7 +5,6 @@
     "dotnet-test-xunit": "1.0.0-rc2-build10025",
     "lvl.TestWebSite": "1.0.0-*",
     "lvl.Web": "1.0.0-*",
-    "Microsoft.AspNetCore.TestHost": "1.1.0-*",
     "Microsoft.DotNet.InternalAbstractions": "1.0.0",
     "Microsoft.Extensions.DependencyInjection": "1.1.0",
     "xunit": "2.1.0"
