@@ -1,6 +1,7 @@
 ﻿using lvl.Web.Logging;
 using lvl.Web.Serialization;
 using lvl.Web.Tests.Fixtures;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,6 +42,14 @@ namespace lvl.Web.Tests
             var loggerFactory = Services.GetRequiredService<ILoggerFactory>();
 
             Assert.NotNull(loggerFactory);
+        }
+
+        [Fact]
+        public void WhenAddingWeb_AddCorsIsCalled()
+        {
+            var corsService = Services.GetRequiredService<ICorsService>();
+
+            Assert.NotNull(corsService);
         }
 
         [Fact]

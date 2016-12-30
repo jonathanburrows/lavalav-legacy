@@ -47,6 +47,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException($"{nameof(RepositoryServiceCollectionExtensions.AddRepositories)} has not been called");
             }
 
+            Action<JsonSerializerSettings> configureJson = options =>
+            {
+                options.MissingMemberHandling = MissingMemberHandling.Error;
+            };
+
             serviceCollection
                 .AddLogging()
                 .AddScoped<EntityDeserializer>()
@@ -54,7 +59,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()
                 .AddOptions()
-                .ConfigureJsonOptions()
+                .Configure(configureJson)
+                .AddCors()
                 .AddMvcCore()
                 .AddJsonFormatters()
                 .AddApplicationPart(typeof(WebServiceCollectionExtensions).Assembly)
@@ -77,16 +83,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 Logging = new LoggingSettings { }
             };
             return AddWeb(serviceCollection, webSettings);
-        }
-
-        public static IServiceCollection ConfigureJsonOptions(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.Configure<JsonSerializerSettings>(options =>
-            {
-                options.MissingMemberHandling = MissingMemberHandling.Error;
-            });
-
-            return serviceCollection;
         }
     }
 }

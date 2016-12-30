@@ -5,8 +5,9 @@ To provide a way to register all classes required by the middleware.
 ## Requirements
 Must provide a method, AddWeb, which
 1. Registers all classes required by the middleware
-2. Calls Microsoft's AddMvc
-3. Throws an exception if the service collection is null
+2. Calls Microsoft's AddCors
+3. Calls Microsoft's AddMvc
+4. Throws an exception if the service collection is null
 
 
 ## Technical considerations

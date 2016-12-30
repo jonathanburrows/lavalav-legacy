@@ -1,4 +1,5 @@
-﻿using lvl.Web.Logging;
+﻿using lvl.Web.Cors;
+using lvl.Web.Logging;
 using Microsoft.Extensions.Configuration;
 
 namespace lvl.Web
@@ -9,6 +10,7 @@ namespace lvl.Web
     public class WebSettings
     {
         public LoggingSettings Logging { get; set; }
+        public CorsSettings Cors { get; }
 
         public WebSettings() { }
 
@@ -16,6 +18,9 @@ namespace lvl.Web
         {
             Logging = new LoggingSettings { };
             configuration.GetSection("logging").Bind(Logging);
+
+            Cors = new CorsSettings { };
+            configuration.GetSection("cors").Bind(Cors);
         }
     }
 }
