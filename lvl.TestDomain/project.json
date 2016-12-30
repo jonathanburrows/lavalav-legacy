@@ -15,8 +15,8 @@
 
   "buildOptions": {
     "embed": [
-      "config.json",
-      "config.*.json"
+      "appsettings.json",
+      "appsettings.*.json"
     ]
   }
 }

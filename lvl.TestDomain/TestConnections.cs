@@ -9,7 +9,7 @@ using System.Reflection;
 namespace lvl.TestDomain
 {
     /// <summary>
-    /// Used by unit tests to read connection strings from config.json to testing databases.
+    /// Used by unit tests to read connection strings from appsettings.json to testing databases.
     /// </summary>
     public static class TestConnections
     {
@@ -47,12 +47,12 @@ namespace lvl.TestDomain
             var environment = assemblyConfiguration.Configuration.ToLower();
 
             var resources = assembly.GetManifestResourceNames();
-            var appConfigName = resources.FirstOrDefault(name => name.ToLower().EndsWith("config.json"));
-            var environmentConfigName = resources.FirstOrDefault(name => name.ToLower().EndsWith($"config.{environment}.json"));
+            var appConfigName = resources.FirstOrDefault(name => name.ToLower().EndsWith("appsettings.json"));
+            var environmentConfigName = resources.FirstOrDefault(name => name.ToLower().EndsWith($"appsettings.{environment}.json"));
 
             if (appConfigName == null && environmentConfigName == null)
             {
-                throw new InvalidOperationException($"Neither config.json or config.{environment}.json were embedded in the dll");
+                throw new InvalidOperationException($"Neither appsettings.json or appsettings.{environment}.json were embedded in the dll");
             }
 
             var appConfig = assembly.GetManifestResourceStream(appConfigName).WriteAsString();
@@ -72,19 +72,19 @@ namespace lvl.TestDomain
             }
             else if (appConfig != null && environmentConfig != null)
             {
-                throw new InvalidOperationException($"The {connectionKey} connection was not defined in config.json or config.{environment}.json");
+                throw new InvalidOperationException($"The {connectionKey} connection was not defined in appsettings.json or appsettings.{environment}.json");
             }
             else if (appConfig != null)
             {
-                throw new InvalidOperationException($"The {connectionKey} connection was not defined in config.json");
+                throw new InvalidOperationException($"The {connectionKey} connection was not defined in appsettings.json");
             }
             else if (environmentConfig != null)
             {
-                throw new InvalidOperationException($"The {connectionKey} connection was not defined in config.{environment}.json");
+                throw new InvalidOperationException($"The {connectionKey} connection was not defined in appsettings.{environment}.json");
             }
             else
             {
-                throw new InvalidOperationException($"Neither config.json or config.{environment}.json were embedded in the dll");
+                throw new InvalidOperationException($"Neither appsettings.json or appsettings.{environment}.json were embedded in the dll");
             }
         }
 
