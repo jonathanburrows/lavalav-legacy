@@ -1,4 +1,5 @@
 ﻿using lvl.Web.Logging;
+using lvl.Web.OData;
 using lvl.Web.Serialization;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -82,6 +83,14 @@ namespace lvl.Web.Tests
             var serviceCollection = new ServiceCollection().AddDomains();
 
             Assert.Throws<InvalidOperationException>(() => serviceCollection.AddWeb());
+        }
+
+        [Fact]
+        public void AfterAddingWeb_ResolvingODataParser_ReturnsValue()
+        {
+            var odataParser = Services.GetRequiredService<ODataParser>();
+
+            Assert.NotNull(odataParser);
         }
     }
 }

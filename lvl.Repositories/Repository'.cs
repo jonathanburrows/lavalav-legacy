@@ -48,19 +48,15 @@ namespace lvl.Repositories
 
         }
 
-        async Task<IQueryResult<TResult>> IRepository.GetAsync<TResult>(IQuery<IEntity, TResult> query)
+        async Task<IQueryResult> IRepository.GetAsync(IQuery query)
         {
-            var boxed = query as IQuery<TEntity, TResult>;
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(query));
             }
-            if (boxed == null)
-            {
-                throw new ArgumentException($"Cant use query {query.GetType().Name} as {typeof(IQuery<TEntity, TResult>).Name}");
-            }
 
-            return await GetAsync(boxed);
+            dynamic boxedQuery = query;
+            return await GetAsync(boxedQuery);
         }
 
 

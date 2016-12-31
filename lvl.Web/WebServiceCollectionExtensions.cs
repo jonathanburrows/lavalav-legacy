@@ -2,6 +2,7 @@
 using lvl.Web;
 using lvl.Web.Cors;
 using lvl.Web.Logging;
+using lvl.Web.OData;
 using lvl.Web.Serialization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -56,6 +57,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<EntityDeserializer>()
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()
+                .AddScoped<ODataParser>()
                 .AddOptions()
                 .AddCors()
                 .AddMvcCore()

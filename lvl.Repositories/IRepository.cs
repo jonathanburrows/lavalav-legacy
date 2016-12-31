@@ -22,7 +22,7 @@ namespace lvl.Repositories
         /// <param name="query">The query to be applied to the entities.</param>
         /// <returns>The result of the odata query.</returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
-        Task<IQueryResult<TResult>> GetAsync<TResult>(IQuery<IEntity, TResult> query);
+        Task<IQueryResult> GetAsync(IQuery query);
 
         /// <summary>
         /// Gets an entity with a matching id from the repository.

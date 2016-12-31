@@ -4,7 +4,6 @@
   "dependencies": {
     "lvl.Ontology": "0.0.0-*",
     "lvl.Repositories": "0.0.0-*",
-    "lvl.TestDomain": "0.0.0-*",
     "Microsoft.AspNetCore.Hosting": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.Extensions.Logging": "1.1.0"

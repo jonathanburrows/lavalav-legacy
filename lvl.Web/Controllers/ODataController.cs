@@ -1,8 +1,9 @@
-﻿using lvl.Ontology;
-using lvl.Repositories;
-using lvl.Web.Serialization;
+﻿using lvl.Repositories;
+using lvl.Web.OData;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,17 +13,30 @@ namespace lvl.Web.Controllers
     /// Provides odata endpoints for all entities.
     /// </summary>
     [Route("[controller]")]
-    public class ODataController
+    public class ODataController : Controller
     {
         private TypeResolver TypeResolver { get; }
         private RepositoryFactory RepositoryFactory { get; }
-        private EntityDeserializer EntityDeserializer { get; }
+        private ODataParser ODataParser { get; }
 
-        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, EntityDeserializer entityDeserializer)
+        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataParser odataParser)
         {
+            if (typeResolver == null)
+            {
+                throw new ArgumentNullException(nameof(typeResolver));
+            }
+            if (repositoryFactory == null)
+            {
+                throw new ArgumentNullException(nameof(repositoryFactory));
+            }
+            if (odataParser == null)
+            {
+                throw new ArgumentNullException(nameof(odataParser));
+            }
+
             TypeResolver = typeResolver;
             RepositoryFactory = repositoryFactory;
-            EntityDeserializer = entityDeserializer;
+            ODataParser = odataParser;
         }
 
         /// <summary>
@@ -31,18 +45,24 @@ namespace lvl.Web.Controllers
         /// <param name="entityName"></param>
         /// <returns></returns>
         [HttpGet("{entityName}")]
-        public async Task<IEnumerable<IEntity>> Get(string entityName)
+        public async Task<IEnumerable> Get(string entityName)
         {
-
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
             var type = TypeResolver.Resolve(entityName);
+            var query = ODataParser.Parse(Request.Query, type);
             var repository = RepositoryFactory.Construct(type);
+            var queryResult = await repository.GetAsync(query);
 
-            return await repository.GetAsync();
+            return new Dictionary<string, object>
+            {
+                ["@odata.context"] = UriHelper.GetDisplayUrl(Request),
+                ["value"] = queryResult.Items,
+                ["count"] = queryResult.Count
+            };
         }
     }
 }
