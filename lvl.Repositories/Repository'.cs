@@ -9,16 +9,16 @@ namespace lvl.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : class, IEntity
     {
-        private SessionManager SessionManager { get; }
+        private SessionProvider SessionProvider { get; }
 
-        public Repository(SessionManager sessionManager)
+        public Repository(SessionProvider sessionManager)
         {
-            SessionManager = sessionManager;
+            SessionProvider = sessionManager;
         }
 
         public virtual Task<IEnumerable<TEntity>> GetAsync()
         {
-            using (var session = SessionManager.OpenSession())
+            using (var session = SessionProvider.GetSession())
             {
                 var entities = session.Query<TEntity>().ToList();
                 return Task.FromResult(entities.AsEnumerable());
@@ -32,7 +32,7 @@ namespace lvl.Repositories
 
         public virtual Task<TEntity> GetAsync(int id)
         {
-            using (var session = SessionManager.OpenSession())
+            using (var session = SessionProvider.GetSession())
             {
                 var entity = session.Get<TEntity>(id);
                 return Task.FromResult(entity);
@@ -55,7 +55,7 @@ namespace lvl.Repositories
                 throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} as it already has an id: {creating.Id}");
             }
 
-            using (var session = SessionManager.OpenSession())
+            using (var session = SessionProvider.GetSession())
             using (var transaction = session.BeginTransaction())
             {
                 session.Save(creating);
@@ -87,7 +87,7 @@ namespace lvl.Repositories
                 throw new ArgumentNullException(nameof(updating));
             }
 
-            using (var session = SessionManager.OpenSession())
+            using (var session = SessionProvider.GetSession())
             using (var transaction = session.BeginTransaction())
             {
                 if (session.QueryOver<TEntity>().Where(x => x.Id == updating.Id).RowCount() == 0)
@@ -123,7 +123,7 @@ namespace lvl.Repositories
                 throw new ArgumentNullException(nameof(deleting));
             }
 
-            using (var session = SessionManager.OpenSession())
+            using (var session = SessionProvider.GetSession())
             using (var transaction = session.BeginTransaction())
             {
                 if (session.QueryOver<TEntity>().Where(x => x.Id == deleting.Id).RowCount() == 0)

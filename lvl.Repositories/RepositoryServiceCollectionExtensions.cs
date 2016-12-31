@@ -33,13 +33,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var databaseDetector = new DatabaseDetector();
             var databaseVendor = databaseDetector.GetConfigurationsVendor(configuration);
-            var sessionManager = databaseVendor == DatabaseVendor.SQLite ? typeof(SQLitePersistentSessionManager) : typeof(SessionManager);
+            var sessionManager = databaseVendor == DatabaseVendor.SQLite ? typeof(SQLitePersistentSessionProvider) : typeof(SessionProvider);
             
             serviceCollection
                 .AddScoped<TypeResolver>()
                 .AddScoped<RepositoryFactory>()
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
-                .AddScoped(typeof(SessionManager), sessionManager)
+                .AddScoped(typeof(SessionProvider), sessionManager)
                 .AddScoped<ISessionFactory>(_ => configuration.BuildSessionFactory());
 
             return serviceCollection;

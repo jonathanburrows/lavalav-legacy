@@ -54,9 +54,9 @@ namespace lvl.Repositories.Tests
         }
 
         [Fact]
-        public void AfterAddingRepository_WhenResolvingSessionManager_ValueIsReturned()
+        public void AfterAddingRepository_WhenResolvingSessionProvider_ValueIsReturned()
         {
-            var sessionFactory = Services.GetRequiredService<SessionManager>();
+            var sessionFactory = Services.GetRequiredService<SessionProvider>();
 
             Assert.NotNull(sessionFactory);
         }
@@ -107,7 +107,7 @@ namespace lvl.Repositories.Tests
 
         private class MockRepository<TEntity> : Repository<TEntity> where TEntity : class, IEntity
         {
-            public MockRepository(SessionManager sessionManager) : base(sessionManager) { }
+            public MockRepository(SessionProvider sessionManager) : base(sessionManager) { }
         }
     }
 
@@ -118,11 +118,11 @@ namespace lvl.Repositories.Tests
 
 
         [Fact]
-        public void AfterAddingRepository_WhenUsingSQLite_PersistentSessionManagerResolved()
+        public void AfterAddingRepository_WhenUsingSQLite_PersistentSessionProviderResolved()
         {
-            var sessionFactory = Services.GetRequiredService<SessionManager>();
+            var sessionFactory = Services.GetRequiredService<SessionProvider>();
 
-            Assert.IsAssignableFrom<SQLitePersistentSessionManager>(sessionFactory);
+            Assert.IsAssignableFrom<SQLitePersistentSessionProvider>(sessionFactory);
         }
     }
 

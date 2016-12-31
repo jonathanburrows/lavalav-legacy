@@ -9,12 +9,12 @@ namespace lvl.Repositories
     /// <summary>
     /// Provides a way for the sql lite database to not regenerate every request.
     /// </summary>
-    public sealed class SQLitePersistentSessionManager : SessionManager
+    public sealed class SQLitePersistentSessionProvider : SessionProvider
     {
         private static object connectionLock { get; } = new object();
         private static IDbConnection Connection { get; set; }
 
-        public SQLitePersistentSessionManager(ISessionFactory sessionFactory, DatabaseCreator databaseCreator, Configuration configuration) : base(sessionFactory)
+        public SQLitePersistentSessionProvider(ISessionFactory sessionFactory, DatabaseCreator databaseCreator, Configuration configuration) : base(sessionFactory)
         {
             if (Connection == null)
             {
@@ -26,13 +26,13 @@ namespace lvl.Repositories
                         var connectionString = configuration.GetProperty(connectionStringKey);
                         Connection = new SQLiteConnection(connectionString);
                         Connection.Open();
-                        databaseCreator.Create(OpenSession());
+                        databaseCreator.Create(GetSession());
                     }
                 }
             }
 
         }
 
-        public override ISession OpenSession() => SessionFactory.OpenSession(Connection);
+        public override ISession GetSession() => SessionFactory.OpenSession(Connection);
     }
 }
