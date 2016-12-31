@@ -10,11 +10,12 @@ using System.Net.Http;
 using System;
 using System.Net;
 using System.Linq;
+using lvl.Web.Tests.Fixtures;
 
 namespace lvl.Web.Tests
 {
-    [Collection(nameof(CorsTests))]
-    public class CorsTests : IClassFixture<WebHostFixture<CorsTests.CorsStartup>>
+    [Collection(WebCollection.Name)]
+    public class CorsTests
     {
         private static CorsSettings Settings = new CorsSettings
         {

@@ -10,8 +10,8 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-    [Collection(nameof(WebServicesTests))]
-    public class WebServicesTests : IClassFixture<WebServiceProviderFixture>
+    [Collection(WebCollection.Name)]
+    public class WebServicesTests
     {
         private IServiceProvider Services { get; }
 

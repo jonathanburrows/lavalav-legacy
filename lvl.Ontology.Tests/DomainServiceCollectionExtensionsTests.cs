@@ -9,7 +9,8 @@ using Xunit;
 
 namespace lvl.Ontology.Tests
 {
-    public class DomainServiceCollectionExtensionsTests : IClassFixture<InMemoryDomainFixture>
+    [Collection(OntologyCollection.Name)]
+    public class DomainServiceCollectionExtensionsTests
     {
         private IServiceProvider Services { get; }
 

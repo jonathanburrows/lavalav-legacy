@@ -8,7 +8,8 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public abstract class RepositoryFactoryTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
+    [Collection(RepositoriesCollection.Name)]
+    public abstract class RepositoryFactoryTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
@@ -70,21 +71,16 @@ namespace lvl.Repositories.Tests
         private class NonEntity { }
     }
 
-    [Collection(nameof(SQLiteRepositoryFactoryTests))]
     public class SQLiteRepositoryFactoryTests : RepositoryFactoryTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryFactoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
-    /// <remarks>To disable, make internal</remarks>
-    [Collection(nameof(MsSqlRepositoryFactoryTests))]
     public class MsSqlRepositoryFactoryTests : RepositoryFactoryTests<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryFactoryTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
-    /// <remarks>To disable, make internal</remarks>
-    [Collection(nameof(OracleRepositoryFactoryTests))]
     public class OracleRepositoryFactoryTests : RepositoryFactoryTests<OracleRepositoryFixture>
     {
         public OracleRepositoryFactoryTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

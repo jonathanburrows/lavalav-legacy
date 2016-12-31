@@ -2,6 +2,7 @@
 using lvl.TestDomain;
 using lvl.TestWebSite.Tests.Fixtures;
 using lvl.Web.Logging;
+using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,8 +13,8 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-    [Collection(nameof(ErrorLoggingTests))]
-    public class ErrorLoggingTests : IClassFixture<WebHostFixture<TestWebSite.Startup>>
+    [Collection(WebCollection.Name)]
+    public class ErrorLoggingTests
     {
         private HttpClient Client { get; }
         private IServiceProvider Services { get; }

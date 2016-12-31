@@ -8,8 +8,8 @@ namespace lvl.Repositories.Tests.Fixtures
     {
         public OracleRepositoryFixture() : base(TestConnections.Oracle())
         {
-            var databaseMigrator = ServiceProvider.GetRequiredService<DatabaseCreator>();
-            databaseMigrator.Create();
+            var databaseCreator = ServiceProvider.GetRequiredService<DatabaseCreator>();
+            databaseCreator.Create();
         }
     }
 }

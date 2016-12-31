@@ -1,9 +1,11 @@
-﻿using System;
+﻿using lvl.DatabaseGenerator.Tests.Fixtures;
+using System;
 using Xunit;
 
 namespace lvl.DatabaseGenerator.Tests
 {
-    public class ArgumentParserTests : IClassFixture<ArgumentParser>
+    [Collection(DatabaseGeneratorCollection.Name)]
+    public class ArgumentParserTests
     {
         private ArgumentParser ArgumentParser { get; }
 

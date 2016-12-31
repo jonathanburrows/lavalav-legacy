@@ -5,7 +5,8 @@ using Xunit;
 
 namespace lvl.DatabaseGenerator.Tests
 {
-    public class DatabaseGeneratorServiceCollectionExtensionsTests : IClassFixture<InMemoryDatabaseGenerationFixture>
+    [Collection(DatabaseGeneratorCollection.Name)]
+    public class DatabaseGeneratorServiceCollectionExtensionsTests
     {
         private IServiceProvider Services { get; }
 

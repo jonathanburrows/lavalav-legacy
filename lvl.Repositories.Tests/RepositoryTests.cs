@@ -1,4 +1,6 @@
-﻿using lvl.Repositories.Tests.Fixtures;
+﻿using lvl.Ontology;
+using lvl.Repositories.Querying;
+using lvl.Repositories.Tests.Fixtures;
 using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -8,7 +10,8 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    public abstract class RepositoryTests<TRepositoryFixture> : IClassFixture<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
+    [Collection(RepositoriesCollection.Name)]
+    public abstract class RepositoryTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
@@ -450,26 +453,275 @@ namespace lvl.Repositories.Tests
 
             await planetRepository.DeleteAsync(parent);
 
-            var deletedChild = await planetRepository.GetAsync(child.Id);
+            var deletedChild = await moonRepository.GetAsync(child.Id);
             Assert.Null(deletedChild);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndApplingFilter_MatchingEntitiesAreReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var query = new Query<Planet>().Where(planet => planet.SupportsLife);
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.True(queryResults.Items.All(p => p.SupportsLife));
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndApplyingFilter_UnmatchedEntitiesAreNotReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var query = new Query<Planet>().Where(planet => planet.SupportsLife);
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.False(queryResults.Items.Any(p => !p.SupportsLife));
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndApplingDynamicFilter_MatchingEntitiesAreReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var query = new Query<Planet>().Where($"{nameof(Planet.SupportsLife)}={true}");
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.True(queryResults.Items.All(p => p.SupportsLife));
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndApplyingDynamicFilter_UnmatchedEntitiesAreNotReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var query = new Query<Planet>().Where($"{nameof(Planet.SupportsLife)}={true}");
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.False(queryResults.Items.Any(p => !p.SupportsLife));
+        }
+
+        [Fact]
+        public async Task WhenQueryingAndTakingRecords_AndTheresMoreRecordsThanTheTakeAmount_OnlyTakeAmountIsReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var query = new Query<Planet>().Where($"{nameof(Planet.SupportsLife)}={true}");
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.False(queryResults.Items.Any(p => !p.SupportsLife));
+        }
+
+        [Fact]
+        public async Task WhenQueryingAndSkipping_SkippingRecordsArentReturned()
+        {
+            var skip = 2;
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var total = (await repository.GetAsync()).Count();
+            var query = new Query<Planet>().Skip(skip);
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.Equal(total - skip, queryResults.Items.Count());
+        }
+
+        [Fact]
+        public async Task WhenQueryingAndTaking_TakenRecordsAreReturned()
+        {
+            var take = 2;
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+            var query = new Query<Planet>().Take(take);
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.Equal(take, queryResults.Items.Count());
+        }
+
+        [Fact]
+        public async Task WhenQuery_AndApplyingFilter_MatchedCountIsReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var query = new Query<Planet>().Where(planet => planet.SupportsLife);
+            var countBefore = (await repository.GetAsync(query)).Count;
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.Equal(2, queryResults.Count - countBefore);
+        }
+
+        [Fact]
+        public async Task WhenQuery_AndApplyingDynamicFilter_MatchedCountIsReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var query = new Query<Planet>().Where($"{nameof(Planet.SupportsLife)}={true}");
+            var countBefore = (await repository.GetAsync(query)).Count;
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = true });
+            await repository.CreateAsync(new Planet { SupportsLife = false });
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.Equal(2, queryResults.Count - countBefore);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndTaking_CountIncludesRecordsNotInResult()
+        {
+            var take = 2;
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { });
+            await repository.CreateAsync(new Planet { });
+            await repository.CreateAsync(new Planet { });
+            var query = new Query<Planet>().Take(take);
+
+            var queryResult = await repository.GetAsync(query);
+
+            Assert.True(queryResult.Count > take);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndSkipping_CountIncludesRecordsNotInResult()
+        {
+            var skip = 2;
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { });
+            await repository.CreateAsync(new Planet { });
+            await repository.CreateAsync(new Planet { });
+            var query = new Query<Planet>().Skip(skip);
+
+            var queryResult = await repository.GetAsync(query);
+
+            Assert.True(queryResult.Count > skip);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndSelectingProperty_ArrayOfThatPropertyIsReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { Name = "Earth" });
+            var query = new Query<Planet>().Select(planet => planet.Name);
+
+            var queryResult = await repository.GetAsync(query);
+
+            Assert.Contains("Earth", queryResult.Items);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndSelectingAnonymousObject_AnonymousObjectsArePopulatedAndReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var earth = await repository.CreateAsync(new Planet { Name = "Earth" });
+            var query = new Query<Planet>().Select(planet => new
+            {
+                planet.Id,
+                EnglishName = planet.Name
+            });
+
+            var queryResult = await repository.GetAsync(query);
+            var selectedEarth = queryResult.Items.Single(p => p.Id == earth.Id);
+
+            Assert.Equal("Earth", selectedEarth.EnglishName);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndSelectingChildProperty_ChildPropertyIsReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Moon>>();
+            var lunar = new Moon { Planet = new Planet { Name = "Terra" } };
+            await repository.CreateAsync(lunar);
+            var query = new Query<Moon>().Select(moon => moon.Planet);
+
+            var queryResult = await repository.GetAsync(query);
+            var queriedPlanet = queryResult.Items.Single(p => p?.Id == lunar.Planet.Id);
+
+            Assert.Equal("Terra", queriedPlanet.Name);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndOrderingByName_CorrectlySortsResult()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var planets = new[]
+            {
+                new Planet { Name = "A" },
+                new Planet { Name = "C" },
+                new Planet { Name = "B" }
+            };
+            foreach (var planet in planets)
+            {
+                await repository.CreateAsync(planet);
+            }
+            var planetIds = planets.Select(p => p.Id);
+            var query = new Query<Planet>().Where(p => planetIds.Contains(p.Id)).OrderBy(p => p.Name);
+
+            var queryResult = await repository.GetAsync(query);
+
+            var linqOrdered = queryResult.Items.OrderBy(p => p.Name);
+            var inOrder = linqOrdered.Zip(queryResult.Items, (a, b) => new { a, b }).All(z => z.a.Name == z.b.Name);
+
+            Assert.True(inOrder);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndDynamicallyOrderingByName_CorrectlySortsResult()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var planets = new[]
+            {
+                new Planet { Name = "A" },
+                new Planet { Name = "C" },
+                new Planet { Name = "B" }
+            };
+            foreach (var planet in planets)
+            {
+                await repository.CreateAsync(planet);
+            }
+            var planetIds = planets.Select(p => p.Id);
+            var query = new Query<Planet>().Where(p => planetIds.Contains(p.Id)).OrderBy(nameof(Planet.Name));
+
+            var queryResult = await repository.GetAsync(query);
+
+            var linqOrdered = queryResult.Items.OrderBy(p => p.Name);
+            var inOrder = linqOrdered.Zip(queryResult.Items, (a, b) => new { a, b }).All(z => z.a.Name == z.b.Name);
+
+            Assert.True(inOrder);
         }
     }
 
-    [Collection(nameof(SQLiteRepositoryTests))]
     public class SQLiteRepositoryTests : RepositoryTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
-    /// <remarks>To disable, make internal</remarks>
-    [Collection(nameof(MsSqlRepositoryTests))]
     public class MsSqlRepositoryTests : RepositoryTests<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
-    /// <remarks>To disable, make internal</remarks>
-    [Collection(nameof(OracleRepositoryTests))]
     public class OracleRepositoryTests : RepositoryTests<OracleRepositoryFixture>
     {
         public OracleRepositoryTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

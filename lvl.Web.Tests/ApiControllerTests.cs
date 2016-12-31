@@ -2,6 +2,7 @@
 using lvl.Repositories;
 using lvl.TestDomain;
 using lvl.TestWebSite.Tests.Fixtures;
+using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
@@ -13,8 +14,8 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-    [Collection(nameof(ApiControllerTests))]
-    public class ApiControllerTests : IClassFixture<WebHostFixture<TestWebSite.Startup>>
+    [Collection(WebCollection.Name)]
+    public class ApiControllerTests
     {
         private HttpClient Client { get; }
         private IServiceProvider Services { get; }

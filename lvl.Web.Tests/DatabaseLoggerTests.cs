@@ -10,7 +10,7 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-    [Collection(nameof(DatabaseLoggerTests))]
+    [Collection(WebCollection.Name)]
     public class DatabaseLoggerTests
     {
         [Fact]

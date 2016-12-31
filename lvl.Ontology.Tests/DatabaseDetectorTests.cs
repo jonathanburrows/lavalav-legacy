@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using lvl.Ontology.Tests.Fixtures;
+using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using Xunit;
 
 namespace lvl.Ontology.Tests
 {
-    public class DatabaseDetectorTests : IClassFixture<DatabaseDetector>
+    [Collection(OntologyCollection.Name)]
+    public class DatabaseDetectorTests
     {
         private DatabaseDetector DatabaseDetector { get; }
 

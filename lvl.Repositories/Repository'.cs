@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Repositories.Querying;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,39 @@ namespace lvl.Repositories
         {
             return (await GetAsync()).Cast<IEntity>();
         }
+
+        public async Task<IQueryResult<TResult>> GetAsync<TResult>(IQuery<TEntity, TResult> query)
+        {
+            using (var session = SessionProvider.GetSession())
+            {
+                var unfiltered = session.Query<TEntity>();
+                var items = query.Apply(unfiltered).ToList();
+                var count = query.Count(unfiltered);
+                var queryResult = new QueryResult<TResult>
+                {
+                    Count = count,
+                    Items = items
+                };
+                return await Task.FromResult(queryResult);
+            }
+
+        }
+
+        async Task<IQueryResult<TResult>> IRepository.GetAsync<TResult>(IQuery<IEntity, TResult> query)
+        {
+            var boxed = query as IQuery<TEntity, TResult>;
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+            if (boxed == null)
+            {
+                throw new ArgumentException($"Cant use query {query.GetType().Name} as {typeof(IQuery<TEntity, TResult>).Name}");
+            }
+
+            return await GetAsync(boxed);
+        }
+
 
         public virtual Task<TEntity> GetAsync(int id)
         {

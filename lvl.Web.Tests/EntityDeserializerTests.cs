@@ -10,7 +10,8 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-    public class EntityDeserializerTests : IClassFixture<WebServiceProviderFixture>
+    [Collection(WebCollection.Name)]
+    public class EntityDeserializerTests
     {
         private IServiceProvider Services { get; }
 

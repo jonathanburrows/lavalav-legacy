@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Repositories.Querying;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,6 +15,14 @@ namespace lvl.Repositories
         /// </summary>
         /// <returns>All entities in the repository.</returns>
         Task<IEnumerable<IEntity>> GetAsync();
+
+        /// <summary>
+        /// Applies an odata query to the entities, and returns the result.
+        /// </summary>
+        /// <param name="query">The query to be applied to the entities.</param>
+        /// <returns>The result of the odata query.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
+        Task<IQueryResult<TResult>> GetAsync<TResult>(IQuery<IEntity, TResult> query);
 
         /// <summary>
         /// Gets an entity with a matching id from the repository.

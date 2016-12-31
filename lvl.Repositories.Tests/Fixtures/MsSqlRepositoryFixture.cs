@@ -1,6 +1,7 @@
 ﻿using lvl.DatabaseGenerator;
 using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
 
 namespace lvl.Repositories.Tests.Fixtures
 {
@@ -8,8 +9,8 @@ namespace lvl.Repositories.Tests.Fixtures
     {
         public MsSqlRepositoryFixture() : base(TestConnections.MsSql())
         {
-            var databaseMigrator = ServiceProvider.GetRequiredService<DatabaseMigrator>();
-            databaseMigrator.Migrate();
+            var databaseCreator = ServiceProvider.GetRequiredService<DatabaseCreator>();
+            databaseCreator.Create();
         }
     }
 }
