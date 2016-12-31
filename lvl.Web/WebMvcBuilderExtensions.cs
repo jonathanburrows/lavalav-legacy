@@ -1,6 +1,11 @@
-﻿using lvl.Web.Logging;
+﻿using lvl.Web.Cors;
+using lvl.Web.Logging;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -17,6 +22,7 @@ namespace Microsoft.AspNetCore.Builder
         /// <returns>The application builder with the middleware registered against it.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="configureRoutes"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">AddWeb has not been called.</exception>
         public static IApplicationBuilder UseWeb(this IApplicationBuilder applicationBuilder, Action<IRouteBuilder> configureRoutes)
         {
             if (applicationBuilder == null)
@@ -28,14 +34,31 @@ namespace Microsoft.AspNetCore.Builder
                 throw new ArgumentNullException(nameof(configureRoutes));
             }
 
+            var corsSettings = applicationBuilder.ApplicationServices.GetService<CorsSettings>();
+            if (corsSettings == null)
+            {
+                throw new InvalidOperationException($"{nameof(WebServiceCollectionExtensions.AddWeb)} has not been called.");
+            }
+
+            Action<CorsPolicyBuilder> corsConfiguration = corsBuilder =>
+            {
+                corsBuilder.WithMethods(corsSettings.AllowMethods.ToArray());
+                corsBuilder.WithHeaders(corsSettings.AllowHeaders.ToArray());
+                corsBuilder.WithOrigins(corsSettings.AllowOrigins.ToArray());
+                corsBuilder.WithExposedHeaders(corsSettings.ExposedHeaders.ToArray());
+            };
+
+            // sets up the default routs before calling the given configuration method.
             Action<IRouteBuilder> defaultRouteBuilder = routes =>
             {
                 routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
                 configureRoutes.Invoke(routes);
             };
 
+
             return applicationBuilder
                 .UseMiddleware<ErrorLoggingMiddleware>()
+                .UseCors(corsConfiguration)
                 .UseMvc(defaultRouteBuilder);
         }
 

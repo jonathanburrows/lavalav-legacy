@@ -40,7 +40,7 @@ Provide a method which updates an existing entity:
 5. If the entity cannot deserialize to the entity type, an ArgumentException is thrown
 6. If there is no matching entity, an InvalidOperationException is thrown
 
-### delete
+### Delete
 Provide a method which deletes an existing entity:
 1. After calling the method (as a DELETE request), the entity is removed from the persistent collection
 2. If the entity is null, an ArgumentNullException is thrown
