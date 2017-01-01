@@ -1,11 +1,9 @@
 ﻿using lvl.Web.Cors;
 using lvl.Web.Logging;
-using lvl.Web.Middleware;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.AspNetCore.Builder
@@ -60,7 +58,6 @@ namespace Microsoft.AspNetCore.Builder
             return applicationBuilder
                 .UseMiddleware<ErrorLoggingMiddleware>()
                 .UseCors(corsConfiguration)
-                .UseMiddleware<TargetInvocationUnwrapperMiddleware>()
                 .UseMvc(defaultRouteBuilder);
         }
 

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -50,10 +51,22 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenRequesting_AndInvalidTopIsGiven_InvalidOperationExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$top=hello";
-
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(url));
+            var exception = default(Exception);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$top=hello";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                var aggregateException = e.InnerException as AggregateException;
+                exception = aggregateException?.InnerExceptions?.Single();
+            }
+            finally
+            {
+                Assert.IsType<InvalidOperationException>(exception);
+            }
         }
 
         [Fact]
@@ -78,10 +91,22 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenRequesting_AndInvalidSkipIsGiven_InvalidOperationExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$skip=hello";
-
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(url));
+            var exception = default(Exception);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$skip=hello";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                var aggregateException = e.InnerException as AggregateException;
+                exception = aggregateException?.InnerExceptions?.Single();
+            }
+            finally
+            {
+                Assert.IsType<InvalidOperationException>(exception);
+            }
         }
 
         [Fact]
@@ -113,19 +138,42 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenRequesting_AndSingleInvalidOrderIsGiven_InvalidOperationExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$orderby=hello";
-
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(url));
+            var exception = default(Exception);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$orderby=hello";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                var aggregateException = e.InnerException as AggregateException;
+                exception = aggregateException?.InnerExceptions?.Single();
+            }
+            finally
+            {
+                Assert.IsType<InvalidOperationException>(exception);
+            }
         }
 
         [Fact]
         public async Task WhenRequesting_AndTwoInvalidOrdersAreGiven_AggregateExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$orderby=hello,world";
-
-            await Assert.ThrowsAsync<AggregateException>(() => Client.GetAsync(url));
+            var aggregateException = default(AggregateException);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$orderby=hello,world";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                aggregateException = e.InnerException as AggregateException;
+            }
+            finally
+            {
+                Assert.Equal(2, aggregateException?.InnerExceptions?.Count);
+            }
         }
 
         [Fact]
@@ -219,19 +267,42 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenRequesting_AndSingleInvalidSelect_InvalidOperationExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$select=hello";
-
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(url));
+            var exception = default(Exception);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$select=hello";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                var aggregateException = e.InnerException as AggregateException;
+                exception = aggregateException?.InnerExceptions?.Single();
+            }
+            finally
+            {
+                Assert.IsType<InvalidOperationException>(exception);
+            }
         }
 
         [Fact]
         public async Task WhenRequesting_AndMultipleInvalidSelects_AggregateExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$select=hello,world";
-
-            await Assert.ThrowsAsync<AggregateException>(() => Client.GetAsync(url));
+            var aggregateException = default(AggregateException);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$select=hello,world";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                aggregateException = e.InnerException as AggregateException;
+            }
+            finally
+            {
+                Assert.Equal(2, aggregateException?.InnerExceptions?.Count);
+            }
         }
 
         //[Fact]
@@ -255,10 +326,21 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenRequesting_AndInvalidSkipTopOrderByAndSelectsAreGiven_AggreggateExceptionIsThrown()
         {
-            var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var url = $"/odata/{nameof(Moon)}?$skip=this&$orderby=invalid&$top=that&$select=hello";
-
-            await Assert.ThrowsAsync<AggregateException>(() => Client.GetAsync(url));
+            var aggregateException = default(AggregateException);
+            try
+            {
+                var repository = Services.GetRequiredService<IRepository<Moon>>();
+                var url = $"/odata/{nameof(Moon)}?$skip=this&$orderby=invalid&$top=that&$select=hello";
+                await Client.GetAsync(url);
+            }
+            catch (TargetInvocationException e)
+            {
+                aggregateException = e.InnerException as AggregateException;
+            }
+            finally
+            {
+                Assert.Equal(4, aggregateException?.InnerExceptions?.Count);
+            }
         }
 
         private async Task EmptyRepositoryAsync<TEntity>(IRepository<TEntity> emptying) where TEntity : class, IEntity
