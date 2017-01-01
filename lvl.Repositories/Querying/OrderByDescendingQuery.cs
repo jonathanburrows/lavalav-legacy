@@ -5,16 +5,16 @@ using System.Linq.Expressions;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for ordering by a given key.
+    /// A query for ordering by a given key in descending order.
     /// </summary>
     /// <typeparam name="THead"></typeparam>
     /// <typeparam name="TTail"></typeparam>
-    /// <typeparam name="TKey">The type of the key being sorted on</typeparam>
-    internal class OrderByQuery<THead, TTail, TKey> : ChainedQuery<THead, TTail>
+    /// <typeparam name="TKey">The type of the key being sorted on.</typeparam>
+    internal class OrderByDescendingQuery<THead, TTail, TKey> : ChainedQuery<THead, TTail>
     {
         private Expression<Func<TTail, TKey>> KeySelector { get; }
 
-        public OrderByQuery(IQuery previous, Expression<Func<TTail, TKey>> keySelector) : base(previous)
+        public OrderByDescendingQuery(IQuery previous, Expression<Func<TTail, TKey>> keySelector) : base(previous)
         {
             KeySelector = keySelector;
         }
@@ -22,7 +22,7 @@ namespace lvl.Repositories.Querying
         public override IQueryable<TTail> Apply(IQueryable<THead> querying)
         {
             var previousQuery = (IQueryable<TTail>)Previous.Apply(querying);
-            return previousQuery.OrderBy(KeySelector);
+            return previousQuery.OrderByDescending(KeySelector);
         }
     }
 }

@@ -706,7 +706,110 @@ namespace lvl.Repositories.Tests
             var queryResult = await repository.GetAsync(query);
 
             var linqOrdered = queryResult.Items.OrderBy(p => p.Name);
-            var inOrder = linqOrdered.Zip(queryResult.Items, (a, b) => new { a, b }).All(z => z.a.Name == z.b.Name);
+            var inOrder = queryResult.Items.SequenceEqual(linqOrdered);
+
+            Assert.True(inOrder);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndOrderingByNameDescending_ResultsAreCorrectlySorted()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var planets = new[]
+            {
+                new Planet { Name = "A" },
+                new Planet { Name = "C" },
+                new Planet { Name = "B" }
+            };
+            foreach (var planet in planets)
+            {
+                await repository.CreateAsync(planet);
+            }
+            var planetIds = planets.Select(p => p.Id);
+            var query = new Query<Planet>().Where(p => planetIds.Contains(p.Id)).OrderByDescending(p => p.Name);
+
+            var queryResult = await repository.GetAsync(query);
+
+            var linqOrdered = queryResult.Items.OrderByDescending(p => p.Name);
+            var inOrder = queryResult.Items.SequenceEqual(linqOrdered);
+
+            Assert.True(inOrder);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndOrderDynamicallyByNameDescending_ResultsAreCorrectlySorted()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var planets = new[]
+            {
+                new Planet { Name = "A" },
+                new Planet { Name = "C" },
+                new Planet { Name = "B" }
+            };
+            foreach (var planet in planets)
+            {
+                await repository.CreateAsync(planet);
+            }
+            var planetIds = planets.Select(p => p.Id);
+            var query = new Query<Planet>().Where(p => planetIds.Contains(p.Id)).OrderBy($"{nameof(Planet.Name)} descending");
+
+            var queryResult = await repository.GetAsync(query);
+
+            var linqOrdered = queryResult.Items.OrderByDescending(p => p.Name);
+            var inOrder = queryResult.Items.SequenceEqual(linqOrdered);
+
+            Assert.True(inOrder);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndOrderDynamicallyByNameDescendingWithShorthand_ResultsAreCorrectlySorted()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var planets = new[]
+            {
+                new Planet { Name = "A" },
+                new Planet { Name = "C" },
+                new Planet { Name = "B" }
+            };
+            foreach (var planet in planets)
+            {
+                await repository.CreateAsync(planet);
+            }
+            var planetIds = planets.Select(p => p.Id);
+            var query = new Query<Planet>().Where(p => planetIds.Contains(p.Id)).OrderBy($"{nameof(Planet.Name)} desc");
+
+            var queryResult = await repository.GetAsync(query);
+
+            var linqOrdered = queryResult.Items.OrderByDescending(p => p.Name);
+            var inOrder = queryResult.Items.SequenceEqual(linqOrdered);
+
+            Assert.True(inOrder);
+        }
+
+        [Fact]
+        public async Task WhenQuerying_AndOrderTwice_ResultsAreCorrectlySorted()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            var planets = new[]
+            {
+                new Planet { Name = "A", SupportsLife = false },
+                new Planet { Name = "C", SupportsLife = false },
+                new Planet { Name = "B", SupportsLife = false },
+                new Planet { Name = "A", SupportsLife = true },
+                new Planet { Name = "C", SupportsLife = true },
+                new Planet { Name = "B", SupportsLife = true }
+            };
+            foreach (var planet in planets)
+            {
+                await repository.CreateAsync(planet);
+            }
+            var planetIds = planets.Select(p => p.Id);
+            var query = new Query<Planet>().Where(p => planetIds.Contains(p.Id)).OrderBy(p => p.Name).OrderBy(p => p.SupportsLife);
+
+            var queryResult = await repository.GetAsync(query);
+
+            var linqOrdered = queryResult.Items.OrderBy(p => p.Name).ThenBy(p => p.SupportsLife);
+            var inOrder = queryResult.Items.SequenceEqual(linqOrdered);
 
             Assert.True(inOrder);
         }

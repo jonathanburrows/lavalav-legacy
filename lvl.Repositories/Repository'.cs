@@ -35,7 +35,7 @@ namespace lvl.Repositories
         {
             using (var session = SessionProvider.GetSession())
             {
-                var unfiltered = session.Query<TEntity>();
+                var unfiltered = session.Query<TEntity>(); 
                 var items = query.Apply(unfiltered).ToList();
                 var count = query.Count(unfiltered);
                 var queryResult = new QueryResult<TResult>
@@ -43,6 +43,11 @@ namespace lvl.Repositories
                     Count = count,
                     Items = items
                 };
+
+                //force the collection to load.
+                var settings = new Newtonsoft.Json.JsonSerializerSettings { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore };
+                Newtonsoft.Json.JsonConvert.SerializeObject(items, settings);
+
                 return await Task.FromResult(queryResult);
             }
 

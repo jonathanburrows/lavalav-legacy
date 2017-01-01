@@ -4,7 +4,7 @@ using System.Linq.Dynamic;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for selecting anonyous objects by query
+    /// A query for selecting anonyous objects by query.
     /// </summary>
     internal class DynamicSelectQuery<THead, TSource> : ChainedQuery<THead, dynamic>
     {

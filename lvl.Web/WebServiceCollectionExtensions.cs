@@ -50,6 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.Configure<JsonSerializerSettings>(options =>
             {
                 options.MissingMemberHandling = MissingMemberHandling.Error;
+                options.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
             serviceCollection

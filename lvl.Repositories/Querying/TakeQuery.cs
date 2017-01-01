@@ -3,7 +3,7 @@
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for taking the top amount of records
+    /// A query for taking the top amount of records.
     /// </summary>
     internal class TakeQuery<THead, TTail> : ChainedQuery<THead, TTail>
     {

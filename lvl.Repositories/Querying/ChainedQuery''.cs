@@ -4,7 +4,7 @@ using System.Linq;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query that can be Chained
+    /// A query that can be Chained.
     /// </summary>
     public abstract class ChainedQuery<THead, TTail> : IQuery<THead, TTail>, IQuery
     {

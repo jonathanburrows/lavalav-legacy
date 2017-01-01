@@ -3,7 +3,7 @@
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A chain of expressions which can be applied to a query
+    /// A chain of expressions which can be applied to a query.
     /// </summary>
     public interface IQuery
     {

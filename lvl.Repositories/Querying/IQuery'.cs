@@ -3,7 +3,7 @@
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A chain of expressions which can be applied to query
+    /// A chain of expressions which can be applied to query.
     /// </summary>
     /// <typeparam name="THead">The type of query which the first expression will be applied to</typeparam>
     /// <typeparam name="TTail">The result of the last query in the expression chain</typeparam>

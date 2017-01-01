@@ -15,15 +15,16 @@ namespace lvl.Web.OData
             {
                 var orderBys = orderByValues.SelectMany(x => x.Split(','));
 
-                foreach (var orderBy in orderBys)
+                foreach (var orderBy in orderBys.Reverse())
                 {
-                    var orderByProperty = typeof(T).GetProperty(orderBy);
+                    var propertyName = orderBy.Split(' ').First();
+                    var orderByProperty = typeof(T).GetProperty(propertyName);
                     if (orderByProperty == null)
                     {
-                        throw new InvalidOperationException($"Attempting to order by {orderByProperty} on {typeof(T).Name}, but that property doesnt exist.");
+                        throw new InvalidOperationException($"Attempting to order by {propertyName} on {typeof(T).Name}, but that property doesnt exist.");
                     }
 
-                    return query.OrderBy(orderBy);
+                    query = query.OrderBy(orderBy);
                 }
             }
 

@@ -2,9 +2,9 @@
 using lvl.Web.OData;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace lvl.Web.Controllers
@@ -18,8 +18,9 @@ namespace lvl.Web.Controllers
         private TypeResolver TypeResolver { get; }
         private RepositoryFactory RepositoryFactory { get; }
         private ODataParser ODataParser { get; }
+        private JsonSerializerSettings JsonSerializerSettings { get; }
 
-        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataParser odataParser)
+        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataParser odataParser, IOptions<JsonSerializerSettings> jsonSerializerSettings)
         {
             if (typeResolver == null)
             {
@@ -33,10 +34,15 @@ namespace lvl.Web.Controllers
             {
                 throw new ArgumentNullException(nameof(odataParser));
             }
+            if (jsonSerializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(jsonSerializerSettings));
+            }
 
             TypeResolver = typeResolver;
             RepositoryFactory = repositoryFactory;
             ODataParser = odataParser;
+            JsonSerializerSettings = jsonSerializerSettings.Value;
         }
 
         /// <summary>
@@ -45,7 +51,7 @@ namespace lvl.Web.Controllers
         /// <param name="entityName"></param>
         /// <returns></returns>
         [HttpGet("{entityName}")]
-        public async Task<IEnumerable> Get(string entityName)
+        public async Task<ODataResponse> Get(string entityName)
         {
             if (entityName == null)
             {
@@ -55,13 +61,13 @@ namespace lvl.Web.Controllers
             var type = TypeResolver.Resolve(entityName);
             var query = ODataParser.Parse(Request.Query, type);
             var repository = RepositoryFactory.Construct(type);
-            var queryResult = await repository.GetAsync(query);
 
-            return new Dictionary<string, object>
+            var queryResult = await repository.GetAsync(query);
+            return new ODataResponse
             {
-                ["@odata.context"] = UriHelper.GetDisplayUrl(Request),
-                ["value"] = queryResult.Items,
-                ["count"] = queryResult.Count
+                Context = UriHelper.GetDisplayUrl(Request),
+                Value = JsonConvert.SerializeObject(queryResult.Items, JsonSerializerSettings),
+                Count = queryResult.Count
             };
         }
     }
