@@ -18,9 +18,8 @@ namespace lvl.Web.Controllers
         private TypeResolver TypeResolver { get; }
         private RepositoryFactory RepositoryFactory { get; }
         private ODataParser ODataParser { get; }
-        private JsonSerializerSettings JsonSerializerSettings { get; }
 
-        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataParser odataParser, IOptions<JsonSerializerSettings> jsonSerializerSettings)
+        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataParser odataParser)
         {
             if (typeResolver == null)
             {
@@ -34,15 +33,10 @@ namespace lvl.Web.Controllers
             {
                 throw new ArgumentNullException(nameof(odataParser));
             }
-            if (jsonSerializerSettings == null)
-            {
-                throw new ArgumentNullException(nameof(jsonSerializerSettings));
-            }
 
             TypeResolver = typeResolver;
             RepositoryFactory = repositoryFactory;
             ODataParser = odataParser;
-            JsonSerializerSettings = jsonSerializerSettings.Value;
         }
 
         /// <summary>
@@ -66,7 +60,7 @@ namespace lvl.Web.Controllers
             return new ODataResponse
             {
                 Context = UriHelper.GetDisplayUrl(Request),
-                Value = JsonConvert.SerializeObject(queryResult.Items, JsonSerializerSettings),
+                Value = queryResult.Items,
                 Count = queryResult.Count
             };
         }

@@ -47,11 +47,11 @@ namespace Microsoft.Extensions.DependencyInjection
             var corsSettings = webSettings?.Cors ?? new CorsSettings { };
             serviceCollection.AddSingleton(corsSettings);
 
-            serviceCollection.Configure<JsonSerializerSettings>(options =>
+            Action<JsonSerializerSettings> configureJson = options =>
             {
                 options.MissingMemberHandling = MissingMemberHandling.Error;
                 options.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
+            };
 
             serviceCollection
                 .AddLogging()
@@ -61,8 +61,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<ODataParser>()
                 .AddOptions()
                 .AddCors()
+                .Configure(configureJson)
                 .AddMvcCore()
-                .AddJsonFormatters()
+                .AddJsonFormatters(configureJson)
                 .AddApplicationPart(typeof(WebServiceCollectionExtensions).Assembly)
                 .AddControllersAsServices();
 

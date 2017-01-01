@@ -1,5 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories.Querying;
+using Newtonsoft.Json;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -45,12 +46,11 @@ namespace lvl.Repositories
                 };
 
                 //force the collection to load.
-                var settings = new Newtonsoft.Json.JsonSerializerSettings { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore };
-                Newtonsoft.Json.JsonConvert.SerializeObject(items, settings);
+                var settings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+                JsonConvert.SerializeObject(items, settings);
 
                 return await Task.FromResult(queryResult);
             }
-
         }
 
         async Task<IQueryResult> IRepository.GetAsync(IQuery query)
