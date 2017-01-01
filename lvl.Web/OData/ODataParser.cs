@@ -25,68 +25,105 @@ namespace lvl.Web.OData
                 throw new AggregateException($"{exceptions.Count} invalid odata arguments were given.", exceptions);
             }
 
-            return new Query<T>()
-                .OrderBy(queryParameters)
-                .Skip(queryParameters)
-                .Take(queryParameters)
-                .Select(queryParameters);
+            IQuery<T, T> query = new Query<T>();
+
+            var orderByValues = GetCollectionParameter(queryParameters, "$orderby");
+            var orderBys = orderByValues.SelectMany(x => x.Split(','));
+            foreach (var orderBy in orderBys.Reverse())
+            {
+                query = query.OrderBy(orderBy);
+            }
+
+            var skipValue = GetSingleParameter(queryParameters, "$skip");
+            if (skipValue != null)
+            {
+                var skip = int.Parse(skipValue);
+                query = query.Skip(skip);
+            }
+
+            var topValue = GetSingleParameter(queryParameters, "$top");
+            if (topValue != null)
+            {
+                var top = int.Parse(topValue);
+                query = query.Take(top);
+            }
+
+            var selectValues = GetCollectionParameter(queryParameters, "$select");
+            if (selectValues.Any())
+            {
+                var selectExpression = $"new({string.Join(",", selectValues)})";
+                return (IQuery)query.Select(selectExpression);
+            }
+            else
+            {
+                return (IQuery)query;
+            }
         }
 
         private IEnumerable<Exception> GetExceptions<T>(IQueryCollection queryParameters)
         {
             var type = typeof(T);
 
-            var orderByValues = new StringValues { };
-            if (queryParameters.TryGetValue("$orderby", out orderByValues))
+            var orderBys = GetCollectionParameter(queryParameters, "$orderby");
+            foreach (var orderBy in orderBys)
             {
-                var orderBys = orderByValues.SelectMany(x => x.Split(','));
-
-                foreach (var orderBy in orderBys)
+                var propertyName = orderBy.Split(' ').First();
+                var orderByProperty = type.GetProperty(propertyName);
+                if (orderByProperty == null)
                 {
-                    var propertyName = orderBy.Split(' ').First();
-                    var orderByProperty = type.GetProperty(propertyName);
-                    if (orderByProperty == null)
-                    {
-                        yield return new InvalidOperationException($"Attempting to order by {propertyName} on {type.Name}, but that property doesnt exist.");
-                    }
+                    yield return new InvalidOperationException($"Attempting to order by {propertyName} on {type.Name}, but that property doesnt exist.");
                 }
             }
 
-            var skipValues = new StringValues { };
-            if (queryParameters.TryGetValue("$skip", out skipValues))
+            var skipValue = GetSingleParameter(queryParameters, "$skip");
+            int skip;
+            if (skipValue != null && !int.TryParse(skipValue, out skip))
             {
-                var skips = skipValues.FirstOrDefault();
-                int skip;
-                if (!int.TryParse(skips, out skip))
-                {
-                    yield return new InvalidOperationException($"Attempting to skip the first '{skip}' records, which is not a number.");
-                }
+                yield return new InvalidOperationException($"Attempting to skip the first '{skip}' records, which is not a number.");
             }
 
-            var takeValues = new StringValues { };
-            if (queryParameters.TryGetValue("$top", out takeValues))
+            var topValue = GetSingleParameter(queryParameters, "$top");
+            int top;
+            if (topValue != null && !int.TryParse(topValue, out top))
             {
-                var takes = takeValues.FirstOrDefault();
-                int take;
-                if (!int.TryParse(takes, out take))
-                {
-                    yield return new InvalidOperationException($"Attempting to take the first '{take}' records, which is not a number.");
-                }
+                yield return new InvalidOperationException($"Attempting to take the first '{top}' records, which is not a number.");
             }
 
-            var selectValues = new StringValues { };
-            if (queryParameters.TryGetValue("$select", out selectValues))
+            var selectValues = GetCollectionParameter(queryParameters, "$select");
+            var selects = selectValues.SelectMany(x => x.Split(','));
+            foreach (var select in selects)
             {
-                var selects = selectValues.SelectMany(x => x.Split(','));
-
-                foreach (var select in selects)
+                var selectProperty = typeof(T).GetProperty(select);
+                if (selectProperty == null)
                 {
-                    var selectProperty = typeof(T).GetProperty(select);
-                    if (selectProperty == null)
-                    {
-                        yield return new InvalidOperationException($"Attempting to select property {selectProperty} on {typeof(T).Name}, but that property doesnt exist.");
-                    }
+                    yield return new InvalidOperationException($"Attempting to select property {selectProperty} on {typeof(T).Name}, but that property doesnt exist.");
                 }
+            }
+        }
+
+        private string GetSingleParameter(IQueryCollection queryParameters, string key)
+        {
+            var values = new StringValues { };
+            if (queryParameters.TryGetValue(key, out values))
+            {
+                return values.First();
+            }
+            else
+            {
+                return default(string);
+            }
+        }
+
+        private IEnumerable<string> GetCollectionParameter(IQueryCollection queryParameters, string key)
+        {
+            var values = new StringValues { };
+            if (queryParameters.TryGetValue(key, out values))
+            {
+                return values.SelectMany(v => v.Split(','));
+            }
+            else
+            {
+                return Enumerable.Empty<string>();
             }
         }
 
