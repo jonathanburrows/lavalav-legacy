@@ -58,7 +58,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<EntityDeserializer>()
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()
-                .AddScoped<ODataParser>()
+                .AddScoped<ODataQueryParser>()
                 .AddOptions()
                 .AddCors()
                 .Configure(configureJson)

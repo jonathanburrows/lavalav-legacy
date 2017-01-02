@@ -88,7 +88,7 @@ namespace lvl.Web.Tests
         [Fact]
         public void AfterAddingWeb_ResolvingODataParser_ReturnsValue()
         {
-            var odataParser = Services.GetRequiredService<ODataParser>();
+            var odataParser = Services.GetRequiredService<ODataQueryParser>();
 
             Assert.NotNull(odataParser);
         }

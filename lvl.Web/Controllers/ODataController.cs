@@ -15,9 +15,9 @@ namespace lvl.Web.Controllers
     {
         private TypeResolver TypeResolver { get; }
         private RepositoryFactory RepositoryFactory { get; }
-        private ODataParser ODataParser { get; }
+        private ODataQueryParser ODataParser { get; }
 
-        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataParser odataParser)
+        public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataQueryParser odataParser)
         {
             if (typeResolver == null)
             {

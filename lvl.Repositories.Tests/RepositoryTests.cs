@@ -500,6 +500,20 @@ namespace lvl.Repositories.Tests
         }
 
         [Fact]
+        public async Task WhenQuerying_AndApplingDynamicEqualsFilter_MatchingEntitiesAreReturned()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await repository.CreateAsync(new Planet { Name = "Hello", SupportsLife = true });
+            await repository.CreateAsync(new Planet { Name = "World", SupportsLife = true });
+            await repository.CreateAsync(new Planet { Name = "true", SupportsLife = false });
+            var query = new Query<Planet>().Where($@"{nameof(Planet.Name)}.ToLower() = ""hello""");
+
+            var queryResults = await repository.GetAsync(query);
+
+            Assert.True(queryResults.Items.All(p => p.SupportsLife));
+        }
+
+        [Fact]
         public async Task WhenQuerying_AndApplyingDynamicFilter_UnmatchedEntitiesAreNotReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();

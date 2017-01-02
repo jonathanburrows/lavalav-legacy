@@ -10,7 +10,7 @@ namespace lvl.Web.OData
     /// <summary>
     /// Converts a set of query parameters to a Query.
     /// </summary>
-    public class ODataParser
+    public class ODataQueryParser
     {
         public IQuery Parse<T>(IQueryCollection queryParameters)
         {
@@ -90,8 +90,7 @@ namespace lvl.Web.OData
             }
 
             var selectValues = GetCollectionParameter(queryParameters, "$select");
-            var selects = selectValues.SelectMany(x => x.Split(','));
-            foreach (var select in selects)
+            foreach (var select in selectValues)
             {
                 var selectProperty = typeof(T).GetProperty(select);
                 if (selectProperty == null)
