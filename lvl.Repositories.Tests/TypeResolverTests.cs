@@ -9,7 +9,6 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
-    [Collection(RepositoriesCollection.Name)]
     public abstract class TypeResolverTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
@@ -101,6 +100,7 @@ namespace lvl.Repositories.Tests
         }
     }
 
+    [Collection(RepositoriesCollection.Name)]
     public class SQLiteTypeResolverTests : TypeResolverTests<SQLiteRepositoryFixture>
     {
         public SQLiteTypeResolverTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
@@ -112,11 +112,13 @@ namespace lvl.Repositories.Tests
         }
     }
 
+    [Collection(RepositoriesMsSqlCollection.Name)]
     public class MsSqlTypeResolverTests : TypeResolverTests<MsSqlRepositoryFixture>
     {
         public MsSqlTypeResolverTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    [Collection(RepositoriesOracleCollection.Name)]
     public class OracleTypeResolverTests : TypeResolverTests<OracleRepositoryFixture>
     {
         public OracleTypeResolverTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

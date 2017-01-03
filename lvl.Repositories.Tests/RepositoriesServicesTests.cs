@@ -10,7 +10,6 @@ namespace lvl.Repositories.Tests
     /// <remarks>
     /// Shortened class name as it was becoming too unweildy
     /// </remarks>
-    [Collection(RepositoriesCollection.Name)]
     public abstract class RepositoriesServicesTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         protected IServiceProvider Services { get; }
@@ -112,6 +111,7 @@ namespace lvl.Repositories.Tests
         }
     }
 
+    [Collection(RepositoriesCollection.Name)]
     public class SQLiteRepositoryServicesTests : RepositoriesServicesTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryServicesTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
@@ -126,11 +126,13 @@ namespace lvl.Repositories.Tests
         }
     }
 
+    [Collection(RepositoriesMsSqlCollection.Name)]
     public class MsSqlRepositoryServicesTests : RepositoriesServicesTests<MsSqlRepositoryFixture>
     {
         public MsSqlRepositoryServicesTests(MsSqlRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
     }
 
+    [Collection(RepositoriesOracleCollection.Name)]
     public class OracleRepositoryServicesTests : RepositoriesServicesTests<OracleRepositoryFixture>
     {
         public OracleRepositoryServicesTests(OracleRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
