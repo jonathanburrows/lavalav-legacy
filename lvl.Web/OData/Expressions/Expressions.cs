@@ -163,7 +163,8 @@ namespace lvl.Web.OData.Expressions
         {
             var valuePattern = new Regex("'(.*)'");
             var valueWithoutQuotes = valuePattern.Match(Value).Groups[1].Value;
-            return $@"""{valueWithoutQuotes}""";
+            var valueWithoutEscapes = valueWithoutQuotes.Replace("\\'", "'");
+            return $@"""{valueWithoutEscapes}""";
         }
     }
 
