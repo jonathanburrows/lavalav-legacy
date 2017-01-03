@@ -139,16 +139,22 @@ namespace lvl.Web.OData.Expressions
                 return expression;
             }
 
-            var sequenceExpression = expression as SequenceExpression;
-            if (sequenceExpression == null)
-            {
-                sequenceExpression = new SequenceExpression();
-                sequenceExpression.Expressions.Enqueue(expression);
-            }
             tokens.Next();
             var next = Expression(tokens);
-            sequenceExpression.Expressions.Enqueue(next);
-            return sequenceExpression;
+
+            if (next is SequenceExpression)
+            {
+                var sequenceExpression = (next as SequenceExpression);
+                sequenceExpression.Expressions.Push(expression);
+                return sequenceExpression;
+            }
+            else
+            {
+                var sequenceExpression = new SequenceExpression();
+                sequenceExpression.Expressions.Push(next);
+                sequenceExpression.Expressions.Push(expression);
+                return sequenceExpression;
+            }
         }
 
         private IExpression Function(TokenStack tokens)
@@ -162,7 +168,7 @@ namespace lvl.Web.OData.Expressions
                 }
                 var resolver = FunctionExpressionResolvers[tokenType];
                 tokens.Next();
-                var arguments = Expression(tokens);
+                var arguments = Function(tokens);
                 return resolver(arguments);
             }
             else if (tokens.Lookahead is OpenBracketToken)

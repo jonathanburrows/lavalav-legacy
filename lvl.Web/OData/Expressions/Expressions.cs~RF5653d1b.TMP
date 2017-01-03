@@ -294,35 +294,35 @@ namespace lvl.Web.OData.Expressions
     {
         public DayExpression(IExpression argument) : base(argument) { }
 
-        public override string CsString() => $"{Arg0.CsString()}.Value.Day";
+        public override string CsString() => $"{Arg0.CsString()}.Day";
     }
 
     internal class HourExpression : FunctionExpression
     {
         public HourExpression(IExpression argument) : base(argument) { }
 
-        public override string CsString() => $"{Arg0.CsString()}.Value.Hour";
+        public override string CsString() => $"{Arg0.CsString()}.Hour";
     }
 
     internal class MinuteExpression : FunctionExpression
     {
         public MinuteExpression(IExpression argument) : base(argument) { }
 
-        public override string CsString() => $"{Arg0.CsString()}.Value.Minute";
+        public override string CsString() => $"{Arg0.CsString()}.Minute";
     }
 
     internal class SecondExpression : FunctionExpression
     {
         public SecondExpression(IExpression argument) : base(argument) { }
 
-        public override string CsString() => $"{Arg0.CsString()}.Value.Second";
+        public override string CsString() => $"{Arg0.CsString()}.Second";
     }
 
     internal class YearExpression : FunctionExpression
     {
         public YearExpression(IExpression argument) : base(argument) { }
 
-        public override string CsString() => $"{Arg0.CsString()}.Value.Year";
+        public override string CsString() => $"{Arg0.CsString()}.Year";
     }
 
     internal class RoundExpression : FunctionExpression

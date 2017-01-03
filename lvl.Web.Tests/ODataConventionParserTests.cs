@@ -588,6 +588,336 @@ namespace lvl.Web.Tests
             Assert.NotEmpty(filteredResult.Items);
         }
 
+        [Fact]
+        public async Task SubstringOf_WhenStringMatches_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Terra" });
+            var query = CompileQuery<Planet>($"substringof('Terra', Name) eq true");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task SubstringOf_WhenStringIsContained_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Terra" });
+            var query = CompileQuery<Planet>($"substringof('Terran', Name) eq true");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task SubstringOf_WhenStringIsNotContained_ReturnsFalse()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Terra" });
+            var query = CompileQuery<Planet>($"substringof('Earth', Name) eq false");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task EndsWith_WhenEndsWith_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "rth" });
+            var query = CompileQuery<Planet>($"endswith('Earth', Name) eq true");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task EndsWith_WhenMatches_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Earth" });
+            var query = CompileQuery<Planet>($"endswith('Earth', Name) eq true");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task EndsWith_WhenStartsWith_ReturnsFalse()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Earth" });
+            var query = CompileQuery<Planet>($"endswith('Ear', Name) eq false");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task EndsWith_WhenNoMatch_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Earth" });
+            var query = CompileQuery<Planet>($"endswith('Terra', Name) eq false");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task StartsWith_WhenContained_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            await repository.CreateAsync(new Planet { Name = "Terra" });
+            var query = CompileQuery<Planet>($"startswith('Terran', Name) eq true");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task StartsWith_WhenEquals_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terra" });
+            var query = CompileQuery<Planet>($"startswith('{planet.Name}', {nameof(Planet.Name)}) eq true");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task StartsWith_WhenNotContains_ReturnsFalse()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"startswith('Terra', {nameof(Planet.Name)}) eq false");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Length_WhenMatching_ReturnsTrue()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"length({nameof(Planet.Name)}) eq {planet.Name.Length}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Length_WhenNotMatching_ReturnsFalse()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"length({nameof(Planet.Name)}) eq {planet.Name.Length - 1}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.Empty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Replace_ReplacesInstance()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"replace({nameof(Planet.Name)}, '{planet.Name}', 'Earth') eq 'Earth'");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Substring_SkipsThoseCharacters()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"substring({nameof(Planet.Name)}, 1) eq '{planet.Name.Substring(1)}'");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Substring_WithLength_ReturnsThoseCharacters()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"substring({nameof(Planet.Name)}, 1, 2) eq '{planet.Name.Substring(1, 2)}'");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task ToLower_ReturnsLoweredCharacters()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"tolower({nameof(Planet.Name)}) eq 'terran'");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task ToUpper_ReturnsCapitilizedCharacters()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"toupper({nameof(Planet.Name)}) eq 'TERRAN'");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Trimming_RemovesWhitespace()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = " Terran " });
+            var query = CompileQuery<Planet>($"trim({nameof(Planet.Name)}) eq 'Terran'");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Concat_CombinesTwoStrings()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            var query = CompileQuery<Planet>($"concat('Terra','n') eq {nameof(Planet.Name)}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task NestedFunctionCalls_AreParsedInCorrectOrder()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var planet = await repository.CreateAsync(new Planet { Name = "abcde" });
+            var query = CompileQuery<Planet>($"concat('a', concat(concat('b', concat('c', 'd')), 'e')) eq {nameof(Planet.Name)}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Day_ReturnsDay()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
+            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+
+            var query = CompileQuery<Planet>($"day({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Day}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Hour_ReturnsHour()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
+            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            var query = CompileQuery<Planet>($"hour({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Hour}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Minute_ReturnsMinute()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
+            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            var query = CompileQuery<Planet>($"minute({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Minute}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Second_ReturnsSecond()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
+            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            var query = CompileQuery<Planet>($"second({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Second}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
+
+        [Fact]
+        public async Task Year_ReturnsYear()
+        {
+            var repository = Services.GetRequiredService<IRepository<Planet>>();
+            await ClearRepositoryAsync(repository);
+            var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
+            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            var query = CompileQuery<Planet>($"year({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Year}");
+
+            var filteredResult = await repository.GetAsync(query);
+
+            Assert.NotEmpty(filteredResult.Items);
+        }
 
         private async Task ClearRepositoryAsync<TEntity>(IRepository<TEntity> repository) where TEntity : class, IEntity
         {
