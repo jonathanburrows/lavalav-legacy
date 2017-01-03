@@ -2,6 +2,9 @@
 
 namespace lvl.Web.OData.Expressions
 {
+    /// <summary>
+    /// Represents a comparison between two objects, with a boolean result.
+    /// </summary>
     internal abstract class ComparisonExpression : IExpression
     {
         protected abstract string Operator { get; }

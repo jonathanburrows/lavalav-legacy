@@ -1,5 +1,8 @@
 ﻿namespace lvl.Web.OData.Expressions
 {
+    /// <summary>
+    /// Represents a function, which will consume a list of arguments.
+    /// </summary>
     internal abstract class FunctionExpression : IExpression
     {
         protected IExpression Arg0 { get; }

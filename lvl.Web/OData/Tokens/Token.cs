@@ -1,24 +1,30 @@
 ﻿namespace lvl.Web.OData.Tokens
 {
-    /// <summary>
-    /// Multiple classes were put into once class due to each token being very thin.
-    /// </summary>
+    // Multiple classes were put into once class due to each token being thin, and there being a lot of them.
+
+    /// <summary>Represents some input which will be transformed into an expression.</summary>
     public abstract class Token
     {
         public string Value { get; set; }
         public abstract string Pattern { get; }
     }
 
+    /// <summary>Represents a token which will be transformed to a function expression.</summary>
     internal abstract class FunctionToken : Token { }
 
+    /// <summary>Represents a token which denotes a value.</summary>
     internal abstract class ValueToken : Token { }
 
+    /// <summary>Represents a token which will be transformed into a unary operator expression.</summary>
     internal abstract class UnaryOperatorToken : Token { }
 
+    /// <summary>Represents a token which will be transformed into a binary operator expression.</summary>
     internal abstract class BinaryOperatorToken : Token { }
 
+    /// <summary>Represents a token which will be transfored into a comparison operator expression.</summary>
     internal abstract class ComparisonToken : Token { }
 
+    /// <summary>Represents a token which will be transformed into a boolean operator expression.</summary>
     internal abstract class LogicalToken : Token { }
 
     internal class ConcatToken : FunctionToken

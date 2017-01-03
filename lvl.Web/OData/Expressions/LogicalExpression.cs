@@ -2,6 +2,9 @@
 
 namespace lvl.Web.OData.Expressions
 {
+    /// <summary>
+    /// Represents boolean logic between two expressions.
+    /// </summary>
     internal abstract class LogicalExpression : IExpression
     {
         protected abstract string Operator { get; }

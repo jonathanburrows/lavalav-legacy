@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace lvl.Web.OData.Tokens
 {
+    /// <summary>Converts a string input into a set of tokens.</summary>
     public class Tokenizer
     {
         private List<TokenResolver> TokenResolvers { get; } = new List<TokenResolver>();
@@ -18,6 +19,12 @@ namespace lvl.Web.OData.Tokens
             return this;
         }
 
+        /// <summary>
+        /// Converts an input string into a set of tokens.
+        /// </summary>
+        /// <param name="tokenizing">The input to be tokenized.</param>
+        /// <returns>The set of tokens produced.</returns>
+        /// <exception cref="InvalidOperationException">A character was encountered which could not be tokenized.</exception>
         public IEnumerable<Token> Tokenize(string tokenizing)
         {
             if (tokenizing == string.Empty)
@@ -31,7 +38,7 @@ namespace lvl.Web.OData.Tokens
                 if (pattern.IsMatch(tokenizing))
                 {
                     var value = pattern.Match(tokenizing).Value.Trim();
-                    var token = tokenResolver.Construct(value);
+                    var token = tokenResolver.Resolve(value);
                     var remainingString = pattern.Replace(tokenizing, string.Empty, 1).Trim();
                     var remainingTokens = Tokenize(remainingString);
 

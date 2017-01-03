@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace lvl.Web.OData.Expressions
 {
     /// <summary>
-    /// Parses a set of odata tokens into a valid C# string
+    /// Parses a set of tokens into an abstract syntax tree.
     /// </summary>
     public class Parser
     {
