@@ -9,6 +9,7 @@ namespace lvl.TestDomain
         public string Name { get; set; }
         public bool SupportsLife { get; set; }
         public decimal Mass { get; set; }
+        public int? AstronomicalUnits { get; set; }
 
         public IEnumerable<Moon> Moons { get; set; }
     }

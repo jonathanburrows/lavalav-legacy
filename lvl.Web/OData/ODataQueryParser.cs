@@ -12,6 +12,24 @@ namespace lvl.Web.OData
     /// </summary>
     public class ODataQueryParser
     {
+        private ODataConventionTokenizer ConventionTokenizer { get; }
+        private ODataConventionParser ConventionParser { get; }
+
+        public ODataQueryParser(ODataConventionTokenizer conventionTokenizer, ODataConventionParser conventionParser)
+        {
+            if (conventionTokenizer == null)
+            {
+                throw new ArgumentNullException(nameof(conventionTokenizer));
+            }
+            if (conventionParser == null)
+            {
+                throw new ArgumentNullException(nameof(conventionParser));
+            }
+
+            ConventionTokenizer = conventionTokenizer;
+            ConventionParser = conventionParser;
+        }
+
         public IQuery Parse<T>(IQueryCollection queryParameters)
         {
             if (queryParameters == null)
@@ -27,9 +45,17 @@ namespace lvl.Web.OData
 
             IQuery<T, T> query = new Query<T>();
 
+            var filterValue = GetSingleParameter(queryParameters, "$filter");
+            if (filterValue != null)
+            {
+                var filterTokens = ConventionTokenizer.Tokenize(filterValue);
+                var filterExpression = ConventionParser.Parse(filterTokens);
+                var filterStatement = filterExpression.CsString();
+                query = query.Where(filterStatement);
+            }
+
             var orderByValues = GetCollectionParameter(queryParameters, "$orderby");
-            var orderBys = orderByValues.SelectMany(x => x.Split(','));
-            foreach (var orderBy in orderBys.Reverse())
+            foreach (var orderBy in orderByValues.Reverse())
             {
                 query = query.OrderBy(orderBy);
             }

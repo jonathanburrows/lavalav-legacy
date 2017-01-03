@@ -58,6 +58,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<EntityDeserializer>()
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()
+                .AddScoped<ODataConventionTokenizer>()
+                .AddScoped<ODataConventionParser>()
                 .AddScoped<ODataQueryParser>()
                 .AddOptions()
                 .AddCors()

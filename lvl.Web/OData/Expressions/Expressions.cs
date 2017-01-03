@@ -8,6 +8,74 @@ namespace lvl.Web.OData.Expressions
     /// <summary>
     /// Multiple classes were put into one file as they are all very thin.
     /// </summary>
+    internal class AndExpression : LogicalExpression
+    {
+        protected override string Operator => "&&";
+
+        public AndExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
+
+    internal class OrExpression : LogicalExpression
+    {
+        protected override string Operator => "||";
+
+        public OrExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
+
+    internal class EqualsExpression : ComparisonExpression
+    {
+        protected override string Operator => "=";
+
+        public EqualsExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
+
+    internal class NotEqualsExpression : ComparisonExpression
+    {
+        protected override string Operator => "!=";
+
+        public NotEqualsExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+
+        public override string CsString()
+        {
+            var basicCompliment = base.CsString();
+            if (LeftArgument is NullExpression || RightArgument is NullExpression)
+            {
+                return basicCompliment;
+            }
+            else
+            {
+                return $"({basicCompliment}) || ({LeftArgument.CsString()} = null) || ({RightArgument.CsString()} = null)";
+            }
+        }
+    }
+
+    internal class GreaterThanEqualExpression : ComparisonExpression
+    {
+        protected override string Operator => ">=";
+
+        public GreaterThanEqualExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
+
+    internal class GreaterThanExpression : ComparisonExpression
+    {
+        protected override string Operator => ">";
+
+        public GreaterThanExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
+
+    internal class LessThanEqualExpression : ComparisonExpression
+    {
+        protected override string Operator => "<=";
+
+        public LessThanEqualExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
+
+    internal class LessThanExpression : ComparisonExpression
+    {
+        protected override string Operator => "<";
+
+        public LessThanExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+    }
     internal class AdditionExpression : BinaryOperatorExpression
     {
         protected override string Operator => "+";
@@ -15,53 +83,11 @@ namespace lvl.Web.OData.Expressions
         public AdditionExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
     }
 
-    internal class AndExpression : BinaryOperatorExpression
+    internal class SubtractionExpression : BinaryOperatorExpression
     {
-        protected override string Operator => "&&";
+        protected override string Operator => "-";
 
-        public AndExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
-    }
-
-    internal class DivisionExpression : BinaryOperatorExpression
-    {
-        protected override string Operator => "/";
-
-        public DivisionExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
-    }
-
-    internal class EqualsExpression : BinaryOperatorExpression
-    {
-        protected override string Operator => "=";
-
-        public EqualsExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
-    }
-
-    internal class GreaterThanEqualExpression : BinaryOperatorExpression
-    {
-        protected override string Operator => ">=";
-
-        public GreaterThanEqualExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
-    }
-
-    internal class GreaterThanExpression : BinaryOperatorExpression
-    {
-        protected override string Operator => ">";
-
-        public GreaterThanExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
-    }
-
-    internal class LessThanEqualExpression : BinaryOperatorExpression
-    {
-        protected override string Operator => "<=";
-
-        public LessThanEqualExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
-    }
-
-    internal class LessThanExpression : BinaryOperatorExpression
-    {
-        protected override string Operator => "<";
-
-        public LessThanExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+        public SubtractionExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
     }
 
     internal class ModulusExpression : BinaryOperatorExpression
@@ -78,25 +104,32 @@ namespace lvl.Web.OData.Expressions
         public MultiplicationExpression(IExpression leftExpression, IExpression rightExpression) : base(leftExpression, rightExpression) { }
     }
 
-    internal class NotEqualsExpression : BinaryOperatorExpression
+    internal class DivisionExpression : BinaryOperatorExpression
     {
-        protected override string Operator => "!=";
+        protected override string Operator => "/";
 
-        public NotEqualsExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+        public DivisionExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
     }
 
-    internal class OrExpression : BinaryOperatorExpression
+    internal class PositiveSignExpression : UnaryOperatorExpression
     {
-        protected override string Operator => "||";
+        public PositiveSignExpression(IExpression argument) : base(argument) { }
 
-        public OrExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+        public override string CsString() => Argument.CsString();
     }
 
-    internal class SubtractionExpression : BinaryOperatorExpression
+    internal class NegativeSignExpression : UnaryOperatorExpression
     {
-        protected override string Operator => "-";
+        public NegativeSignExpression(IExpression argument) : base(argument) { }
 
-        public SubtractionExpression(IExpression leftArgument, IExpression rightArgument) : base(leftArgument, rightArgument) { }
+        public override string CsString() => $"-1 * ({Argument.CsString()})";
+    }
+
+    internal class NotExpression : UnaryOperatorExpression
+    {
+        public NotExpression(IExpression argument) : base(argument) { }
+
+        public override string CsString() => $"!({Argument.CsString()})";
     }
 
     internal class NumberExpression : ValueExpression
@@ -132,6 +165,30 @@ namespace lvl.Web.OData.Expressions
             var valueWithoutQuotes = valuePattern.Match(Value).Groups[1].Value;
             return $@"""{valueWithoutQuotes}""";
         }
+    }
+
+    internal class NullExpression : ValueExpression
+    {
+        public NullExpression(string value) { }
+
+        public override string CsString() => "null";
+    }
+
+    internal class BooleanExpression : ValueExpression
+    {
+        private bool Value { get; }
+
+        public BooleanExpression(string value)
+        {
+            bool _value;
+            if (!bool.TryParse(value, out _value))
+            {
+                throw new ArgumentException($"'{value}' is not a value boolean value");
+            }
+            Value = _value;
+        }
+
+        public override string CsString() => Value.ToString();
     }
 
     internal class VariableExpression : ValueExpression

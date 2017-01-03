@@ -17,6 +17,10 @@
 
     internal abstract class BinaryOperatorToken : Token { }
 
+    internal abstract class ComparisonToken : Token { }
+
+    internal abstract class LogicalToken : Token { }
+
     internal class ConcatToken : FunctionToken
     {
         public override string Pattern => "concat";
@@ -112,7 +116,7 @@
         public override string Pattern => "floor";
     }
 
-    internal class CeilngToken : FunctionToken
+    internal class CeilingToken : FunctionToken
     {
         public override string Pattern => "ceiling";
     }
@@ -132,42 +136,52 @@
         public override string Pattern => "not ";
     }
 
-    internal class EqualsToken : BinaryOperatorToken
+    internal class PositiveSignToken : UnaryOperatorToken
+    {
+        public override string Pattern => @"\+";
+    }
+
+    internal class NegativeSignToken : UnaryOperatorToken
+    {
+        public override string Pattern => "-";
+    }
+
+    internal class EqualsToken : ComparisonToken
     {
         public override string Pattern => "eq ";
     }
 
-    internal class NotEqualsToken : BinaryOperatorToken
+    internal class NotEqualsToken : ComparisonToken
     {
         public override string Pattern => "ne ";
     }
 
-    internal class GreaterThanToken : BinaryOperatorToken
+    internal class GreaterThanToken : ComparisonToken
     {
         public override string Pattern => "gt ";
     }
 
-    internal class GreaterThanEqualToken : BinaryOperatorToken
+    internal class GreaterThanEqualToken : ComparisonToken
     {
         public override string Pattern => "ge ";
     }
 
-    internal class LessThanToken : BinaryOperatorToken
+    internal class LessThanToken : ComparisonToken
     {
         public override string Pattern => "lt ";
     }
 
-    internal class LessThanEqualToken : BinaryOperatorToken
+    internal class LessThanEqualToken : ComparisonToken
     {
         public override string Pattern => "le ";
     }
 
-    internal class AndToken : BinaryOperatorToken
+    internal class AndToken : LogicalToken
     {
         public override string Pattern => "and ";
     }
 
-    internal class OrToken : BinaryOperatorToken
+    internal class OrToken : LogicalToken
     {
         public override string Pattern => "or ";
     }
@@ -205,6 +219,16 @@
     internal class StringToken : ValueToken
     {
         public override string Pattern => "'[^']*'";
+    }
+
+    internal class NullToken : ValueToken
+    {
+        public override string Pattern => "null";
+    }
+
+    internal class BooleanToken : ValueToken
+    {
+        public override string Pattern => "true|false";
     }
 
     internal class VariableToken : ValueToken

@@ -2,13 +2,13 @@
 
 namespace lvl.Web.OData.Expressions
 {
-    internal abstract class BinaryOperatorExpression : IExpression
+    internal abstract class ComparisonExpression : IExpression
     {
         protected abstract string Operator { get; }
         protected IExpression LeftArgument { get; }
         protected IExpression RightArgument { get; set; }
 
-        public BinaryOperatorExpression(IExpression leftArgument, IExpression rightArgument)
+        public ComparisonExpression(IExpression leftArgument, IExpression rightArgument)
         {
             if (leftArgument == null)
             {

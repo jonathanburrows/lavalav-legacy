@@ -86,11 +86,27 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingODataParser_ReturnsValue()
+        public void AfterAddingWeb_ResolvingODataQueryParser_ReturnsValue()
         {
             var odataParser = Services.GetRequiredService<ODataQueryParser>();
 
             Assert.NotNull(odataParser);
+        }
+
+        [Fact]
+        public void AfterAddingWeb_ResolvingODataConventionTokenizer_ReturnsValue()
+        {
+            var conventionTokenizer = Services.GetRequiredService<ODataConventionTokenizer>();
+
+            Assert.NotNull(conventionTokenizer);
+        }
+
+        [Fact]
+        public void AfterAddingWeb_ResolvingODataConventionParser_ReturnsValue()
+        {
+            var conventionParser = Services.GetRequiredService<ODataConventionParser>();
+
+            Assert.NotNull(conventionParser);
         }
     }
 }

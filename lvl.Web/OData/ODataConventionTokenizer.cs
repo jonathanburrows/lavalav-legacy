@@ -14,6 +14,11 @@ namespace lvl.Web.OData
             Register<MultiplicationToken>();
             Register<DivisionToken>();
             Register<ModulusToken>();
+
+            Register<PositiveSignToken>();
+            Register<NegativeSignToken>();
+            Register<NotToken>();
+
             Register<CommaToken>();
             Register<SubstringOfToken>();
             Register<EndsWithToken>();
@@ -34,9 +39,11 @@ namespace lvl.Web.OData
             Register<YearToken>();
             Register<RoundToken>();
             Register<FloorToken>();
-            Register<CeilngToken>();
+            Register<CeilingToken>();
+
             Register<OpenBracketToken>();
             Register<CloseBracketToken>();
+
             Register<NotToken>();
             Register<EqualsToken>();
             Register<NotEqualsToken>();
@@ -46,8 +53,11 @@ namespace lvl.Web.OData
             Register<LessThanEqualToken>();
             Register<AndToken>();
             Register<OrToken>();
+
             Register<NumberToken>();
             Register<StringToken>();
+            Register<NullToken>();
+            Register<BooleanToken>();
             Register<VariableToken>();
         }
     }
