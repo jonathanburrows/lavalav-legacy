@@ -4,10 +4,11 @@ using lvl.Web.OData.Tokens;
 namespace lvl.Web.OData
 {
     /// <summary>
-    /// Parses a set of odata tokens into a valid C# string
+    /// Parses a set of OData tokens into an OData abtract syntax tree.
     /// </summary>
     public class ODataConventionParser : Parser
     {
+        /// <summary>Registers all the tokens and their respective expressions in an OData abstract syntax tree.</summary>
         public ODataConventionParser()
         {
             RegisterLogical<AndToken, AndExpression>();

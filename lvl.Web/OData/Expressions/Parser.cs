@@ -28,6 +28,12 @@ namespace lvl.Web.OData.Expressions
             UnaryExpressionResolvers = new Dictionary<Type, UnaryArgumentResolver>();
         }
 
+        /// <summary>
+        /// Parses a set of tokens into an abstract syntax tree.
+        /// </summary>
+        /// <param name="tokens">The tokens which will be used to construct the syntax tree.</param>
+        /// <returns>The root node of the syntax tree.</returns>
+        /// <exception cref="InvalidOperationException">The tokens could not be parsed into a valid tree.</exception>
         public IExpression Parse(IEnumerable<Token> tokens)
         {
             var tokenStack = new TokenStack(tokens);
@@ -39,12 +45,14 @@ namespace lvl.Web.OData.Expressions
             return parsed;
         }
 
+        /// <summary>Reduces a stack of tokens into a single expression.</summary>
         private IExpression Expression(TokenStack tokens)
         {
             var argument = Function(tokens);
             return ExpressionOp(tokens, argument);
         }
 
+        /// <summary>Recursively reduces a token stack into an expression.</summary>
         private IExpression ExpressionOp(TokenStack tokens, IExpression expression)
         {
             if (tokens.Lookahead is EpsilonToken)
@@ -68,6 +76,7 @@ namespace lvl.Web.OData.Expressions
             return ExpressionOp(tokens, sequence);
         }
 
+        /// <summary>Allows for arithmetic expressions to be parsed, without evaluating logical operators.</summary>
         private IExpression NonBooleanExpression(TokenStack tokens)
         {
             var argument = Function(tokens);
@@ -76,11 +85,12 @@ namespace lvl.Web.OData.Expressions
             return sequence;
         }
 
-        private IExpression Logical(TokenStack tokens, IExpression expression)
+        /// <summary>If the next token is a logical operator, constructs a logical expression from the previous and next expression.</summary>
+        private IExpression Logical(TokenStack tokens, IExpression previousExpression)
         {
             if (!(tokens.Lookahead is LogicalToken))
             {
-                return expression;
+                return previousExpression;
             }
 
             var tokenType = tokens.Lookahead.GetType();
@@ -91,15 +101,16 @@ namespace lvl.Web.OData.Expressions
 
             var resolver = LogicalExpressionResolvers[tokenType];
             tokens.Next();
-            var rightArgument = Expression(tokens);
-            return resolver(expression, rightArgument);
+            var nextExpression = Expression(tokens);
+            return resolver(previousExpression, nextExpression);
         }
 
-        private IExpression Comparison(TokenStack tokens, IExpression expression)
+        /// <summary>If the next token is a comparison operator, constructs a comparison expression from the previous and next expression.</summary>
+        private IExpression Comparison(TokenStack tokens, IExpression previousExpression)
         {
             if (!(tokens.Lookahead is ComparisonToken))
             {
-                return expression;
+                return previousExpression;
             }
 
             var tokenType = tokens.Lookahead.GetType();
@@ -110,15 +121,16 @@ namespace lvl.Web.OData.Expressions
 
             var resolver = ComparisonExpressionResolvers[tokenType];
             tokens.Next();
-            var rightArgument = Expression(tokens);
-            return resolver(expression, rightArgument);
+            var nextExpression = Expression(tokens);
+            return resolver(previousExpression, nextExpression);
         }
 
-        private IExpression BinaryOperator(TokenStack tokens, IExpression expression)
+        /// <summary>If the next token is a binary operator, constructs a binary expression with the previous and next expressions.</summary>
+        private IExpression BinaryOperator(TokenStack tokens, IExpression previousExpression)
         {
             if (!(tokens.Lookahead is BinaryOperatorToken))
             {
-                return expression;
+                return previousExpression;
             }
 
             var tokenType = tokens.Lookahead.GetType();
@@ -129,9 +141,10 @@ namespace lvl.Web.OData.Expressions
             var resolver = BinaryOperatorExpressionResolvers[tokenType];
             tokens.Next();
             var rightArgument = NonBooleanExpression(tokens);
-            return resolver(expression, rightArgument);
+            return resolver(previousExpression, rightArgument);
         }
 
+        /// <summary>Constructs a list of values from tokens seperated by commas</summary>
         private IExpression Sequence(TokenStack tokens, IExpression expression)
         {
             if (!(tokens.Lookahead is CommaToken))
@@ -144,12 +157,14 @@ namespace lvl.Web.OData.Expressions
 
             if (next is SequenceExpression)
             {
+                //The next expression is a sequence, to make sure it is flat, the previous expression is put at head of sequence.
                 var sequenceExpression = (next as SequenceExpression);
                 sequenceExpression.Expressions.Push(expression);
                 return sequenceExpression;
             }
             else
             {
+                //Construct a new seqence with two values, the previous and next expression.
                 var sequenceExpression = new SequenceExpression();
                 sequenceExpression.Expressions.Push(next);
                 sequenceExpression.Expressions.Push(expression);
@@ -157,6 +172,10 @@ namespace lvl.Web.OData.Expressions
             }
         }
 
+        /// <summary>
+        /// If the next token is a function, then a function expression is created.
+        /// Whatever expressions are in the following brackets are passed as an argument.
+        /// </summary>
         private IExpression Function(TokenStack tokens)
         {
             if (tokens.Lookahead is FunctionToken)
@@ -190,6 +209,8 @@ namespace lvl.Web.OData.Expressions
             }
         }
 
+        /// <summary>If the next token is a value token, then a value is parsed with that tokens value.</summary>
+        /// <remarks>Also detects unary tokens. If a unary token is detected, it is interpreted as a value.</remarks>
         private IExpression Value(TokenStack tokens)
         {
             if (tokens.Lookahead is EpsilonToken)
@@ -227,69 +248,135 @@ namespace lvl.Web.OData.Expressions
             }
         }
 
+        /// <summary>
+        /// Signifies that a logical token should be parsed into a given logical expression.
+        /// </summary>
+        /// <typeparam name="TToken">The type of token to be parsed.</typeparam>
+        /// <typeparam name="TExpression">The type of expression to be constructed when the token is encountered.</typeparam>
+        /// <returns>The original parser.</returns>
+        /// <remarks>A logical expression will be applied to its left and right hand expressions.</remarks>
+        /// <exception cref="ArgumentException">The given expression type does not have a constructor taking 2 IExpression parameters.</exception>
         internal Parser RegisterLogical<TToken, TExpression>() where TToken : LogicalToken where TExpression : LogicalExpression
         {
-            LogicalExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
+            var constructor = typeof(TExpression).GetConstructor(new[] { typeof(IExpression), typeof(IExpression) });
+            if (constructor == null)
             {
-                var resolverType = typeof(TExpression);
-                var resolver = Activator.CreateInstance(resolverType, leftArgument, rightArgument);
-                return (IExpression)resolver;
-            };
+                throw new ArgumentException($"{typeof(TExpression).Name} does not have a constructor accepting 2 {nameof(IExpression)}s");
+            }
+
+            LogicalExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
+                (TExpression)constructor.Invoke(new[] { leftArgument, rightArgument });
+
             return this;
         }
 
+        /// <summary>
+        /// Signifies that a binary token should be parsed into a given binary expression.
+        /// </summary>
+        /// <typeparam name="TToken">The type of token to be parsed.</typeparam>
+        /// <typeparam name="TExpression">The type of expression to be constructed when the token is encountered.</typeparam>
+        /// <returns>The original parser.</returns>
+        /// <remarks>A binary expression will be applied to its left and right hand expressions.</remarks>
+        /// <exception cref="ArgumentException">The given expression type does not have a constructor taking 2 IExpression parameters.</exception>
         internal Parser RegisterBinaryOperator<TToken, TExpression>() where TToken : BinaryOperatorToken where TExpression : BinaryOperatorExpression
         {
-            BinaryOperatorExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
+            var constructor = typeof(TExpression).GetConstructor(new[] { typeof(IExpression), typeof(IExpression) });
+            if (constructor == null)
             {
-                var resolverType = typeof(TExpression);
-                var resolver = Activator.CreateInstance(resolverType, leftArgument, rightArgument);
-                return (IExpression)resolver;
-            };
+                throw new ArgumentException($"{typeof(TExpression).Name} does not have a constructor accepting 2 {nameof(IExpression)}s");
+            }
+
+            BinaryOperatorExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
+                (TExpression)constructor.Invoke(new[] { leftArgument, rightArgument });
+
             return this;
         }
 
+        /// <summary>
+        /// Signifies that a comparison token should be parsed into a given comparison expression.
+        /// </summary>
+        /// <typeparam name="TToken">The type of token to be parsed.</typeparam>
+        /// <typeparam name="TExpression">The type of expression to be constructed when the token is encountered.</typeparam>
+        /// <returns>The original parser.</returns>
+        /// <remarks>A binary expression will be applied to its left and right hand expressions.</remarks>
+        /// <exception cref="ArgumentException">The given expression type does not have a constructor taking 2 IExpression parameters.</exception>
         internal Parser RegisterComparison<TToken, TExpression>() where TToken : ComparisonToken where TExpression : ComparisonExpression
         {
-            ComparisonExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
+            var constructor = typeof(TExpression).GetConstructor(new[] { typeof(IExpression), typeof(IExpression) });
+            if (constructor == null)
             {
-                var resolverType = typeof(TExpression);
-                var resolver = Activator.CreateInstance(resolverType, leftArgument, rightArgument);
-                return (IExpression)resolver;
-            };
+                throw new ArgumentException($"{typeof(TExpression).Name} does not have a constructor accepting 2 {nameof(IExpression)}s");
+            }
+
+            ComparisonExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
+                (TExpression)constructor.Invoke(new[] { leftArgument, rightArgument });
+
             return this;
         }
 
+        /// <summary>
+        /// Signifies that a function token should be parsed into a function expression.
+        /// </summary>
+        /// <typeparam name="TToken">The type of token to be parsed.</typeparam>
+        /// <typeparam name="TExpression">The type of expression to be constructed when the token is encountered.</typeparam>
+        /// <returns>The original parser.</returns>
+        /// <remarks>A binary expression will be given a single argument</remarks>
+        /// <exception cref="ArgumentException">The given expression type does not have a constructor taking an IExpression parameter.</exception>
         internal Parser RegisterFunction<TToken, TExpression>() where TToken : FunctionToken where TExpression : FunctionExpression
         {
-            FunctionExpressionResolvers[typeof(TToken)] = (arguments) =>
+            var constructor = typeof(TExpression).GetConstructor(new[] { typeof(IExpression) });
+            if (constructor == null)
             {
-                var resolverType = typeof(TExpression);
-                var resolver = Activator.CreateInstance(resolverType, arguments);
-                return (IExpression)resolver;
-            };
+                throw new ArgumentException($"{typeof(TExpression).Name} does not have a constructor accepting an {nameof(IExpression)}");
+            }
+
+            FunctionExpressionResolvers[typeof(TToken)] = (arguments) =>
+                (TExpression)constructor.Invoke(new[] { arguments });
+
             return this;
         }
 
+        /// <summary>
+        /// Signifies that a value token should be parsed into a value expression.
+        /// </summary>
+        /// <typeparam name="TToken">The type of token to be parsed.</typeparam>
+        /// <typeparam name="TExpression">The type of expression to be constructed when the token is encountered.</typeparam>
+        /// <returns>The original parser.</returns>
+        /// <remarks>A value expression will be constructed from a string value.</remarks>
+        /// <exception cref="ArgumentException">The given expression type does not have a constructor taking a string parameter.</exception>
         internal Parser RegisterValue<TToken, TExpression>() where TToken : ValueToken where TExpression : ValueExpression
         {
-            ValueExpressionResolvers[typeof(TToken)] = (value) =>
+            var constructor = typeof(TExpression).GetConstructor(new[] { typeof(string) });
+            if (constructor == null)
             {
-                var resolverType = typeof(TExpression);
-                var resolved = Activator.CreateInstance(resolverType, value);
-                return (IExpression)resolved;
-            };
+                throw new ArgumentException($"{typeof(TExpression).Name} does not have a constructor accepting a {nameof(String)}");
+            }
+
+            ValueExpressionResolvers[typeof(TToken)] = (value) =>
+                (TExpression)constructor.Invoke(new[] { value });
+
             return this;
         }
 
+        /// <summary>
+        /// Signifies that a unary token should be parsed into a unary expression.
+        /// </summary>
+        /// <typeparam name="TToken">The type of token to be parsed.</typeparam>
+        /// <typeparam name="TExpression">The type of expression to be constructed when the token is encountered.</typeparam>
+        /// <returns>The original parser.</returns>
+        /// <remarks>A unary expression will be applied to the following expression.</remarks>
+        /// <exception cref="ArgumentException">The given expression type does not have a constructor taking an IExpression parameter.</exception>
         internal Parser RegisterUnary<TToken, TExpression>() where TToken : UnaryOperatorToken where TExpression : UnaryOperatorExpression
         {
-            UnaryExpressionResolvers[typeof(TToken)] = (value) =>
+            var constructor = typeof(TExpression).GetConstructor(new[] { typeof(IExpression) });
+            if (constructor == null)
             {
-                var resolverType = typeof(TExpression);
-                var resolved = Activator.CreateInstance(resolverType, value);
-                return (IExpression)resolved;
-            };
+                throw new ArgumentException($"{typeof(TExpression).Name} does not have a constructor accepting an {nameof(IExpression)}");
+            }
+
+            UnaryExpressionResolvers[typeof(TToken)] = (arguments) =>
+                (TExpression)constructor.Invoke(new[] { arguments });
+
             return this;
         }
     }
