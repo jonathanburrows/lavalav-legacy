@@ -63,7 +63,8 @@ namespace lvl.Repositories.Tests.Configuration
             }
             else
             {
-                return integrationTests.Where(it => {
+                return integrationTests.Where(it =>
+                {
                     var matchingName = it.Method.Name == testMethod.Method.Name;
                     var matchingClass = it.TestMethod.TestClass.Class.Name == testMethod.TestClass.Class.Name;
                     return !(matchingName && matchingClass);
@@ -94,11 +95,23 @@ namespace lvl.Repositories.Tests.Configuration
             var ctors = collectionType.GetConstructors();
             var fixtures = ctors.SelectMany(ctor => ctor.GetParameters());
             return fixtures.Any(parameter => fixtureType.IsAssignableFrom(parameter.ParameterType));
-        }
+        } 
 
         private static bool DatabaseDisabledInConfiguration(DatabaseVendor databaseVendor)
         {
-            return true;
+            var integrationSettings = ConfigurationReader.IntegrationSettings;
+            if (databaseVendor == DatabaseVendor.MsSql)
+            {
+                return integrationSettings.MsSql.Disabled ?? false;
+            }
+            else if (databaseVendor == DatabaseVendor.Oracle)
+            {
+                return integrationSettings.Oracle.Disabled ?? false;
+            }
+            else
+            {
+                throw new NotImplementedException($"Integration tests for the database vendor {databaseVendor} are not supported.");
+            }
         }
     }
 }

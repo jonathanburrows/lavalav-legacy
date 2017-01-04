@@ -6,6 +6,7 @@
     "lvl.Repositories": "0.0.0-*",
     "lvl.TestDomain": "0.0.0-*",
     "Microsoft.Extensions.DependencyInjection": "1.1.0",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0",
     "NETStandard.Library": "1.6.1",
     "xunit": "2.1.0"
   },
@@ -16,6 +17,10 @@
       },
       "imports": "dnxcore50"
     }
+  },
+
+  "buildOptions": {
+    "copyToOutput": "appsettings.json"
   },
 
   "testRunner": "xunit"

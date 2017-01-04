@@ -1,13 +1,12 @@
 ﻿using lvl.DatabaseGenerator;
-using lvl.TestDomain;
+using lvl.Repositories.Tests.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace lvl.Repositories.Tests.Fixtures
 {
     public class MsSqlRepositoryFixture : RepositoryFixture
     {
-        public MsSqlRepositoryFixture() : base(TestConnections.MsSql())
+        public MsSqlRepositoryFixture() : base(ConfigurationReader.IntegrationSettings.MsSql.ConnectionString)
         {
             var databaseCreator = ServiceProvider.GetRequiredService<DatabaseCreator>();
             databaseCreator.Create();
