@@ -7,10 +7,8 @@ namespace lvl.Repositories.Tests.Configuration
     /// </summary>
     public class IntegrationSettings
     {
-        [JsonProperty("ms-sql")]
         public DatabaseSettings MsSql { get; set; }
 
-        [JsonProperty("oracle")]
         public DatabaseSettings Oracle { get; set; }
     }
 }
