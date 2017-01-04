@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using lvl.TestDomain;
 using lvl.Ontology;
 using lvl.Repositories.Tests.Fixtures;
+using lvl.Repositories.Tests.Configuration;
 
 namespace lvl.Repositories.Tests
 {
@@ -19,7 +20,7 @@ namespace lvl.Repositories.Tests
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfterAddingRepositories_WhenResolvingTypeResolver_ValueIsReturned()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
@@ -27,7 +28,7 @@ namespace lvl.Repositories.Tests
             Assert.NotNull(typeResolver);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfterAddingRepositories_WhenResolvingRepositoryFactory_ValueIsReturned()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
@@ -35,7 +36,7 @@ namespace lvl.Repositories.Tests
             Assert.NotNull(repositoryFactory);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfterAddingRepositories_WhenResolvingRepositoryForMappedType_ValueIsReturned()
         {
             var mappedType = typeof(Moon);
@@ -45,7 +46,7 @@ namespace lvl.Repositories.Tests
             Assert.NotNull(repository);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfteringAddingRepository_WhenResolvingRepositoryForUnmappedType_InvalidOperationIsThrown()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
@@ -53,7 +54,7 @@ namespace lvl.Repositories.Tests
             Assert.Throws<InvalidOperationException>(() => repositoryFactory.Construct<UnmappedEntity>());
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfterAddingRepository_WhenResolvingSessionProvider_ValueIsReturned()
         {
             var sessionFactory = Services.GetRequiredService<SessionProvider>();
@@ -61,7 +62,7 @@ namespace lvl.Repositories.Tests
             Assert.NotNull(sessionFactory);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfterOverridingRepository_WhenResolvingThroughServiceProvider_OverriddenTypeIsReturned()
         {
             var mockedServices = new ServiceCollection()
@@ -76,7 +77,7 @@ namespace lvl.Repositories.Tests
             Assert.IsType<MockRepository<Moon>>(repository);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void AfterOverridingRepository_WhenResolvingThroughFactory_OverridenTypeIsReturned()
         {
             var mockedServices = new ServiceCollection()
@@ -92,7 +93,7 @@ namespace lvl.Repositories.Tests
             Assert.IsType<MockRepository<Moon>>(repository);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenAddingRepositories_WithoutCallingAddDomains_ThrowsInvalidOperationException()
         {
             var services = new ServiceCollection();

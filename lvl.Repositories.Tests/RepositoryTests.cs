@@ -1,5 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories.Querying;
+using lvl.Repositories.Tests.Configuration;
 using lvl.Repositories.Tests.Fixtures;
 using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ namespace lvl.Repositories.Tests
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GetCollection_OnRepositoryWithMultipleElements_ReturnsMultipleElement()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -31,7 +32,7 @@ namespace lvl.Repositories.Tests
             Assert.True(entities.Count() > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GetSingle_OnRepositoryWithMatchingElement_ReturnsElement()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -41,7 +42,7 @@ namespace lvl.Repositories.Tests
             Assert.NotNull(fetched);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GetSingle_OnRepositoryWithNoMatchingElement_ReturnsNull()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -51,7 +52,7 @@ namespace lvl.Repositories.Tests
             Assert.Null(fetched);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericCreate_IncreasesSizeByOne()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -63,7 +64,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(countBefore + 1, countAfter);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Create_IncreasesSizeByOne()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -76,7 +77,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(countAfter, countBefore + 1);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericCreate_PopulatesId()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -86,7 +87,7 @@ namespace lvl.Repositories.Tests
             Assert.True(created.Id > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Create_PopulatesId()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -97,7 +98,7 @@ namespace lvl.Repositories.Tests
             Assert.True(creating.Id > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericCreate_WhenAddingNull_ThrowsArgumentNullException()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -105,7 +106,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<ArgumentNullException>(() => repository.CreateAsync(null));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Create_WhenAddingNull_ThrowsArgumentNullException()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -124,7 +125,7 @@ namespace lvl.Repositories.Tests
             }
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Create_WhenNotOfCorrectType_ThrowsArgumentException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -132,7 +133,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAsync(new Planet { }));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenGenericallyCreating_EntityWithIdentifier_InvalidOperationExceptionIsThrown()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -141,7 +142,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<InvalidOperationException>(() => repository.CreateAsync(entityWithIdentifier));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenCreating_AndHasNewChildEntity_ChildEntityCreated()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -153,7 +154,7 @@ namespace lvl.Repositories.Tests
             Assert.True(newChildEntity.Id > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenCreating_AndHasNewEntityInChildCollection_ChildEntityCreated()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -168,7 +169,7 @@ namespace lvl.Repositories.Tests
             Assert.True(newChildEntity.Id > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenCreating_AndHasEditedChildEntity_ChildEntityIsUpdated()
         {
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
@@ -184,7 +185,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(existingChildEntity.Name, updatedChild.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenCreating_AndHasEditedEntityInChildCollection_ChildEntityIsUpdated()
         {
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
@@ -203,7 +204,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(existingChildEntity.Name, updatedChild.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericUpdate_WhenSuccessful_UpdatesPropertiesOfMatchingEntity()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -216,7 +217,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(updated.Name, updating.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Update_WhenSuccessful_UpdatesPropertiesOfMatchingEntity()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -230,7 +231,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(updated.Name, updating.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericUpdate_WhenGivenNullValue_ThrowsArgumentNullException()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -238,7 +239,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<ArgumentNullException>(() => repository.UpdateAsync(null));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Update_WhenGivenNullValue_ThrowsArgumentNullException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -246,7 +247,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(null));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Update_WhenEntityTypeIsntRepositoryType_ThrowsArgumentException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -254,7 +255,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Planet { }));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericUpdate_WhenNoMatchingEntity_ThrowsInvalidOperationException()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -262,7 +263,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<InvalidOperationException>(() => repository.UpdateAsync(new Moon { }));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Update_WhenNoMatchingEntity_ThrowsInvalidOperationException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -270,7 +271,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Moon { }));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenUpdating_AndHasNewChildEntity_ChildIsCreated()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -282,7 +283,7 @@ namespace lvl.Repositories.Tests
             Assert.True(updating.Planet.Id > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenUpdating_AndHasNewEntityInChildCollection_ChildIsCreated()
         {
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
@@ -296,7 +297,7 @@ namespace lvl.Repositories.Tests
             Assert.True(newChild.Id > 0);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenUpdating_AndHasEditedChildEntity_ChildIsUpdated()
         {
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
@@ -312,7 +313,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(existingChild.Name, updatedChild.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenUpdating_AndHasEditedEntityInChildCollection_ChildIsUpdated()
         {
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
@@ -331,7 +332,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(existingChild.Name, updatedChild.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericDelete_WhenSuccessful_ReducesSizeByOne()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -344,7 +345,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(countBefore - 1, countAfter);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Delete_WhenSuccessful_ReducesSizeByOne()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -357,7 +358,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(countBefore - 1, countAfter);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericDelete_WhenSuccessful_MakesGettingEntityReturnNull()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -370,7 +371,7 @@ namespace lvl.Repositories.Tests
             Assert.Null(deleted);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Delete_WhenSuccessful_MakesGettingEntityReturnNull()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -382,7 +383,7 @@ namespace lvl.Repositories.Tests
             Assert.Null(deleted);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericDelete_WhenEntityIsNull_ThrowsArgumentNullException()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -390,7 +391,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<ArgumentNullException>(() => repository.DeleteAsync(null));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Delete_WhenEntityIsNull_ThrowsArgumentNullException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -398,7 +399,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(null));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Delete_WhenEntityTypeIsntRepositoryType_ThrowsArgumentException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -407,7 +408,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(planet));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GenericDelete_WhenEntityHasNoMatchingElement_ThrowsInvalidOperationException()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -415,7 +416,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAsync<InvalidOperationException>(() => repository.DeleteAsync(new Moon()));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task Delete_WhenEntityHasNoMatchingElement_ThrowsInvalidOperationException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
@@ -424,7 +425,7 @@ namespace lvl.Repositories.Tests
             await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(unmatchedElement));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenDeleting_WhenReferencingChild_ChildStillExists()
         {
             var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
@@ -438,7 +439,7 @@ namespace lvl.Repositories.Tests
             Assert.NotNull(child);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenDeleting_WhenReferencingChildCollection_ChildrenAreRemoved()
         {
             var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
@@ -456,7 +457,7 @@ namespace lvl.Repositories.Tests
             Assert.Null(deletedChild);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndApplingFilter_MatchingEntitiesAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -470,7 +471,7 @@ namespace lvl.Repositories.Tests
             Assert.True(queryResults.Items.All(p => p.SupportsLife));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndApplyingFilter_UnmatchedEntitiesAreNotReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -484,7 +485,7 @@ namespace lvl.Repositories.Tests
             Assert.False(queryResults.Items.Any(p => !p.SupportsLife));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndApplingDynamicFilter_MatchingEntitiesAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -498,7 +499,7 @@ namespace lvl.Repositories.Tests
             Assert.True(queryResults.Items.All(p => p.SupportsLife));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndApplingDynamicEqualsFilter_MatchingEntitiesAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -512,7 +513,7 @@ namespace lvl.Repositories.Tests
             Assert.True(queryResults.Items.All(p => p.SupportsLife));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndApplyingDynamicFilter_UnmatchedEntitiesAreNotReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -526,7 +527,7 @@ namespace lvl.Repositories.Tests
             Assert.False(queryResults.Items.Any(p => !p.SupportsLife));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQueryingAndTakingRecords_AndTheresMoreRecordsThanTheTakeAmount_OnlyTakeAmountIsReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -540,7 +541,7 @@ namespace lvl.Repositories.Tests
             Assert.False(queryResults.Items.Any(p => !p.SupportsLife));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQueryingAndSkipping_SkippingRecordsArentReturned()
         {
             var skip = 2;
@@ -556,7 +557,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(total - skip, queryResults.Items.Count());
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQueryingAndTaking_TakenRecordsAreReturned()
         {
             var take = 2;
@@ -571,7 +572,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(take, queryResults.Items.Count());
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuery_AndApplyingFilter_MatchedCountIsReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -586,7 +587,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(2, queryResults.Count - countBefore);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuery_AndApplyingDynamicFilter_MatchedCountIsReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -601,7 +602,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(2, queryResults.Count - countBefore);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndTaking_CountIncludesRecordsNotInResult()
         {
             var take = 2;
@@ -616,7 +617,7 @@ namespace lvl.Repositories.Tests
             Assert.True(queryResult.Count > take);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndSkipping_CountIncludesRecordsNotInResult()
         {
             var skip = 2;
@@ -631,7 +632,7 @@ namespace lvl.Repositories.Tests
             Assert.True(queryResult.Count > skip);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndSelectingProperty_ArrayOfThatPropertyIsReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -643,7 +644,7 @@ namespace lvl.Repositories.Tests
             Assert.Contains("Earth", queryResult.Items);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndSelectingAnonymousObject_AnonymousObjectsArePopulatedAndReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -660,7 +661,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal("Earth", selectedEarth.EnglishName);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndSelectingChildProperty_ChildPropertyIsReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -674,7 +675,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal("Terra", queriedPlanet.Name);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndOrderingByName_CorrectlySortsResult()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -699,7 +700,7 @@ namespace lvl.Repositories.Tests
             Assert.True(inOrder);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndDynamicallyOrderingByName_CorrectlySortsResult()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -724,7 +725,7 @@ namespace lvl.Repositories.Tests
             Assert.True(inOrder);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndOrderingByNameDescending_ResultsAreCorrectlySorted()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -749,7 +750,7 @@ namespace lvl.Repositories.Tests
             Assert.True(inOrder);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndOrderDynamicallyByNameDescending_ResultsAreCorrectlySorted()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -774,7 +775,7 @@ namespace lvl.Repositories.Tests
             Assert.True(inOrder);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndOrderDynamicallyByNameDescendingWithShorthand_ResultsAreCorrectlySorted()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
@@ -799,7 +800,7 @@ namespace lvl.Repositories.Tests
             Assert.True(inOrder);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task WhenQuerying_AndOrderTwice_ResultsAreCorrectlySorted()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();

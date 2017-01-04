@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Repositories.Tests.Configuration;
 using lvl.Repositories.Tests.Fixtures;
 using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ namespace lvl.Repositories.Tests
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenResolvingName_AndGivenFullyQualifiedEntity_TypeIsResolved()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
@@ -28,7 +29,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(resolvedType, moonType);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenResolvingName_AndGivenFullyQualifiedEntityWithWrongCase_TypeIsResolved()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
@@ -47,7 +48,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(moonType, resolvedType);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenResolvingName_AndGivenClassNameOfEntity_TypeIsResolved()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
@@ -57,7 +58,7 @@ namespace lvl.Repositories.Tests
             Assert.Equal(resolvedType, moonType);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenResolvingName_AndGivenClassNameOfEntityWithWrongCase_TypeIsResolved()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
@@ -76,21 +77,21 @@ namespace lvl.Repositories.Tests
             Assert.Equal(moonType, resolvedType);
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenResolvingName_AndNameIsNull_ArgumentNullExceptionIsThrown()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             Assert.Throws<ArgumentNullException>(() => typeResolver.Resolve(null));
         }
 
-        [Fact]
+        [IntegrationTest]
         public void WhenResolvingName_AndTwoExist_InvalidOperationIsThrown()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             Assert.Throws<InvalidOperationException>(() => typeResolver.Resolve(nameof(Planet)));
         }
 
-        [Fact]
+        [IntegrationTest]
         public void ResolveMethodIsOverridable()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
