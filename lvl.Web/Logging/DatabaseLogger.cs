@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using lvl.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using System.Security.Claims;
 
 namespace lvl.Web.Logging
 {
@@ -12,8 +15,9 @@ namespace lvl.Web.Logging
         private string Name { get; }
         private LoggingSettings LoggingSettings { get; }
         private IRepository<LogEntry> LogEntryRepository { get; }
+        private IHttpContextAccessor HttpContextAccessor { get; }
 
-        public DatabaseLogger(string name, LoggingSettings loggingSettings, IRepository<LogEntry> logEntryRepository)
+        public DatabaseLogger(string name, LoggingSettings loggingSettings, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
         {
             if (name == null)
             {
@@ -27,10 +31,15 @@ namespace lvl.Web.Logging
             {
                 throw new ArgumentNullException(nameof(logEntryRepository));
             }
+            if (httpContextAccessor == null)
+            {
+                throw new ArgumentNullException(nameof(httpContextAccessor));
+            }
 
             Name = name;
             LoggingSettings = loggingSettings;
             LogEntryRepository = logEntryRepository;
+            HttpContextAccessor = httpContextAccessor;
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -60,15 +69,23 @@ namespace lvl.Web.Logging
                 throw new ArgumentNullException(nameof(formatter));
             }
 
-
             var message = formatter(state, exception);
+            var context = HttpContextAccessor?.HttpContext;
+            var request = context?.Request;
+            var userName = context?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var url = request?.Path != PathString.Empty ? request?.GetDisplayUrl() : null;
 
             var logEntry = new LogEntry
             {
                 MachineName = Environment.MachineName,
                 Logged = DateTime.Now,
                 LogLevel = logLevel.ToString(),
-                Message = message
+                Message = message,
+                StackTrace = exception?.StackTrace,
+                Exception = exception?.GetType()?.Name,
+                Https = request?.IsHttps,
+                Url = url,
+                UserName = userName
             };
 
             LogEntryRepository.CreateAsync(logEntry).Wait();

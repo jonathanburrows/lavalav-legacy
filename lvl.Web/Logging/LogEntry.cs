@@ -24,12 +24,10 @@ namespace lvl.Web.Logging
         public string Message { get; set; }
 
         public string UserName { get; set; }
-        public string ServerName { get; set; }
-        public string Port { get; set; }
         public string Url { get; set; }
         public bool? Https { get; set; }
-        public string RemoteAddress { get; set; }
         public string Exception { get; set; }
         public string StackTrace { get; set; }
+        public string EnvironmentName { get; set; }
     }
 }

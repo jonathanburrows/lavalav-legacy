@@ -38,10 +38,10 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all the entities, applying the odata query string.
         /// </summary>
-        /// <param name="entityName"></param>
-        /// <returns></returns>
+        /// <param name="entityName">The name of entities which will be queried.</param>
+        /// <returns>The odata query results.</returns>
         [HttpGet("{entityName}")]
         public async Task<ODataResponse> Get(string entityName)
         {

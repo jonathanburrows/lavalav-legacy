@@ -60,8 +60,7 @@ namespace Microsoft.AspNetCore.Builder
                 .UseCors(corsConfiguration)
                 .UseMvc(defaultRouteBuilder);
         }
-
-
+        
         /// <summary>
         /// Adds the middleware used in the API pipeline, and sets up routing.
         /// </summary>

@@ -4,6 +4,7 @@ using lvl.Web.Cors;
 using lvl.Web.Logging;
 using lvl.Web.OData;
 using lvl.Web.Serialization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -61,6 +62,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<ODataConventionTokenizer>()
                 .AddScoped<ODataConventionParser>()
                 .AddScoped<ODataQueryParser>()
+                .AddScoped<IHttpContextAccessor, HttpContextAccessor>()
                 .AddOptions()
                 .AddCors()
                 .Configure(configureJson)
