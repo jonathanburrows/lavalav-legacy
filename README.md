@@ -4,5 +4,4 @@ A collection of libraries and DevOps products. These products aim to reduce the 
 ## API Architecture
 <img src="docs/api-architecture.png" />
 
-## Ontology Architecture
-<img src="lvl.Ontology\docs\ontology-architecture.png" />
+For details on an project's architecture, see its specific README.md
