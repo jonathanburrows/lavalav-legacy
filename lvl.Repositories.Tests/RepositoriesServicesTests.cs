@@ -123,7 +123,7 @@ namespace lvl.Repositories.Tests
         {
             var sessionFactory = Services.GetRequiredService<SessionProvider>();
 
-            Assert.IsAssignableFrom<SQLitePersistentSessionProvider>(sessionFactory);
+            Assert.IsNotType<SessionProvider>(sessionFactory);
         }
     }
 

@@ -9,7 +9,7 @@ namespace lvl.Repositories
     /// <summary>
     /// Provides a way for the sql lite database to not regenerate every request.
     /// </summary>
-    public sealed class SQLitePersistentSessionProvider : SessionProvider
+    internal sealed class SQLitePersistentSessionProvider : SessionProvider
     {
         private static object connectionLock { get; } = new object();
         private static IDbConnection Connection { get; set; }
