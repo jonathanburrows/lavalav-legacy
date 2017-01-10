@@ -1,5 +1,4 @@
 ﻿using lvl.Ontology;
-using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
 

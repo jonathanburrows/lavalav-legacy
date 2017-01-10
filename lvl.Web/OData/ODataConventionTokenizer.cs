@@ -5,7 +5,7 @@ namespace lvl.Web.OData
     /// <summary>
     /// Converts a query string into a set of tokens for an abstract syntax tree.
     /// </summary>
-     public class ODataConventionTokenizer : Tokenizer
+    public class ODataConventionTokenizer : Tokenizer
     {
         public ODataConventionTokenizer()
         {

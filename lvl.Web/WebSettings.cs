@@ -1,6 +1,7 @@
 ﻿using lvl.Web.Cors;
 using lvl.Web.Logging;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace lvl.Web
 {
@@ -16,6 +17,11 @@ namespace lvl.Web
 
         public WebSettings(IConfiguration configuration)
         {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
             Logging = new LoggingSettings { };
             configuration.GetSection("logging").Bind(Logging);
 

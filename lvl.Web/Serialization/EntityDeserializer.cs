@@ -8,10 +8,15 @@ namespace lvl.Web.Serialization
 {
     public class EntityDeserializer
     {
-        JsonSerializerSettings JsonSerializerSettings { get; }
+        private JsonSerializerSettings JsonSerializerSettings { get; }
 
         public EntityDeserializer(IOptions<JsonSerializerSettings> jsonSerializerSettingsOptions)
         {
+            if (jsonSerializerSettingsOptions == null || jsonSerializerSettingsOptions.Value == null)
+            {
+                throw new ArgumentNullException(nameof(jsonSerializerSettingsOptions));
+            }
+
             JsonSerializerSettings = jsonSerializerSettingsOptions.Value;
         }
 

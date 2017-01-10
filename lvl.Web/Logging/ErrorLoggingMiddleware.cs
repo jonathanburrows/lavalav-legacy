@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace lvl.Web.Logging
 {
+    /// <summary>
+    /// Catches any errors in the pipeline and logs them.
+    /// </summary>
+    /// <remarks>Was done as MVC does not call Logging on default when an error occurs.</remarks>
     internal class ErrorLoggingMiddleware
     {
         private RequestDelegate Next { get; }

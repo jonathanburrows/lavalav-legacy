@@ -9,6 +9,5 @@ namespace lvl.Web.Logging
     public class LoggingSettings
     {
         public LogLevel LogLevel { get; set; } = LogLevel.Information;
-        public bool IncludeScopes { get; set; } = true;
     }
 }
