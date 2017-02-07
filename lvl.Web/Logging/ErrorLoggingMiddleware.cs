@@ -13,9 +13,8 @@ namespace lvl.Web.Logging
     {
         private RequestDelegate Next { get; }
         private ILoggerFactory LoggerFactory { get; }
-        private LoggingSettings LoggingSettings { get; }
 
-        public ErrorLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, LoggingSettings loggingSettings)
+        public ErrorLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             if (next == null)
             {
@@ -25,16 +24,17 @@ namespace lvl.Web.Logging
             {
                 throw new ArgumentNullException(nameof(loggerFactory));
             }
-            if (loggingSettings == null)
-            {
-                throw new ArgumentNullException(nameof(loggingSettings));
-            }
 
             Next = next;
             LoggerFactory = loggerFactory;
-            LoggingSettings = loggingSettings;
         }
 
+        /// <summary>
+        /// Wraps all actions in the remainder of the pipeline in a try catch, and logs errors when they occur.
+        /// </summary>
+        /// <param name="httpContext">The request being sent down the pipeline.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="httpContext"/> is null.</exception>
+        /// <returns>The completion of the request.</returns>
         public async Task Invoke(HttpContext httpContext)
         {
             if (httpContext == null)
@@ -48,16 +48,9 @@ namespace lvl.Web.Logging
             }
             catch (Exception e)
             {
-                // If there's a database issue causing the error, we dont want to obscure it, wrap this in an additional try finally
-                try
-                {
-                    var logger = LoggerFactory.CreateLogger<ErrorLoggingMiddleware>();
-                    logger.LogError(0, e, e.Message);
-                }
-                finally
-                {
-                    throw e;
-                }
+                var logger = LoggerFactory.CreateLogger<ErrorLoggingMiddleware>();
+                logger.LogError(0, e, e.Message);
+                throw;
             }
         }
     }
