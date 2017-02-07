@@ -48,9 +48,16 @@ namespace lvl.Web.Logging
             }
             catch (Exception e)
             {
-                var logger = LoggerFactory.CreateLogger<ErrorLoggingMiddleware>();
-                logger.LogError(0, e, e.Message);
-                throw;
+                // If there's a database issue causing the error, we dont want to obscure it, wrap this in an additional try finally
+                try
+                {
+                    var logger = LoggerFactory.CreateLogger<ErrorLoggingMiddleware>();
+                    logger.LogError(0, e, e.Message);
+                }
+                finally
+                {
+                    throw e;
+                }
             }
         }
     }
