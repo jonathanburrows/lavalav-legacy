@@ -3,7 +3,7 @@
 
 Below is the roadmap of lavalav. The order of these plans are subject to change.
 
-### Current version: 0.1
+### Current version: 0.2
 
 
 ## Release Features
@@ -31,9 +31,7 @@ The database generator aims to set up a programatic way of deploying databases, 
 Amendment: due to dependencies of SQLite on database generation, Database Generation was merged in with this release.
 
 
-
-### 0.2
-#### Web Library
+### 0.2 #### Web Library
 This will be a set of generic web functions, not specific to any domain, and used across all APIs.
 - RestFUL API endpoints for all registered models
 - OData endpoints for all registered models
@@ -42,50 +40,71 @@ This will be a set of generic web functions, not specific to any domain, and use
 - Ability to register all the above functionality
 
 
-### 0.3
-#### Angular 2 Gulp Packaging
-A set of gulp tasks which will aid in building, testing, and minifying angular components.
+### 0.3 #### Angular 2 Build Pipeline
+A template of configurations and code for building angular 2 projects and libraries. 
+The build pipeline aims to provide the following features:
+- Building a project from source code
+- Building a project from distributables
+- Option to lazy load
+- Option to Ahead of Time compile
+- Run spec tests
+- Run spec tests from child libraries
+- Run e2e tests
+- Run e2e tests from child libraries
+- Run the project for development
+- Have changes be automatically updated in the browser when running development
+- Have changes from a child library automatically update the browser when running development
+- Support Sass
+- Support having a global Sass file override default Sass variables, per project
+- Have error messaging on how a project failed to build
 
 
-### 0.4
-#### Git Server
-A set of components which may be used for hosting a git server.
+### 0.4 #### TypeScript Generator
+Provides the ability convert the POCOs of a C# assembly to TypeScript.
+This will aim to convert a all models in a single C# assembly into TypeScript models, and output them into a directory. It will also:
+- Provide inheritence
+- Strongly type child properties
+- Allow for referencing of models in different libraries
+- Decorate the properties with validation attributes
+- Support interfaces and abstract classes
+- Support abstract properties
+- Allow for mapping of C# namespaces to TypeScript resolvable paths
+- Provide a set of decorators for validation
+- Be distrubuted via an npm package
 
 
-### 0.5 Package Manager Server
-A set of components for hosting npm, nuget, and chocolately packages
-
-
-### 0.6
-#### Build server
+### 0.5 #### Build server
 A set of components which may be used for hosting a build server.
 
 
-### 0.7
-#### Deployment server
+### 0.6 #### Package Manager Server
+A set of components for hosting npm, nuget, and chocolately packages.
+
+
+### 0.7 #### Deployment server
 A set of components which may be used for a deployment server.
 
 
-### 0.8
-#### Semantic Versioning API
+### 0.8 #### Semantic Versioning API
 An executable used to version code in accordance to SemVer 2.0.
 
 
-### 0.9
-#### Agile Management Application
+### 0.9 #### Agile Management Application
 A set of components for managing sprints.
 
 
-### 0.10
-#### Change Management Application
+### 0.10 #### Change Management Application
 A set of components to track changes made to software.
 
 
-### 0.11
-#### Environment Management Application
-A set of components for distrubuting and virtualizing environments
+### 0.11 #### Environment Management Application
+A set of components for distrubuting and virtualizing environments.
 
 
-### 0.12
+### 0.12 #### Build Server
+A set of components which may be used for hosting a build server
+
+
+### 0.13
 #### Portfolio
 A set of components which highlight the work done.
