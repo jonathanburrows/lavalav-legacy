@@ -12,6 +12,7 @@ export function CreditCard(): PropertyDecorator {
             if (!value) {
                 return true;
             }
+
             return creditCardRegex.test(value);
         };
 
