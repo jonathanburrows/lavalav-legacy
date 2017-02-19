@@ -19,7 +19,7 @@ describe('MaxLength', () => {
         const isValid = rules.every(rule => rule(person));
 
         expect(isValid).toBe(true);
-    }); 
+    });
 
     it('is valid if value is equal to MaxLength', () => {
         const person = new Person();

@@ -13,12 +13,11 @@ export function Phone(): PropertyDecorator {
             }
 
             const length = value.toString().length;
+
             if (length < 7) {
                 return false;
             }
-            else {
-                return true;
-            }
+            return true;
         };
 
         DefineValidationMetadata(Phone.name, isValid, target, propertyKey);

@@ -22,15 +22,13 @@ export function DataType(dataType: Function): PropertyDecorator {
                 if (value === true || value === false) {
                     return false;
                 }
-                else if (value instanceof Date) {
+                if (value instanceof Date) {
                     return false;
                 }
-                else if (value instanceof dataType) {
+                if (value instanceof dataType) {
                     return true;
                 }
-                else {
-                    return !isNaN(value);
-                }
+                return !isNaN(value);
             }
 
             // Need to make sure boolean primatives are considered
@@ -38,15 +36,13 @@ export function DataType(dataType: Function): PropertyDecorator {
                 if (value instanceof dataType) {
                     return true;
                 }
-                else if (value === true) {
+                if (value === true) {
                     return true;
                 }
-                else if (value === false) {
+                if (value === false) {
                     return true;
-                } 
-                else {
-                    return false;
                 }
+return false;
             }
 
             return value instanceof dataType;

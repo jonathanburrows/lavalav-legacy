@@ -37,7 +37,7 @@ const modulesSpecTests = [
 ];
 
 // And load the modules.
-for (let moduleSpecTest of modulesSpecTests) {
+for (const moduleSpecTest of modulesSpecTests) {
     moduleSpecTest.keys().map(moduleSpecTest);
 }
 

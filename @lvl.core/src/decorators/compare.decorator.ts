@@ -13,5 +13,5 @@ export function Compare(otherProperty: string): PropertyDecorator {
         const isValid = (validating) => validating[propertyKey] === validating[otherProperty];
 
         DefineValidationMetadata(Compare.name, isValid, target, propertyKey);
-    }
+    };
 }

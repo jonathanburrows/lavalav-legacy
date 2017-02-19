@@ -19,6 +19,7 @@ export function Range(minimum: number, maximum: number): PropertyDecorator {
             throw new Error(`@${Range.name} on ${target.constructor.name} has an identical min and max value of ${minimum}`);
         }
         if (minimum > maximum) {
+            // tslint:disable-next-line
             throw new Error(`@${Range.name} on ${target.constructor.name} has a minimum ${minimum} which is larger than the maximum ${maximum}`);
         }
 

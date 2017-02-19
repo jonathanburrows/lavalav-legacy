@@ -53,6 +53,7 @@ describe(DataType.name, () => {
 
     it('is valid if number is object number', () => {
         const numberContainer = new NumberContainer();
+        // tslint:disable-next-line
         numberContainer.number = new Number(5);
         const rules = GetValidationRules(numberContainer);
 
@@ -93,6 +94,7 @@ describe(DataType.name, () => {
 
     it('is invalid if boolean is true object', () => {
         const booleanContainer = new BooleanContainer();
+        // tslint:disable-next-line
         booleanContainer.boolean = new Boolean(true);
         const rules = GetValidationRules(booleanContainer);
 
@@ -103,6 +105,7 @@ describe(DataType.name, () => {
 
     it('is invalid if boolean is false object', () => {
         const booleanContainer = new BooleanContainer();
+        // tslint:disable-next-line
         booleanContainer.boolean = new Boolean(false);
         const rules = GetValidationRules(booleanContainer);
 

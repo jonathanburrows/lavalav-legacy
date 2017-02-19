@@ -9,15 +9,13 @@ export function Required(): PropertyDecorator {
             if (typeof value === 'undefined') {
                 return false;
             }
-            else if (value == null) {
+            if (value == null) {
                 return false;
             }
-            else if (value === '') {
+            if (value === '') {
                 return false;
             }
-            else {
-                return true;
-            }
+            return true;
         };
 
         DefineValidationMetadata(Required.name, isValid, target, propertyKey);
