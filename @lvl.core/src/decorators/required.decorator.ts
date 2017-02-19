@@ -1,8 +1,6 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
-/**
- *  Checks if a value has been assigned to a property.
- */
+/** Checks if a value has been assigned to a property. */
 export function Required(): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         const isValid = (validating) => {

@@ -43,6 +43,5 @@ describe('MaxLength', () => {
 });
 
 class Person {
-    @MaxLength(3)
-    fullName: string;
+    @MaxLength(3) fullName: string;
 }

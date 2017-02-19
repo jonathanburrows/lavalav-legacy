@@ -43,6 +43,5 @@ describe(MinLength.name, () => {
 });
 
 class Person {
-    @MinLength(3)
-    fullName: string;
+    @MinLength(3) fullName: string;
 }

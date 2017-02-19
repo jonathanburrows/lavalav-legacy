@@ -2,13 +2,12 @@
 
 import { DefineValidationMetadata } from './validation-factory';
 
-/**
- * Specifies the maximum length of array or string data allowed in a property.
- */
+/** Specifies the maximum length of array or string data allowed in a property.
+ *  @param dataType {Function} the type which the property value must be. */
 export function DataType(dataType: Function): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         if (!dataType) {
-            throw new Error(`@${DataType.name} on ${target.constructor.name} has no value.`);
+            throw new Error(`@${DataType.name} on ${target.constructor.name}.${propertyKey} has no value.`);
         }
 
         const isValid = (validating) => {

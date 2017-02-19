@@ -1,8 +1,6 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
-/**
- * Provides URL validation.
- */
+/** Provides URL validation. */
 export function Url(): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         const isValid = (validating) => {

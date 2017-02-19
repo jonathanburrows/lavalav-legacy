@@ -63,6 +63,5 @@ describe('EmailAddress', () => {
 });
 
 class Person {
-    @EmailAddress()
-    emailAddress: string;
+    @EmailAddress() emailAddress: string;
 }

@@ -46,7 +46,6 @@ describe('Compare', () => {
 });
 
 class Person {
-    @Compare('nickname')
-    name: string;
+    @Compare('nickname') name: string;
     nickname: string;
 }

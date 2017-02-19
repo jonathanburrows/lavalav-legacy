@@ -1,9 +1,9 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
-/**
- *  Specifies that a data field value in ASP.NET Dynamic Data must match the specified
+/** Specifies that a data field value in ASP.NET Dynamic Data must match the specified
  *  regular expression.
- */
+ *  @param pattern {RegExp} the pattern the property must adhere to.
+ *  @throws pattern has been been assigned a value. */
 export function RegularExpression(pattern: RegExp): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         if (!pattern) {

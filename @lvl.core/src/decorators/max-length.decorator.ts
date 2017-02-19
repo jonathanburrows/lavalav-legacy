@@ -1,7 +1,8 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
-/**
- * Specifies the maximum length of array or string data allowed in a property.
+/** Specifies the maximum length of array or string data allowed in a property.
+ *  @throws length has not been given a value.
+ *  @throws length is not a positive number.
  */
 export function MaxLength(length: number): PropertyDecorator {
     return (target: Object, propertyKey: string) => {

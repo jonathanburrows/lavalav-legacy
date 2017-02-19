@@ -1,8 +1,12 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
-/**
- * Specifies the numeric range constraints for the value of a data field.
- */
+/** Specifies the numeric range constraints for the value of a data field.
+ *  @param minimum {number} The minimum value (inclusive) the property must be.
+ *  @param maximum {number} The maximum value (inclusive) the property can be.
+ *  @throws minimum has not been given a value.
+ *  @throws maximum has not been given a value.
+ *  @throws minimum equals maximum.
+ *  @throws minimum is larger than maximum. */
 export function Range(minimum: number, maximum: number): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         if (!minimum && isNaN(minimum)) {

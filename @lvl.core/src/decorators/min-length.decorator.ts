@@ -1,8 +1,9 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
-/**
- * Specifies the minimum length of array or string data allowed in a property.
- */
+/** Specifies the minimum length of array or string data allowed in a property.
+ *  @param length {number} The minimum (inclusive) the value must be to be valid.
+ *  @throws length has not been given a value.
+ *  @throws length is not a positive number */
 export function MinLength(length: number): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         if (!length) {
