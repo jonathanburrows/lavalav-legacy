@@ -7,4 +7,5 @@ export * from './min-length.decorator';
 export * from './phone.decorator';
 export * from './range.decorator';
 export * from './regular-expression.decorator';
+export * from './required.decorator';
 export * from './url.decorator';
