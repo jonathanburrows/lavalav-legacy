@@ -2,9 +2,7 @@
   "name": "@lvl/core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-  },
+  "main": "dist/bundles/core.umd.js",
   "dependencies": {
     "@angular/common": "2.4.7",
     "@angular/compiler": "2.4.7",
