@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/bundles/core.umd.js",
+  "scripts": {
+    "test": "ng test --watch=false"
+  },
   "dependencies": {
     "@angular/common": "2.4.7",
     "@angular/compiler": "2.4.7",
@@ -22,7 +25,26 @@
   "devDependencies": {
     "@types/core-js": "0.9.35",
     "@types/jasmine": "2.5.38",
-    "protractor": "4.0.14"
+    "@types/reflect-metadata": "0.0.5",
+    "protractor": "4.0.14",
+
+
+
+    "@angular/compiler-cli": "2.4.7",
+    "@types/node": "6.0.63",
+    "angular-cli": "1.0.0-beta.28.3",
+    "codelyzer": "2.0.0",
+    "jasmine-core": "2.5.2",
+    "jasmine-spec-reporter": "2.5.0",
+    "karma": "1.2.0",
+    "karma-chrome-launcher": "2.0.0",
+    "karma-cli": "1.0.1",
+    "karma-jasmine": "1.1.0",
+    "karma-remap-istanbul": "0.2.2",
+    "npm-run-all": "4.0.1",
+    "ts-node": "1.2.1",
+    "tslint": "4.4.2",
+    "typescript": "2.0.10"
   },
   "author": "",
   "license": "ISC"
