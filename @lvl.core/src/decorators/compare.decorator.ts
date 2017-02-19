@@ -3,7 +3,7 @@
 /** Provides an attribute that compares two properties.
  *  @param otherProperty Gets the property to compare with the current property.
  */
-export function Compare(otherProperty: string): any {
+export function Compare(otherProperty: string): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         const isValid = (validating) => validating[propertyKey] === validating[otherProperty];
 
