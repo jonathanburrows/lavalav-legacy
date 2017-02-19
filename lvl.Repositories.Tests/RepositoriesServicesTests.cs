@@ -11,7 +11,7 @@ namespace lvl.Repositories.Tests
     /// <remarks>
     /// Shortened class name as it was becoming too unweildy
     /// </remarks>
-    public abstract class RepositoriesServicesTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
+    public abstract class RepositoriesServicesTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture 
     {
         protected IServiceProvider Services { get; }
 

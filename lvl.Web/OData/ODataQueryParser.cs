@@ -21,7 +21,7 @@ namespace lvl.Web.OData
             {
                 throw new ArgumentNullException(nameof(conventionTokenizer));
             }
-            if (conventionParser == null)
+            if (conventionParser == null) 
             {
                 throw new ArgumentNullException(nameof(conventionParser));
             }
@@ -30,14 +30,20 @@ namespace lvl.Web.OData
             ConventionParser = conventionParser;
         }
 
-        public IQuery Parse<T>(IQueryCollection queryParameters)
+        /// <summary>
+        /// Converts a set of query parameters to a Query.
+        /// </summary>
+        /// <typeparam name="T">The type of entites which will be queried.</typeparam>
+        /// <param name="parsing">The query which will be converted into a query.</param>
+        /// <returns>The query parsed from the query string.</returns>
+        public IQuery Parse<T>(IQueryCollection parsing)
         {
-            if (queryParameters == null)
+            if (parsing == null)
             {
-                throw new ArgumentNullException(nameof(queryParameters));
+                throw new ArgumentNullException(nameof(parsing));
             }
 
-            var exceptions = GetExceptions<T>(queryParameters).ToList();
+            var exceptions = GetExceptions<T>(parsing).ToList();
             if (exceptions.Any())
             {
                 throw new AggregateException($"{exceptions.Count} invalid odata arguments were given.", exceptions);
@@ -45,7 +51,7 @@ namespace lvl.Web.OData
 
             IQuery<T, T> query = new Query<T>();
 
-            var filterValue = GetSingleParameter(queryParameters, "$filter");
+            var filterValue = GetSingleParameter(parsing, "$filter");
             if (filterValue != null)
             {
                 var filterTokens = ConventionTokenizer.Tokenize(filterValue);
@@ -54,27 +60,27 @@ namespace lvl.Web.OData
                 query = query.Where(filterStatement);
             }
 
-            var orderByValues = GetCollectionParameter(queryParameters, "$orderby");
+            var orderByValues = GetCollectionParameter(parsing, "$orderby");
             foreach (var orderBy in orderByValues.Reverse())
             {
                 query = query.OrderBy(orderBy);
             }
 
-            var skipValue = GetSingleParameter(queryParameters, "$skip");
+            var skipValue = GetSingleParameter(parsing, "$skip");
             if (skipValue != null)
             {
                 var skip = int.Parse(skipValue);
                 query = query.Skip(skip);
             }
 
-            var topValue = GetSingleParameter(queryParameters, "$top");
+            var topValue = GetSingleParameter(parsing, "$top");
             if (topValue != null)
             {
                 var top = int.Parse(topValue);
                 query = query.Take(top);
             }
 
-            var selectValues = GetCollectionParameter(queryParameters, "$select");
+            var selectValues = GetCollectionParameter(parsing, "$select");
             if (selectValues.Any())
             {
                 var selectExpression = $"new({string.Join(",", selectValues)})";
@@ -152,6 +158,12 @@ namespace lvl.Web.OData
             }
         }
 
+        /// <summary>
+        /// Converts a set of query parameters to a Query.
+        /// </summary>
+        /// <param name="queryParameters">The query which will be converted into a query.</param>
+        /// <param name="type">The type of entites which will be queried.</param>
+        /// <returns>The query parsed from the query string.</returns>
         public IQuery Parse(IQueryCollection parsing, Type type)
         {
             var genericMethod = GetType().GetMethod(nameof(Parse), new[] { typeof(IQueryCollection) });

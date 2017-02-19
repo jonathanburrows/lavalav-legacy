@@ -8,8 +8,10 @@ namespace lvl.Repositories.Querying
     /// <typeparam name="T"></typeparam>
     public class Query<T> : ChainedQuery<T, T>
     {
+        /// <inheritdoc />
         public override IQueryable<T> Apply(IQueryable<T> querying) => querying;
 
+        /// <inheritdoc />
         public override int Count(IQueryable<T> counting) => counting.Count();
     }
 }

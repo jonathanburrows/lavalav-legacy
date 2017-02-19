@@ -32,7 +32,8 @@ namespace lvl.Repositories
             }
 
         }
-
+        
+        /// <inheritdoc />
         public override ISession GetSession() => SessionFactory.OpenSession(Connection);
     }
 }

@@ -16,12 +16,14 @@ namespace lvl.Repositories.Querying
             WhereExpression = whereExpression;
         }
 
+        /// <inheritdoc />
         public override IQueryable<TTail> Apply(IQueryable<THead> querying)
         {
             var previous = (IQueryable<TTail>)Previous.Apply(querying);
             return previous.Where(WhereExpression);
         }
 
+        /// <inheritdoc />
         public override int Count(IQueryable<THead> counting)
         {
             return Apply(counting).Count();

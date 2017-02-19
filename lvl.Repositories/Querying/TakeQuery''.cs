@@ -13,6 +13,7 @@ namespace lvl.Repositories.Querying
             TakeN = takeN;
         }
 
+        /// <inheritdoc />
         public override IQueryable<TTail> Apply(IQueryable<THead> querying)
         {
             var previous = (IQueryable<TTail>)Previous.Apply(querying);

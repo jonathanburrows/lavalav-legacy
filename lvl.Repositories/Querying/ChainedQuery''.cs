@@ -17,6 +17,11 @@ namespace lvl.Repositories.Querying
             Previous = previous;
         }
 
+        /// <summary>
+        /// Applies a set of queries, from head to tail, and returns the result.
+        /// </summary>
+        /// <param name="querying">The original, unaltered queryable.</param>
+        /// <returns>A queryable which has all queries applied.</returns>
         public abstract IQueryable<TTail> Apply(IQueryable<THead> querying);
 
         IQueryable IQuery.Apply(IQueryable querying)
@@ -34,6 +39,11 @@ namespace lvl.Repositories.Querying
             return Apply(boxed);
         }
 
+        /// <summary>
+        /// Gets the total amount of items in the query before paging.
+        /// </summary>
+        /// <param name="counting"></param>
+        /// <returns></returns>
         public virtual int Count(IQueryable<THead> counting) => Previous.Count(counting);
 
         int IQuery.Count(IQueryable counting)

@@ -43,7 +43,7 @@ namespace lvl.Repositories.Tests
 
         [IntegrationTest]
         public void WhenConstructing_AndTypeIsntEntity_ArgumentExceptionIsThrown()
-        {
+        { 
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             Assert.Throws<ArgumentException>(() => repositoryFactory.Construct(typeof(NonEntity)));
         }

@@ -14,6 +14,7 @@ namespace lvl.Repositories.Querying
             SkipN = skipN;
         }
 
+        /// <inheritdoc />
         public override IQueryable<TTail> Apply(IQueryable<THead> querying)
         {
             var previousQuery = (IQueryable<TTail>)Previous.Apply(querying);

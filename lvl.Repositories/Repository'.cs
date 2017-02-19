@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace lvl.Repositories
 {
+    /// <inheritdoc />
     public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : class, IEntity
     {
         private SessionProvider SessionProvider { get; }
@@ -18,6 +19,7 @@ namespace lvl.Repositories
             SessionProvider = sessionManager;
         }
 
+        /// <inheritdoc />
         public virtual Task<IEnumerable<TEntity>> GetAsync()
         {
             using (var session = SessionProvider.GetSession())
@@ -26,12 +28,13 @@ namespace lvl.Repositories
                 return Task.FromResult(entities.AsEnumerable());
             }
         }
-
+        
         async Task<IEnumerable<IEntity>> IRepository.GetAsync()
         {
             return (await GetAsync()).Cast<IEntity>();
         }
 
+        /// <inheritdoc />
         public async Task<IQueryResult<TResult>> GetAsync<TResult>(IQuery<TEntity, TResult> query)
         {
             using (var session = SessionProvider.GetSession())
@@ -45,14 +48,15 @@ namespace lvl.Repositories
                     Items = items
                 };
 
-                //force the collection to load.
+                // Force the collection to load, due to a limitation in asp.core serialization.
+                // Please replace with something more elegant.
                 var settings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
                 JsonConvert.SerializeObject(items, settings);
 
                 return await Task.FromResult(queryResult);
             }
         }
-
+        
         async Task<IQueryResult> IRepository.GetAsync(IQuery query)
         {
             if (query == null)
@@ -64,7 +68,7 @@ namespace lvl.Repositories
             return await GetAsync(boxedQuery);
         }
 
-
+        /// <inheritdoc />
         public virtual Task<TEntity> GetAsync(int id)
         {
             using (var session = SessionProvider.GetSession())
@@ -73,12 +77,13 @@ namespace lvl.Repositories
                 return Task.FromResult(entity);
             }
         }
-
+        
         async Task<IEntity> IRepository.GetAsync(int id)
         {
             return await GetAsync(id);
         }
 
+        /// <inheritdoc />
         public virtual Task<TEntity> CreateAsync(TEntity creating)
         {
             if (creating == null)
@@ -99,7 +104,7 @@ namespace lvl.Repositories
 
             return Task.FromResult(creating);
         }
-
+        
         async Task<IEntity> IRepository.CreateAsync(IEntity creating)
         {
             var boxed = creating as TEntity;
@@ -115,6 +120,7 @@ namespace lvl.Repositories
             return await CreateAsync(boxed);
         }
 
+        /// <inheritdoc />
         public virtual Task<TEntity> UpdateAsync(TEntity updating)
         {
             if (updating == null)
@@ -135,7 +141,7 @@ namespace lvl.Repositories
 
             return Task.FromResult(updating);
         }
-
+        
         async Task<IEntity> IRepository.UpdateAsync(IEntity updating)
         {
             var boxed = updating as TEntity;
@@ -151,6 +157,7 @@ namespace lvl.Repositories
             return await UpdateAsync(boxed);
         }
 
+        /// <inheritdoc />
         public virtual Task<TEntity> DeleteAsync(TEntity deleting)
         {
             if (deleting == null)

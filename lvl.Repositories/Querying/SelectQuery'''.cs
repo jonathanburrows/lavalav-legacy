@@ -17,6 +17,7 @@ namespace lvl.Repositories.Querying
             SelectExpression = selectExpression;
         }
 
+        /// <inheritdoc />
         public override IQueryable<TTail> Apply(IQueryable<THead> querying)
         {
             var previous = (IQueryable<TSource>)Previous.Apply(querying);

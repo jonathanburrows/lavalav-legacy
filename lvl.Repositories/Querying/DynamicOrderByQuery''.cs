@@ -15,6 +15,7 @@ namespace lvl.Repositories.Querying
             KeySelector = keySelector;
         }
 
+        /// <inheritdoc />
         public override IQueryable<TTail> Apply(IQueryable<THead> querying)
         {
             var previousQuery = (IQueryable<TTail>)Previous.Apply(querying);
