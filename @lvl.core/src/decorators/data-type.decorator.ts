@@ -42,7 +42,7 @@ export function DataType(dataType: Function): PropertyDecorator {
                 if (value === false) {
                     return true;
                 }
-return false;
+                return false;
             }
 
             return value instanceof dataType;
