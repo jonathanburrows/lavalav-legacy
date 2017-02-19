@@ -5,4 +5,5 @@ export * from './email-address.decorator';
 export * from './max-length.decorator';
 export * from './min-length.decorator';
 export * from './phone.decorator';
+export * from './range.decorator';
 export * from './url.decorator';
