@@ -15,8 +15,13 @@ namespace lvl.TypescriptGenerator
         /// 
         /// </summary>
         /// <param name="args">The command line arguments used to generate the models.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="args"/> is null.</exception> 
         public static void Main(string[] args)
         {
+            if (args == null)
+            {
+                throw new ArgumentNullException();
+            }
             throw new NotImplementedException();
         }
     }

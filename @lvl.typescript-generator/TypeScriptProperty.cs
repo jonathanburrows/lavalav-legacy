@@ -5,7 +5,7 @@ namespace lvl.TypescriptGenerator
     /// <summary>
     /// Represents an accessible member on a class or interface.
     /// </summary>
-    internal class TypeScriptProperty
+    public class TypeScriptProperty
     {
         /// <summary>The name of the property.</summary>
         public string Name { get; set; }

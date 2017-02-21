@@ -7,14 +7,16 @@ namespace lvl.TypescriptGenerator
     /// <summary>
     /// Represets a type in TypeScript.
     /// </summary>
-    internal abstract class TypeScriptType
+    public abstract class TypeScriptType
     {
         /// <summary>The name of the type.</summary>
         public string Name { get; set; }
 
         /// <summary>Represents the next class in the inheritance chain</summary>
-        /// <exception cref="ArgumentException">BaseType is the same as the parent type.</exception>
         public TypeScriptType BaseType { get; set; }
+
+        /// <summary>Represents all the interfaces the type implements.</summary>
+        public IEnumerable<TypeScriptType> Interfaces { get; set; } 
 
         /// <summary>Represents the path to the type's module.</summary>
         public string ModulePath { get; set; }
