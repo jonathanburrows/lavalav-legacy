@@ -35,9 +35,14 @@ namespace lvl.DatabaseGenerator
         /// This was done to allow for transactions to be run from the same configuration.
         /// </summary>
         /// <param name="session">The session which will provide the transaction.</param>
-        /// <exception cref=""
+        /// <exception cref="ArgumentNullException"><paramref name="session"/> is null.</exception>
         public void Create(ISession session)
         {
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
+
             var exporter = new SchemaExport(Configuration);
             //this method was used because the same connection needs to be used for SQLite.
             exporter.Execute(true, true, false, session.Connection, null);

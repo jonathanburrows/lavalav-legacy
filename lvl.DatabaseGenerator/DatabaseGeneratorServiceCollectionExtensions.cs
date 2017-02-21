@@ -14,7 +14,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="serviceCollection">The provider which will have the services registered.</param>
         /// <returns>The given provider, with all services registered.</returns>
-        /// <exception cref="InvalidOperationException">AddDomains has not been called</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">AddDomains has not been called.</exception>
         public static IServiceCollection AddDatabaseGeneration(this IServiceCollection serviceCollection)
         {
             if (serviceCollection == null)

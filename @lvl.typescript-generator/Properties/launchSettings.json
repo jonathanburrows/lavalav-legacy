@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "@lvl.typescript-generator": {
+      "commandName": "Project",
+      "commandLineArgs": "--assembly-path=\"hello, world\" --output-directory=\"world\" TestDomain.Models=@lvl/test-domain"
+    }
+  }
+}

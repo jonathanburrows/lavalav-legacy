@@ -16,16 +16,27 @@ namespace lvl.DatabaseGenerator
 
         public ScriptRunner(Configuration configuration)
         {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
             SessionFactory = configuration.BuildSessionFactory();
         }
 
         /// <summary>
         /// Runs scripts from a given folder against the registered database.
         /// </summary>
-        /// <param name="scriptBin">The directory which will contain the .sql files to be run</param>
-        /// <remarks>Run in order by file name</remarks>
+        /// <param name="scriptBin">The directory which will contain the .sql files to be run.</param>
+        /// <remarks>Run in order by file name.</remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="scriptBin"/> is null.</exception>
+        /// <exception cref="DirectoryNotFoundException"><paramref name="scriptBin"/> is not a directory.</exception>
         public void RunScriptsInDirectory(string scriptBin)
         {
+            if (scriptBin == null)
+            {
+                throw new ArgumentNullException(nameof(scriptBin));
+            }
+
             var scriptDirectory = new DirectoryInfo(scriptBin);
             if (!scriptDirectory.Exists)
             {

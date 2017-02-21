@@ -22,7 +22,7 @@ namespace lvl.DatabaseGenerator
         /// <summary>
         /// Applies changes to the registered database, bringing it up the current model.
         /// </summary>
-        /// <exception cref="System.AggregateException">There are breaking changes which prevent the migration.</exception>
+        /// <exception cref="AggregateException">There are breaking changes which prevent the migration.</exception>
         public void Migrate()
         {
             var migrator = new SchemaUpdate(Configuration);
