@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace lvl.TypescriptGenerator
@@ -12,11 +13,14 @@ namespace lvl.TypescriptGenerator
         /// <summary>The name of the type.</summary>
         public string Name { get; set; }
 
+        /// <summary>Name to use to prevent naming collisions.</summary>
+        public string Alias { get; set; }
+
         /// <summary>Represents the next class in the inheritance chain</summary>
         public TypeScriptType BaseType { get; set; }
 
         /// <summary>Represents all the interfaces the type implements.</summary>
-        public IEnumerable<TypeScriptType> Interfaces { get; set; } 
+        public IList<TypeScriptType> Interfaces { get; set; }
 
         /// <summary>Represents the path to the type's module.</summary>
         public string ModulePath { get; set; }
@@ -25,50 +29,109 @@ namespace lvl.TypescriptGenerator
         public bool IsVisible { get; set; }
 
         /// <summary>Represents the accessible properties for the type.</summary>
-        public IEnumerable<TypeScriptProperty> Properties { get; set; }
+        public IList<TypeScriptProperty> Properties { get; set; }
+
+        /// <summary>Denotes if this is a global primative type.</summary>
+        public bool IsPrimitive { get; set; }
+
+        /// <summary>Denotes if this should be an array type.</summary>
+        public bool IsCollection { get; set; }
 
         /// <summary>
         /// Will construct the necissary import statements.
         /// </summary>
         /// <returns>The typescript for importing the dependant libraries.</returns>
-        protected StringBuilder GetImportStatements()
+        protected string GetImportStatements()
         {
-            throw new NotImplementedException();
+            MangleImports();
+
+            var dependencies = GetDependencies();
+            if (!dependencies.Any())
+            {
+                //we dont want any newlines at the top of the file if there's no dependencies.
+                return string.Empty;
+            }
+
+            var importStatements = dependencies.GroupBy(d => d.ModulePath).Select(moduleDependencies =>
+            {
+                var modulePath = moduleDependencies.Key;
+
+                var references = moduleDependencies
+                    .Select(d => d.Alias != null ? $"{d.Name} as {d.Alias}" : $"{d.Name}")
+                    .Distinct()
+                    .OrderBy(r => r);
+                var referencesStatement = string.Join(", ", references);
+
+                return $"import {{ {referencesStatement} }} from '{modulePath}';";
+            });
+
+            return string.Join(Environment.NewLine, importStatements) + Environment.NewLine + Environment.NewLine;
         }
 
         /// <summary>
-        /// Will resolve naming collisions
+        /// Will resolve naming collisions by setting aliases.
         /// </summary>
         private void MangleImports()
         {
-            throw new NotImplementedException();
+            var dependencies = GetDependencies();
+            var dependenciesByName = dependencies.GroupBy(d => d.Name);
+            foreach (var dependenciesWithName in dependenciesByName)
+            {
+                var name = dependenciesWithName.Key;
+
+                var likeDependencies = dependenciesWithName.GroupBy(ld => ld.ModulePath).ToArray();
+
+                for (var i = 1; i < likeDependencies.Length; i++)
+                {
+                    foreach (var likeDependency in likeDependencies[i])
+                    {
+                        likeDependency.Alias = $"{name}_{i}";
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Will return all types which need to be imported.
         /// </summary>
-        /// <returns></returns>
-        private IEnumerable<TypeScriptType> GetDependencies()
+        /// <returns>The types to be imported, imported by module path</returns>
+        private IOrderedEnumerable<TypeScriptType> GetDependencies()
         {
-            throw new NotImplementedException();
-        }
+            if (Properties == null)
+            {
+                throw new InvalidOperationException($"{nameof(Properties)} has not been properly initialized.");
+            }
+            if (Interfaces == null)
+            {
+                throw new InvalidOperationException($"{nameof(Interfaces)} has not been properly initialized.");
+            }
 
-        /// <summary>
-        /// Will construct the necissary statement for inheritance.
-        /// </summary>
-        /// <returns>The typescript for extending a class.</returns>
-        public StringBuilder GetExtendStatement()
-        {
-            throw new NotImplementedException();
+            var propertyTypes = Properties.Select(p => p.PropertyType).Where(p => !p.IsPrimitive);
+            var decoratorTypes = Properties.SelectMany(p => p.Decorators);
+            var dependencies = propertyTypes.Union(Interfaces).Union(decoratorTypes);
+            if (BaseType != null)
+            {
+                return dependencies.Union(new[] { BaseType }).OrderBy(d => d.ModulePath);
+            }
+            else
+            {
+                return dependencies.OrderBy(d => d.ModulePath);
+            }
         }
 
         /// <summary>
         /// Will construct the necissary statements for interface implementation.
         /// </summary>
         /// <returns>The typescript for implementing interfaces.</returns>
-        public StringBuilder GetImplementationStatements()
+        public string GetImplementationStatements()
         {
-            throw new NotImplementedException();
+            if (!Interfaces.Any())
+            {
+                return string.Empty;
+            }
+
+            var interfaces = string.Join(", ", Interfaces.Select(i => i.Alias ?? i.Name));
+            return $"implements {interfaces} ";
         }
 
         /// <summary>

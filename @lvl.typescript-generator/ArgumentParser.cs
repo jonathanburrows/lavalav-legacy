@@ -10,6 +10,7 @@ namespace lvl.TypescriptGenerator
     {
         private const string AssemblyPathKey = "--assembly-path";
         private const string OutputDirectoryKey = "--output-directory";
+        private const string DecoratorPathKey = "--decorator-path";
 
         /// <summary>
         /// Converts a set of command line arguments into options for generating typescript models.

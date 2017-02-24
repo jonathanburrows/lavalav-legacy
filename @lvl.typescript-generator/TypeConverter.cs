@@ -1,8 +1,11 @@
-﻿using System;
+﻿using lvl.TypescriptGenerator.Decorators;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using lvl.TypescriptGenerator.Extensions;
 
 namespace lvl.TypescriptGenerator
 {
@@ -19,27 +22,31 @@ namespace lvl.TypescriptGenerator
         /// <returns>The content of the converted typescript type.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="converting"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="packageForNamespace"/> is null.</exception>
-        public TypeScriptType CsToTypeScript(Type converting, IReadOnlyDictionary<string, string> packageForNamespace)
+        public TypeScriptType CsToTypeScript(Type converting, GenerationOptions generationOptions)
         {
             if (converting == null)
             {
                 throw new ArgumentNullException(nameof(converting));
             }
-            if (packageForNamespace == null)
+            if (generationOptions == null)
             {
-                throw new ArgumentNullException(nameof(packageForNamespace));
+                throw new ArgumentNullException(nameof(generationOptions));
+            }
+            if (generationOptions.PackageForNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(generationOptions.PackageForNamespace));
             }
 
-            var tsType = converting.IsInterface ? (TypeScriptType)new TypeScriptInterface() : new TypeScriptClass();
+            var tsType = converting.IsInterface ? (TypeScriptType)new TypeScriptInterface() : new TypeScriptClass { IsAbstract = converting.IsAbstract };
             tsType.Name = converting.Name;
 
-            if (converting.BaseType != typeof(object))
+            if (converting.BaseType != typeof(object) && converting.BaseType != null)
             {
-                tsType.BaseType = ConvertImportedType(converting.BaseType, packageForNamespace);
+                tsType.BaseType = ConvertImportedType(converting.BaseType, generationOptions);
             }
 
-            tsType.Interfaces = converting.GetInterfaces().Select(i => ConvertImportedType(i, packageForNamespace));
-            tsType.Properties = converting.GetProperties().Select(p => ConvertPropertyInfo(p, packageForNamespace)).ToList();
+            tsType.Interfaces = converting.GetInterfaces().Select(i => ConvertImportedType(i, generationOptions)).ToList();
+            tsType.Properties = converting.GetProperties().Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
             tsType.IsVisible = converting.IsVisible;
 
             return tsType;
@@ -51,57 +58,73 @@ namespace lvl.TypescriptGenerator
         /// <param name="propertyInfo">The property to be converted.</param>
         /// <param name="packageForNamespace">The mapping of namespace to package directory.</param>
         /// <returns>The converted property.</returns>
-        private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, IReadOnlyDictionary<string, string> packageForNamespace)
+        private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, GenerationOptions generationOptions)
         {
-            var compareDecorators = propertyInfo
+            var decoratorBin = generationOptions.DecoratorPath;
+
+            // sorry for the repeatedness, the more clever solutions were harder to read.
+            IEnumerable<TypeScriptType> compareDecorators = propertyInfo
                 .GetCustomAttributes<CompareAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "Compare", Arguments = new[] { v.OtherProperty } });
-            var creditCardDecorators = propertyInfo
+                .Select(c => new CompareDecorator(decoratorBin, c));
+
+            IEnumerable<TypeScriptType> creditCardDecorators = propertyInfo
                 .GetCustomAttributes<CreditCardAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "CreditCard" });
-            var emailAddressDecorators = propertyInfo
+                .Select(c => new CreditCardDecorator(decoratorBin));
+
+            IEnumerable<TypeScriptType> emailAddressDecorators = propertyInfo
                 .GetCustomAttributes<EmailAddressAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "EmailAddress" });
-            var maxLengthDecorators = propertyInfo
+                .Select(e => new EmailAddressDecorator(decoratorBin));
+
+            IEnumerable<TypeScriptType> maxLengthDecorators = propertyInfo
                 .GetCustomAttributes<MaxLengthAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "MaxLength", Arguments = new object[] { v.Length } });
-            var minLengthDecorators = propertyInfo
+                .Select(m => new MaxLengthDecorator(decoratorBin, m));
+
+            IEnumerable<TypeScriptType> minLengthDecorators = propertyInfo
                 .GetCustomAttributes<MinLengthAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "MinLength", Arguments = new object[] { v.Length } });
-            var phoneDecorators = propertyInfo
+                .Select(m => new MinLengthDecorator(decoratorBin, m));
+
+            IEnumerable<TypeScriptType> phoneDecorators = propertyInfo
                 .GetCustomAttributes<PhoneAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "Phone" });
-            var urlDecorators = propertyInfo
-                .GetCustomAttributes<UrlAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "Url" });
-            var rangeDecorators = propertyInfo
+                .Select(p => new PhoneDecorator(decoratorBin));
+
+            IEnumerable<TypeScriptType> rangeDecorators = propertyInfo
                 .GetCustomAttributes<RangeAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "Range", Arguments = new object[] { v.Minimum, v.Maximum } });
-            var regularExpressionDecorators = propertyInfo
+                .Select(r => new RangeDecorator(decoratorBin, r));
+
+            IEnumerable<TypeScriptType> regularExpressionDecorators = propertyInfo
                 .GetCustomAttributes<RegularExpressionAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "RegularExpression", Arguments = new[] { v.Pattern } });
-            var requiredDecorators = propertyInfo
+                .Select(r => new RegularExpressionDecorator(decoratorBin, r));
+
+            IEnumerable<TypeScriptType> requiredDecorators = propertyInfo
                 .GetCustomAttributes<RequiredAttribute>()
-                .Select(v => new TypeScriptDecorator { Name = "Required" });
+                .Select(r => new RequiredDecorator(decoratorBin));
+
+            IEnumerable<TypeScriptType> urlDecorators = propertyInfo
+                .GetCustomAttributes<UrlAttribute>()
+                .Select(u => new UrlDecorator(decoratorBin));
+
             var decorators = compareDecorators
                 .Union(creditCardDecorators)
                 .Union(emailAddressDecorators)
                 .Union(maxLengthDecorators)
                 .Union(minLengthDecorators)
                 .Union(phoneDecorators)
-                .Union(urlDecorators)
                 .Union(rangeDecorators)
                 .Union(regularExpressionDecorators)
-                .Union(requiredDecorators);
+                .Union(requiredDecorators)
+                .Union(urlDecorators);
 
-            var propertyType = ConvertImportedType(propertyInfo.PropertyType, packageForNamespace);
+            var propertyType = ConvertImportedType(propertyInfo.PropertyType, generationOptions);
+
+            var isGeneric = propertyInfo.PropertyType.IsGenericType;
+            var isOptional = isGeneric && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
 
             return new TypeScriptProperty
             {
                 Name = propertyInfo.Name,
                 Decorators = decorators,
                 IsAbstract = propertyInfo.GetSetMethod().IsAbstract,
-                IsOptional = !propertyInfo.PropertyType.IsValueType,
+                IsOptional = isOptional,
                 PropertyType = propertyType
             };
         }
@@ -111,27 +134,86 @@ namespace lvl.TypescriptGenerator
         /// </summary>
         /// <param name="imported">The type which will have a shallow conversion done.</param>
         /// <returns>The shallow converted type which can be used for imports.</returns>
-        private TypeScriptType ConvertImportedType(Type imported, IReadOnlyDictionary<string, string> packageForNamespace)
+        private TypeScriptType ConvertImportedType(Type imported, GenerationOptions generationOptions)
         {
             var isPrimitive = imported == typeof(string) || imported.IsValueType;
 
-            if (isPrimitive)
+            if (imported.IsArray)
             {
-                return new TypeScriptClass { Name = imported.Name };
-            }
-            else if (packageForNamespace.ContainsKey(imported.Namespace))
-            {
+                var type = imported.GetElementType();
                 return new TypeScriptClass
                 {
-                    Name = imported.Name,
-                    ModulePath = packageForNamespace[imported.Namespace]
+                    Name = GetTypeName(type),
+                    ModulePath = GetPathForType(type, generationOptions),
+                    IsPrimitive = type == typeof(string) || type.IsValueType,
+                    IsCollection = true
+                };
+            }
+            else if (typeof(IEnumerable).IsAssignableFrom(imported) && imported != typeof(string))
+            {
+                var type = imported.GetGenericArguments().Single();
+                return new TypeScriptClass
+                {
+                    Name = GetTypeName(type),
+                    ModulePath = GetPathForType(type, generationOptions),
+                    IsPrimitive = type == typeof(string) || type.IsValueType,
+                    IsCollection = true
                 };
             }
             else
             {
-                // consider it as a type within the generated npm package.
-                return new TypeScriptClass { Name = imported.Name };
+                return new TypeScriptClass
+                {
+                    Name = GetTypeName(imported),
+                    ModulePath = GetPathForType(imported, generationOptions),
+                    IsPrimitive = imported == typeof(string) || imported.IsValueType
+                };
             }
+        }
+
+        private string GetPathForType(Type type, GenerationOptions generationOptions)
+        {
+            var packageForNamespace = generationOptions.PackageForNamespace;
+            if (type == typeof(string) || type.IsValueType)
+            {
+                return null;
+            }
+            else if (packageForNamespace.ContainsKey(type.Namespace))
+            {
+                return packageForNamespace[type.Namespace];
+            }
+            else
+            {
+                return $"./{type.Name.ToDashed()}";
+            }
+        }
+
+        private string GetTypeName(Type type)
+        {
+            var numberTypes = new[] { typeof(int), typeof(int?), typeof(double), typeof(double?), typeof(decimal), typeof(decimal?), typeof(long), typeof(long?) };
+            if (numberTypes.Any(t => t.IsAssignableFrom(type)))
+            {
+                return "number";
+            }
+
+            var dateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
+            if (dateTypes.Any(t => t.IsAssignableFrom(type)))
+            {
+                return "Date";
+            }
+
+            var booleanTypes = new[] { typeof(bool), typeof(bool?) };
+            if (booleanTypes.Any(t => t.IsAssignableFrom(type)))
+            {
+                return "boolean";
+            }
+
+            if (typeof(string).IsAssignableFrom(type))
+            {
+                return "string";
+            }
+
+            return type.Name;
         }
     }
 }

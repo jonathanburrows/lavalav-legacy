@@ -20,9 +20,9 @@ When the class is abstract, the result must reads:
 "export abstract class &lt;class-name&gt;"
 
 ### When converting a class to TypeScript, the generated properties must satisfy the conditions:
-The property name must be pascal case.
-
 The property must have the public modifier.
+
+The property name must be pascal case.
 
 If there is a CompareAttribute, the result must read:
 "@Compare("&lt;comparedProperty&gt;") public &lt;propertyName&gt;"
@@ -161,6 +161,9 @@ If the property type is a boolean, the result must read:
 If the property type is a boolean, the result must read:
 "public &lt;propertyName&gt;?: boolean;"
 
+ If there is a single property on an interface, and the property type comes from the same assembly, then the result must read:
+ "import { &lt;propertyType&gt; } from './&lt;propertyType&gt;';"
+
 If the property type is not a structure, then the result must read:
 "public &lt;propertyName&gt;?: &lt;propertyType&gt;;"
 
@@ -173,6 +176,3 @@ If there are two properties on an interface, and the property types are mapped t
 If there are two properties on an interface, and the property types are mapped to two different npm packages, then the result must read:
 "import { &lt;propertyType1&gt; } from '&lt;module-path1&gt;';
  import { &lt;propertyType2&gt; } from '&lt;module-path2&gt;';"
-
- If there is a single property on an interface, and the property type comes from the same assembly, then the result must read:
- "import { &lt;propertyType&gt; } from './&lt;propertyType&gt;';"

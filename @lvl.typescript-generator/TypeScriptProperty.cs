@@ -14,7 +14,7 @@ namespace lvl.TypescriptGenerator
         public TypeScriptType PropertyType { get; set; }
 
         /// <summary>Validation metadata which will be added to classes.</summary>
-        public IEnumerable<TypeScriptDecorator> Decorators { get; set; }
+        public IEnumerable<TypeScriptType> Decorators { get; set; }
 
         /// <summary>Denotes on an interface if this is optional.</summary>
         public bool IsOptional { get; set; }

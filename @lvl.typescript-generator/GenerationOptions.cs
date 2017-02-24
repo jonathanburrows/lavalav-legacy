@@ -13,7 +13,10 @@ namespace lvl.TypescriptGenerator
         /// <summary>The directory where the typescript will be generated to.</summary>
         public string OutputPath { get; set; }
 
+        /// <summary>(optional) The directory which the decorator attributes may be found in.</summary>
+        public string DecoratorPath { get; set; }
+
         /// <summary>A set of mappings from C# namespaces to NPM Packages</summary>
-        public IReadOnlyDictionary<string, string> PackageByNamespace { get; set; }
+        public IReadOnlyDictionary<string, string> PackageForNamespace { get; set; }
     }
 }

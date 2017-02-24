@@ -1,7 +1,7 @@
 ﻿import { DefineValidationMetadata } from './validation-factory';
 
 /**
- * Validates an email address.
+ * Validates a phone address.
  */
 export function Phone(): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
