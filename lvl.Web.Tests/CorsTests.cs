@@ -37,7 +37,7 @@ namespace lvl.Web.Tests
         [InlineData("POST")]
         [InlineData("PUT")]
         [InlineData("DELETE")]
-        public async Task WhenRequestingOptions_ForAllMethods_CorsResponseIsGiven(string method)
+        public void WhenRequestingOptions_ForAllMethods_CorsResponseIsGiven(string method)
         {
             var request = new HttpRequestMessage
             {
@@ -47,7 +47,8 @@ namespace lvl.Web.Tests
             request.Headers.Add(CorsConstants.Origin, Client.BaseAddress.ToString());
             request.Headers.Add(CorsConstants.AccessControlRequestMethod, method);
 
-            var response = await Client.SendAsync(request);
+            // Since Theories dont adhere to the TestCollection rules, the call was made synchronous.
+            var response = Client.SendAsync(request).Result;
 
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
