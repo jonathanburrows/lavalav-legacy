@@ -57,7 +57,7 @@ namespace lvl.Web.Tests
         [InlineData("PUT")]
         [InlineData("DELETE")]
         [InlineData("NON-STANDARD")]
-        public async Task WhenRequestingOptions_NonStandardAllowedMethodsAreReturned(string nonStandardMethod)
+        public void WhenRequestingOptions_NonStandardAllowedMethodsAreReturned(string nonStandardMethod)
         {
             var request = new HttpRequestMessage
             {
@@ -67,7 +67,8 @@ namespace lvl.Web.Tests
             request.Headers.Add(CorsConstants.Origin, Client.BaseAddress.ToString());
             request.Headers.Add(CorsConstants.AccessControlRequestMethod, nonStandardMethod);
 
-            var response = await Client.SendAsync(request);
+            // due to theories not adhering to test collection behaviour, calls are made synchronously.
+            var response = Client.SendAsync(request).Result;
             var allowedMethods = response.Headers.GetValues(CorsConstants.AccessControlAllowMethods);
 
             Assert.Contains(nonStandardMethod, allowedMethods);

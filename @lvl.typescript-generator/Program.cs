@@ -57,7 +57,7 @@ namespace lvl.TypescriptGenerator
 
             // construct the barrel file
             var exportStatements = tsTypes.OrderBy(ts => ts.Name).Select(ts => $"export {{ {ts.Name} }} from './{ts.Name.ToDashed()}';");
-            var barrelContents = string.Join(Environment.NewLine, exportStatements);
+            var barrelContents = string.Join(Environment.NewLine, exportStatements) + Environment.NewLine;
             var barrelPath = Path.Combine(generationOptions.OutputBin, "index.ts");
 
             var barrelInfo = new FileInfo(barrelPath);

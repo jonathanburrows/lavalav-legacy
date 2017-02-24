@@ -36,7 +36,8 @@ namespace lvl.TypescriptGenerator
             return
 $@"{GetImportStatements()}export interface {Name} {GetImplementationStatements()}{{
     {GetPropertyStatements()}
-}}";
+}}
+";
         }
     }
 }
