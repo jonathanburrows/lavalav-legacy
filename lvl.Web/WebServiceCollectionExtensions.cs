@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 
+// ReSharper disable once CheckNamespace In compliance with Microsoft conventions
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
@@ -32,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(serviceCollection));
             }
 
-            var registeredServices = serviceCollection.Select(s => s.ServiceType);
+            var registeredServices = serviceCollection.Select(s => s.ServiceType).ToList();
             if (!registeredServices.Contains(typeof(NHibernate.Cfg.Configuration)))
             {
                 throw new InvalidOperationException($"{nameof(DomainServiceCollectionExtensions.AddDomains)} has not been called");
@@ -42,10 +43,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException($"{nameof(RepositoryServiceCollectionExtensions.AddRepositories)} has not been called");
             }
 
-            var loggingSettings = webSettings?.Logging ?? new LoggingSettings { };
+            var loggingSettings = webSettings?.Logging ?? new LoggingSettings();
             serviceCollection.AddSingleton(loggingSettings);
 
-            var corsSettings = webSettings?.Cors ?? new CorsSettings { };
+            var corsSettings = webSettings?.Cors ?? new CorsSettings();
             serviceCollection.AddSingleton(corsSettings);
 
             Action<JsonSerializerSettings> configureJson = options =>

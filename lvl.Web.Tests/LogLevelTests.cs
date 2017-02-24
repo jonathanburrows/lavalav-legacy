@@ -1,6 +1,5 @@
 ﻿using lvl.Repositories;
 using lvl.TestDomain;
-using lvl.TestWebSite.Tests.Fixtures;
 using lvl.Web.Logging;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +8,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using lvl.TestWebSite.Fixtures;
 using Xunit;
 
 namespace lvl.Web.Tests
@@ -32,11 +32,11 @@ namespace lvl.Web.Tests
             loggingSettings.LogLevel = LogLevel.Debug;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Debug.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Debug.ToString());
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Debug.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Debug.ToString());
             Assert.True(countBefore < countAfter);
         }
 
@@ -47,11 +47,11 @@ namespace lvl.Web.Tests
             loggingSettings.LogLevel = LogLevel.Information;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Debug.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Debug.ToString());
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Debug.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Debug.ToString());
             Assert.Equal(countBefore, countAfter);
         }
 
@@ -62,11 +62,11 @@ namespace lvl.Web.Tests
             loggingSettings.LogLevel = LogLevel.Information;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Information.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Information.ToString());
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Information.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Information.ToString());
             Assert.True(countBefore < countAfter);
         }
 
@@ -77,11 +77,11 @@ namespace lvl.Web.Tests
             loggingSettings.LogLevel = LogLevel.Warning;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Information.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Information.ToString());
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Information.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Information.ToString());
             Assert.Equal(countBefore, countAfter);
         }
 
@@ -92,11 +92,11 @@ namespace lvl.Web.Tests
             loggingSettings.LogLevel = LogLevel.Debug;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Trace.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Trace.ToString());
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Trace.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Trace.ToString());
             Assert.Equal(countBefore, countAfter);
         }
     }

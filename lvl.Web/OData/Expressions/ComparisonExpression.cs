@@ -11,7 +11,7 @@ namespace lvl.Web.OData.Expressions
         protected IExpression LeftArgument { get; }
         protected IExpression RightArgument { get; set; }
 
-        public ComparisonExpression(IExpression leftArgument, IExpression rightArgument)
+        protected ComparisonExpression(IExpression leftArgument, IExpression rightArgument)
         {
             if (leftArgument == null)
             {

@@ -8,7 +8,7 @@ namespace lvl.Web.OData.Expressions
         protected IExpression LeftArgument { get; }
         protected IExpression RightArgument { get; set; }
 
-        public BinaryOperatorExpression(IExpression leftArgument, IExpression rightArgument)
+        protected BinaryOperatorExpression(IExpression leftArgument, IExpression rightArgument)
         {
             if (leftArgument == null)
             {

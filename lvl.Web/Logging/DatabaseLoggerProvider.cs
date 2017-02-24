@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using lvl.Repositories;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 
 namespace lvl.Web.Logging
 {
@@ -16,7 +15,6 @@ namespace lvl.Web.Logging
         private ConcurrentDictionary<string, DatabaseLogger> Loggers { get; }
         private IRepository<LogEntry> LogEntryRepository { get; }
         private IHttpContextAccessor HttpContextAccessor { get; }
-        private IHostingEnvironment HostingEnvironment { get; }
 
         public DatabaseLoggerProvider(LoggingSettings settings, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
         {

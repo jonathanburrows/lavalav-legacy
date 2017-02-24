@@ -52,7 +52,7 @@ namespace lvl.Web.Tests
         public void WhenDeserializing_AndTypeIsntEntity_ArgumentExceptionIsThrown()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
-            var item = new NonEntity { };
+            var item = new NonEntity();
             var serialized = JsonConvert.SerializeObject(item);
             var bytes = Encoding.UTF8.GetBytes(serialized);
             using (var stream = new MemoryStream(bytes))

@@ -138,13 +138,13 @@ namespace lvl.Web.OData.Expressions
 
         public NumberExpression(string value)
         {
-            int _value;
-            if (!int.TryParse(value, out _value))
+            int val;
+            if (!int.TryParse(value, out val))
             {
                 throw new InvalidCastException($"Attempting to cast the value '{value}' as a number");
             }
 
-            Value = _value;
+            Value = val;
         }
 
         public override string CsString() => Value.ToString();
@@ -170,6 +170,7 @@ namespace lvl.Web.OData.Expressions
 
     internal class NullExpression : ValueExpression
     {
+        // ReSharper disable once UnusedParameter.Local Needed for reflection.
         public NullExpression(string value) { }
 
         public override string CsString() => "null";
@@ -181,12 +182,12 @@ namespace lvl.Web.OData.Expressions
 
         public BooleanExpression(string value)
         {
-            bool _value;
-            if (!bool.TryParse(value, out _value))
+            bool val;
+            if (!bool.TryParse(value, out val))
             {
                 throw new ArgumentException($"'{value}' is not a value boolean value");
             }
-            Value = _value;
+            Value = val;
         }
 
         public override string CsString() => Value.ToString();
@@ -194,7 +195,7 @@ namespace lvl.Web.OData.Expressions
 
     internal class VariableExpression : ValueExpression
     {
-        private string Name { get; set; }
+        private string Name { get; }
 
         public VariableExpression(string name)
         {

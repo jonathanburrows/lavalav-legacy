@@ -9,7 +9,8 @@ namespace lvl.Repositories.Querying
     internal class DynamicSelectQuery<THead, TSource> : ChainedQuery<THead, dynamic>
     {
         private string SelectExpression { get; }
-        private static object queryConstructionLock { get; } = new object();
+        // ReSharper disable once StaticMemberInGenericType
+        private static object QueryConstructionLock { get; } = new object();
 
         public DynamicSelectQuery(IQuery previous, string selectExpression) : base(previous)
         {
@@ -23,7 +24,7 @@ namespace lvl.Repositories.Querying
 
             // The dynamic select statement is not thread safe.
             IQueryable selectResults;
-            lock (queryConstructionLock)
+            lock (QueryConstructionLock)
             {
                 selectResults = previousResult.Select(SelectExpression);
             }

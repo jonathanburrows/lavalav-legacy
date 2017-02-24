@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using lvl.TestDomain;
 using System.Threading.Tasks;
 using lvl.TestWebSite;
-using lvl.TestWebSite.Tests.Fixtures;
 using System.Net.Http;
 using System;
 using System.Net;
 using System.Linq;
+using lvl.TestWebSite.Fixtures;
 using lvl.Web.Tests.Fixtures;
 
 namespace lvl.Web.Tests
@@ -17,7 +17,7 @@ namespace lvl.Web.Tests
     [Collection(WebCollection.Name)]
     public class CorsTests
     {
-        private static CorsSettings Settings = new CorsSettings
+        private static CorsSettings Settings { get; } = new CorsSettings
         {
             AllowMethods = new[] { "GET", "POST", "PUT", "DELETE", "NON-STANDARD" },
             AllowOrigins = new[] { "http://localhost/" },

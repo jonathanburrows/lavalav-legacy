@@ -45,8 +45,7 @@ namespace lvl.Ontology
         /// <returns>The vendor which the configuration has been set up for.</returns>
         public DatabaseVendor GetConfigurationsVendor(Configuration configuration)
         {
-            var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
-            var driver = configuration.GetProperty(driverKey);
+            var driver = configuration.GetProperty(Environment.ConnectionDriver);
 
             if (driver == typeof(SQLite20Driver).AssemblyQualifiedName)
             {

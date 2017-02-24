@@ -9,7 +9,7 @@ namespace lvl.Web.OData.Expressions
     {
         protected IExpression Argument { get; }
 
-        public UnaryOperatorExpression(IExpression argument)
+        protected UnaryOperatorExpression(IExpression argument)
         {
             if (argument == null)
             {

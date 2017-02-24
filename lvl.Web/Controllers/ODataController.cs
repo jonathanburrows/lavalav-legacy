@@ -57,7 +57,7 @@ namespace lvl.Web.Controllers
             var queryResult = await repository.GetAsync(query);
             return new ODataResponse
             {
-                Context = UriHelper.GetDisplayUrl(Request),
+                Context = Request.GetDisplayUrl(),
                 Value = queryResult.Items,
                 Count = queryResult.Count
             };

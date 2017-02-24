@@ -1,5 +1,4 @@
-﻿using lvl.Ontology;
-using lvl.Repositories.Querying;
+﻿using lvl.Repositories.Querying;
 using lvl.Repositories.Tests.Configuration;
 using lvl.Repositories.Tests.Fixtures;
 using lvl.TestDomain;
@@ -11,11 +10,12 @@ using Xunit;
 
 namespace lvl.Repositories.Tests
 {
+    // ReSharper disable All The use of generics here is important for test re-use.
     public abstract class RepositoryTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture
     {
         private IServiceProvider Services { get; }
 
-        public RepositoryTests(RepositoryFixture inMemoryRepositoriesFixture)
+        protected RepositoryTests(RepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -24,19 +24,19 @@ namespace lvl.Repositories.Tests
         public async Task GetCollection_OnRepositoryWithMultipleElements_ReturnsMultipleElement()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
 
             var entities = await repository.GetAsync();
 
-            Assert.True(entities.Count() > 0);
+            Assert.True(entities.Any());
         }
 
         [IntegrationTest]
         public async Task GetSingle_OnRepositoryWithMatchingElement_ReturnsElement()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var fetching = await repository.CreateAsync(new Moon { });
+            var fetching = await repository.CreateAsync(new Moon());
 
             var fetched = await repository.GetAsync(fetching.Id);
             Assert.NotNull(fetched);
@@ -58,7 +58,7 @@ namespace lvl.Repositories.Tests
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var countBefore = (await repository.GetAsync()).Count();
 
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var countAfter = (await repository.GetAsync()).Count();
 
             Assert.Equal(countBefore + 1, countAfter);
@@ -70,7 +70,7 @@ namespace lvl.Repositories.Tests
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var countBefore = (await repository.GetAsync()).Count();
 
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
 
             var countAfter = (await repository.GetAsync()).Count();
 
@@ -82,7 +82,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            var created = await repository.CreateAsync(new Moon { });
+            var created = await repository.CreateAsync(new Moon());
 
             Assert.True(created.Id > 0);
         }
@@ -91,7 +91,7 @@ namespace lvl.Repositories.Tests
         public async Task Create_PopulatesId()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var creating = new Moon { };
+            var creating = new Moon();
 
             await repository.CreateAsync(creating);
 
@@ -120,7 +120,7 @@ namespace lvl.Repositories.Tests
             {
                 if (!(e is ArgumentNullException) && !(e.InnerException is ArgumentNullException))
                 {
-                    throw e;
+                    throw;
                 }
             }
         }
@@ -130,7 +130,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAsync(new Planet { }));
+            await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAsync(new Planet()));
         }
 
         [IntegrationTest]
@@ -146,7 +146,7 @@ namespace lvl.Repositories.Tests
         public async Task WhenCreating_AndHasNewChildEntity_ChildEntityCreated()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var newChildEntity = new Planet { };
+            var newChildEntity = new Planet();
             var creating = new Moon { Planet = newChildEntity };
 
             await repository.CreateAsync(creating);
@@ -158,7 +158,7 @@ namespace lvl.Repositories.Tests
         public async Task WhenCreating_AndHasNewEntityInChildCollection_ChildEntityCreated()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
-            var newChildEntity = new Moon { };
+            var newChildEntity = new Moon();
             var creating = new Planet
             {
                 Moons = new[] { newChildEntity }
@@ -252,7 +252,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Planet { }));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Planet()));
         }
 
         [IntegrationTest]
@@ -260,7 +260,7 @@ namespace lvl.Repositories.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => repository.UpdateAsync(new Moon { }));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => repository.UpdateAsync(new Moon()));
         }
 
         [IntegrationTest]
@@ -268,15 +268,15 @@ namespace lvl.Repositories.Tests
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
 
-            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Moon { }));
+            await Assert.ThrowsAnyAsync<Exception>(() => repository.UpdateAsync(new Moon()));
         }
 
         [IntegrationTest]
         public async Task WhenUpdating_AndHasNewChildEntity_ChildIsCreated()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var updating = await repository.CreateAsync(new Moon { });
-            updating.Planet = new Planet { };
+            var updating = await repository.CreateAsync(new Moon());
+            updating.Planet = new Planet();
 
             await repository.UpdateAsync(updating);
 
@@ -287,10 +287,9 @@ namespace lvl.Repositories.Tests
         public async Task WhenUpdating_AndHasNewEntityInChildCollection_ChildIsCreated()
         {
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
-            var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
-            var updating = await planetRepository.CreateAsync(new Planet { });
+            var updating = await planetRepository.CreateAsync(new Planet());
 
-            var newChild = new Moon { };
+            var newChild = new Moon();
             updating.Moons = new[] { newChild };
             await planetRepository.UpdateAsync(updating);
 
@@ -336,7 +335,7 @@ namespace lvl.Repositories.Tests
         public async Task GenericDelete_WhenSuccessful_ReducesSizeByOne()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var deleting = await repository.CreateAsync(new Moon { });
+            var deleting = await repository.CreateAsync(new Moon());
             var countBefore = (await repository.GetAsync()).Count();
 
             await repository.DeleteAsync(deleting);
@@ -349,7 +348,7 @@ namespace lvl.Repositories.Tests
         public async Task Delete_WhenSuccessful_ReducesSizeByOne()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
-            var deleting = await repository.CreateAsync(new Moon { });
+            var deleting = await repository.CreateAsync(new Moon());
             var countBefore = (await repository.GetAsync()).Count();
 
             await repository.DeleteAsync(deleting);
@@ -362,7 +361,7 @@ namespace lvl.Repositories.Tests
         public async Task GenericDelete_WhenSuccessful_MakesGettingEntityReturnNull()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var deleting = new Moon { };
+            var deleting = new Moon();
             await repository.CreateAsync(deleting);
 
             await repository.DeleteAsync(deleting);
@@ -375,7 +374,7 @@ namespace lvl.Repositories.Tests
         public async Task Delete_WhenSuccessful_MakesGettingEntityReturnNull()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
-            var deleting = await repository.CreateAsync(new Moon { });
+            var deleting = await repository.CreateAsync(new Moon());
 
             await repository.DeleteAsync(deleting);
             var deleted = await repository.GetAsync(deleting.Id);
@@ -403,7 +402,7 @@ namespace lvl.Repositories.Tests
         public async Task Delete_WhenEntityTypeIsntRepositoryType_ThrowsArgumentException()
         {
             var repository = (IRepository)Services.GetRequiredService<IRepository<Moon>>();
-            var planet = new Planet { };
+            var planet = new Planet();
 
             await Assert.ThrowsAnyAsync<Exception>(() => repository.DeleteAsync(planet));
         }
@@ -430,7 +429,7 @@ namespace lvl.Repositories.Tests
         {
             var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
-            var deleting = new Moon { Planet = new Planet { } };
+            var deleting = new Moon { Planet = new Planet()};
             await moonRepository.CreateAsync(deleting);
 
             await moonRepository.DeleteAsync(deleting);
@@ -444,7 +443,7 @@ namespace lvl.Repositories.Tests
         {
             var moonRepository = Services.GetRequiredService<IRepository<Moon>>();
             var planetRepository = Services.GetRequiredService<IRepository<Planet>>();
-            var child = new Moon { };
+            var child = new Moon();
             var parent = new Planet
             {
                 Moons = new[] { child }
@@ -607,9 +606,9 @@ namespace lvl.Repositories.Tests
         {
             var take = 2;
             var repository = Services.GetRequiredService<IRepository<Planet>>();
-            await repository.CreateAsync(new Planet { });
-            await repository.CreateAsync(new Planet { });
-            await repository.CreateAsync(new Planet { });
+            await repository.CreateAsync(new Planet());
+            await repository.CreateAsync(new Planet());
+            await repository.CreateAsync(new Planet());
             var query = new Query<Planet>().Take(take);
 
             var queryResult = await repository.GetAsync(query);
@@ -622,9 +621,9 @@ namespace lvl.Repositories.Tests
         {
             var skip = 2;
             var repository = Services.GetRequiredService<IRepository<Planet>>();
-            await repository.CreateAsync(new Planet { });
-            await repository.CreateAsync(new Planet { });
-            await repository.CreateAsync(new Planet { });
+            await repository.CreateAsync(new Planet());
+            await repository.CreateAsync(new Planet());
+            await repository.CreateAsync(new Planet());
             var query = new Query<Planet>().Skip(skip);
 
             var queryResult = await repository.GetAsync(query);
@@ -830,6 +829,7 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(RepositoriesCollection.Name)]
+    // ReSharper disable once InconsistentNaming Is the literal name of the vendor.
     public class SQLiteRepositoryTests : RepositoryTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

@@ -7,7 +7,7 @@ namespace lvl.Repositories.Tests.Fixtures
     {
         public IServiceProvider ServiceProvider { get; }
 
-        public RepositoryFixture(string connectionString)
+        protected RepositoryFixture(string connectionString)
         {
             ServiceProvider = new ServiceCollection()
                 .AddDomains(connectionString)

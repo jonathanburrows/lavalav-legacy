@@ -1,7 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories;
 using lvl.TestDomain;
-using lvl.TestWebSite.Tests.Fixtures;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using lvl.TestWebSite.Fixtures;
 using Xunit;
 
 namespace lvl.Web.Tests
@@ -30,9 +30,9 @@ namespace lvl.Web.Tests
         public async Task WhenRequestingEntities_AllReturnedEntitiesAreOfGivenType()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
             var getUrl = $"/api/{nameof(Moon)}";
 
             var getResult = await Client.GetAsync(getUrl);
@@ -45,7 +45,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenRequestingEntities_IfTypeIsntMapped_ThrowsInvalidOperationException()
         {
-            var getUrl = $"/api/madeUpEntity";
+            const string getUrl = "/api/madeUpEntity";
 
             await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
         }
@@ -54,7 +54,7 @@ namespace lvl.Web.Tests
         public async Task WhenRequestingEntity_WithMatchingId_Returns200()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var entity = await repository.CreateAsync(new Moon { });
+            var entity = await repository.CreateAsync(new Moon());
             var getUrl = $"/api/{nameof(Moon)}/{entity.Id}";
 
             var getResponse = await Client.GetAsync(getUrl);
@@ -77,7 +77,7 @@ namespace lvl.Web.Tests
         public async Task WhenRequestingEntity_WithoutGet_Returns404(string httpMethod)
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var fetching = await repository.CreateAsync(new Moon { });
+            var fetching = await repository.CreateAsync(new Moon());
             var getUrl = $"/api/{nameof(Moon)}/{fetching.Id}";
             var getMessage = new HttpRequestMessage(new HttpMethod(httpMethod), getUrl);
 
@@ -90,7 +90,7 @@ namespace lvl.Web.Tests
         public async Task WhenRequestingEntity_AndMatchingEntity_SerializedObjectIsReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var fetching = await repository.CreateAsync(new Moon { });
+            var fetching = await repository.CreateAsync(new Moon());
             var getUrl = $"/api/{nameof(Moon)}/{fetching.Id}";
 
             var fetched = await Client.GetAsync(getUrl);
@@ -113,7 +113,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var postUrl = $"/api/{nameof(Moon)}";
-            var posting = new Moon { };
+            var posting = new Moon();
             var postingSerialized = JsonConvert.SerializeObject(posting);
             var postingContent = new StringContent(postingSerialized);
 
@@ -138,7 +138,7 @@ namespace lvl.Web.Tests
         public async Task WhenPosting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
         {
             var postUrl = $"/api/{nameof(UnmappedEntity)}";
-            var posting = new Moon { };
+            var posting = new Moon();
             var postingSerialized = JsonConvert.SerializeObject(posting);
             var postingContent = new StringContent(postingSerialized);
 
@@ -197,7 +197,7 @@ namespace lvl.Web.Tests
         public async Task WhenPutting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
         {
             var putUrl = $"/api/{nameof(UnmappedEntity)}";
-            var putting = new Moon { };
+            var putting = new Moon();
             var puttingSerialized = JsonConvert.SerializeObject(putting);
             var puttingContent = new StringContent(puttingSerialized);
 
@@ -228,7 +228,7 @@ namespace lvl.Web.Tests
         public async Task WhenDeleted_EntityRemoval_IsPersistent()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            var deleting = await repository.CreateAsync(new Moon { });
+            var deleting = await repository.CreateAsync(new Moon());
             var deletingSerialized = JsonConvert.SerializeObject(deleting);
             var deletingContent = new StringContent(deletingSerialized);
             var deletingMessage = new HttpRequestMessage
@@ -262,7 +262,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDeleting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
         {
-            var deleting = new Moon { };
+            var deleting = new Moon();
             var deletingSerialized = JsonConvert.SerializeObject(deleting);
             var deletingContent = new StringContent(deletingSerialized);
             var deletingMessage = new HttpRequestMessage
@@ -304,6 +304,7 @@ namespace lvl.Web.Tests
             await Assert.ThrowsAsync<InvalidOperationException>(() => Client.SendAsync(deletingMessage));
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
         private class UnmappedEntity : IEntity
         {
             public int Id { get; set; }

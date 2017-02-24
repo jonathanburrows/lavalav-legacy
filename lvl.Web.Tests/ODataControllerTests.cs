@@ -1,8 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories;
-using lvl.Repositories.Querying;
 using lvl.TestDomain;
-using lvl.TestWebSite.Tests.Fixtures;
 using lvl.Web.OData;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+using lvl.TestWebSite.Fixtures;
 using Xunit;
 
 namespace lvl.Web.Tests
@@ -34,9 +33,9 @@ namespace lvl.Web.Tests
         public async Task WhenRequesting_AndTopIsGiven_OnlyThatNumberOfRecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
             var top = 2;
             var url = $"/odata/{nameof(Moon)}?$top={top}";
 
@@ -54,7 +53,6 @@ namespace lvl.Web.Tests
             var exception = default(Exception);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$top=hello";
                 await Client.GetAsync(url);
             }
@@ -73,9 +71,9 @@ namespace lvl.Web.Tests
         public async Task WhenRequesting_AndSkipIsGiven_OnlyThoseNumberRecordsAreSkipped()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
             var skip = 2;
             var countBefore = (await repository.GetAsync()).Count();
             var url = $"/odata/{nameof(Moon)}?$skip={skip}";
@@ -94,7 +92,6 @@ namespace lvl.Web.Tests
             var exception = default(Exception);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$skip=hello";
                 await Client.GetAsync(url);
             }
@@ -141,7 +138,6 @@ namespace lvl.Web.Tests
             var exception = default(Exception);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$orderby=hello";
                 await Client.GetAsync(url);
             }
@@ -162,7 +158,6 @@ namespace lvl.Web.Tests
             var aggregateException = default(AggregateException);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$orderby=hello,world";
                 await Client.GetAsync(url);
             }
@@ -201,6 +196,7 @@ namespace lvl.Web.Tests
             var responseDeserialized = JsonConvert.DeserializeObject<ODataResponse>(responseSerialized);
             var queryResult = JsonConvert.DeserializeObject<List<Planet>>(responseDeserialized.Value.ToString());
 
+            // ReSharper disable once MultipleOrderBy
             var orderedResult = queryResult.OrderBy(p => p.Name).OrderBy(p => p.SupportsLife);
             Assert.True(orderedResult.SequenceEqual(queryResult));
         }
@@ -270,7 +266,6 @@ namespace lvl.Web.Tests
             var exception = default(Exception);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$select=hello";
                 await Client.GetAsync(url);
             }
@@ -291,7 +286,6 @@ namespace lvl.Web.Tests
             var aggregateException = default(AggregateException);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$select=hello,world";
                 await Client.GetAsync(url);
             }
@@ -305,31 +299,12 @@ namespace lvl.Web.Tests
             }
         }
 
-        //[Fact]
-        //public async Task WhenRequesting_AndEqualsFilterIsGiven_ResultsAreFiltered()
-        //{
-        //    Assert.True(false);
-        //}
-
-        //[Fact]
-        //public async Task WhenRequesting_AndInvalidFilterIsGiven_InvalidOperationExceptionIsThrown()
-        //{
-        //    Assert.True(false);
-        //}
-
-        //[Fact]
-        //public async Task WhenRequesting_AndInvalidFiltersAreGiven_AggregateExceptionIsThrown()
-        //{
-        //    Assert.True(false);
-        //}
-
         [Fact]
         public async Task WhenRequesting_AndInvalidSkipTopOrderByAndSelectsAreGiven_AggreggateExceptionIsThrown()
         {
             var aggregateException = default(AggregateException);
             try
             {
-                var repository = Services.GetRequiredService<IRepository<Moon>>();
                 var url = $"/odata/{nameof(Moon)}?$skip=this&$orderby=invalid&$top=that&$select=hello";
                 await Client.GetAsync(url);
             }
@@ -351,6 +326,8 @@ namespace lvl.Web.Tests
             }
         }
 
+        // ReSharper disable ClassNeverInstantiated.Local Used by reflection.
+        // ReSharper disable UnusedAutoPropertyAccessor.Local Used by reflection
         private class SingleSelectResult
         {
             public string Name { get; set; }

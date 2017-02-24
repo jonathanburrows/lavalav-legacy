@@ -15,7 +15,7 @@ namespace lvl.Repositories.Tests
     {
         protected IServiceProvider Services { get; }
 
-        public RepositoriesServicesTests(TRepositoryFixture inMemoryRepositoriesFixture)
+        protected RepositoriesServicesTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -39,8 +39,6 @@ namespace lvl.Repositories.Tests
         [IntegrationTest]
         public void AfterAddingRepositories_WhenResolvingRepositoryForMappedType_ValueIsReturned()
         {
-            var mappedType = typeof(Moon);
-
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
             Assert.NotNull(repository);
@@ -101,11 +99,13 @@ namespace lvl.Repositories.Tests
             Assert.Throws<InvalidOperationException>(() => services.AddRepositories());
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
         private class UnmappedEntity : IEntity
         {
             public int Id { get; set; }
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
         private class MockRepository<TEntity> : Repository<TEntity> where TEntity : class, IEntity
         {
             public MockRepository(SessionProvider sessionManager) : base(sessionManager) { }
@@ -113,6 +113,7 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(RepositoriesCollection.Name)]
+    // ReSharper disable once InconsistentNaming matches the vendor name literally.
     public class SQLiteRepositoryServicesTests : RepositoriesServicesTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryServicesTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

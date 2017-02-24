@@ -12,6 +12,6 @@ namespace lvl.Repositories.Tests.Configuration
     /// A unit test depends on a database if its parent class has an OracleRepositoryFixture or an MsSqlRepositoryFixture.
     /// </summary>
     [XunitTestCaseDiscoverer("lvl.Repositories.Tests.Configuration.IntegrationTestDiscoverer", "lvl.Repositories.Tests")]
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class IntegrationTestAttribute : FactAttribute { }
 }

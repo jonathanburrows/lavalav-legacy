@@ -1,4 +1,4 @@
-﻿using lvl.TestWebSite.Tests.Fixtures;
+﻿using lvl.TestWebSite.Fixtures;
 using Xunit;
 
 namespace lvl.Web.Tests.Fixtures

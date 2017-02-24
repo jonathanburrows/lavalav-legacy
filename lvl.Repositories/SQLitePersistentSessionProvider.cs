@@ -9,16 +9,17 @@ namespace lvl.Repositories
     /// <summary>
     /// Provides a way for the sql lite database to not regenerate every request.
     /// </summary>
+    // ReSharper disable once InconsistentNaming Is the literal name of the vendor.
     internal sealed class SQLitePersistentSessionProvider : SessionProvider
     {
-        private static object connectionLock { get; } = new object();
+        private static object ConnectionLock { get; } = new object();
         private static IDbConnection Connection { get; set; }
 
         public SQLitePersistentSessionProvider(ISessionFactory sessionFactory, DatabaseCreator databaseCreator, Configuration configuration) : base(sessionFactory)
         {
             if (Connection == null)
             {
-                lock (connectionLock)
+                lock (ConnectionLock)
                 {
                     if (Connection == null)
                     {

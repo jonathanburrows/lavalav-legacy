@@ -38,7 +38,7 @@ namespace lvl.TypescriptGenerator
         {
             var properties = Properties.Select(p =>
             {
-                var decorators = p.Decorators.Select(d => d.ToTypeScript());
+                var decorators = p.Decorators.Select(d => d.ToTypeScript()).ToList();
                 var decoratorsJoined = string.Join(", ", decorators);
                 var decoratorStatement = !decorators.Any() ? "" : $"{decoratorsJoined} ";
 

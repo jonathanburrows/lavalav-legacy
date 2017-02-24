@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 
+// ReSharper disable once CheckNamespace In compliance with Microsoft's conventions.
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>

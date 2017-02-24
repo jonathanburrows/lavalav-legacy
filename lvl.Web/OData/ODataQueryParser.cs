@@ -80,7 +80,7 @@ namespace lvl.Web.OData
                 query = query.Take(top);
             }
 
-            var selectValues = GetCollectionParameter(parsing, "$select");
+            var selectValues = GetCollectionParameter(parsing, "$select").ToList();
             if (selectValues.Any())
             {
                 var selectExpression = $"new({string.Join(",", selectValues)})";
@@ -127,27 +127,20 @@ namespace lvl.Web.OData
                 var selectProperty = typeof(T).GetProperty(select);
                 if (selectProperty == null)
                 {
-                    yield return new InvalidOperationException($"Attempting to select property {selectProperty} on {typeof(T).Name}, but that property doesnt exist.");
+                    yield return new InvalidOperationException($"Attempting to select property {nameof(selectProperty)} on {typeof(T).Name}, but that property doesnt exist.");
                 }
             }
         }
 
-        private string GetSingleParameter(IQueryCollection queryParameters, string key)
+        private static string GetSingleParameter(IQueryCollection queryParameters, string key)
         {
-            var values = new StringValues { };
-            if (queryParameters.TryGetValue(key, out values))
-            {
-                return values.First();
-            }
-            else
-            {
-                return default(string);
-            }
+            StringValues values;
+            return queryParameters.TryGetValue(key, out values) ? values.First() : default(string);
         }
 
-        private IEnumerable<string> GetCollectionParameter(IQueryCollection queryParameters, string key)
+        private static IEnumerable<string> GetCollectionParameter(IQueryCollection queryParameters, string key)
         {
-            var values = new StringValues { };
+            StringValues values;
             if (queryParameters.TryGetValue(key, out values))
             {
                 return values.SelectMany(v => v.Split(','));
@@ -161,14 +154,14 @@ namespace lvl.Web.OData
         /// <summary>
         /// Converts a set of query parameters to a Query.
         /// </summary>
-        /// <param name="queryParameters">The query which will be converted into a query.</param>
+        /// <param name="parsing">The query which will be converted into a query.</param>
         /// <param name="type">The type of entites which will be queried.</param>
         /// <returns>The query parsed from the query string.</returns>
         public IQuery Parse(IQueryCollection parsing, Type type)
         {
             var genericMethod = GetType().GetMethod(nameof(Parse), new[] { typeof(IQueryCollection) });
             var castedMethod = genericMethod.MakeGenericMethod(type);
-            return (IQuery)castedMethod.Invoke(this, new[] { parsing });
+            return (IQuery)castedMethod.Invoke(this, new object[] { parsing });
         }
     }
 }

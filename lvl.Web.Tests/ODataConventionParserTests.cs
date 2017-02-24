@@ -30,9 +30,9 @@ namespace lvl.Web.Tests
         public async Task OneEqualsOne_ReturnsEntireSet()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
+            await repository.CreateAsync(new Moon());
             var total = (await repository.GetAsync()).Count();
             var query = CompileQuery<Moon>("1 eq 1");
 
@@ -45,7 +45,7 @@ namespace lvl.Web.Tests
         public async Task OneEqualsTwo_ReturnsEmptySet()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("1 ne 1");
 
             var filteredResult = await repository.GetAsync(query);
@@ -254,7 +254,7 @@ namespace lvl.Web.Tests
         public async Task And_WhenLeftIsFalse_NoRecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false and true");
 
             var filteredResult = await repository.GetAsync(query);
@@ -266,7 +266,7 @@ namespace lvl.Web.Tests
         public async Task And_WhenBothTrue_RecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("true and true");
 
             var filteredResult = await repository.GetAsync(query);
@@ -278,7 +278,7 @@ namespace lvl.Web.Tests
         public async Task And_WhenBothFalse_NoRecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false and false");
 
             var filteredResult = await repository.GetAsync(query);
@@ -290,7 +290,7 @@ namespace lvl.Web.Tests
         public async Task Or_WhenBothTrue_RecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("true or true");
 
             var filteredResult = await repository.GetAsync(query);
@@ -302,7 +302,7 @@ namespace lvl.Web.Tests
         public async Task Or_WhenLeftTrueRightFalse_RecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("true or false");
 
             var filteredResult = await repository.GetAsync(query);
@@ -314,7 +314,7 @@ namespace lvl.Web.Tests
         public async Task Or_WhenLeftFalseRightTrue_RecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false or true");
 
             var filteredResult = await repository.GetAsync(query);
@@ -326,7 +326,7 @@ namespace lvl.Web.Tests
         public async Task Or_WhenBothFalse_NoRecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false or false");
 
             var filteredResult = await repository.GetAsync(query);
@@ -338,7 +338,7 @@ namespace lvl.Web.Tests
         public async Task Or_WithFalseBrackets_NoRecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false or (false and true)");
 
             var filteredResult = await repository.GetAsync(query);
@@ -350,7 +350,7 @@ namespace lvl.Web.Tests
         public async Task Or_WithFalseAndTrueBracket_RecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false or (true and true)");
 
             var filteredResult = await repository.GetAsync(query);
@@ -362,7 +362,7 @@ namespace lvl.Web.Tests
         public async Task And_WithTrueBrackets_RecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("true and (true or false)");
 
             var filteredResult = await repository.GetAsync(query);
@@ -374,7 +374,7 @@ namespace lvl.Web.Tests
         public async Task And_WithTrueAndFalseBracket_NoRecordsAreReturned()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
-            await repository.CreateAsync(new Moon { });
+            await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>("false and (true or false)");
 
             var filteredResult = await repository.GetAsync(query);
@@ -387,7 +387,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
-            var moon = await repository.CreateAsync(new Moon { });
+            var moon = await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>($"{moon.Id - 1} add 1 eq Id");
 
             var filteredResult = await repository.GetAsync(query);
@@ -400,7 +400,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
-            var moon = await repository.CreateAsync(new Moon { });
+            var moon = await repository.CreateAsync(new Moon());
             var query = CompileQuery<Moon>($"{moon.Id + 1} sub 1 eq Id");
 
             var filteredResult = await repository.GetAsync(query);
@@ -414,7 +414,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = 6 });
-            var query = CompileQuery<Planet>($"AstronomicalUnits mul 2 eq 12");
+            var query = CompileQuery<Planet>("AstronomicalUnits mul 2 eq 12");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -426,7 +426,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { });
+            var planet = await repository.CreateAsync(new Planet());
             var query = CompileQuery<Planet>($"(Id add 3) mul 4 eq {(planet.Id + 3) * 4}");
 
             var filteredResult = await repository.GetAsync(query);
@@ -440,7 +440,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = 6 });
-            var query = CompileQuery<Planet>($"AstronomicalUnits div 2 eq 3");
+            var query = CompileQuery<Planet>("AstronomicalUnits div 2 eq 3");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -453,7 +453,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = 24 });
-            var query = CompileQuery<Planet>($"AstronomicalUnits div (2 mul 3) eq 4");
+            var query = CompileQuery<Planet>("AstronomicalUnits div (2 mul 3) eq 4");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -466,7 +466,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = 24 });
-            var query = CompileQuery<Planet>($"AstronomicalUnits mod 6 eq 0");
+            var query = CompileQuery<Planet>("AstronomicalUnits mod 6 eq 0");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -479,7 +479,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = 24 });
-            var query = CompileQuery<Planet>($"AstronomicalUnits mod 5 eq 4");
+            var query = CompileQuery<Planet>("AstronomicalUnits mod 5 eq 4");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -490,8 +490,8 @@ namespace lvl.Web.Tests
         public async Task Not_True_ReturnsNoValues()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
-            await repository.CreateAsync(new Planet { });
-            var query = CompileQuery<Planet>($"not true");
+            await repository.CreateAsync(new Planet());
+            var query = CompileQuery<Planet>("not true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -502,8 +502,8 @@ namespace lvl.Web.Tests
         public async Task Not_DoubleNegative_ReturnsValues()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
-            await repository.CreateAsync(new Planet { });
-            var query = CompileQuery<Planet>($"not not true");
+            await repository.CreateAsync(new Planet());
+            var query = CompileQuery<Planet>("not not true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -516,7 +516,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { SupportsLife = true });
-            var query = CompileQuery<Planet>($"not SupportsLife");
+            var query = CompileQuery<Planet>("not SupportsLife");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -529,7 +529,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { SupportsLife = false });
-            var query = CompileQuery<Planet>($"not SupportsLife");
+            var query = CompileQuery<Planet>("not SupportsLife");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -542,7 +542,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = -2 });
-            var query = CompileQuery<Planet>($"AstronomicalUnits eq -2");
+            var query = CompileQuery<Planet>("AstronomicalUnits eq -2");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -568,7 +568,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = -2 });
-            var query = CompileQuery<Planet>($"(4 add -AstronomicalUnits) eq 6");
+            var query = CompileQuery<Planet>("(4 add -AstronomicalUnits) eq 6");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -581,7 +581,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { AstronomicalUnits = -2 });
-            var query = CompileQuery<Planet>($"+AstronomicalUnits eq -2");
+            var query = CompileQuery<Planet>("+AstronomicalUnits eq -2");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -594,7 +594,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Terra" });
-            var query = CompileQuery<Planet>($"substringof('Terra', Name) eq true");
+            var query = CompileQuery<Planet>("substringof('Terra', Name) eq true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -607,7 +607,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Terra" });
-            var query = CompileQuery<Planet>($"substringof('Terran', Name) eq true");
+            var query = CompileQuery<Planet>("substringof('Terran', Name) eq true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -620,7 +620,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Terra" });
-            var query = CompileQuery<Planet>($"substringof('Earth', Name) eq false");
+            var query = CompileQuery<Planet>("substringof('Earth', Name) eq false");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -633,7 +633,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "rth" });
-            var query = CompileQuery<Planet>($"endswith('Earth', Name) eq true");
+            var query = CompileQuery<Planet>("endswith('Earth', Name) eq true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -646,7 +646,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Earth" });
-            var query = CompileQuery<Planet>($"endswith('Earth', Name) eq true");
+            var query = CompileQuery<Planet>("endswith('Earth', Name) eq true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -659,7 +659,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Earth" });
-            var query = CompileQuery<Planet>($"endswith('Ear', Name) eq false");
+            var query = CompileQuery<Planet>("endswith('Ear', Name) eq false");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -672,7 +672,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Earth" });
-            var query = CompileQuery<Planet>($"endswith('Terra', Name) eq false");
+            var query = CompileQuery<Planet>("endswith('Terra', Name) eq false");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -685,7 +685,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             await repository.CreateAsync(new Planet { Name = "Terra" });
-            var query = CompileQuery<Planet>($"startswith('Terran', Name) eq true");
+            var query = CompileQuery<Planet>("startswith('Terran', Name) eq true");
 
             var filteredResult = await repository.GetAsync(query);
 
@@ -710,7 +710,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            await repository.CreateAsync(new Planet { Name = "Terran" });
             var query = CompileQuery<Planet>($"startswith('Terra', {nameof(Planet.Name)}) eq false");
 
             var filteredResult = await repository.GetAsync(query);
@@ -788,7 +788,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            await repository.CreateAsync(new Planet { Name = "Terran" });
             var query = CompileQuery<Planet>($"tolower({nameof(Planet.Name)}) eq 'terran'");
 
             var filteredResult = await repository.GetAsync(query);
@@ -801,7 +801,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            await repository.CreateAsync(new Planet { Name = "Terran" });
             var query = CompileQuery<Planet>($"toupper({nameof(Planet.Name)}) eq 'TERRAN'");
 
             var filteredResult = await repository.GetAsync(query);
@@ -814,7 +814,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { Name = " Terran " });
+            await repository.CreateAsync(new Planet { Name = " Terran " });
             var query = CompileQuery<Planet>($"trim({nameof(Planet.Name)}) eq 'Terran'");
 
             var filteredResult = await repository.GetAsync(query);
@@ -827,7 +827,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { Name = "Terran" });
+            await repository.CreateAsync(new Planet { Name = "Terran" });
             var query = CompileQuery<Planet>($"concat('Terra','n') eq {nameof(Planet.Name)}");
 
             var filteredResult = await repository.GetAsync(query);
@@ -840,7 +840,7 @@ namespace lvl.Web.Tests
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
-            var planet = await repository.CreateAsync(new Planet { Name = "abcde" });
+            await repository.CreateAsync(new Planet { Name = "abcde" });
             var query = CompileQuery<Planet>($"concat('a', concat(concat('b', concat('c', 'd')), 'e')) eq {nameof(Planet.Name)}");
 
             var filteredResult = await repository.GetAsync(query);
@@ -854,7 +854,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
-            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
 
             var query = CompileQuery<Planet>($"day({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Day}");
 
@@ -869,7 +869,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
-            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
             var query = CompileQuery<Planet>($"hour({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Hour}");
 
             var filteredResult = await repository.GetAsync(query);
@@ -883,7 +883,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
-            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
             var query = CompileQuery<Planet>($"minute({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Minute}");
 
             var filteredResult = await repository.GetAsync(query);
@@ -897,7 +897,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
-            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
             var query = CompileQuery<Planet>($"second({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Second}");
 
             var filteredResult = await repository.GetAsync(query);
@@ -911,7 +911,7 @@ namespace lvl.Web.Tests
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
             var dateOfDiscovery = new DateTime(2000, 1, 2, 3, 4, 5);
-            var planet = await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
+            await repository.CreateAsync(new Planet { DiscoveredOn = dateOfDiscovery });
             var query = CompileQuery<Planet>($"year({nameof(Planet.DiscoveredOn)}) eq {dateOfDiscovery.Year}");
 
             var filteredResult = await repository.GetAsync(query);

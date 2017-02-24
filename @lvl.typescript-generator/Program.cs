@@ -40,18 +40,18 @@ namespace lvl.TypescriptGenerator
             var entityTypes = assembly.GetExportedTypes().Where(t => ientity.IsAssignableFrom(t) || t.GUID == ientity.GUID);
 
             // we want to get any possible errors before writing, generate typescript first
-            var tsTypes = entityTypes.Select(t => typeConverter.CsToTypeScript(t, generationOptions));
+            var tsTypes = entityTypes.Select(t => typeConverter.CsToTypeScript(t, generationOptions)).ToList();
             var tsOutputs = tsTypes.Select(t => new
             {
                 FileName = t.Name.ToDashed() + ".ts",
                 Content = t.ToTypeScript()
-            });
+            }).ToList();
 
             foreach (var tsOutput in tsOutputs)
             {
                 var filePath = Path.Combine(generationOptions.OutputBin, tsOutput.FileName);
                 var fileInfo = new FileInfo(filePath);
-                fileInfo.Directory.Create();
+                fileInfo.Directory?.Create();
                 File.WriteAllText(fileInfo.FullName, tsOutput.Content);
             }
 
@@ -62,7 +62,7 @@ namespace lvl.TypescriptGenerator
 
             var barrelInfo = new FileInfo(barrelPath);
             // possible there's no ts files, and directory does not exist.
-            barrelInfo.Directory.Create();
+            barrelInfo.Directory?.Create();
             File.WriteAllText(barrelInfo.FullName, barrelContents);
         }
     }

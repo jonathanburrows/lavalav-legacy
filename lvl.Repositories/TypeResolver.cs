@@ -39,6 +39,7 @@ namespace lvl.Repositories
 
             var types = Configuration.ClassMappings.Select(c => c.MappedClass);
 
+            // ReSharper disable PossibleMultipleEnumeration resharper getting confused, is as intended.
             var matchingFullyQualified = types.Where(t => t.FullName.Equals(entityType, StringComparison.InvariantCultureIgnoreCase));
             if (matchingFullyQualified.Count() > 1)
             {

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-/// <summary>
-/// Due to the large amount of classes, they were centralized into one file here.
-/// </summary>
+
+// Due to the large amount of classes, they were centralized into one file here.
 namespace lvl.TypeScriptGenerator.Tests.Fixtures
 {
     public class BareClass { }
@@ -211,9 +210,9 @@ namespace lvl.TypeScriptGenerator.Tests.Fixtures
 
     public interface IBareInterface { }
 
-    public interface SingleImplementationInterface : IBaseInterface { }
+    public interface ISingleImplementationInterface : IBaseInterface { }
 
-    public interface DoubleImplementationInterface : IFirstInterface, ISecondInterface { }
+    public interface IDoubleImplementationInterface : IFirstInterface, ISecondInterface { }
 
 
     public interface IIntegerInterface

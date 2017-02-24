@@ -1,6 +1,5 @@
 ﻿using lvl.Repositories;
 using lvl.TestDomain;
-using lvl.TestWebSite.Tests.Fixtures;
 using lvl.Web.Logging;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +8,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using lvl.TestWebSite.Fixtures;
 using Xunit;
 
 namespace lvl.Web.Tests
@@ -29,16 +29,19 @@ namespace lvl.Web.Tests
         public async Task WhenPerformingGetRequest_AndErrorOccurs_LogEntryIsAdded()
         {
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Error.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
             var url = $"/api/{nameof(Moon)}/{int.MaxValue}";
 
             try
             {
                 await Client.GetAsync(url);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Error.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
             Assert.True(countBefore < countAfter);
         }
 
@@ -46,12 +49,12 @@ namespace lvl.Web.Tests
         public async Task WhenPerformingGetRequest_AndFinishesSuccessfully_NoErrorLogEntryIsAdded()
         {
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
-            var countBefore = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Error.ToString()).Count();
+            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
             var url = $"/api/{nameof(Moon)}";
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Where(log => log.LogLevel == LogLevel.Error.ToString()).Count();
+            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
             Assert.Equal(countAfter, countBefore);
         }
     }

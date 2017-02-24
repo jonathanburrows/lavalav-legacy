@@ -7,7 +7,7 @@ namespace lvl.Ontology.Tests.Fixtures
     {
         internal IServiceProvider Services { get; }
 
-        public DomainFixture(string connectionString)
+        protected DomainFixture()
         {
             Services = new ServiceCollection()
                 .AddDomains()

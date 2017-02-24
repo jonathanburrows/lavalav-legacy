@@ -1,6 +1,7 @@
 ﻿using lvl.TestWebSite.Configuration;
 using System;
 
+// ReSharper disable once CheckNamespace In compliance with Microsoft conventions.
 namespace Microsoft.Extensions.Configuration
 {
     /// <summary>
@@ -12,7 +13,6 @@ namespace Microsoft.Extensions.Configuration
         /// Adds a configuration based on the given anoynmous object. For each property of the variable, 
         /// a configuration property will be assigned.
         /// </summary>
-        /// <typeparam name="TAnonymous">The type of the anonymous object.</typeparam>
         /// <param name="configurationBuilder">The onfiguration which will be populated by the variables properties.</param>
         /// <param name="anonymous">The object whos properties will be applied to the configuration.</param>
         /// <returns>The configuration with all properties of the anoynmous object assigned.</returns>

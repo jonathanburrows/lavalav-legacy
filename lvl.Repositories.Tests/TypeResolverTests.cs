@@ -14,7 +14,7 @@ namespace lvl.Repositories.Tests
     {
         private IServiceProvider Services { get; }
 
-        public TypeResolverTests(TRepositoryFixture inMemoryRepositoriesFixture)
+        protected TypeResolverTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -102,6 +102,7 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(RepositoriesCollection.Name)]
+    // ReSharper disable once InconsistentNaming the literal name of the vendor.
     public class SQLiteTypeResolverTests : TypeResolverTests<SQLiteRepositoryFixture>
     {
         public SQLiteTypeResolverTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

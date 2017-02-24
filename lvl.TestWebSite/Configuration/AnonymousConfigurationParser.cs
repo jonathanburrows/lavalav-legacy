@@ -14,7 +14,7 @@ namespace lvl.TestWebSite.Configuration
     {
         private IDictionary<string, string> Data { get; }
         private Stack<string> Context { get; }
-        private string currentPath { get; set; }
+        private string CurrentPath { get; set; }
 
         public AnonymousConfigurationParser()
         {
@@ -81,7 +81,7 @@ namespace lvl.TestWebSite.Configuration
 
         private void VisitPrimitive(JToken data)
         {
-            var key = currentPath;
+            var key = CurrentPath;
 
             if (Data.ContainsKey(key))
             {
@@ -93,13 +93,13 @@ namespace lvl.TestWebSite.Configuration
         private void EnterContext(string context)
         {
             Context.Push(context);
-            currentPath = ConfigurationPath.Combine(Context.Reverse());
+            CurrentPath = ConfigurationPath.Combine(Context.Reverse());
         }
 
         private void ExitContext()
         {
             Context.Pop();
-            currentPath = ConfigurationPath.Combine(Context.Reverse());
+            CurrentPath = ConfigurationPath.Combine(Context.Reverse());
         }
     }
 }

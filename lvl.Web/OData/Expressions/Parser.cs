@@ -265,7 +265,7 @@ namespace lvl.Web.OData.Expressions
             }
 
             LogicalExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
-                (TExpression)constructor.Invoke(new[] { leftArgument, rightArgument });
+                (TExpression)constructor.Invoke(new object[] { leftArgument, rightArgument });
 
             return this;
         }
@@ -287,7 +287,7 @@ namespace lvl.Web.OData.Expressions
             }
 
             BinaryOperatorExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
-                (TExpression)constructor.Invoke(new[] { leftArgument, rightArgument });
+                (TExpression)constructor.Invoke(new object[] { leftArgument, rightArgument });
 
             return this;
         }
@@ -309,7 +309,7 @@ namespace lvl.Web.OData.Expressions
             }
 
             ComparisonExpressionResolvers[typeof(TToken)] = (leftArgument, rightArgument) =>
-                (TExpression)constructor.Invoke(new[] { leftArgument, rightArgument });
+                (TExpression)constructor.Invoke(new object[] { leftArgument, rightArgument });
 
             return this;
         }
@@ -331,7 +331,7 @@ namespace lvl.Web.OData.Expressions
             }
 
             FunctionExpressionResolvers[typeof(TToken)] = (arguments) =>
-                (TExpression)constructor.Invoke(new[] { arguments });
+                (TExpression)constructor.Invoke(new object[] { arguments });
 
             return this;
         }
@@ -353,7 +353,7 @@ namespace lvl.Web.OData.Expressions
             }
 
             ValueExpressionResolvers[typeof(TToken)] = (value) =>
-                (TExpression)constructor.Invoke(new[] { value });
+                (TExpression)constructor.Invoke(new object[] { value });
 
             return this;
         }
@@ -375,7 +375,7 @@ namespace lvl.Web.OData.Expressions
             }
 
             UnaryExpressionResolvers[typeof(TToken)] = (arguments) =>
-                (TExpression)constructor.Invoke(new[] { arguments });
+                (TExpression)constructor.Invoke(new object[] { arguments });
 
             return this;
         }

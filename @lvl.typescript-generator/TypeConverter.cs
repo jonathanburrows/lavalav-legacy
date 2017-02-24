@@ -18,10 +18,10 @@ namespace lvl.TypescriptGenerator
         /// Constructs a typescript object which is equivilant the given C# type.
         /// </summary>
         /// <param name="converting">The type to be converted to typescript.</param>
-        /// <param name="packageForNamespace">The list of paths to npm modules, based on assembly.</param>
+        /// <param name="generationOptions">The options to generate the typescript files.</param>
         /// <returns>The content of the converted typescript type.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="converting"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="packageForNamespace"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generationOptions"/> is null.</exception>
         public TypeScriptType CsToTypeScript(Type converting, GenerationOptions generationOptions)
         {
             if (converting == null)
@@ -56,7 +56,7 @@ namespace lvl.TypescriptGenerator
         /// Converts a property of a type, including any metadata.
         /// </summary>
         /// <param name="propertyInfo">The property to be converted.</param>
-        /// <param name="packageForNamespace">The mapping of namespace to package directory.</param>
+        /// <param name="generationOptions">The mapping of namespace to package directory.</param>
         /// <returns>The converted property.</returns>
         private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, GenerationOptions generationOptions)
         {
@@ -133,11 +133,10 @@ namespace lvl.TypescriptGenerator
         /// Does a simple, shallow typescript conversion.
         /// </summary>
         /// <param name="imported">The type which will have a shallow conversion done.</param>
+        /// <param name="generationOptions">The options, including mapping to different npm packages.</param>
         /// <returns>The shallow converted type which can be used for imports.</returns>
         private TypeScriptType ConvertImportedType(Type imported, GenerationOptions generationOptions)
         {
-            var isPrimitive = imported == typeof(string) || imported.IsValueType;
-
             if (imported.IsArray)
             {
                 var type = imported.GetElementType();

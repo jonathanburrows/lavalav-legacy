@@ -31,7 +31,7 @@ namespace lvl.Repositories
         
         async Task<IEnumerable<IEntity>> IRepository.GetAsync()
         {
-            return (await GetAsync()).Cast<IEntity>();
+            return await GetAsync();
         }
 
         /// <inheritdoc />

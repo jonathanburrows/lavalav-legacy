@@ -12,7 +12,6 @@ namespace lvl.Web.Logging
     /// </summary>
     internal class DatabaseLogger : ILogger
     {
-        private string Name { get; }
         private LoggingSettings LoggingSettings { get; }
         private IRepository<LogEntry> LogEntryRepository { get; }
         private IHttpContextAccessor HttpContextAccessor { get; }
@@ -36,7 +35,6 @@ namespace lvl.Web.Logging
                 throw new ArgumentNullException(nameof(httpContextAccessor));
             }
 
-            Name = name;
             LoggingSettings = loggingSettings;
             LogEntryRepository = logEntryRepository;
             HttpContextAccessor = httpContextAccessor;
@@ -49,7 +47,7 @@ namespace lvl.Web.Logging
                 throw new ArgumentNullException(nameof(state));
             }
 
-            return LogScope.Push(Name, state);
+            return LogScope.Push(state);
         }
 
         public bool IsEnabled(LogLevel logLevel)
@@ -82,7 +80,7 @@ namespace lvl.Web.Logging
                 LogLevel = logLevel.ToString(),
                 Message = message,
                 StackTrace = exception?.StackTrace,
-                Exception = exception?.GetType()?.Name,
+                Exception = exception?.GetType().Name,
                 Https = request?.IsHttps,
                 Url = url,
                 UserName = userName

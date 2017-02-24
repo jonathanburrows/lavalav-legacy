@@ -13,7 +13,7 @@ namespace lvl.Repositories.Tests
     {
         private IServiceProvider Services { get; }
 
-        public RepositoryFactoryTests(TRepositoryFixture inMemoryRepositoriesFixture)
+        protected RepositoryFactoryTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
             Services = inMemoryRepositoriesFixture.ServiceProvider;
         }
@@ -72,6 +72,7 @@ namespace lvl.Repositories.Tests
     }
 
     [Collection(RepositoriesCollection.Name)]
+    // ReSharper disable once InconsistentNaming Matches the vendor name literally.
     public class SQLiteRepositoryFactoryTests : RepositoryFactoryTests<SQLiteRepositoryFixture>
     {
         public SQLiteRepositoryFactoryTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }

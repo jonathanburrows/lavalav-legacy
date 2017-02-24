@@ -310,8 +310,8 @@ namespace lvl.TypeScriptGenerator.Tests
             {
                 "--assembly-path=lvl.Ontology.dll",
                 "--output-bin=./",
-                $"lvl.Ontology=@lvl/core",
-                $"lvl.TestDomain=@lvl/test-domain"
+                "lvl.Ontology=@lvl/core",
+                "lvl.TestDomain=@lvl/test-domain"
             };
 
             var generationOptions = ArgumentParser.Parse(args);

@@ -8,18 +8,17 @@ namespace lvl.Web.Logging
     /// </summary>
     internal class LogScope
     {
-        private string Name { get; }
         private object State { get; }
 
-        public LogScope(string name, object state)
+        public LogScope(object state)
         {
-            Name = name;
             State = state;
         }
 
         public LogScope Parent { get; private set; }
 
-        private static AsyncLocal<LogScope> _current { get; set; } = new AsyncLocal<LogScope>();
+        // ReSharper disable once InconsistentNaming Resharper getting confused.
+        private static AsyncLocal<LogScope> _current { get; } = new AsyncLocal<LogScope>();
         public static LogScope Current
         {
             get
@@ -32,16 +31,15 @@ namespace lvl.Web.Logging
             }
         }
 
-        public static IDisposable Push(string name, object state)
+        public static IDisposable Push(object state)
         {
             var temp = Current;
-            Current = new LogScope(name, state);
-            Current.Parent = temp;
+            Current = new LogScope(state) { Parent = temp };
 
             return new DisposableScope();
         }
 
-        public override string ToString() => State?.ToString();
+        public override string ToString() => State.ToString();
 
         private class DisposableScope : IDisposable
         {

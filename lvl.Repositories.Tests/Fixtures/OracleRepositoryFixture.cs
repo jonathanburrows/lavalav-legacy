@@ -1,6 +1,5 @@
 ﻿using lvl.DatabaseGenerator;
 using lvl.Repositories.Tests.Configuration;
-using lvl.TestDomain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace lvl.Repositories.Tests.Fixtures

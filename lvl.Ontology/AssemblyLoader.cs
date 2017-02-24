@@ -12,7 +12,7 @@ namespace lvl.Ontology
         /// <summary>
         /// Loads an assembly from the given path, and loads any missing references from the assemblies directory.
         /// </summary>
-        /// <param name="assemblyName">The full path to the assembly to be loaded.</param>
+        /// <param name="assemblyPath">The full path to the assembly to be loaded.</param>
         /// <returns>The loaded assembly.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="assemblyPath"/> is null</exception>
         /// <exception cref="FileNotFoundException">There was no assembly found at the given path</exception>
@@ -20,7 +20,7 @@ namespace lvl.Ontology
         {
             if (assemblyPath == null)
             {
-                throw new ArgumentNullException(assemblyPath);
+                throw new ArgumentNullException(nameof(assemblyPath));
             }
 
             var assemblyFile = new FileInfo(assemblyPath);
@@ -29,7 +29,7 @@ namespace lvl.Ontology
                 throw new FileNotFoundException($"Assembly {assemblyFile.FullName} not found");
             }
 
-            var assemblyDirectory = assemblyFile.Directory.FullName;
+            var assemblyDirectory = assemblyFile.Directory?.FullName ?? "./";
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 var missingAssemblyName = new AssemblyName(args.Name).Name;

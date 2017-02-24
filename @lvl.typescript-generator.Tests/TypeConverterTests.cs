@@ -30,8 +30,6 @@ namespace lvl.TypeScriptGenerator.Tests
         [Fact]
         public void ConvertingNullType_ThrowsArgumentNullException()
         {
-            var packageForNamespace = new Dictionary<string, string>();
-
             Assert.Throws<ArgumentNullException>(() => TypeConverter.CsToTypeScript(null, GenerationOptions));
         }
 
@@ -62,7 +60,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export class {type.Name} extends {type.BaseType.Name} {{", tsContent);
+            Assert.Contains("export class SingleInheritanceClass extends BaseClass {", tsContent);
         }
 
         [Fact]
@@ -601,23 +599,23 @@ namespace lvl.TypeScriptGenerator.Tests
         [Fact]
         public void Interface_SingleImplementation()
         {
-            var type = typeof(SingleImplementationInterface);
+            var type = typeof(ISingleImplementationInterface);
 
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains("export interface SingleImplementationInterface implements IBaseInterface {", tsContent);
+            Assert.Contains("export interface ISingleImplementationInterface implements IBaseInterface {", tsContent);
         }
 
         [Fact]
         public void Interface_DoubleImplementation()
         {
-            var type = typeof(DoubleImplementationInterface);
+            var type = typeof(IDoubleImplementationInterface);
 
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains("export interface DoubleImplementationInterface implements IFirstInterface, ISecondInterface {", tsContent);
+            Assert.Contains("export interface IDoubleImplementationInterface implements IFirstInterface, ISecondInterface {", tsContent);
         }
 
         [Fact]

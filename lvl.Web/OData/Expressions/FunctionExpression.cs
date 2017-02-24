@@ -9,7 +9,7 @@
         protected IExpression Arg1 { get; }
         protected IExpression Arg2 { get; }
 
-        public FunctionExpression(IExpression argument)
+        protected FunctionExpression(IExpression argument)
         {
             var sequence = argument as SequenceExpression;
             if (sequence != null)

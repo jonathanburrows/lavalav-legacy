@@ -39,6 +39,7 @@ namespace lvl.TypescriptGenerator
             }
 
             var assemblyPaths = args.Where(arg => arg.StartsWith($"{AssemblyPathKey}=", StringComparison.OrdinalIgnoreCase));
+            // ReSharper disable PossibleMultipleEnumeration It is as it's supposed to be.
             if (!assemblyPaths.Any())
             {
                 throw new ArgumentException($"No {AssemblyPathKey} was specified.");

@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Net.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Net.Http;
 
-namespace lvl.TestWebSite.Tests.Fixtures
+namespace lvl.TestWebSite.Fixtures
 {
     /// <summary>
     /// Starts a website for testing.

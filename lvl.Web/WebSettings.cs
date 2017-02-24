@@ -22,10 +22,10 @@ namespace lvl.Web
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            Logging = new LoggingSettings { };
+            Logging = new LoggingSettings();
             configuration.GetSection("logging").Bind(Logging);
 
-            Cors = new CorsSettings { };
+            Cors = new CorsSettings();
             configuration.GetSection("cors").Bind(Cors);
         }
     }
