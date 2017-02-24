@@ -2,7 +2,7 @@
   "profiles": {
     "@lvl.typescript-generator": {
       "commandName": "Project",
-      "commandLineArgs": "--assembly-path=\"hello, world\" --output-bin=\"world\" TestDomain.Models=@lvl/test-domain"
+      "commandLineArgs": "--assembly-path=\"../lvl.TestDomain/bin/Debug/net461/lvl.TestDomain.dll\" --output-bin=\"bin/debug/net461/temp/test-domain/models\" lvl.Ontology=@lvl/core"
     }
   }
 }
