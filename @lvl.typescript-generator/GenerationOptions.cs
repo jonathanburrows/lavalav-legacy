@@ -11,7 +11,7 @@ namespace lvl.TypescriptGenerator
         public string AssemblyPath { get; set; }
 
         /// <summary>The directory where the typescript will be generated to.</summary>
-        public string OutputPath { get; set; }
+        public string OutputBin { get; set; }
 
         /// <summary>(optional) The directory which the decorator attributes may be found in.</summary>
         public string DecoratorPath { get; set; }

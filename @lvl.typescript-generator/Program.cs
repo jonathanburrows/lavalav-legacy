@@ -8,10 +8,10 @@ namespace lvl.TypescriptGenerator
         /// An application to generate typescript models from a given assembly.
         /// 
         /// Synopsis:
-        /// @lvl.typescript-generator --assembly-path='assembly-path' --output-directory='output-directory' ['C# namespace'='npm package'[, 'C# namespace'='npm package'...]] 
+        /// @lvl.typescript-generator --assembly-path='assembly-path' --output-bin='output-bin' [--decorator-path='decorator-path'] ['C# namespace'='npm package'[, 'C# namespace'='npm package'...]] 
         /// 
         /// Example:
-        /// @lvl.typescript-generator --assembly-path=lvl.TestDomain.dll --output-directory='src/models' lvl.Ontology='@lvl/core'
+        /// @lvl.typescript-generator --assembly-path=lvl.TestDomain.dll --output-bin='src/models' lvl.Ontology='@lvl/core'
         /// 
         /// </summary>
         /// <param name="args">The command line arguments used to generate the models.</param>
