@@ -7,3 +7,6 @@ dist/
 *.log*
 *.xproj.user
 project.lock.json
+
+# If this isnt included, it will break 1 click builds.
+!@lvl.typescript-generator/bin/Debug/net461/win7-x64/@lvl.typescript-generator.exe

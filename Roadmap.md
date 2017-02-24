@@ -3,7 +3,7 @@
 
 Below is the roadmap of lavalav. The order of these plans are subject to change.
 
-### Current version: 0.3
+### Current version: 0.4
 
 
 ## Release Features
@@ -76,20 +76,20 @@ This will aim to convert a all models in a single C# assembly into TypeScript mo
 A set of components which may be used for hosting a build server.
 
 
-### 0.6 Package Manager Server
-A set of components for hosting npm, nuget, and chocolately packages.
-
-
-### 0.7 Deployment server
+### 0.6 Deployment server
 A set of components which may be used for a deployment server.
 
 
-### 0.8 Semantic Versioning API
-An executable used to version code in accordance to SemVer 2.0.
-
-
-### 0.9 Agile Management Application
+### 0.7 Agile Management Application
 A set of components for managing sprints.
+
+
+### 0.8 Package Manager Server
+A set of components for hosting npm, nuget, and chocolately packages.
+
+
+### 0.9 Semantic Versioning API
+An executable used to version code in accordance to SemVer 2.0.
 
 
 ### 0.10 Change Management Application
