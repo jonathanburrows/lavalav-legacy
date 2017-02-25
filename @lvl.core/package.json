@@ -6,7 +6,7 @@
   "scripts": {
     "link": "npm link ../@lvl.typescript-generator",
 
-    "typescript-generator": "typescript-generator",
+    "install-tools": "npm install file:../@lvl.typescript-generator",
     "generate-models": "typescript-generator --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators"
   },
   "dependencies": {
@@ -26,8 +26,6 @@
     "zone.js": "0.7.7"
   },
   "devDependencies": {
-    "@lvl/typescript-generator": "file:../@lvl.typescript-generator",
-
     "@types/core-js": "0.9.35",
     "@types/jasmine": "2.5.38",
     "@types/reflect-metadata": "0.0.5",
