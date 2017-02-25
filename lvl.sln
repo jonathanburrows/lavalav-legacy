@@ -66,6 +66,27 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "@lvl.typescript-generator",
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "@lvl.typescript-generator.Tests", "@lvl.typescript-generator.Tests\@lvl.typescript-generator.Tests.xproj", "{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "@lvl.dotnet-runner", "@lvl.dotnet-runner\", "{BD682E98-CC11-41B1-AAF8-23FBC5644447}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_60550"
+		Debug.AspNetCompiler.PhysicalPath = "@lvl.dotnet-runner\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60550\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_60550"
+		Release.AspNetCompiler.PhysicalPath = "@lvl.dotnet-runner\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60550\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "60550"
+		SlnRelativePath = "@lvl.dotnet-runner\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,6 +197,12 @@ Global
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}.Release|x64.ActiveCfg = Release|Any CPU
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}.Release|x64.Build.0 = Release|Any CPU
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447}.Debug|x64.Build.0 = Debug|Any CPU
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447}.Release|x64.ActiveCfg = Debug|Any CPU
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447}.Release|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,5 +221,6 @@ Global
 		{04E5F0FA-35FD-4982-838C-0BDC4E07081B} = {BD24A8DC-DE35-4A7B-943D-3AD894DD8FDF}
 		{29159C9E-A8FF-4A76-B4AA-2A31618427D3} = {42BD6556-4F8F-4C70-A86B-96A13F053E91}
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB} = {4BD69EAF-B494-43EB-8ED9-7F13713BC953}
+		{BD682E98-CC11-41B1-AAF8-23FBC5644447} = {BD24A8DC-DE35-4A7B-943D-3AD894DD8FDF}
 	EndGlobalSection
 EndGlobal
