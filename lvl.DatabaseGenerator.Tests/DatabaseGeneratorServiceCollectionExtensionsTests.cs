@@ -12,7 +12,7 @@ namespace lvl.DatabaseGenerator.Tests
 
         public DatabaseGeneratorServiceCollectionExtensionsTests(InMemoryDatabaseGenerationFixture inMemoryDatabaseGenerationFixture)
         {
-            Services = inMemoryDatabaseGenerationFixture.ServiceProvider;
+            Services = inMemoryDatabaseGenerationFixture.ServiceProvider ?? throw new ArgumentNullException(nameof(inMemoryDatabaseGenerationFixture));
         }
 
         [Fact]

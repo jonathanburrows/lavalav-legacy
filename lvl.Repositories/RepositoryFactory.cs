@@ -27,8 +27,8 @@ namespace lvl.Repositories
 
         public RepositoryFactory(Configuration configuration, IServiceProvider serviceProvider)
         {
-            Configuration = configuration;
-            Services = serviceProvider;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            Services = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
         /// <summary>

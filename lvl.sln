@@ -1,13 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD24A8DC-DE35-4A7B-943D-3AD894DD8FDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9487E45A-1EFE-4794-8E36-1153387F1CE0}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		NuGet.config = NuGet.config
 	EndProjectSection
 EndProject
@@ -21,25 +20,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A6CC74E6-E
 		Roadmap.md = Roadmap.md
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.Ontology", "lvl.Ontology\lvl.Ontology.xproj", "{90039483-AC2A-4D7D-9EA9-AE3004B63FBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Ontology", "lvl.Ontology\lvl.Ontology.csproj", "{90039483-AC2A-4D7D-9EA9-AE3004B63FBE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.Repositories", "lvl.Repositories\lvl.Repositories.xproj", "{C4EA1232-B589-4153-8841-7C1DB9D71AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Repositories", "lvl.Repositories\lvl.Repositories.csproj", "{C4EA1232-B589-4153-8841-7C1DB9D71AEB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.Ontology.Tests", "lvl.Ontology.Tests\lvl.Ontology.Tests.xproj", "{0D230D60-163E-45C6-B2D7-9B1C2189B5E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Ontology.Tests", "lvl.Ontology.Tests\lvl.Ontology.Tests.csproj", "{0D230D60-163E-45C6-B2D7-9B1C2189B5E7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.TestDomain", "lvl.TestDomain\lvl.TestDomain.xproj", "{D8AA24D4-1A6D-4A12-80CF-42DEBC3B0895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.TestDomain", "lvl.TestDomain\lvl.TestDomain.csproj", "{D8AA24D4-1A6D-4A12-80CF-42DEBC3B0895}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.Repositories.Tests", "lvl.Repositories.Tests\lvl.Repositories.Tests.xproj", "{E99C59F6-6D88-4265-9ACF-B03F8EB77FE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Repositories.Tests", "lvl.Repositories.Tests\lvl.Repositories.Tests.csproj", "{E99C59F6-6D88-4265-9ACF-B03F8EB77FE9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.DatabaseGenerator", "lvl.DatabaseGenerator\lvl.DatabaseGenerator.xproj", "{5517AE6F-5463-4AEA-B858-6C0BA3BC59BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.DatabaseGenerator", "lvl.DatabaseGenerator\lvl.DatabaseGenerator.csproj", "{5517AE6F-5463-4AEA-B858-6C0BA3BC59BB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.DatabaseGenerator.Tests", "lvl.DatabaseGenerator.Tests\lvl.DatabaseGenerator.Tests.xproj", "{CD026A42-AA89-4EE1-B339-14A036793044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.DatabaseGenerator.Tests", "lvl.DatabaseGenerator.Tests\lvl.DatabaseGenerator.Tests.csproj", "{CD026A42-AA89-4EE1-B339-14A036793044}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.Web", "lvl.Web\lvl.Web.xproj", "{5D690382-8CC0-418B-ABE4-0B483AED06D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Web", "lvl.Web\lvl.Web.csproj", "{5D690382-8CC0-418B-ABE4-0B483AED06D9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.Web.Tests", "lvl.Web.Tests\lvl.Web.Tests.xproj", "{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "lvl.TestWebSite", "lvl.TestWebSite\lvl.TestWebSite.xproj", "{6C74B9A1-159E-4957-96E6-70441F9558FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.TestWebSite", "lvl.TestWebSite\lvl.TestWebSite.csproj", "{6C74B9A1-159E-4957-96E6-70441F9558FE}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "@lvl.core", "@lvl.core\", "{04E5F0FA-35FD-4982-838C-0BDC4E07081B}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -62,9 +59,11 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "@lvl.core", "@lvl.core\", "
 		SlnRelativePath = "@lvl.core\"
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "@lvl.typescript-generator", "@lvl.typescript-generator\@lvl.typescript-generator.xproj", "{29159C9E-A8FF-4A76-B4AA-2A31618427D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "@lvl.typescript-generator", "@lvl.typescript-generator\@lvl.typescript-generator.csproj", "{29159C9E-A8FF-4A76-B4AA-2A31618427D3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "@lvl.typescript-generator.Tests", "@lvl.typescript-generator.Tests\@lvl.typescript-generator.Tests.xproj", "{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "@lvl.typescript-generator.Tests", "@lvl.typescript-generator.Tests\@lvl.typescript-generator.Tests.csproj", "{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Web.Tests", "lvl.Web.Tests\lvl.Web.Tests.csproj", "{54DB915F-1742-4B6D-B15F-6F451FC6E223}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -138,14 +137,6 @@ Global
 		{5D690382-8CC0-418B-ABE4-0B483AED06D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D690382-8CC0-418B-ABE4-0B483AED06D9}.Release|x64.ActiveCfg = Release|Any CPU
 		{5D690382-8CC0-418B-ABE4-0B483AED06D9}.Release|x64.Build.0 = Release|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Debug|x64.Build.0 = Debug|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Release|x64.ActiveCfg = Release|Any CPU
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE}.Release|x64.Build.0 = Release|Any CPU
 		{6C74B9A1-159E-4957-96E6-70441F9558FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C74B9A1-159E-4957-96E6-70441F9558FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C74B9A1-159E-4957-96E6-70441F9558FE}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -176,6 +167,14 @@ Global
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}.Release|x64.ActiveCfg = Release|Any CPU
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}.Release|x64.Build.0 = Release|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Debug|x64.Build.0 = Debug|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|x64.ActiveCfg = Release|Any CPU
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,10 +188,10 @@ Global
 		{5517AE6F-5463-4AEA-B858-6C0BA3BC59BB} = {42BD6556-4F8F-4C70-A86B-96A13F053E91}
 		{CD026A42-AA89-4EE1-B339-14A036793044} = {4BD69EAF-B494-43EB-8ED9-7F13713BC953}
 		{5D690382-8CC0-418B-ABE4-0B483AED06D9} = {BD24A8DC-DE35-4A7B-943D-3AD894DD8FDF}
-		{9CF90455-DDD8-449E-8ECC-EF631C76CAFE} = {4BD69EAF-B494-43EB-8ED9-7F13713BC953}
 		{6C74B9A1-159E-4957-96E6-70441F9558FE} = {4BD69EAF-B494-43EB-8ED9-7F13713BC953}
 		{04E5F0FA-35FD-4982-838C-0BDC4E07081B} = {BD24A8DC-DE35-4A7B-943D-3AD894DD8FDF}
 		{29159C9E-A8FF-4A76-B4AA-2A31618427D3} = {42BD6556-4F8F-4C70-A86B-96A13F053E91}
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB} = {4BD69EAF-B494-43EB-8ED9-7F13713BC953}
+		{54DB915F-1742-4B6D-B15F-6F451FC6E223} = {4BD69EAF-B494-43EB-8ED9-7F13713BC953}
 	EndGlobalSection
 EndGlobal

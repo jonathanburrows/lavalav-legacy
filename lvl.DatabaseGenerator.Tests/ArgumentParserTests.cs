@@ -11,7 +11,7 @@ namespace lvl.DatabaseGenerator.Tests
 
         public ArgumentParserTests(ArgumentParser argumentParser)
         {
-            ArgumentParser = argumentParser;
+            ArgumentParser = argumentParser ?? throw new ArgumentNullException(nameof(argumentParser));
         }
 
         [Theory]

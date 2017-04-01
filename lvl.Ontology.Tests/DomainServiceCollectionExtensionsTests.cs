@@ -16,7 +16,7 @@ namespace lvl.Ontology.Tests
 
         public DomainServiceCollectionExtensionsTests(InMemoryDomainFixture inMemoryTestFixture)
         {
-            Services = inMemoryTestFixture.Services;
+            Services = inMemoryTestFixture?.Services ?? throw new ArgumentNullException(nameof(inMemoryTestFixture));
         }
 
         [Fact]

@@ -4,6 +4,7 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -64,7 +65,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static FluentConfiguration AddReferencedEntities(this FluentConfiguration fluentConfiguration, Assembly callingAssembly)
         {
-            var baseType = typeof(IEntity);
             callingAssembly
                 .GetReferencedAssemblies()
                 .AsParallel()
@@ -74,12 +74,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 .CurrentDomain
                 .GetAssemblies()
                 .AsParallel()
-                .Where(a => !a.IsDynamic)
-                .Where(a => a.ExportedTypes.Any(t => baseType.IsAssignableFrom(t)));
+                .Where(AssemblyContainsIEntity);
 
             var assemblyMapping = AutoMap
                 .Assemblies(assemblies.ToArray())
-                .Where(t => baseType.IsAssignableFrom(t))
+                .Where(t => typeof(IEntity).IsAssignableFrom(t))
                 .IgnoreBase<IEntity>();
 
             var conventions = assemblyMapping.Conventions;
@@ -90,6 +89,29 @@ namespace Microsoft.Extensions.DependencyInjection
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 
             return fluentConfiguration;
+        }
+
+        /// <summary>
+        /// Determines if an assembly contains an IEntity.
+        /// </summary>
+        /// <param name="assembly">The assembly to be checked.</param>
+        /// <returns>true if the assembly contains an ientity, false otherwise.</returns>
+        /// <remarks>Much of this was done to prevent 3rd party libraries from crashing the app.</remarks>
+        private static bool AssemblyContainsIEntity(Assembly assembly)
+        {
+            // this was done to prevent nhibernate from crashing the app.
+            if (assembly.IsDynamic)
+            {
+                return false;
+            }
+
+            // this was done to prevent a preview release version of xunit from crashing
+            var ontologyAssembly = typeof(IEntity).GetTypeInfo().Assembly;
+            if (!assembly.GetReferencedAssemblies().Any(ra => ra.FullName == ontologyAssembly.FullName)) {
+                return false;
+            }
+
+            return assembly.ExportedTypes.Any(t => typeof(IEntity).IsAssignableFrom(t));
         }
     }
 }

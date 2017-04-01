@@ -21,6 +21,11 @@ namespace lvl.Web.Tests
 
         public ErrorLoggingTests(WebHostFixture<TestWebSite.Startup> webHostFixture)
         {
+            if (webHostFixture == null)
+            {
+                throw new ArgumentNullException(nameof(webHostFixture));
+            }
+
             Client = webHostFixture.Client;
             Services = webHostFixture.Services;
         }

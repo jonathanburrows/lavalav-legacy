@@ -17,6 +17,11 @@ namespace lvl.Repositories
 
         public SQLitePersistentSessionProvider(ISessionFactory sessionFactory, DatabaseCreator databaseCreator, Configuration configuration) : base(sessionFactory)
         {
+            if (sessionFactory == null)
+            {
+                throw new System.ArgumentNullException(nameof(sessionFactory));
+            }
+
             if (Connection == null)
             {
                 lock (ConnectionLock)
@@ -33,7 +38,7 @@ namespace lvl.Repositories
             }
 
         }
-        
+
         /// <inheritdoc />
         public override ISession GetSession() => SessionFactory.OpenSession(Connection);
     }

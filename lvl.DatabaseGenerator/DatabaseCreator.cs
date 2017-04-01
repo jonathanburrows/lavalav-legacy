@@ -16,7 +16,7 @@ namespace lvl.DatabaseGenerator
 
         public DatabaseCreator(Configuration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         /// <summary>

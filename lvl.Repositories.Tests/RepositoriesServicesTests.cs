@@ -17,7 +17,7 @@ namespace lvl.Repositories.Tests
 
         protected RepositoriesServicesTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
-            Services = inMemoryRepositoriesFixture.ServiceProvider;
+            Services = inMemoryRepositoriesFixture?.ServiceProvider ?? throw new ArgumentNullException(nameof(inMemoryRepositoriesFixture));
         }
 
         [IntegrationTest]

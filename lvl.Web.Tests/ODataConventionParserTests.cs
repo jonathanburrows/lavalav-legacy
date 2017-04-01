@@ -21,7 +21,8 @@ namespace lvl.Web.Tests
 
         public ODataConventionParserTests(WebServiceProviderFixture webServiceProviderFixture)
         {
-            Services = webServiceProviderFixture.ServiceProvider;
+            Services = webServiceProviderFixture.ServiceProvider ?? throw new ArgumentNullException(nameof(webServiceProviderFixture));
+
             Parser = Services.GetRequiredService<ODataConventionParser>();
             Tokenizer = Services.GetRequiredService<ODataConventionTokenizer>();
         }

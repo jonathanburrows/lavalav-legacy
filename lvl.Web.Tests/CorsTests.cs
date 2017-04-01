@@ -29,7 +29,7 @@ namespace lvl.Web.Tests
 
         public CorsTests(WebHostFixture<CorsStartup> webHostFixture)
         {
-            Client = webHostFixture.Client;
+            Client = webHostFixture?.Client ?? throw new ArgumentNullException(nameof(webHostFixture));
         }
 
         [Theory]

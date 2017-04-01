@@ -18,7 +18,7 @@ namespace lvl.Web.Tests
 
         public WebServicesTests(WebServiceProviderFixture webServiceProviderFixture)
         {
-            Services = webServiceProviderFixture.ServiceProvider;
+            Services = webServiceProviderFixture?.ServiceProvider ?? throw new ArgumentNullException(nameof(webServiceProviderFixture));
         }
 
         [Fact]

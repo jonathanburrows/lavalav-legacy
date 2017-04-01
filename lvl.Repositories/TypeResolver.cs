@@ -13,7 +13,7 @@ namespace lvl.Repositories
 
         public TypeResolver(Configuration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         /// <summary>

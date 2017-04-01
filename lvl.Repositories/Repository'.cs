@@ -14,9 +14,9 @@ namespace lvl.Repositories
     {
         private SessionProvider SessionProvider { get; }
 
-        public Repository(SessionProvider sessionManager)
+        public Repository(SessionProvider sessionProvider)
         {
-            SessionProvider = sessionManager;
+            SessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));
         }
 
         /// <inheritdoc />

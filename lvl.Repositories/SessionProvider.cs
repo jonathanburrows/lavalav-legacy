@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using System;
 
 namespace lvl.Repositories
 {
@@ -12,7 +13,7 @@ namespace lvl.Repositories
 
         public SessionProvider(ISessionFactory sessionFactory)
         {
-            SessionFactory = sessionFactory;
+            SessionFactory = sessionFactory ?? throw new ArgumentNullException(nameof(sessionFactory));
         }
 
         /// <summary>

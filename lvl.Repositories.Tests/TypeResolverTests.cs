@@ -16,7 +16,7 @@ namespace lvl.Repositories.Tests
 
         protected TypeResolverTests(TRepositoryFixture inMemoryRepositoriesFixture)
         {
-            Services = inMemoryRepositoriesFixture.ServiceProvider;
+            Services = inMemoryRepositoriesFixture?.ServiceProvider ?? throw new ArgumentNullException(nameof(inMemoryRepositoriesFixture));
         }
 
         [IntegrationTest]

@@ -1,6 +1,7 @@
 ﻿using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
+using System;
 using Xunit;
 
 namespace lvl.Ontology.Tests
@@ -12,7 +13,7 @@ namespace lvl.Ontology.Tests
 
         public DatabaseDetectorTests(DatabaseDetector databaseDetector)
         {
-            DatabaseDetector = databaseDetector;
+            DatabaseDetector = databaseDetector ?? throw new ArgumentNullException(nameof(databaseDetector));
         }
 
         [Fact]
