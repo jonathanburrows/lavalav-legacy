@@ -55,7 +55,6 @@ namespace Microsoft.AspNetCore.Builder
                 configureRoutes.Invoke(routes);
             };
 
-
             return applicationBuilder
                 .UseMiddleware<ErrorLoggingMiddleware>()
                 .UseCors(corsConfiguration)

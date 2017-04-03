@@ -4,7 +4,6 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -74,14 +73,23 @@ namespace Microsoft.Extensions.DependencyInjection
                 .CurrentDomain
                 .GetAssemblies()
                 .AsParallel()
-                .Where(AssemblyContainsIEntity);
+                .Where(AssemblyContainsIEntity)
+                .ToArray();
 
             var assemblyMapping = AutoMap
-                .Assemblies(assemblies.ToArray())
+                .Assemblies(assemblies)
                 .Where(t => typeof(IEntity).IsAssignableFrom(t))
                 .IgnoreBase<IEntity>();
 
+            foreach (var assembly in assemblies)
+            {
+                assemblyMapping.AddMappingsFromAssembly(assembly);
+                assemblyMapping.Conventions.AddAssembly(assembly);
+                assemblyMapping.UseOverridesFromAssembly(assembly);
+            }
+
             var conventions = assemblyMapping.Conventions;
+
             conventions.Add(DefaultCascade.All());
             conventions.Add(LazyLoad.Never());
             conventions.Add(ForeignKey.EndsWith("Id"));
@@ -107,7 +115,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // this was done to prevent a preview release version of xunit from crashing
             var ontologyAssembly = typeof(IEntity).GetTypeInfo().Assembly;
-            if (!assembly.GetReferencedAssemblies().Any(ra => ra.FullName == ontologyAssembly.FullName)) {
+            if (!assembly.GetReferencedAssemblies().Any(ra => ra.FullName == ontologyAssembly.FullName))
+            {
                 return false;
             }
 

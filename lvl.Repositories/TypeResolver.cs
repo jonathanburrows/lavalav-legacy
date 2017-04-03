@@ -59,7 +59,8 @@ namespace lvl.Repositories
             {
                 return matchingClasses.Single();
             }
-            else {
+            else
+            {
                 throw new InvalidOperationException($"No entity was mapped with the class or fully qualified name {entityType}");
             }
         }
