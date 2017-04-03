@@ -1,0 +1,44 @@
+import { Claim } from './claim';
+import { Secret } from './secret';
+import { IEntity } from '@lvl/core';
+
+export class Client implements IEntity {
+    public id: number;
+    public enabled: boolean;
+    public clientId: string;
+    public protocolType: string;
+    public clientSecrets: Secret[];
+    public requireClientSecret: boolean;
+    public clientName: string;
+    public clientUri: string;
+    public logoUri: string;
+    public requireConsent: boolean;
+    public allowRememberConsent: boolean;
+    public allowedGrantTypes: string[];
+    public requirePkce: boolean;
+    public allowPlainTextPkce: boolean;
+    public allowAccessTokensViaBrowser: boolean;
+    public redirectUris: string[];
+    public postLogoutRedirectUris: string[];
+    public logoutUri: string;
+    public logoutSessionRequired: boolean;
+    public allowOfflineAccess: boolean;
+    public allowedScopes: string[];
+    public alwaysIncludeUserClaimsInIdToken: boolean;
+    public identityTokenLifetime: number;
+    public accessTokenLifetime: number;
+    public authorizationCodeLifetime: number;
+    public absoluteRefreshTokenLifetime: number;
+    public slidingRefreshTokenLifetime: number;
+    public refreshTokenUsage: number;
+    public updateAccessTokenClaimsOnRefresh: boolean;
+    public refreshTokenExpiration: number;
+    public accessTokenType: number;
+    public enableLocalLogin: boolean;
+    public identityProviderRestrictions: string[];
+    public includeJwtId: boolean;
+    public claims: Claim[];
+    public alwaysSendClientClaims: boolean;
+    public prefixClientClaims: boolean;
+    public allowedCorsOrigins: string[];
+}
