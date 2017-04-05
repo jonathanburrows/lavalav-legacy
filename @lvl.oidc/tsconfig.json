@@ -1,8 +1,8 @@
-{
+﻿{
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -15,6 +15,12 @@
     "lib": [
       "es2016",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@angular/*": [ "./node_modules/@angular/*" ],
+      "@angular/platform-browser-dynamic/testing": [ "./node_modules/@angular/platform-browser-dynamic/testing" ],
+      "@lvl/core": [ "./node_modules/@lvl/core" ],
+      "rxjs/*": [ "./node_modules/rxjs/*" ]
+    }
   }
 }

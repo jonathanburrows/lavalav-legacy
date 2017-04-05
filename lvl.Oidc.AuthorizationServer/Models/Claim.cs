@@ -1,8 +1,10 @@
 ﻿using lvl.Ontology;
+using System.ComponentModel;
 using System.Security.Claims;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Description(nameof(Claim))]
     public class ClaimEntity : IEntity
     {
         public int Id { get; set; }

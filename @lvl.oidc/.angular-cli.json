@@ -14,7 +14,7 @@
       "test": "../test.ts",
       "tsconfig": "../tsconfig.json",
       "testTsconfig": "../tsconfig.json",
-      "prefix": "app",
+      "prefix": "lvl-oidc",
       "styles": [],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -31,13 +31,13 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "tsconfig.json"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "tsconfig.json"
     },
     {
-      "project": "e2e/tsconfig.e2e.json"
+      "project": "tsconfig.json"
     }
   ],
   "test": {
@@ -46,7 +46,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
 }

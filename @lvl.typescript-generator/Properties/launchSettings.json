@@ -2,7 +2,7 @@
   "profiles": {
     "@lvl.typescript-generator": {
       "commandName": "Project",
-      "commandLineArgs": "--assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./bin/net461/temp/src/models --decorator-path=./src/decorators"
+      "commandLineArgs": "--assembly-path=../lvl.Oidc.AuthorizationServer/bin/Debug/net461/lvl.Oidc.AuthorizationServer.exe --output-bin=./bin/net461/temp/src/models --decorator-path=./src/decorators"
     }
   }
 }

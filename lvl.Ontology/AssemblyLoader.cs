@@ -37,7 +37,8 @@ namespace lvl.Ontology
                 return File.Exists(missingAssemblyPath) ? Assembly.LoadFrom(missingAssemblyPath) : null;
             };
 
-            return Assembly.LoadFrom(assemblyPath);
+            var absolutePath = new FileInfo(assemblyPath).FullName;
+            return Assembly.LoadFile(absolutePath);
         }
     }
 }

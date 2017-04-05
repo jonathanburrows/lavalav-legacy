@@ -1,4 +1,6 @@
-﻿export const ValidationKey = '__validation';
+﻿import 'reflect-metadata';
+
+export const ValidationKey = '__validation';
 
 /** Adds a validation function to the metadata of a property.
  *  @param metadataKey the name of the validation to be added.

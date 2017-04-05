@@ -1,4 +1,4 @@
-﻿//#! /usr/bin/env node
+﻿#!/usr/bin/env node
 
 // Used to build, link, and run dotnet projects from npm.
 

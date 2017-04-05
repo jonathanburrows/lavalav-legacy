@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using lvl.TypescriptGenerator.Extensions;
+using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace lvl.TypescriptGenerator
 {
@@ -38,15 +40,15 @@ namespace lvl.TypescriptGenerator
             }
 
             var tsType = converting.IsInterface ? (TypeScriptType)new TypeScriptInterface() : new TypeScriptClass { IsAbstract = converting.IsAbstract };
-            tsType.Name = converting.Name;
+            tsType.Name = GetTypeName(converting);
 
-            if (converting.BaseType != typeof(object) && converting.BaseType != null)
+            if (converting.BaseType != typeof(object) && converting.BaseType != null && GetTypeName(converting.BaseType) != tsType.Name)
             {
                 tsType.BaseType = ConvertImportedType(converting.BaseType, generationOptions);
             }
 
             tsType.Interfaces = converting.GetInterfaces().Select(i => ConvertImportedType(i, generationOptions)).ToList();
-            tsType.Properties = converting.GetProperties().Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
+            tsType.Properties = converting.GetProperties().Where(p => p.GetCustomAttribute<JsonIgnoreAttribute>() == null).Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
             tsType.IsVisible = converting.IsVisible;
 
             return tsType;
@@ -183,7 +185,7 @@ namespace lvl.TypescriptGenerator
             }
             else
             {
-                return $"./{type.Name.ToDashed()}";
+                return $"./{GetTypeName(type).ToDashed()}";
             }
         }
 
@@ -212,7 +214,13 @@ namespace lvl.TypescriptGenerator
                 return "string";
             }
 
-            return type.Name;
+            if (type.IsEnum)
+            {
+                return "number";
+            }
+
+            var jsonNameAttribute = type.GetCustomAttribute<DescriptionAttribute>();
+            return jsonNameAttribute?.Description ?? type.Name;
         }
     }
 }

@@ -4,11 +4,13 @@ using IdentityServer4.Models;
 using lvl.Ontology;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Description(nameof(Client))]
     public class ClientEntity : Client, IEntity
     {
         public int Id { get; set; }
