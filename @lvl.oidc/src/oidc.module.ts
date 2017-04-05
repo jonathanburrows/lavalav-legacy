@@ -6,7 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from '@lvl/core';
 
 import {
-    AppComponent
+    AppComponent,
+    LoginComponent
 } from './components';
 
 import {
@@ -18,7 +19,11 @@ import {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent
+    ],
+    exports: [
+        LoginComponent
     ],
     imports: [
         BrowserModule,

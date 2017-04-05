@@ -68,6 +68,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddCors()
                 .Configure(configureJson)
                 .AddMvcCore()
+                .AddViewLocalization()
                 .AddJsonFormatters(configureJson)
                 .AddApplicationPart(typeof(WebServiceCollectionExtensions).Assembly)
                 .AddControllersAsServices();

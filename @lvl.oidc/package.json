@@ -1,19 +1,19 @@
 {
-  "name": "d",
+  "name": "@lvl/oidc",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "generate-models": "node node_modules/@lvl/core/dotnet-runner.js ../@lvl.typescript-generator --assembly-path=../lvl.Oidc.AuthorizationServer/bin/Debug/net461/lvl.Oidc.AuthorizationServer.exe --output-bin=./src/models lvl.Ontology=@lvl/core",
-
     "init.dev": "npm link ../@lvl.core",
 
     "build.dev": "ng build --progress=false --output-path=./dist/dev",
-    "build.prod": "ng build --prod --aot --output-path=./dist/prod",
+    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open",
 
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "build.prod": "ng build --prod --aot --output-path=./dist/prod",
+    "serve.prod": "ng serve --prod --aot --output-path=./dist/prod --open",
+
     "lint": "ng lint",
+    "test": "ng test",
     "e2e": "ng e2e"
   },
   "private": true,

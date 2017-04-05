@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "d"
+    "name": "@lvl/oidc"
   },
   "apps": [
     {
@@ -10,39 +10,33 @@
       "assets": [],
       "index": "index.html",
       "main": "main.ts",
-      "polyfills": "polyfills.ts",
+      "polyfills": "../node_modules/@lvl/core/polyfills.ts",
       "test": "../test.ts",
       "tsconfig": "../tsconfig.json",
       "testTsconfig": "../tsconfig.json",
       "prefix": "lvl-oidc",
       "styles": [],
       "scripts": [],
-      "environmentSource": "environments/environment.ts",
+      "environmentSource": "../node_modules/@lvl/core/environments/environment.ts",
       "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "dev": "../node_modules/@lvl/core/environments/environment.ts",
+        "prod": "../node_modules/@lvl/core/environments/environment.prod.ts"
       }
     }
   ],
   "e2e": {
     "protractor": {
-      "config": "./protractor.conf.js"
+      "config": "./node_modules/@lvl/core/protractor.conf.js"
     }
   },
   "lint": [
     {
-      "project": "tsconfig.json"
-    },
-    {
-      "project": "tsconfig.json"
-    },
-    {
-      "project": "tsconfig.json"
+      "project": "./node_modules/@lvl/core/tsconfig.json"
     }
   ],
   "test": {
     "karma": {
-      "config": "./karma.conf.js"
+      "config": "./node_modules/@lvl/core/karma.conf.js"
     }
   },
   "defaults": {

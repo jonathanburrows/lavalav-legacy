@@ -58,6 +58,7 @@ namespace Microsoft.AspNetCore.Builder
             return applicationBuilder
                 .UseMiddleware<ErrorLoggingMiddleware>()
                 .UseCors(corsConfiguration)
+                .UseStaticFiles()
                 .UseMvc(defaultRouteBuilder);
         }
         

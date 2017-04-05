@@ -1,0 +1,46 @@
+﻿{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "project": {
+        "name": "@lvl/oidc-authorization-server"
+    },
+    "apps": [
+        {
+            "name": "login",
+            "root": "wwwroot/src/login",
+            "outDir": "wwwroot/dist/login",
+            "assets": [],
+            "index": "login.html",
+            "main": "login.main.ts",
+            "polyfills": "../../../node_modules/@lvl/core/polyfills.ts",
+            "test": "../../../test.ts",
+            "tsconfig": "../../../tsconfig.json",
+            "prefix": "lvl-oidc",
+            "styles": [],
+            "scripts": [],
+            "environmentSource": "../../../node_modules/@lvl/core/environments/environment.ts",
+            "environments": {
+                "dev": "../../../node_modules/@lvl/core/environments/environment.ts",
+                "prod": "../../../node_modules/@lvl/core/environments/environment.prod.ts"
+            }
+        }
+    ],
+    "e2e": {
+        "protractor": {
+            "config": "./node_modules/@lvl/core/protractor.conf.js"
+        }
+    },
+    "lint": [
+        {
+            "project": "./node_modules/@lvl/core/tslint.json"
+        }
+    ],
+    "test": {
+        "karma": {
+            "config": "./node_modules/@lvl/core/karma.conf.js"
+        }
+    },
+    "defaults": {
+        "styleExt": "scss",
+        "component": {}
+    }
+}

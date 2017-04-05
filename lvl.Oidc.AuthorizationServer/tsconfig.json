@@ -1,0 +1,13 @@
+﻿{
+    "extends": "./node_modules/@lvl/core/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./wwwroot/dist/out-tsc",
+        "baseUrl": ".",
+        "paths": {
+            "@angular/*": [ "./node_modules/@angular/*" ],
+            "@lvl/core": [ "./node_modules/@lvl/core" ],
+            "rxjs/*": [ "./node_modules/rxjs/*" ]
+        }
+    },
+    "compileOnSave": false
+}
