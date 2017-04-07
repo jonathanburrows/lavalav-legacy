@@ -20,7 +20,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
         public async Task<Client> FindClientByIdAsync(string clientId)
         {
-            var clientQuery = new Query<Client>();
+            var clientQuery = new Query<ClientEntity>();
             var clients = await ClientRepository.GetAsync(clientQuery);
             if (clients.Count == 0)
             {
@@ -31,7 +31,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new InvalidOperationException($"{clients.Count} clients were found with id {clientId}.");
             }
 
-            return clients.Items.Single();
+            return clients.Items.Single().ToIdentityClient();
         }
     }
 }

@@ -5,8 +5,8 @@
     "scripts": {
         "init.dev": "npm link ../@lvl.oidc && npm link ../@lvl.core",
 
-        "build.dev.login": "ng build --progress=false --output-path=./wwwroot/dist/home --app=login",
-        "build.prod.login": "ng build --prod --aot --progress=false --output-path=./wwwroot/dist/home --app=login",
+        "build.dev.login": "ng build --progress=false --output-path=./wwwroot/dist/login --app=login",
+        "build.prod.login": "ng build --prod --aot --progress=false --output-path=./wwwroot/dist/login --app=login",
 
         "test": "ng test",
         "lint": "ng lint",

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using lvl.Repositories;
-using lvl.Oidc.AuthorizationServer.Models;
 using lvl.Repositories.Querying;
 using System.Linq;
+using lvl.Oidc.AuthorizationServer.Models;
 
 namespace lvl.Oidc.AuthorizationServer.Stores
 {
@@ -28,9 +28,9 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new ArgumentNullException(nameof(name));
             }
 
-            var query = new Query<ApiResource>().Where(ar => ar.Name == name);
+            var query = new Query<ApiResourceEntity>().Where(ar => ar.Name == name);
             var apiResources = await ApiResourceRepository.GetAsync(query);
-            return apiResources.Items.Single();
+            return apiResources.Items.Single().ToIdentityServer();
         }
 
         public async Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
@@ -40,9 +40,9 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new ArgumentNullException(nameof(scopeNames));
             }
 
-            var query = new Query<ApiResource>().Where(api => api.Scopes.Where(x => scopeNames.Contains(x.Name)).Any());
+            var query = new Query<ApiResourceEntity>().Where(api => api.Scopes.Where(x => scopeNames.Contains(x.Name)).Any());
             var apiResources = await ApiResourceRepository.GetAsync(query);
-            return apiResources.Items;
+            return apiResources.Items.Select(ar => ar.ToIdentityServer());
         }
 
         public async Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
@@ -52,16 +52,20 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new ArgumentNullException(nameof(scopeNames));
             }
 
-            var query = new Query<IdentityResource>().Where(ir => scopeNames.Contains(ir.Name));
+            var query = new Query<IdentityResourceEntity>().Where(ir => scopeNames.Contains(ir.Name));
             var identityResources = await IdentityResourceRepository.GetAsync(query);
-            return identityResources.Items;
+            return identityResources.Items.Select(ir => ir.ToIdentityServer());
         }
 
         public async Task<Resources> GetAllResources()
         {
             var identityResources = await IdentityResourceRepository.GetAsync();
+            var boxedIdentityResources = identityResources.Select(ir => ir.ToIdentityServer());
+
             var apiResources = await ApiResourceRepository.GetAsync();
-            return new Resources(identityResources, apiResources);
+            var boxedApiResources = apiResources.Select(ar => ar.ToIdentityServer());
+
+            return new Resources(boxedIdentityResources, boxedApiResources);
         }
     }
 }

@@ -21,13 +21,21 @@ namespace lvl.Oidc.AuthorizationServer.Services
 
         public async Task<bool> IsOriginAllowedAsync(string origin)
         {
-            var clients = await ClientRepository.GetAsync();
-            var allowedOrigins = clients
-                .SelectMany(client => client.AllowedCorsOrigins)
-                .Where(allowedOrigin => allowedOrigin != null)
-                .Distinct();
+            if (origin == null)
+            {
+                throw new ArgumentNullException(nameof(origin));
+            }
 
-            return allowedOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase);
+            var clients = await ClientRepository.GetAsync();
+
+            var isAllowed = clients.Any(client => client.AllowsOrigin(origin));
+
+            if (!isAllowed)
+            {
+                Logger.LogError($"Origin '{origin}' is not allowed on any clients.");
+            }
+
+            return isAllowed;
         }
     }
 }

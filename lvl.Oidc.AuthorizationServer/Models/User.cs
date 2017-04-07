@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
-    public class User : IEntity
+    public class User : IEntity, IAggregateRoot
     {
         public int Id { get; set; }
 

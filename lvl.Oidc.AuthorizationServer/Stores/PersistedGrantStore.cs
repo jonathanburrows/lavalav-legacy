@@ -26,7 +26,8 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new ArgumentNullException(nameof(subjectId));
             }
 
-            return await PersistedGrantRepository.GetAsync();
+            var persistedGrants = await PersistedGrantRepository.GetAsync();
+            return persistedGrants.Select(pg => pg.ToIdentityPersistedGrant());
         }
 
         public async Task<PersistedGrant> GetAsync(string key)
@@ -36,9 +37,9 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new ArgumentNullException(nameof(key));
             }
 
-            var query = new Query<PersistedGrant>().Where(pg => pg.Key == key);
+            var query = new Query<PersistedGrantEntity>().Where(pg => pg.Key == key);
             var grants = await PersistedGrantRepository.GetAsync(query);
-            return grants.Items.Single();
+            return grants.Items.Single().ToIdentityPersistedGrant();
         }
 
         public async Task RemoveAllAsync(string subjectId, string clientId)
