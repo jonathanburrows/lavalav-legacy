@@ -1,13 +1,13 @@
-﻿using FluentNHibernate.Automapping;
-using FluentNHibernate.Automapping.Alterations;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Table(nameof(Client), Schema = "oidc")]
     public class ClientEntity : IEntity, IAggregateRoot
     {
         public int Id { get; set; }
@@ -87,7 +87,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         // Summary:
         //     Specifies which external IdPs can be used with this client (if list is empty
         //     all IdPs are allowed). Defaults to empty.
-        public ICollection<string> IdentityProviderRestrictions { get; set; }
+        public ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
 
         //
         // Summary:
@@ -109,7 +109,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         // Summary:
         //     Specifies the api scopes that the client is allowed to request. If empty, the
         //     client can't access any scope
-        public ICollection<string> AllowedScopes { get; set; }
+        public ICollection<AllowedScope> AllowedScopes { get; set; }
 
         //
         // Summary:
@@ -119,7 +119,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     Gets or sets the allowed CORS origins for JavaScript clients.
-        public ICollection<string> AllowedCorsOrigins { get; set; }
+        public ICollection<CorsOrigin> AllowedCorsOrigins { get; set; }
 
         //
         // Summary:
@@ -181,7 +181,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         // Summary:
         //     Specifies the allowed grant types (legal combinations of AuthorizationCode, Implicit,
         //     Hybrid, ResourceOwner, ClientCredentials). Defaults to Implicit.
-        public IEnumerable<string> AllowedGrantTypes { get; set; }
+        public IEnumerable<GrantTypeEntity> AllowedGrantTypes { get; set; }
 
         //
         // Summary:
@@ -205,12 +205,12 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     Specifies allowed URIs to return tokens or authorization codes to
-        public ICollection<string> RedirectUris { get; set; }
+        public ICollection<RedirectUri> RedirectUris { get; set; }
 
         //
         // Summary:
         //     Specifies allowed URIs to redirect to after logout
-        public ICollection<string> PostLogoutRedirectUris { get; set; }
+        public ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
 
         //
         // Summary:
@@ -225,9 +225,9 @@ namespace lvl.Oidc.AuthorizationServer.Models
                 AccessTokenLifetime = AccessTokenLifetime,
                 AccessTokenType = AccessTokenType,
                 AllowAccessTokensViaBrowser = AllowAccessTokensViaBrowser,
-                AllowedCorsOrigins = AllowedCorsOrigins,
-                AllowedGrantTypes = AllowedGrantTypes,
-                AllowedScopes = AllowedScopes,
+                AllowedCorsOrigins = AllowedCorsOrigins.Select(co => co.Name).ToList(),
+                AllowedGrantTypes = AllowedGrantTypes.Select(gt => gt.Name).ToList(),
+                AllowedScopes = AllowedScopes.Select(co => co.Name).ToList(),
                 AllowOfflineAccess = AllowOfflineAccess,
                 AllowPlainTextPkce = AllowPlainTextPkce,
                 AllowRememberConsent = AllowRememberConsent,
@@ -241,16 +241,16 @@ namespace lvl.Oidc.AuthorizationServer.Models
                 ClientUri = ClientUri,
                 Enabled = Enabled,
                 EnableLocalLogin = EnableLocalLogin,
-                IdentityProviderRestrictions = IdentityProviderRestrictions,
+                IdentityProviderRestrictions = IdentityProviderRestrictions.Select(ipr => ipr.Name).ToList(),
                 IdentityTokenLifetime = IdentityTokenLifetime,
                 IncludeJwtId = IncludeJwtId,
                 LogoUri = LogoUri,
                 LogoutSessionRequired = LogoutSessionRequired,
                 LogoutUri = LogoutUri,
-                PostLogoutRedirectUris = PostLogoutRedirectUris,
+                PostLogoutRedirectUris = PostLogoutRedirectUris.Select(ru => ru.Name).ToList(),
                 PrefixClientClaims = PrefixClientClaims,
                 ProtocolType = ProtocolType,
-                RedirectUris = RedirectUris,
+                RedirectUris = RedirectUris.Select(ru => ru.Name).ToList(),
                 RefreshTokenExpiration = RefreshTokenExpiration,
                 RefreshTokenUsage = RefreshTokenUsage,
                 RequireClientSecret = RequireClientSecret,
@@ -263,20 +263,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
 
         public bool AllowsOrigin(string origin)
         {
-            return AllowedCorsOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    public class ClientOverride : IAutoMappingOverride<ClientEntity>
-    {
-        public void Override(AutoMapping<ClientEntity> mapping)
-        {
-            mapping.HasMany(identity => identity.IdentityProviderRestrictions).Element("Value");
-            mapping.HasMany(identity => identity.AllowedScopes).Element("Value");
-            mapping.HasMany(identity => identity.AllowedCorsOrigins).Element("Value");
-            mapping.HasMany(identity => identity.AllowedGrantTypes).Element("Value");
-            mapping.HasMany(identity => identity.RedirectUris).Element("Value");
-            mapping.HasMany(identity => identity.PostLogoutRedirectUris).Element("Value");
+            return AllowedCorsOrigins.Any(corsOrigin => corsOrigin.Name.Equals(origin, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

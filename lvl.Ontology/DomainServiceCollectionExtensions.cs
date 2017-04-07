@@ -3,6 +3,8 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
+using lvl.Ontology.Naming;
+using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -38,6 +40,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 .Database(ConstructDatabaseConnection(connectionString))
                 .AddReferencedEntities(callingAssembly)
                 .BuildConfiguration();
+
+            var namingApplier = new NamingApplier();
+            configuration.ClassMappings.ToList().ForEach(namingApplier.Apply);
+
+            SchemaMetadataUpdater.QuoteTableAndColumns(configuration);
 
             serviceCollection.AddSingleton(_ => configuration);
 

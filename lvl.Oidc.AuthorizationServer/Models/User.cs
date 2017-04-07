@@ -1,8 +1,10 @@
 ﻿using lvl.Ontology;
+using lvl.Ontology.Naming;
 using System.Collections.Generic;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Schema("oidc")]
     public class User : IEntity, IAggregateRoot
     {
         public int Id { get; set; }

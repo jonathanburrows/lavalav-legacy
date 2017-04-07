@@ -1,12 +1,12 @@
-﻿using FluentNHibernate.Automapping;
-using FluentNHibernate.Automapping.Alterations;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Table(nameof(ApiResource), Schema = "oidc")]
     public class ApiResourceEntity : IEntity, IAggregateRoot
     {
         public int Id { get; set; }
@@ -41,7 +41,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     List of accociated user claims that should be included in the access token.
-        public ICollection<string> UserClaims { get; set; }
+        public ICollection<UserClaim> UserClaims { get; set; }
 
         //
         // Summary:
@@ -58,16 +58,8 @@ namespace lvl.Oidc.AuthorizationServer.Models
                 Enabled = Enabled,
                 Name = Name,
                 Scopes = Scopes.Select(s => s.ToIdentityServer()).ToList(),
-                UserClaims = UserClaims
+                UserClaims = UserClaims.Select(uc => uc.Name).ToList()
             };
-        }
-    }
-
-    public class ApiResourceOverride : IAutoMappingOverride<ApiResourceEntity>
-    {
-        public void Override(AutoMapping<ApiResourceEntity> mapping)
-        {
-            mapping.HasMany(identity => identity.UserClaims).Element("Value");
         }
     }
 }

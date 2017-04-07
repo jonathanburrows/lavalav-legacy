@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "@lvl.oidc-seeder": {
+      "commandName": "Project",
+      "commandLineArgs": "--seed-test-data"
+    }
+  }
+}

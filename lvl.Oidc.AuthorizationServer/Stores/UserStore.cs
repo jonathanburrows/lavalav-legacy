@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Stores
 {
-    internal class UserStore
+    public class UserStore
     {
         private IRepository<User> UserRepository { get; }
         private PasswordHasher PasswordHasher { get; }
@@ -54,6 +54,12 @@ namespace lvl.Oidc.AuthorizationServer.Stores
             }
 
             return users.Items.Single();
+        }
+
+        public async Task<User> AddUserAsync(User adding)
+        {
+            adding.HashedPassword = PasswordHasher.HashPassword(adding.HashedPassword);
+            return await UserRepository.CreateAsync(adding);
         }
     }
 }

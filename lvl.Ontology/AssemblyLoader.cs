@@ -33,8 +33,20 @@ namespace lvl.Ontology
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 var missingAssemblyName = new AssemblyName(args.Name).Name;
+
                 var missingAssemblyPath = Path.Combine(assemblyDirectory, $"{missingAssemblyName}.dll");
-                return File.Exists(missingAssemblyPath) ? Assembly.LoadFrom(missingAssemblyPath) : null;
+                if (File.Exists(missingAssemblyPath))
+                {
+                    return Assembly.LoadFrom(missingAssemblyPath);
+                }
+
+                var missingExecutablePath = Path.Combine(assemblyDirectory, $"{missingAssemblyName}.exe");
+                if (File.Exists(missingExecutablePath))
+                {
+                    return Assembly.LoadFile(missingExecutablePath);
+                }
+
+                return null;
             };
 
             var absolutePath = new FileInfo(assemblyPath).FullName;

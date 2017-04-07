@@ -1,11 +1,12 @@
-﻿using FluentNHibernate.Automapping;
-using FluentNHibernate.Automapping.Alterations;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Table(nameof(IdentityResource), Schema = "oidc")]
     public class IdentityResourceEntity : IEntity, IAggregateRoot
     {
         public int Id { get; set; }
@@ -53,7 +54,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     List of associated user claims that should be included in the identity token.
-        public ICollection<string> UserClaims { get; set; }
+        public ICollection<UserClaim> UserClaims { get; set; }
 
         public IdentityResource ToIdentityServer()
         {
@@ -66,16 +67,23 @@ namespace lvl.Oidc.AuthorizationServer.Models
                 Name = Name,
                 Required = Required,
                 ShowInDiscoveryDocument = ShowInDiscoveryDocument,
-                UserClaims = UserClaims
+                UserClaims = UserClaims.Select(uc => uc.Name).ToList()
             };
         }
-    }
 
-    public class IdentityResourceOverride : IAutoMappingOverride<IdentityResourceEntity>
-    {
-        public void Override(AutoMapping<IdentityResourceEntity> mapping)
+        public static IdentityResourceEntity FromIdentityServer(IdentityResource identityResource)
         {
-            mapping.HasMany(identity => identity.UserClaims).Element("Value");
+            return new IdentityResourceEntity
+            {
+                Description = identityResource.Description,
+                DisplayName = identityResource.DisplayName,
+                Emphasize = identityResource.Emphasize,
+                Enabled = identityResource.Enabled,
+                Name = identityResource.Name,
+                Required = identityResource.Required,
+                ShowInDiscoveryDocument = identityResource.ShowInDiscoveryDocument,
+                UserClaims = identityResource.UserClaims.Select(uc => new UserClaim { Name = uc }).ToList()
+            };
         }
     }
 }

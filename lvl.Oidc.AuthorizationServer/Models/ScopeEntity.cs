@@ -1,11 +1,12 @@
-﻿using FluentNHibernate.Automapping;
-using FluentNHibernate.Automapping.Alterations;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Table(nameof(Scope), Schema = "oidc")]
     public class ScopeEntity : IEntity, IAggregateScope<ApiResourceEntity>
     {
         public int Id { get; set; }
@@ -46,11 +47,11 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     List of user claims that should be included in the access token.
-        public ICollection<string> UserClaims { get; set; }
+        public ICollection<UserClaim> UserClaims { get; set; }
 
         public Scope ToIdentityServer()
         {
-            return new Scope
+            return new IdentityServer4.Models.Scope
             {
                 Description = Description,
                 DisplayName = DisplayName,
@@ -58,16 +59,8 @@ namespace lvl.Oidc.AuthorizationServer.Models
                 Name = Name,
                 Required = Required,
                 ShowInDiscoveryDocument = ShowInDiscoveryDocument,
-                UserClaims = UserClaims
+                UserClaims = UserClaims.Select(uc => uc.Name).ToList()
             };
-        }
-    }
-
-    public class ScopeOverride : IAutoMappingOverride<ScopeEntity>
-    {
-        public void Override(AutoMapping<ScopeEntity> mapping)
-        {
-            mapping.HasMany(identity => identity.UserClaims).Element("Value");
         }
     }
 }

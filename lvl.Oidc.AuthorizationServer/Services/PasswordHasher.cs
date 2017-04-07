@@ -5,7 +5,7 @@ using System.Text;
 
 namespace lvl.Oidc.AuthorizationServer.Services
 {
-    internal class PasswordHasher
+    public class PasswordHasher
     {
         private const int SaltLength = 16;
         private OidcAuthorizationServerOptions Options { get; }
@@ -33,12 +33,21 @@ namespace lvl.Oidc.AuthorizationServer.Services
             using (var saltGenerator = RandomNumberGenerator.Create())
             {
                 saltGenerator.GetBytes(salt);
-                return BitConverter.ToString(salt);
+                return BitConverter.ToString(salt).Replace("-", string.Empty);
             }
         }
 
         public bool VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
+            if (hashedPassword == null)
+            {
+                throw new ArgumentNullException(nameof(hashedPassword));
+            }
+            if (providedPassword == null)
+            {
+                throw new ArgumentNullException(nameof(providedPassword));
+            }
+
             var salt = ExtractSalt(hashedPassword);
             var givenPasswordPeppered = ApplyPepper(providedPassword, salt);
             var givenPasswordHashed = HashPepperedPassword(givenPasswordPeppered);
@@ -55,7 +64,7 @@ namespace lvl.Oidc.AuthorizationServer.Services
             using (var sha512 = SHA512.Create())
             {
                 var hashedBytes = sha512.ComputeHash(saltedPasswordBytes);
-                return BitConverter.ToString(hashedBytes);
+                return BitConverter.ToString(hashedBytes).Replace("-", string.Empty);
             }
         }
     }

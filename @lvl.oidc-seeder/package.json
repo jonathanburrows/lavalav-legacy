@@ -1,0 +1,8 @@
+{
+  "name": "@lvl/oidc-seeder",
+  "version": "1.0.0",
+  "description": "",
+  "bin": "./bin/Debug/net461/@lvl.oidc-seeder.exe",
+  "author": "jburrows",
+  "license": "UNLICENSED"
+}

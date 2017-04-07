@@ -2,7 +2,7 @@
   "profiles": {
     "lvl.DatabaseGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "--assembly-path \"../lvl.TestDomain/bin/Debug/net461/lvl.TestDomain.dll\" --connection-string \"Server=.;Database=lvl;Trusted_Connection=True;\""
+      "commandLineArgs": "--assembly-path \"../lvl.Oidc.AuthorizationServer\\bin\\Debug\\net461\\lvl.Oidc.AuthorizationServer.exe\" --connection-string \"Server=.;Database=LvlTest;Trusted_Connection=True;\""
     }
   }
 }

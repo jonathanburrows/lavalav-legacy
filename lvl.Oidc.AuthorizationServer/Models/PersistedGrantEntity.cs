@@ -1,9 +1,11 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
+    [Table(nameof(PersistedGrant), Schema = "oidc")]
     public class PersistedGrantEntity : IEntity, IAggregateRoot
     {
         public int Id { get; set; }
