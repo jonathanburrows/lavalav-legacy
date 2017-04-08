@@ -43,8 +43,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var namingApplier = new NamingApplier();
             configuration.ClassMappings.ToList().ForEach(namingApplier.Apply);
-
-            SchemaMetadataUpdater.QuoteTableAndColumns(configuration);
+            
+            //SchemaMetadataUpdater.QuoteTableAndColumns(configuration);
 
             serviceCollection.AddSingleton(_ => configuration);
 

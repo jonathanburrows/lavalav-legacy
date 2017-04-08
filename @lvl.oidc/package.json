@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "generate-models": "node node_modules/@lvl/core/dotnet-runner.js ../@lvl.typescript-generator --assembly-path=../lvl.Oidc.AuthorizationServer/bin/Debug/net461/lvl.Oidc.AuthorizationServer.exe --output-bin=./src/models lvl.Ontology=@lvl/core",
-        "seed-oidc": "\"node node_modules/@lvl/core/dotnet-runner.js ../@lvl.oidc-seeder --seed-test-data --connection-string \"Server=.;Database=LvlTest;Trusted_Connection=True;\"",
+        "seed-oidc": "node node_modules/@lvl/core/dotnet-runner.js ../@lvl.oidc-seeder --seed-test-data --connection-string \"Server=.;Database=LvlTest;Trusted_Connection=True;\"",
         "init.dev": "npm link ../@lvl.core",
 
         "build.dev": "ng build --progress=false --output-path=./dist/dev",

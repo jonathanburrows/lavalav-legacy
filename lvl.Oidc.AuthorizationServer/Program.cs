@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using lvl.Oidc.AuthorizationServer.Seeder;
 
 namespace lvl.Oidc.AuthorizationServer
 {
@@ -18,6 +16,20 @@ namespace lvl.Oidc.AuthorizationServer
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
+
+            var options = host.Services.GetRequiredService<OidcAuthorizationServerOptions>();
+
+            if (options.GenerationOptions?.SeedManditoryData == true)
+            {
+                var manditoryDataSeeder = host.Services.GetRequiredService<ManditoryDataSeeder>();
+                manditoryDataSeeder.SeedAsync().Wait();
+            }
+
+            if (options.GenerationOptions?.SeedTestData == true)
+            {
+                var testDataSeeder = host.Services.GetRequiredService<TestDataSeeder>();
+                testDataSeeder.SeedAsync().Wait();
+            }
 
             host.Run();
         }

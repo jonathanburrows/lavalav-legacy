@@ -1,0 +1,10 @@
+﻿{
+    "oidc": {
+        "authorization-server": {
+            "generation-options": {
+                "seed-test-data": true,
+                "seed-manditory-data": true
+            }
+        }
+    }
+}
