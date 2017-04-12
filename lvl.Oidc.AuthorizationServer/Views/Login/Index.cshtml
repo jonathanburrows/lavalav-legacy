@@ -1,5 +1,26 @@
-﻿@section _base{
+﻿@model LoginViewModel
+@inject ExternalProviderNegotiator ExternalProviderNegotiator
+
+@section _base{
     <base href="/dist/login/" />
 }
+@{
+    var externalProviders = await ExternalProviderNegotiator.GetProvidersAsync(Model.ReturnUrl);
+
+    var errors = ViewData.ModelState.Values;
+
+    var usernameMessages = ViewData.ModelState[nameof(LoginViewModel.Username)]?.Errors;
+    var firstUsernameMessage = usernameMessages?.FirstOrDefault()?.ErrorMessage;
+
+    var passwordMessages = ViewData.ModelState[nameof(LoginViewModel.Password)]?.Errors;
+    var firstPasswordMessage = passwordMessages?.FirstOrDefault()?.ErrorMessage;
+}
+
+<script>
+    var externalProviders = @Json.Serialize(externalProviders);
+    var model = @Json.Serialize(Model);
+    var usernameValidationMessage = '@Html.Raw(firstUsernameMessage?.Replace("'", "\""))';
+    var passwordValidationMessage = '@Html.Raw(firstPasswordMessage?.Replace("'", "\""))';
+</script>
 
 @Html.Partial("~/wwwroot/dist/login/login.html")

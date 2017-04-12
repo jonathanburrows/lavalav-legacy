@@ -1,0 +1,16 @@
+﻿@import '~@angular/material/theming';
+
+@import '~@lvl/core/src/core.theme';
+@import '~@lvl/oidc/src/oidc.theme';
+
+$primary-color: mat-palette($mat-pink);
+$accent-color: mat-palette($mat-yellow);
+$warning-color: mat-palette($mat-red);
+$oidc-theme: mat-light-theme($primary-color, $accent-color, $warning-color);
+
+@include core-theme($oidc-theme);
+@include oidc-theme($oidc-theme);
+
+body {
+    margin: 0;
+}

@@ -19,7 +19,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
             PasswordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
 
-        public async Task<bool> ValidateCredentials(string username, string password)
+        public async Task<bool> ValidateCredentialsAsync(string username, string password)
         {
             if (username == null)
             {
@@ -30,35 +30,32 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new ArgumentNullException(nameof(password));
             }
 
-            var user = await FindByUsername(username) ?? throw new NullReferenceException("user");
+            var user = await FindByUsernameAsync(username) ?? throw new NullReferenceException("user");
 
-            return PasswordHasher.VerifyHashedPassword(user.HashedPassword, password);
+            return PasswordHasher.VerifyHashedPassword(user.HashedPassword, password, user.Salt);
         }
 
-        public async Task<User> FindByUsername(string username)
+        public async Task<User> FindByUsernameAsync(string username)
         {
             if (username == null)
             {
                 throw new ArgumentNullException(nameof(username));
             }
 
-            var userQuery = new Query<User>().Where(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+            var userQuery = new Query<User>().Where(u => u.Username.ToLower() == username.ToLower());
             var users = await UserRepository.GetAsync(userQuery);
-            if (users.Count == 0)
-            {
-                throw new InvalidOperationException($"No user was found with username '{username}'.");
-            }
             if (users.Count > 1)
             {
                 throw new InvalidOperationException($"{users.Count} users were found with the username '{username}'.");
             }
 
-            return users.Items.Single();
+            return users.Items.SingleOrDefault();
         }
 
         public async Task<User> AddUserAsync(User adding)
         {
-            adding.HashedPassword = PasswordHasher.HashPassword(adding.HashedPassword);
+            adding.Salt = PasswordHasher.GetSalt();
+            adding.HashedPassword = PasswordHasher.HashPassword(adding.HashedPassword, adding.Salt);
             return await UserRepository.CreateAsync(adding);
         }
     }

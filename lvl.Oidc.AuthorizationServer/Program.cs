@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using lvl.Oidc.AuthorizationServer.Seeder;
+using Microsoft.Extensions.Options;
 
 namespace lvl.Oidc.AuthorizationServer
 {
@@ -19,13 +20,13 @@ namespace lvl.Oidc.AuthorizationServer
 
             var options = host.Services.GetRequiredService<OidcAuthorizationServerOptions>();
 
-            if (options.GenerationOptions?.SeedManditoryData == true)
+            if (options.SeedManditoryData)
             {
                 var manditoryDataSeeder = host.Services.GetRequiredService<ManditoryDataSeeder>();
                 manditoryDataSeeder.SeedAsync().Wait();
             }
 
-            if (options.GenerationOptions?.SeedTestData == true)
+            if (options.SeedTestData)
             {
                 var testDataSeeder = host.Services.GetRequiredService<TestDataSeeder>();
                 testDataSeeder.SeedAsync().Wait();

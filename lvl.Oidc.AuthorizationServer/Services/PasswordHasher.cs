@@ -15,19 +15,18 @@ namespace lvl.Oidc.AuthorizationServer.Services
             Options = options?.Value ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public string HashPassword(string password)
+        public string HashPassword(string password, string salt)
         {
             if (password == null)
             {
                 throw new ArgumentNullException(nameof(password));
             }
 
-            var salt = GetSalt();
             var pepperedPassword = ApplyPepper(password, salt);
             return HashPepperedPassword(pepperedPassword);
         }
 
-        private string GetSalt()
+        public string GetSalt()
         {
             var salt = new byte[SaltLength * 2];
             using (var saltGenerator = RandomNumberGenerator.Create())
@@ -37,7 +36,7 @@ namespace lvl.Oidc.AuthorizationServer.Services
             }
         }
 
-        public bool VerifyHashedPassword(string hashedPassword, string providedPassword)
+        public bool VerifyHashedPassword(string hashedPassword, string providedPassword, string salt)
         {
             if (hashedPassword == null)
             {
@@ -48,13 +47,10 @@ namespace lvl.Oidc.AuthorizationServer.Services
                 throw new ArgumentNullException(nameof(providedPassword));
             }
 
-            var salt = ExtractSalt(hashedPassword);
             var givenPasswordPeppered = ApplyPepper(providedPassword, salt);
             var givenPasswordHashed = HashPepperedPassword(givenPasswordPeppered);
             return hashedPassword == givenPasswordHashed;
         }
-
-        private string ExtractSalt(string password) => password.Substring(0, SaltLength);
 
         private string ApplyPepper(string password, string salt) => salt + password;
 

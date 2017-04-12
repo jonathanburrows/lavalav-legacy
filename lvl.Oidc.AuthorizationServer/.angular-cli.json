@@ -15,7 +15,10 @@
             "test": "../../../test.ts",
             "tsconfig": "../../../tsconfig.json",
             "prefix": "lvl-oidc",
-            "styles": [],
+            "styles": [
+                "../globals.scss",
+                "../../../node_modules/normalize-scss/sass/_normalize.scss"
+            ],
             "scripts": [],
             "environmentSource": "../../../node_modules/@lvl/core/environments/environment.ts",
             "environments": {

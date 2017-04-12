@@ -13,8 +13,8 @@ namespace lvl.Oidc.AuthorizationServer
         public Startup(IHostingEnvironment env)
         {
             Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appconfig.json", false)
-                .AddJsonFile($"appconfig.{env.EnvironmentName}.json", true)
+                .AddJsonFile("appsettings.json", false)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .Build();
         }
 
@@ -27,14 +27,14 @@ namespace lvl.Oidc.AuthorizationServer
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb()
-                .AddOidcAuthorizationServer();
+                .AddOidcAuthorizationServer(authorizationOptions);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseWeb()
-                .UseOidcAuthorizationServer();
+            app.UseOidcAuthorizationServer()
+                .UseWeb();
         }
     }
 }

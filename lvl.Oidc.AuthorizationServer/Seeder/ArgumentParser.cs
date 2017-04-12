@@ -6,7 +6,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
 {
     public class ArgumentParser
     {
-        public GenerationOptions Parse(string[] args)
+        public OidcAuthorizationServerOptions Parse(string[] args)
         {
             if (args == null)
             {
@@ -15,7 +15,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
 
             var connectionString = GetValue(args, "--connection-string");
             var seedTestData = GetFlag(args, "--seed-test-data");
-            return new GenerationOptions
+            return new OidcAuthorizationServerOptions
             {
                 ConnectionString = connectionString,
                 SeedTestData = seedTestData

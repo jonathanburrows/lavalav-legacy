@@ -4,9 +4,14 @@
         <!--Workaround to prevent visual studio to ignore the dont compile option in tsconfig.json-->
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-        <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">npm run build.dev.login</PostBuildEvent>
+        <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">npm run build.prod.login</PostBuildEvent>
         <PostBuildEvent Condition="'$(Configuration)' != 'Debug'">npm run build.prod.login</PostBuildEvent>
     </PropertyGroup>
+    <ItemGroup>
+      <Content Include="wwwroot\src\globals.scss" />
+      <Content Include="wwwroot\src\login\login.component.html" />
+      <Content Include="wwwroot\src\login\login.component.ts" />
+    </ItemGroup>
 
     <ItemGroup>
         <Include Include="wwwroot\src\login\login.html" />
@@ -29,7 +34,7 @@
         <ProjectReference Include="..\lvl.Web\lvl.Web.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Content Update="appconfig.json">
+        <Content Update="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

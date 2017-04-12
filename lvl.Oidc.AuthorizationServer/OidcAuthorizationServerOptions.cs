@@ -1,12 +1,19 @@
-﻿using lvl.Oidc.AuthorizationServer.Seeder;
+﻿using lvl.Oidc.AuthorizationServer.ViewModels;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace lvl.Oidc.AuthorizationServer
 {
     public class OidcAuthorizationServerOptions
     {
-        public GenerationOptions GenerationOptions { get; set; }
+        public string ConnectionString { get; set; }
+        public bool SeedTestData { get; set; }
+        public bool SeedManditoryData { get; set; }
+        public IList<ExternalProvider> WindowsProviders { get; set; } = new List<ExternalProvider>();
+        public TimeSpan RefreshTokenLifetime { get; set; } = TimeSpan.FromDays(30);
+        public bool AutomaticRedirectionAfterSignOut { get; set; } = true;
+        public bool ShowLogoutPrompt { get; set; }
 
         public OidcAuthorizationServerOptions() { }
 
@@ -15,8 +22,6 @@ namespace lvl.Oidc.AuthorizationServer
             configuration.GetSection("oidc:authorization-server").Bind(this);
 
             var connectionString = configuration.GetValue<string>("connection-string");
-            GenerationOptions = configuration.Get<GenerationOptions>();
-            GenerationOptions.ConnectionString = GenerationOptions.ConnectionString ?? connectionString;
         }
     }
 }

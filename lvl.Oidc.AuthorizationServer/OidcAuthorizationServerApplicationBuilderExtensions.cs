@@ -11,7 +11,9 @@ namespace Microsoft.AspNetCore.Builder
                 throw new ArgumentNullException(nameof(applicationBuilder));
             }
 
-            return applicationBuilder.UseIdentityServer();
+            return applicationBuilder
+                .UseCookieAuthentication()
+                .UseIdentityServer();
         }
     }
 }

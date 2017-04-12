@@ -27,11 +27,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddInMemoryCaching();
 
             serviceCollection
+                .AddAuthorization()
                 .AddScoped<PasswordHasher>()
                 .AddScoped<IClientStore, ClientStore>()
                 .AddScoped<IPersistedGrantStore, PersistedGrantStore>()
                 .AddScoped<IResourceStore, ResourceStore>()
                 .AddScoped<UserStore>()
+                .AddScoped<ExternalProviderNegotiator>()
                 .AddScoped<ArgumentParser>()
                 .AddScoped<ManditoryDataSeeder>()
                 .AddScoped<TestDataSeeder>()
