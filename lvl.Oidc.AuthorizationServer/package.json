@@ -8,6 +8,9 @@
         "build.dev.login": "ng build --progress=false --output-path=./wwwroot/dist/login --app=login",
         "build.prod.login": "ng build --prod --aot --progress=false --output-path=./wwwroot/dist/login --app=login",
 
+        "build.dev.consent": "ng build --progress=false --output-path=./wwwroot/dist/consent --app=consent",
+        "build.prod.consent": "ng build --prod --aot --progress=false --output-path=./wwwroot/dist/consent --app=consent",
+
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"

@@ -28,7 +28,7 @@ namespace lvl.Repositories
                 return Task.FromResult(entities.AsEnumerable());
             }
         }
-        
+
         async Task<IEnumerable<IEntity>> IRepository.GetAsync()
         {
             return await GetAsync();
@@ -39,7 +39,7 @@ namespace lvl.Repositories
         {
             using (var session = SessionProvider.GetSession())
             {
-                var unfiltered = session.Query<TEntity>(); 
+                var unfiltered = session.Query<TEntity>();
                 var items = query.Apply(unfiltered).ToList();
                 var count = query.Count(unfiltered);
                 var queryResult = new QueryResult<TResult>
@@ -56,7 +56,7 @@ namespace lvl.Repositories
                 return await Task.FromResult(queryResult);
             }
         }
-        
+
         async Task<IQueryResult> IRepository.GetAsync(IQuery query)
         {
             if (query == null)
@@ -77,7 +77,7 @@ namespace lvl.Repositories
                 return Task.FromResult(entity);
             }
         }
-        
+
         async Task<IEntity> IRepository.GetAsync(int id)
         {
             return await GetAsync(id);
@@ -96,15 +96,21 @@ namespace lvl.Repositories
             }
 
             using (var session = SessionProvider.GetSession())
-            using (var transaction = session.BeginTransaction())
             {
-                session.Save(creating);
-                transaction.Commit();
+                // Since sqlite will use the same session, we need to make sure multiple transactions arent being used.
+                lock (session.Connection)
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.Save(creating);
+                        transaction.Commit();
+                    }
+                }
             }
 
             return Task.FromResult(creating);
         }
-        
+
         async Task<IEntity> IRepository.CreateAsync(IEntity creating)
         {
             var boxed = creating as TEntity;
@@ -141,7 +147,7 @@ namespace lvl.Repositories
 
             return Task.FromResult(updating);
         }
-        
+
         async Task<IEntity> IRepository.UpdateAsync(IEntity updating)
         {
             var boxed = updating as TEntity;

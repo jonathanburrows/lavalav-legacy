@@ -1,12 +1,14 @@
 ﻿import { ModuleWithProviders, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { MaterialModule } from '@angular/material';
 
 import { CoreModule } from '@lvl/core';
 
 import {
     AppComponent,
+    ConsentComponent,
     LoginComponent
 } from './components';
 
@@ -20,16 +22,20 @@ import {
 @NgModule({
     declarations: [
         AppComponent,
+        ConsentComponent,
         LoginComponent
     ],
     exports: [
+        ConsentComponent,
         LoginComponent
     ],
     imports: [
         BrowserModule,
         CoreModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        MaterialModule,
+        ReactiveFormsModule
     ],
     providers: [
         TokenService

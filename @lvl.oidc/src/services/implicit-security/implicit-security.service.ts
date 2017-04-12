@@ -11,7 +11,6 @@ import 'rxjs/add/operator/map';
 
 import { StorageService } from '@lvl/core';
 
-
 import { OidcConfiguration } from '../oidc-configuration';
 import { ImplicitAuthorizationOptions } from './implicit-authorization-options';
 import { ImplicitLogoffOptions } from './implicit-logoff-options';

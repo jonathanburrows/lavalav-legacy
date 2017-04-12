@@ -1,0 +1,23 @@
+﻿@import '~@angular/material/theming';
+
+.navbar {
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+}
+
+.content {
+    padding: 32px;
+}
+
+.navbar__title {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+@mixin layout-theme($theme) {
+    $primary-palette: map-get($theme, 'primary');
+    $text-color: mat-color($primary-palette, 900);
+
+    .navbar__title {
+        color: $text-color;
+    }
+}

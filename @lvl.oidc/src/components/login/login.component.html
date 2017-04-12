@@ -1,1 +1,52 @@
-﻿logging in!!!!
+﻿<md-card class="local-login">
+    <form ngNoForm
+          name="local-login__form"
+          action="/Login"
+          method="post">
+
+        <md-card-header class="local-login__header">
+            <md-card-title class="local-login__header-title">Sign into lavalav</md-card-title>
+        </md-card-header>
+
+        <md-card-content class="local-login__content">
+            <md-input-container class="local-login__input-container mat-input-invalid">
+                <input mdInput
+                       class="local-login__input"
+                       placeholder="Username"
+                       name="username"
+                       [(ngModel)]="model.username"
+                       [formControl]="usernameControl"
+                       required="required" />
+                <md-hint class="mat-input-error">{{usernameValidationMessage}}</md-hint>
+                <md-error *ngIf="usernameControl.hasError('required')">Required</md-error>
+            </md-input-container>
+
+            <md-input-container class="local-login__input-container">
+                <input mdInput
+                       class="local-login__input"
+                       placeholder="Password"
+                       name="password"
+                       [(ngModel)]="model.password"
+                       [formControl]="passwordControl"
+                       type="password"
+                       required="required" />
+                <md-hint class="mat-input-error">{{passwordValidationMessage}}</md-hint>
+                <md-error *ngIf="passwordControl.hasError('required')">Required</md-error>
+            </md-input-container>
+
+            <md-checkbox [(ngModel)]="model.rememberLogin"
+                         value="true"
+                         name="rememberLogin"
+                         class="local-login__input-container">
+                Remember Me
+            </md-checkbox>
+
+            <input type="hidden" name="returnUrl" [(ngModel)]="model.returnUrl" />
+
+            <div class="local-login__button-panel">
+                <button md-raised-button color="primary" type="submit">Sign in</button>
+                <button md-button color="primary" type="button" routerLink="/" routerLinkActive="active">Cancel</button>
+            </div>
+        </md-card-content>
+    </form>
+</md-card>

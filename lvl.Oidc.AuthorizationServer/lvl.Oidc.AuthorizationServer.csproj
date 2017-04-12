@@ -8,6 +8,18 @@
         <PostBuildEvent Condition="'$(Configuration)' != 'Debug'">npm run build.prod.login</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
+      <Content Include="wwwroot\src\consent\consent.component.html" />
+      <Content Include="wwwroot\src\consent\consent.component.ts" />
+      <Content Include="wwwroot\src\consent\login.component.html" />
+      <Content Include="wwwroot\src\consent\consent.html">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="wwwroot\src\consent\consent.main.ts">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="wwwroot\src\consent\consent.module.ts">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
       <Content Include="wwwroot\src\globals.scss" />
       <Content Include="wwwroot\src\login\login.component.html" />
       <Content Include="wwwroot\src\login\login.component.ts" />

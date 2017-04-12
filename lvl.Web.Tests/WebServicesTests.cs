@@ -56,7 +56,7 @@ namespace lvl.Web.Tests
         [Fact]
         public void WhenAddingWeb_CallsAddMvc()
         {
-            var controllerFactory = Services.GetRequiredService<IControllerFactory>();
+            var controllerFactory = Services.GetRequiredService<IControllerActivator>();
 
             Assert.NotNull(controllerFactory);
         }

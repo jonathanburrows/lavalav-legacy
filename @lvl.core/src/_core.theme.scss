@@ -1,0 +1,10 @@
+﻿@import '~@angular/material/theming';
+
+@import 'components/layout/layout.component.scss';
+
+@include mat-core();
+
+@mixin core-theme($theme) {
+    @include angular-material-theme($theme);
+    @include layout-theme($theme);
+}
