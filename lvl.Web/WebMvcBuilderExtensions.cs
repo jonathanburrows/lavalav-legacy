@@ -51,6 +51,7 @@ namespace Microsoft.AspNetCore.Builder
             // sets up the default routs before calling the given configuration method.
             Action<IRouteBuilder> defaultRouteBuilder = routes =>
             {
+                routes.MapRoute(name: "defaultAreas", template: "{area}/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
                 configureRoutes.Invoke(routes);
             };

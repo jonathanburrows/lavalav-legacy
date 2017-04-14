@@ -16,8 +16,4 @@
 @mixin layout-theme($theme) {
     $primary-palette: map-get($theme, 'primary');
     $text-color: mat-color($primary-palette, 900);
-
-    .navbar__title {
-        color: $text-color;
-    }
 }

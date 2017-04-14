@@ -3,8 +3,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 
 import { CoreModule } from '@lvl/core';
+
+import { oidcRouterModule } from './oidc.router.module';
+
 
 import {
     AppComponent,
@@ -35,7 +39,10 @@ import {
         FormsModule,
         HttpModule,
         MaterialModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterModule,
+
+        oidcRouterModule
     ],
     providers: [
         TokenService

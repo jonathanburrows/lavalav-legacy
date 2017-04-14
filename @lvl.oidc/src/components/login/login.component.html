@@ -1,7 +1,7 @@
 ﻿<md-card class="local-login">
     <form ngNoForm
           name="local-login__form"
-          action="/Login"
+          action="/oidc/Login"
           method="post">
 
         <md-card-header class="local-login__header">
@@ -44,8 +44,8 @@
             <input type="hidden" name="returnUrl" [(ngModel)]="model.returnUrl" />
 
             <div class="local-login__button-panel">
-                <button md-raised-button color="primary" type="submit">Sign in</button>
-                <button md-button color="primary" type="button" routerLink="/" routerLinkActive="active">Cancel</button>
+                <button md-raised-button color="accent" type="submit">Sign in</button>
+                <button md-button color="accent" type="button" routerLink="/" routerLinkActive="active">Cancel</button>
             </div>
         </md-card-content>
     </form>

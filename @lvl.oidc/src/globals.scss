@@ -1,7 +1,7 @@
 ﻿@import '~@angular/material/theming';
 
 @import '~@lvl/core/src/core.theme';
-@import '~@lvl/oidc/src/oidc.theme';
+@import 'oidc.theme';
 
 @include core-theme($lvl-default-theme);
 @include oidc-theme($lvl-default-theme);

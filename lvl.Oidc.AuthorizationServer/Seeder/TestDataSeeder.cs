@@ -78,13 +78,13 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
                     AllowedGrantTypes = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }),
 
-                    RequireConsent = false,
+                    RequireConsent = true,
                     AllowAccessTokensViaBrowser = true,
-                    AlwaysIncludeUserClaimsInIdToken =true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     AlwaysSendClientClaims = true,
                     UpdateAccessTokenClaimsOnRefresh = true,
 
-                    RedirectUris = new []{ new RedirectUri { Name = "http://localhost:00000" } },
+                    RedirectUris = new []{ new RedirectUri { Name = "http://localhost:0000" } },
                     PostLogoutRedirectUris = new []{ new PostLogoutRedirectUri { Name = "http://localhost:0000" } },
                     AllowedCorsOrigins = new []{ new CorsOrigin { Name = "http://localhost:0000" } },
                     LogoutUri = "http://localhost:0000",

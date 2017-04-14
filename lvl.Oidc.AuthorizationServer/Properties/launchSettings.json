@@ -8,14 +8,14 @@
         }
     },
     "profiles": {
-        "IIS Express": {
-            "commandName": "IISExpress",
-            "launchBrowser": true,
-            "launchUrl": "Login?returnUrl=hello",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
+      "IIS Express": {
+        "commandName": "IISExpress",
+        "launchBrowser": true,
+        "launchUrl": "oidc/Login?returnUrl=%2Fconnect%2Fauthorize%2Flogin%3Fclient_id%3Dtest-implicit-client%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A0000%26response_type%3Did_token%2520token%26scope%3Dopenid%2520profile",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+      },
         "lvl.Oidc.AuthorizationServer": {
             "commandName": "Project",
             "launchBrowser": true,

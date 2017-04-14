@@ -1,47 +1,48 @@
 ﻿{
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "project": {
-        "name": "@lvl/oidc"
-    },
-    "apps": [
-        {
-            "root": "src",
-            "outDir": "dist",
-            "assets": [],
-            "index": "index.html",
-            "main": "main.ts",
-            "polyfills": "../node_modules/@lvl/core/polyfills.ts",
-            "test": "../test.ts",
-            "tsconfig": "../tsconfig.json",
-            "testTsconfig": "../tsconfig.json",
-            "prefix": "lvl-oidc",
-            "styles": [
-            ],
-            "scripts": [],
-            "environmentSource": "../node_modules/@lvl/core/environments/environment.ts",
-            "environments": {
-                "dev": "../node_modules/@lvl/core/environments/environment.ts",
-                "prod": "../node_modules/@lvl/core/environments/environment.prod.ts"
-            }
-        }
-    ],
-    "e2e": {
-        "protractor": {
-            "config": "./node_modules/@lvl/core/protractor.conf.js"
-        }
-    },
-    "lint": [
-        {
-            "project": "./node_modules/@lvl/core/tsconfig.json"
-        }
-    ],
-    "test": {
-        "karma": {
-            "config": "./node_modules/@lvl/core/karma.conf.js"
-        }
-    },
-    "defaults": {
-        "styleExt": "scss",
-        "component": {}
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "@lvl/oidc"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "../node_modules/@lvl/core/polyfills.ts",
+      "test": "../test.ts",
+      "tsconfig": "../tsconfig.json",
+      "testTsconfig": "../tsconfig.json",
+      "prefix": "lvl-oidc",
+      "styles": [
+        "globals.scss"
+      ],
+      "scripts": [],
+      "environmentSource": "../node_modules/@lvl/core/environments/environment.ts",
+      "environments": {
+        "dev": "../node_modules/@lvl/core/environments/environment.ts",
+        "prod": "../node_modules/@lvl/core/environments/environment.prod.ts"
+      }
     }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./node_modules/@lvl/core/protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "./node_modules/@lvl/core/tslint.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./node_modules/@lvl/core/karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {}
+  }
 }

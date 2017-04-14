@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Controllers
 {
+    [Route("oidc/[controller]")]
     public class LoginController : Controller
     {
         private IIdentityServerInteractionService InteractionService { get; }
@@ -31,10 +32,10 @@ namespace lvl.Oidc.AuthorizationServer.Controllers
             {
                 throw new ArgumentNullException(nameof(returnUrl));
             }
-            //if (!InteractionService.IsValidReturnUrl(returnUrl))
-            //{
-            //    throw new ArgumentException($"'{returnUrl}' is not a valid return url.");
-            //}
+            if (!InteractionService.IsValidReturnUrl(returnUrl))
+            {
+                throw new ArgumentException($"'{returnUrl}' is not a valid return url.");
+            }
 
             var authorizationContext = await InteractionService.GetAuthorizationContextAsync(returnUrl);
             var model = new LoginViewModel
@@ -53,10 +54,10 @@ namespace lvl.Oidc.AuthorizationServer.Controllers
                 throw new ArgumentNullException(nameof(model));
             }
 
-            //if (!InteractionService.IsValidReturnUrl(model.ReturnUrl))
-            //{
-            //    throw new InvalidOperationException($"The url of '{model.ReturnUrl}' is not a valid return url.");
-            //}
+            if (!InteractionService.IsValidReturnUrl(model.ReturnUrl))
+            {
+                throw new InvalidOperationException($"The url of '{model.ReturnUrl}' is not a valid return url.");
+            }
 
             if (!ModelState.IsValid)
             {

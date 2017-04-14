@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Controllers
 {
+    [Route("oidc/[controller]")]
     public class ConsentController : Controller
     {
         private IIdentityServerInteractionService InteractionService { get; }
