@@ -6,7 +6,7 @@ import { OidcModule } from './oidc.module';
 //import { OidcE2eModule } from '../e2e/oidc.e2e-module';
 
 if (environment.production) {
-    //enableProdMode();
+    enableProdMode();
 }
 
 platformBrowserDynamic().bootstrapModule(OidcModule);

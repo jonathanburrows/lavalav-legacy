@@ -4,7 +4,7 @@
         <!--Workaround to prevent visual studio to ignore the dont compile option in tsconfig.json-->
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-        <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">npm run build.prod.consent</PostBuildEvent>
+        <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">npm run build.dev.login</PostBuildEvent>
         <PostBuildEvent Condition="'$(Configuration)' != 'Debug'">npm run build.prod.login</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
