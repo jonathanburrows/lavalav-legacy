@@ -22,6 +22,7 @@
       "environmentSource": "../node_modules/@lvl/core/environments/environment.ts",
       "environments": {
         "dev": "../node_modules/@lvl/core/environments/environment.ts",
+        "test": "../node_modules/@lvl/core/environments/environment.test.ts",
         "prod": "../node_modules/@lvl/core/environments/environment.prod.ts"
       }
     }
