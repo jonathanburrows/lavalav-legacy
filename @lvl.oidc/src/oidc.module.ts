@@ -13,12 +13,14 @@ import { oidcRouterModule } from './oidc.router.module';
 import {
     AppComponent,
     ConsentComponent,
+    CredentialsLoginComponent,
     LoginComponent
 } from './components';
 
 import {
     ImplicitSecurityService,
     OidcConfiguration,
+    ResourceOwnerSecurityService,
     SecurityService,
     TokenService
 } from './services';
@@ -27,10 +29,12 @@ import {
     declarations: [
         AppComponent,
         ConsentComponent,
+        CredentialsLoginComponent,
         LoginComponent
     ],
     exports: [
         ConsentComponent,
+        CredentialsLoginComponent,
         LoginComponent
     ],
     imports: [
@@ -51,12 +55,26 @@ import {
 })
 export class OidcModule {
     static useImplicitFlow(options: (configuration: OidcConfiguration) => void): ModuleWithProviders {
-        const oidcConfiguration = options(new OidcConfiguration());
+        const oidcConfiguration = new OidcConfiguration();
+        options(oidcConfiguration);
 
         return {
             ngModule: OidcModule,
             providers: [
                 { provide: SecurityService, useClass: ImplicitSecurityService },
+                { provide: OidcConfiguration, useValue: oidcConfiguration }
+            ]
+        };
+    }
+
+    static useResourceOwnerFlow(options: (configuration: OidcConfiguration) => void): ModuleWithProviders {
+        const oidcConfiguration = new OidcConfiguration();
+        options(oidcConfiguration);
+
+        return {
+            ngModule: OidcModule,
+            providers: [
+                { provide: SecurityService, useClass: ResourceOwnerSecurityService },
                 { provide: OidcConfiguration, useValue: oidcConfiguration }
             ]
         };

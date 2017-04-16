@@ -2,6 +2,7 @@
 using lvl.Ontology;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
@@ -28,7 +29,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     Gets or sets the type of the client secret.
-        public string Type { get; set; }
+        public string Type { get; set; } = SecretTypes.SharedSecret;
 
         public Secret ToIdentityServer()
         {

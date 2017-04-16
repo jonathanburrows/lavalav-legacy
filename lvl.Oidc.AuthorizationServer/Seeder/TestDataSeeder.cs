@@ -94,6 +94,30 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.OpenId },
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.Profile }
                     }
+                },
+                new ClientEntity
+                {
+                    ClientId = "test-resource-owner-client",
+                    ClientName = "Test Resource Owner Client",
+                    ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
+                    ClientUri = "http://localhost:4200",
+                    AllowedGrantTypes = new []{ GrantType.ResourceOwnerPassword, GrantType.AuthorizationCode } .Select(gt => new GrantTypeEntity { Name = gt }),
+
+                    RequireConsent = true,
+                    AllowAccessTokensViaBrowser = true,
+                    AllowOfflineAccess = true,
+
+                    RedirectUris = new []{ new RedirectUri { Name = "http://localhost:4200" } },
+                    PostLogoutRedirectUris = new []{ new PostLogoutRedirectUri { Name = "http://localhost:4200" } },
+                    AllowedCorsOrigins = new []{ new CorsOrigin { Name = "http://localhost:4200" } },
+                    LogoutUri = "http://localhost:4200",
+                    AllowedScopes = new []
+                    {
+                        new AllowedScope { Name = "test-resource-server" },
+                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.OpenId },
+                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.OfflineAccess},
+                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.Profile }
+                    }
                 }
             };
 

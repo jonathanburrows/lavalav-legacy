@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using lvl.Oidc.AuthorizationServer.Seeder;
-using Microsoft.Extensions.Options;
 
 namespace lvl.Oidc.AuthorizationServer
 {
@@ -13,6 +12,7 @@ namespace lvl.Oidc.AuthorizationServer
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://0.0.0.0:57545")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()

@@ -1,36 +1,36 @@
 {
-    "name": "@lvl/core",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/bundles/core.umd.js",
-    "scripts": {
-        "generate-models": "node dotnet-runner.js ../@lvl.typescript-generator --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
+  "name": "@lvl/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/bundles/core.umd.js",
+  "scripts": {
+    "generate-models": "dotnet run --project ../@lvl.typescript-generator/@lvl.typescript-generator.csproj -- --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
 
-        "test": "ng test"
-    },
-    "dependencies": {
-        "@angular/animations": "4.0.2",
-        "@angular/common": "4.0.2",
-        "@angular/compiler": "4.0.2",
-        "@angular/core": "4.0.2",
-        "@angular/forms": "4.0.2",
-        "@angular/http": "4.0.2",
-        "@angular/material": "2.0.0-beta.3",
-        "@angular/platform-browser": "4.0.2",
-        "@angular/platform-browser-dynamic": "4.0.2",
-        "@angular/router": "4.0.2",
-        "core-js": "2.4.1",
-        "reflect-metadata": "0.1.10",
-        "rxjs": "5.3.0",
-        "ts-helpers": "1.1.2",
-        "zone.js": "0.8.5"
-    },
-    "devDependencies": {
-        "typescript": "2.2.2"
-    },
-    "bin": {
-        "dotnet-runner": "dotnet-runner.js"
-    },
-    "author": "jburrows",
-    "license": "UNLISENCED"
+    "test": "ng test"
+  },
+  "dependencies": {
+    "@angular/animations": "4.0.2",
+    "@angular/common": "4.0.2",
+    "@angular/compiler": "4.0.2",
+    "@angular/core": "4.0.2",
+    "@angular/forms": "4.0.2",
+    "@angular/http": "4.0.2",
+    "@angular/material": "2.0.0-beta.3",
+    "@angular/platform-browser": "4.0.2",
+    "@angular/platform-browser-dynamic": "4.0.2",
+    "@angular/router": "4.0.2",
+    "core-js": "2.4.1",
+    "reflect-metadata": "0.1.10",
+    "rxjs": "5.3.0",
+    "ts-helpers": "1.1.2",
+    "zone.js": "0.8.5"
+  },
+  "devDependencies": {
+    "typescript": "2.2.2"
+  },
+  "bin": {
+    "dotnet-runner": "dotnet-runner.js"
+  },
+  "author": "jburrows",
+  "license": "UNLISENCED"
 }

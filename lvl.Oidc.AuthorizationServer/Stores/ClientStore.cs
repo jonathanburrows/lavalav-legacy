@@ -20,7 +20,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
         public async Task<Client> FindClientByIdAsync(string clientId)
         {
-            var clientQuery = new Query<ClientEntity>();
+            var clientQuery = new Query<ClientEntity>().Where(client => client.ClientId == clientId);
             var clients = await ClientRepository.GetAsync(clientQuery);
             if (clients.Count == 0)
             {

@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using lvl.Ontology;
 using System;
 using System.Collections.Generic;
@@ -12,210 +13,220 @@ namespace lvl.Oidc.AuthorizationServer.Models
     {
         public int Id { get; set; }
 
-        //
-        // Summary:
-        //     Specifies is the user's session id should be sent to the LogoutUri. Defaults
-        //     to true.
-        public bool LogoutSessionRequired { get; set; }
+        /// <summary>
+        /// Specifies if client is enabled (defaults to true)
+        /// </summary>
+        public bool Enabled { get; set; } = true;
 
-        //
-        // Summary:
-        //     When requesting both an id token and access token, should the user claims always
-        //     be added to the id token instead of requring the client to use the userinfo endpoint.
-        public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
-
-        //
-        // Summary:
-        //     Lifetime of identity token in seconds (defaults to 300 seconds / 5 minutes)
-        public int IdentityTokenLifetime { get; set; }
-
-        //
-        // Summary:
-        //     Lifetime of access token in seconds (defaults to 3600 seconds / 1 hour)
-        public int AccessTokenLifetime { get; set; }
-
-        //
-        // Summary:
-        //     Lifetime of authorization code in seconds (defaults to 300 seconds / 5 minutes)
-        public int AuthorizationCodeLifetime { get; set; }
-
-        //
-        // Summary:
-        //     Maximum lifetime of a refresh token in seconds. Defaults to 2592000 seconds /
-        //     30 days
-        public int AbsoluteRefreshTokenLifetime { get; set; }
-
-        //
-        // Summary:
-        //     Sliding lifetime of a refresh token in seconds. Defaults to 1296000 seconds /
-        //     15 days
-        public int SlidingRefreshTokenLifetime { get; set; }
-
-        //
-        // Summary:
-        //     ReUse: the refresh token handle will stay the same when refreshing tokens OneTime:
-        //     the refresh token handle will be updated when refreshing tokens
-        public TokenUsage RefreshTokenUsage { get; set; }
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether the access token (and its claims) should
-        //     be updated on a refresh token request.
-        public bool UpdateAccessTokenClaimsOnRefresh { get; set; }
-
-        //
-        // Summary:
-        //     Absolute: the refresh token will expire on a fixed point in time (specified by
-        //     the AbsoluteRefreshTokenLifetime) Sliding: when refreshing the token, the lifetime
-        //     of the refresh token will be renewed (by the amount specified in SlidingRefreshTokenLifetime).
-        //     The lifetime will not exceed AbsoluteRefreshTokenLifetime.
-        public TokenExpiration RefreshTokenExpiration { get; set; }
-
-        //
-        // Summary:
-        //     Specifies whether the access token is a reference token or a self contained JWT
-        //     token (defaults to Jwt).
-        public AccessTokenType AccessTokenType { get; set; }
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether the local login is allowed for this client.
-        //     Defaults to true.
-        public bool EnableLocalLogin { get; set; }
-
-        //
-        // Summary:
-        //     Specifies which external IdPs can be used with this client (if list is empty
-        //     all IdPs are allowed). Defaults to empty.
-        public ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether JWT access tokens should include an identifier
-        public bool IncludeJwtId { get; set; }
-
-        //
-        // Summary:
-        //     Allows settings claims for the client (will be included in the access token).
-        public ICollection<ClaimEntity> Claims { get; set; }
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether client claims should be always included
-        //     in the access tokens - or only for client credentials flow.
-        public bool AlwaysSendClientClaims { get; set; }
-
-        //
-        // Summary:
-        //     Specifies the api scopes that the client is allowed to request. If empty, the
-        //     client can't access any scope
-        public ICollection<AllowedScope> AllowedScopes { get; set; }
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether [allow offline access].
-        public bool AllowOfflineAccess { get; set; }
-
-        //
-        // Summary:
-        //     Gets or sets the allowed CORS origins for JavaScript clients.
-        public ICollection<CorsOrigin> AllowedCorsOrigins { get; set; }
-
-        //
-        // Summary:
-        //     Specifies logout URI at client for HTTP based logout.
-        public string LogoutUri { get; set; }
-
-        //
-        // Summary:
-        //     Specifies if client is enabled (defaults to true)
-        public bool Enabled { get; set; }
-
-        //
-        // Summary:
-        //     Unique ID of the client
+        /// <summary>
+        /// Unique ID of the client
+        /// </summary>
         public string ClientId { get; set; }
 
-        //
-        // Summary:
-        //     Gets or sets the protocol type.
-        public string ProtocolType { get; set; }
+        /// <summary>
+        /// Gets or sets the protocol type.
+        /// </summary>
+        /// <value>
+        /// The protocol type.
+        /// </value>
+        public string ProtocolType { get; set; } = IdentityServerConstants.ProtocolTypes.OpenIdConnect;
 
-        //
-        // Summary:
-        //     Client secrets - only relevant for flows that require a secret
-        public ICollection<SecretEntity> ClientSecrets { get; set; }
+        /// <summary>
+        /// Client secrets - only relevant for flows that require a secret
+        /// </summary>
+        public ICollection<SecretEntity> ClientSecrets { get; set; } = new HashSet<SecretEntity>();
 
-        //
-        // Summary:
-        //     If set to false, no client secret is needed to request tokens at the token endpoint
-        //     (defaults to true)
-        public bool RequireClientSecret { get; set; }
+        /// <summary>
+        /// If set to false, no client secret is needed to request tokens at the token endpoint (defaults to true)
+        /// </summary>
+        public bool RequireClientSecret { get; set; } = true;
 
-        //
-        // Summary:
-        //     Client display name (used for logging and consent screen)
+        /// <summary>
+        /// Client display name (used for logging and consent screen)
+        /// </summary>
         public string ClientName { get; set; }
 
-        //
-        // Summary:
-        //     URI to further information about client (used on consent screen)
+        /// <summary>
+        /// URI to further information about client (used on consent screen)
+        /// </summary>
         public string ClientUri { get; set; }
 
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether all client claims should be prefixed.
-        public bool PrefixClientClaims { get; set; }
-
-        //
-        // Summary:
-        //     URI to client logo (used on consent screen)
+        /// <summary>
+        /// URI to client logo (used on consent screen)
+        /// </summary>
         public string LogoUri { get; set; }
 
-        //
-        // Summary:
-        //     Specifies whether user can choose to store consent decisions (defaults to true)
-        public bool AllowRememberConsent { get; set; }
+        /// <summary>
+        /// Specifies whether a consent screen is required (defaults to true)
+        /// </summary>
+        public bool RequireConsent { get; set; } = true;
 
-        //
-        // Summary:
-        //     Specifies the allowed grant types (legal combinations of AuthorizationCode, Implicit,
-        //     Hybrid, ResourceOwner, ClientCredentials). Defaults to Implicit.
-        public IEnumerable<GrantTypeEntity> AllowedGrantTypes { get; set; }
+        /// <summary>
+        /// Specifies whether user can choose to store consent decisions (defaults to true)
+        /// </summary>
+        public bool AllowRememberConsent { get; set; } = true;
 
-        //
-        // Summary:
-        //     Specifies whether a proof key is required for authorization code based token
-        //     requests
-        public bool RequirePkce { get; set; }
+        /// <summary>
+        /// Specifies the allowed grant types (legal combinations of AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials). Defaults to Implicit.
+        /// </summary>
+        public IEnumerable<GrantTypeEntity> AllowedGrantTypes { get; set; } = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt });
 
-        //
-        // Summary:
-        //     Specifies whether a proof key can be sent using plain method (not recommended
-        //     and default to false)
-        public bool AllowPlainTextPkce { get; set; }
+        /// <summary>
+        /// Specifies whether a proof key is required for authorization code based token requests
+        /// </summary>
+        public bool RequirePkce { get; set; } = false;
 
-        //
-        // Summary:
-        //     Controls whether access tokens are transmitted via the browser for this client
-        //     (defaults to false). This can prevent accidental leakage of access tokens when
-        //     multiple response types are allowed.
-        public bool AllowAccessTokensViaBrowser { get; set; }
+        /// <summary>
+        /// Specifies whether a proof key can be sent using plain method (not recommended and default to false)
+        /// </summary>
+        public bool AllowPlainTextPkce { get; set; } = false;
 
-        //
-        // Summary:
-        //     Specifies allowed URIs to return tokens or authorization codes to
-        public ICollection<RedirectUri> RedirectUris { get; set; }
+        /// <summary>
+        /// Controls whether access tokens are transmitted via the browser for this client (defaults to false).
+        /// This can prevent accidental leakage of access tokens when multiple response types are allowed.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if access tokens can be transmitted via the browser; otherwise, <c>false</c>.
+        /// </value>
+        public bool AllowAccessTokensViaBrowser { get; set; } = false;
 
-        //
-        // Summary:
-        //     Specifies allowed URIs to redirect to after logout
-        public ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
+        /// <summary>
+        /// Specifies allowed URIs to return tokens or authorization codes to
+        /// </summary>
+        public ICollection<RedirectUri> RedirectUris { get; set; } = new HashSet<RedirectUri>();
 
-        //
-        // Summary:
-        //     Specifies whether a consent screen is required (defaults to true)
-        public bool RequireConsent { get; set; }
+        /// <summary>
+        /// Specifies allowed URIs to redirect to after logout
+        /// </summary>
+        public ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; } = new HashSet<PostLogoutRedirectUri>();
+
+        /// <summary>
+        /// Specifies logout URI at client for HTTP based logout.
+        /// </summary>
+        public string LogoutUri { get; set; }
+
+        /// <summary>
+        /// Specifies is the user's session id should be sent to the LogoutUri. Defaults to true.
+        /// </summary>
+        public bool LogoutSessionRequired { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [allow offline access].
+        /// </summary>
+        public bool AllowOfflineAccess { get; set; } = false;
+
+        /// <summary>
+        /// Specifies the api scopes that the client is allowed to request. If empty, the client can't access any scope
+        /// </summary>
+        public ICollection<AllowedScope> AllowedScopes { get; set; } = new HashSet<AllowedScope>();
+
+        /// <summary>
+        /// When requesting both an id token and access token, should the user claims always be added to the id token instead of requring the client to use the userinfo endpoint.
+        /// </summary>
+        public bool AlwaysIncludeUserClaimsInIdToken { get; set; } = false;
+
+        /// <summary>
+        /// Lifetime of identity token in seconds (defaults to 300 seconds / 5 minutes)
+        /// </summary>
+        public int IdentityTokenLifetime { get; set; } = 300;
+
+        /// <summary>
+        /// Lifetime of access token in seconds (defaults to 3600 seconds / 1 hour)
+        /// </summary>
+        public int AccessTokenLifetime { get; set; } = 3600;
+
+        /// <summary>
+        /// Lifetime of authorization code in seconds (defaults to 300 seconds / 5 minutes)
+        /// </summary>
+        public int AuthorizationCodeLifetime { get; set; } = 300;
+
+        /// <summary>
+        /// Maximum lifetime of a refresh token in seconds. Defaults to 2592000 seconds / 30 days
+        /// </summary>
+        public int AbsoluteRefreshTokenLifetime { get; set; } = 2592000;
+
+        /// <summary>
+        /// Sliding lifetime of a refresh token in seconds. Defaults to 1296000 seconds / 15 days
+        /// </summary>
+        public int SlidingRefreshTokenLifetime { get; set; } = 1296000;
+
+        /// <summary>
+        /// ReUse: the refresh token handle will stay the same when refreshing tokens
+        /// OneTime: the refresh token handle will be updated when refreshing tokens
+        /// </summary>
+        public TokenUsage RefreshTokenUsage { get; set; } = TokenUsage.OneTimeOnly;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the access token (and its claims) should be updated on a refresh token request.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the token should be updated; otherwise, <c>false</c>.
+        /// </value>
+        public bool UpdateAccessTokenClaimsOnRefresh { get; set; } = false;
+
+        /// <summary>
+        /// Absolute: the refresh token will expire on a fixed point in time (specified by the AbsoluteRefreshTokenLifetime)
+        /// Sliding: when refreshing the token, the lifetime of the refresh token will be renewed (by the amount specified in SlidingRefreshTokenLifetime). The lifetime will not exceed AbsoluteRefreshTokenLifetime.
+        /// </summary>        
+        public TokenExpiration RefreshTokenExpiration { get; set; } = TokenExpiration.Absolute;
+
+        /// <summary>
+        /// Specifies whether the access token is a reference token or a self contained JWT token (defaults to Jwt).
+        /// </summary>
+        public AccessTokenType AccessTokenType { get; set; } = AccessTokenType.Jwt;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the local login is allowed for this client. Defaults to <c>true</c>.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if local logins are enabled; otherwise, <c>false</c>.
+        /// </value>
+        public bool EnableLocalLogin { get; set; } = true;
+
+        /// <summary>
+        /// Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.
+        /// </summary>
+        public ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; } = new HashSet<IdentityProviderRestriction>();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether JWT access tokens should include an identifier
+        /// </summary>
+        /// <value>
+        /// <c>true</c> to add an id; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeJwtId { get; set; } = false;
+
+        /// <summary>
+        /// Allows settings claims for the client (will be included in the access token).
+        /// </summary>
+        /// <value>
+        /// The claims.
+        /// </value>
+        public ICollection<ClaimEntity> Claims { get; set; } = new HashSet<ClaimEntity>();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether client claims should be always included in the access tokens - or only for client credentials flow.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if claims should always be sent; otherwise, <c>false</c>.
+        /// </value>
+        public bool AlwaysSendClientClaims { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether all client claims should be prefixed.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if client claims should be prefixed; otherwise, <c>false</c>.
+        /// </value>
+        public bool PrefixClientClaims { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the allowed CORS origins for JavaScript clients.
+        /// </summary>
+        /// <value>
+        /// The allowed CORS origins.
+        /// </value>
+        public ICollection<CorsOrigin> AllowedCorsOrigins { get; set; } = new HashSet<CorsOrigin>();
 
         public Client ToIdentityClient()
         {
