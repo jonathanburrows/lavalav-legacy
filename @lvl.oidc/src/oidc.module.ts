@@ -1,4 +1,5 @@
 ﻿import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,7 +8,7 @@ import { RouterModule } from '@angular/router';
 
 import { CoreModule } from '@lvl/core';
 
-import { oidcRouterModule } from './oidc.router.module';
+import { OidcRouterModule } from './oidc.router.module';
 
 
 import {
@@ -38,15 +39,14 @@ import {
         LoginComponent
     ],
     imports: [
-        BrowserModule,
+        CommonModule,
         CoreModule,
         FormsModule,
         HttpModule,
         MaterialModule,
+        OidcRouterModule,
         ReactiveFormsModule,
-        RouterModule,
-
-        oidcRouterModule
+        RouterModule
     ],
     providers: [
         TokenService
@@ -54,9 +54,9 @@ import {
     bootstrap: [AppComponent]
 })
 export class OidcModule {
-    static useImplicitFlow(options: (configuration: OidcConfiguration) => void): ModuleWithProviders {
+    static useImplicitFlow(/*options: (configuration: OidcConfiguration) => void*/): ModuleWithProviders {
         const oidcConfiguration = new OidcConfiguration();
-        options(oidcConfiguration);
+        //options(oidcConfiguration);
 
         return {
             ngModule: OidcModule,
@@ -67,9 +67,9 @@ export class OidcModule {
         };
     }
 
-    static useResourceOwnerFlow(options: (configuration: OidcConfiguration) => void): ModuleWithProviders {
-        const oidcConfiguration = new OidcConfiguration();
-        options(oidcConfiguration);
+    static useResourceOwnerFlow(oidcConfiguration: OidcConfiguration/*options: (configuration: OidcConfiguration) => void*/): ModuleWithProviders {
+        //const oidcConfiguration = new OidcConfiguration();
+        //options(oidcConfiguration);
 
         return {
             ngModule: OidcModule,

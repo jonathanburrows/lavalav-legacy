@@ -13,8 +13,6 @@
     "build.prod": "ng build --prod --aot --output-path=./dist/prod",
     "serve.prod": "ng serve --prod --aot --output-path=./dist/prod --open",
 
-    "serve.test": "ng serve --progress=false --environment=test --output-path=./dist/test --open",
-
     "lint": "ng lint",
     "test": "ng test",
     "e2e": "ng e2e"

@@ -1,6 +1,7 @@
 ﻿import { RouterModule } from '@angular/router';
 
-import { } from './components';
+import { CredentialsLoginComponent } from './components';
 
-export const oidcRouterModule = RouterModule.forRoot([
+export const OidcRouterModule = RouterModule.forChild([
+    { path: 'oidc/login', component: CredentialsLoginComponent }
 ]);

@@ -12,6 +12,7 @@ namespace Microsoft.AspNetCore.Builder
             }
 
             return applicationBuilder
+                .UseCors(options => options.AllowAnyOrigin())
                 .UseCookieAuthentication()
                 .UseIdentityServer();
         }
