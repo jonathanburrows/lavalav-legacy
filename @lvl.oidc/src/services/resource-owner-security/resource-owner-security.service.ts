@@ -25,6 +25,7 @@ export class ResourceOwnerSecurityService extends SecurityService {
         };
 
         this.requestToken(loginOptions).subscribe(bearerToken => {
+            debugger;
             this.tokenService.bearerToken = bearerToken;
             this.router.navigate([this.postLoginRedirectUrl]);
         });

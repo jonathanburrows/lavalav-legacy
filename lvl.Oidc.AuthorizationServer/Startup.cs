@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using lvl.Web;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,12 +22,13 @@ namespace lvl.Oidc.AuthorizationServer
         public void ConfigureServices(IServiceCollection services)
         {
             var authorizationOptions = new OidcAuthorizationServerOptions(Configuration);
+            var webOptions = new WebSettings(Configuration);
 
             services
-                .AddDomains()
+                .AddDomains(authorizationOptions.ConnectionString)
                 .AddDatabaseGeneration()
                 .AddRepositories()
-                .AddWeb()
+                .AddWeb(webOptions)
                 .AddOidcAuthorizationServer(authorizationOptions);
         }
 

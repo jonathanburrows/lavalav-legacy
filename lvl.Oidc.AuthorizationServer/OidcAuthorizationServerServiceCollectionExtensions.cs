@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.Stores;
+using IdentityServer4.Validation;
 using lvl.Oidc.AuthorizationServer;
 using lvl.Oidc.AuthorizationServer.Seeder;
 using lvl.Oidc.AuthorizationServer.Services;
@@ -22,6 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddClientStoreCache<ClientStore>()
                 .AddResourceStore<ResourceStore>()
                 .AddResourceStoreCache<ResourceStore>()
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryCaching();
@@ -32,6 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<IClientStore, ClientStore>()
                 .AddScoped<IPersistedGrantStore, PersistedGrantStore>()
                 .AddScoped<IResourceStore, ResourceStore>()
+                .AddScoped<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>()
                 .AddScoped<UserStore>()
                 .AddScoped<ExternalProviderNegotiator>()
                 .AddScoped<ArgumentParser>()

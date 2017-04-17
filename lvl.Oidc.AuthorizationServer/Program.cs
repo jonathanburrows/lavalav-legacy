@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using lvl.Oidc.AuthorizationServer.Seeder;
+using lvl.DatabaseGenerator;
 
 namespace lvl.Oidc.AuthorizationServer
 {
@@ -17,6 +18,9 @@ namespace lvl.Oidc.AuthorizationServer
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
+
+            var databaseGenerator = host.Services.GetRequiredService<DatabaseMigrator>();
+            databaseGenerator.Migrate();
 
             var options = host.Services.GetRequiredService<OidcAuthorizationServerOptions>();
 

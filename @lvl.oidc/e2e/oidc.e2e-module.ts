@@ -29,4 +29,3 @@ import { CredentialsLoginE2eComponent } from '../src/components/credentials-logi
     bootstrap: [AppComponent]
 })
 export class OidcE2eModule { }
-

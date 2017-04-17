@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lvl.Oidc.AuthorizationServer.Models
@@ -43,6 +44,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         //
         // Summary:
         //     Gets or sets the data.
+        [StringLength(4000)]
         public string Data { get; set; }
 
         public PersistedGrant ToIdentityPersistedGrant()

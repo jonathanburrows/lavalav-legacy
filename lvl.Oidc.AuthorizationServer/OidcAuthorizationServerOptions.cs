@@ -21,7 +21,7 @@ namespace lvl.Oidc.AuthorizationServer
         {
             configuration.GetSection("oidc:authorization-server").Bind(this);
 
-            var connectionString = configuration.GetValue<string>("connection-string");
+            ConnectionString = ConnectionString ?? configuration.GetValue<string>("connection-string");
         }
     }
 }

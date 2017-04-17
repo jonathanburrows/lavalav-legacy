@@ -45,9 +45,10 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                 }
             };
 
-            foreach (var user in testUsers)
+            var missingUsers = testUsers.Where(user => UserStore.FindByUsernameAsync(user.Username).Result == null);
+            foreach (var missingUser in missingUsers)
             {
-                await UserStore.AddUserAsync(user);
+                await UserStore.AddUserAsync(missingUser);
             }
         }
 

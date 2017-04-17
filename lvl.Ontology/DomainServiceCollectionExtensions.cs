@@ -44,7 +44,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var namingApplier = new NamingApplier();
             configuration.ClassMappings.ToList().ForEach(namingApplier.Apply);
             
-            //SchemaMetadataUpdater.QuoteTableAndColumns(configuration);
+            SchemaMetadataUpdater.QuoteTableAndColumns(configuration);
 
             serviceCollection.AddSingleton(_ => configuration);
 
@@ -100,6 +100,7 @@ namespace Microsoft.Extensions.DependencyInjection
             conventions.Add(DefaultCascade.All());
             conventions.Add(LazyLoad.Never());
             conventions.Add(ForeignKey.EndsWith("Id"));
+            conventions.Add<StringLengthConvention>();
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 
