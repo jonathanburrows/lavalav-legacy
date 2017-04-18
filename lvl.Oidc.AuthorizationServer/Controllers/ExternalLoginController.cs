@@ -1,6 +1,8 @@
 ﻿using IdentityModel;
 using IdentityServer4;
+using lvl.Oidc.AuthorizationServer.Services;
 using lvl.Oidc.AuthorizationServer.Stores;
+using lvl.Oidc.AuthorizationServer.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -13,20 +15,32 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Controllers
 {
+    [Route("oidc/external-login")]
     public class ExternalLoginController : ControllerBase
     {
         private UserStore UserStore { get; }
         private OidcAuthorizationServerOptions Options { get; }
+        private ExternalProviderNegotiator ExternalProviderNegotiator { get; }
 
-        public ExternalLoginController(UserStore userStore, OidcAuthorizationServerOptions options)
+        public ExternalLoginController(UserStore userStore, OidcAuthorizationServerOptions options, ExternalProviderNegotiator externalProviderNegotiator)
         {
             UserStore = userStore ?? throw new ArgumentNullException(nameof(userStore));
             Options = options ?? throw new ArgumentNullException(nameof(options));
+            ExternalProviderNegotiator = externalProviderNegotiator ?? throw new ArgumentNullException(nameof(externalProviderNegotiator));
         }
 
-        [HttpGet]
+        [HttpGet("login")]
         public async Task<IActionResult> Login(string provider, string returnUrl)
         {
+            if(provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if(returnUrl == null)
+            {
+                throw new ArgumentNullException(nameof(returnUrl));
+            }
+
             var callbackUrl = Url.Action(nameof(LoginCallback), new { returnUrl = returnUrl });
 
             var windowsProvider = Options.WindowsProviders.FirstOrDefault(wp => wp.AuthenticationScheme.Equals(provider, StringComparison.OrdinalIgnoreCase));
@@ -64,7 +78,7 @@ namespace lvl.Oidc.AuthorizationServer.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("login-callback")]
         public async Task<IActionResult> LoginCallback(string returnUrl)
         {
             if (returnUrl == null)
@@ -102,6 +116,12 @@ namespace lvl.Oidc.AuthorizationServer.Controllers
             await HttpContext.Authentication.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
             return Redirect(returnUrl);
+        }
+
+        [HttpGet("providers")]
+        public async Task<IEnumerable<ExternalProvider>> GetProvidersForReturnUrlAsync(string returnUrl)
+        {
+            return await ExternalProviderNegotiator.GetProvidersAsync(returnUrl);
         }
     }
 }

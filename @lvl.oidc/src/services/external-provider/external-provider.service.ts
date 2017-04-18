@@ -18,12 +18,13 @@ export class ExternalProviderService {
     ) { }
 
     public getProviders(): Observable<ExternalProvider[]> {
-        const url = `${this.oidcConfiguration.authorizationServerUrl}/oidc/external-providers?returnUrl=${this.oidcConfiguration.clientUrl}`;
+        const url = `${this.oidcConfiguration.authorizationServerUrl}/oidc/external-login/providers?returnUrl=${this.oidcConfiguration.clientUrl}`;
         return this.http.get(url).map(response => response.json());
     }
 
     public login(authenticationScheme: string) {
-        this.securityService.postLoginRedirectUrl = this.router.routerState.snapshot.url;
-        window.location.href = `${this.oidcConfiguration.authorizationServerUrl}/oidc/external-login`;
+        const returnUrl = this.router.routerState.snapshot.url;
+        this.securityService.postLoginRedirectUrl = returnUrl;
+        window.location.href = `${this.oidcConfiguration.authorizationServerUrl}/oidc/external-login/login?provider=${authenticationScheme}&returnUrl=${returnUrl}`;
     }
 }
