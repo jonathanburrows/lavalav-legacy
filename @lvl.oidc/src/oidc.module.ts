@@ -19,6 +19,7 @@ import {
 } from './components';
 
 import {
+    ExternalProviderService,
     ImplicitSecurityService,
     OidcConfiguration,
     ResourceOwnerSecurityService,
@@ -49,6 +50,7 @@ import {
         RouterModule
     ],
     providers: [
+        ExternalProviderService,
         TokenService
     ],
     bootstrap: [AppComponent]

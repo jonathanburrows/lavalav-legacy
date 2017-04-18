@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
-import { ExternalProvider } from './external-provider';
+import { ExternalProvider } from '../../services';
 import { LoginViewModel } from './login-view-model';
 
 declare var externalProviders: ExternalProvider[];
