@@ -24,7 +24,7 @@ export abstract class SecurityService {
             this._postLoginRedirectUrl = this.storageService.getItem(this.postLoginRedirectUrlKey);
         }
 
-        return this._postLoginRedirectUrl;
+        return this._postLoginRedirectUrl || '/';
     }
     public set postLoginRedirectUrl(value: string) {
         this._postLoginRedirectUrl = value;

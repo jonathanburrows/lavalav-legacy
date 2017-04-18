@@ -80,11 +80,9 @@ export class TokenService {
             const claims = this.convertJwtToIdToken(this.bearerToken.access_token);
 
             const secondsToTimeout = claims.exp - currentTime;
-            this.tokenExpiryTimer = setTimeout(() => this.tokenExpired.emit(this.bearerToken), secondsToTimeout);
+            this.tokenExpiryTimer = setTimeout(() => this.tokenExpired.emit(this.bearerToken), secondsToTimeout * 1000);
 
-            const halflifeDate = claims.iat + (claims.exp - claims.iat) / 2;
-            const secondsToHalflife = halflifeDate - currentTime;
-            this.tokenHalflifeTimer = setTimeout(() => this.tokenHalflife.emit(this.bearerToken), secondsToHalflife);
+            this.tokenHalflifeTimer = setTimeout(() => this.tokenHalflife.emit(this.bearerToken), secondsToTimeout / 2 * 1000);
         }
     }
 

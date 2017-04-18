@@ -9,33 +9,33 @@ namespace lvl.Oidc.AuthorizationServer
 {
     public class Startup
     {
-        private IConfiguration Configuration { get; }
+        private OidcAuthorizationServerOptions OidcAuthorizationServerOptions { get; }
+        private WebSettings WebOptions { get; }
 
         public Startup(IHostingEnvironment env)
         {
-            Configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .Build();
+            OidcAuthorizationServerOptions = new OidcAuthorizationServerOptions(configuration);
+            WebOptions = new WebSettings(configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var authorizationOptions = new OidcAuthorizationServerOptions(Configuration);
-            var webOptions = new WebSettings(Configuration);
-
             services
-                .AddDomains(authorizationOptions.ConnectionString)
+                .AddDomains(OidcAuthorizationServerOptions.ConnectionString)
                 .AddDatabaseGeneration()
                 .AddRepositories()
-                .AddWeb(webOptions)
-                .AddOidcAuthorizationServer(authorizationOptions);
+                .AddWeb(WebOptions)
+                .AddOidcAuthorizationServer(OidcAuthorizationServerOptions);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseOidcAuthorizationServer()
+            app.UseOidcAuthorizationServer(OidcAuthorizationServerOptions)
                 .UseWeb();
         }
     }
