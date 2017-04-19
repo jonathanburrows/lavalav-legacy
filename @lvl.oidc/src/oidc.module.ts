@@ -15,7 +15,8 @@ import {
     AppComponent,
     ConsentComponent,
     CredentialsLoginComponent,
-    LoginComponent
+    LoginComponent,
+    LoginCallbackComponent
 } from './components';
 
 import {
@@ -32,12 +33,14 @@ import {
         AppComponent,
         ConsentComponent,
         CredentialsLoginComponent,
-        LoginComponent
+        LoginComponent,
+        LoginCallbackComponent
     ],
     exports: [
         ConsentComponent,
         CredentialsLoginComponent,
-        LoginComponent
+        LoginComponent,
+        LoginCallbackComponent
     ],
     imports: [
         CommonModule,

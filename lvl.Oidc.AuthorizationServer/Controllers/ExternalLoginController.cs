@@ -49,7 +49,7 @@ namespace lvl.Oidc.AuthorizationServer.Controllers
                 var externalAuthenticationProperties = new AuthenticationProperties
                 {
                     RedirectUri = callbackUrl,
-                    Items = { { "scheme", provider } }
+                    Items = { ["scheme"] = provider }
                 };
                 return new ChallengeResult(provider, externalAuthenticationProperties);
             }

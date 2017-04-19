@@ -23,8 +23,8 @@ export class ExternalProviderService {
     }
 
     public login(authenticationScheme: string) {
-        const returnUrl = this.router.routerState.snapshot.url;
-        this.securityService.postLoginRedirectUrl = returnUrl;
-        window.location.href = `${this.oidcConfiguration.authorizationServerUrl}/oidc/external-login/login?provider=${authenticationScheme}&returnUrl=${returnUrl}`;
+        this.securityService.postLoginRedirectUrl = this.router.routerState.snapshot.url;
+        const loginCallbackUrl = `${this.oidcConfiguration.clientUrl}/oidc/login-callback`;
+        window.location.href = `${this.oidcConfiguration.authorizationServerUrl}/oidc/external-login/login?provider=${authenticationScheme}&returnUrl=${loginCallbackUrl}`;
     }
 }
