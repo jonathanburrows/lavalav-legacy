@@ -10,8 +10,8 @@
     "build.dev": "ng build --progress=false --output-path=./dist/dev",
     "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open",
 
-    "build.prod": "ng build --prod --aot --output-path=./dist/prod",
-    "serve.prod": "ng serve --prod --aot --output-path=./dist/prod --open",
+    "build.prod": "ng build --progress=false --prod --aot --output-path=./dist/prod",
+    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open",
 
     "lint": "ng lint",
     "test": "ng test",

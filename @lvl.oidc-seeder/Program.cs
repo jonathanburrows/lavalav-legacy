@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using lvl.Oidc.AuthorizationServer.Seeder;
+using lvl.Ontology;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace lvl.Oidc.Seeder
 {
@@ -7,24 +9,33 @@ namespace lvl.Oidc.Seeder
         public static void Main(string[] args)
         {
             var argumentParser = new ArgumentParser();
-            var options = argumentParser.Parse(args);
+            var seedOptions = argumentParser.Parse(args);
+            var connectionString = argumentParser.GetValue(args, "--connection-string");
 
             var serviceProvider = new ServiceCollection()
-                .AddDomains(options.ConnectionString)
+                .AddDomains(new DomainOptions { ConnectionString = connectionString })
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb()
                 .AddOidcAuthorizationServer()
-                .AddOidcSeeder()
                 .BuildServiceProvider();
+            
+            if(seedOptions.SeedManditoryData || seedOptions.SeedTestData)
+            {
+                var migrator = serviceProvider.GetRequiredService<DatabaseGenerator.DatabaseMigrator>();
+                migrator.Migrate();
+            }
 
-            var manditoryDataSeeder = serviceProvider.GetRequiredService<ManditoryDataSeeder>();
-            manditoryDataSeeder.Seed().Wait();
+            if (seedOptions.SeedManditoryData)
+            {
+                var manditoryDataSeeder = serviceProvider.GetRequiredService<ManditoryDataSeeder>();
+                manditoryDataSeeder.SeedAsync().Wait();
+            }
 
-            if (options.SeedTestData)
+            if (seedOptions.SeedTestData)
             {
                 var testDataSeeder = serviceProvider.GetRequiredService<TestDataSeeder>();
-                testDataSeeder.Seed().Wait();
+                testDataSeeder.SeedAsync().Wait();
             }
         }
     }

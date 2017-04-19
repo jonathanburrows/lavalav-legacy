@@ -1,4 +1,5 @@
-﻿using lvl.Ontology.Tests.Fixtures;
+﻿using lvl.Ontology.Database;
+using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using System;
@@ -66,7 +67,8 @@ namespace lvl.Ontology.Tests
         public void WhenDetecting_WhenMsSqlIsConfigured_MsSqlIsReturned()
         {
             var msSqlConnectionString = @"Server=.;Database=lvl;Trusted_Connection=True;";
-            var services = new ServiceCollection().AddDomains(msSqlConnectionString).BuildServiceProvider();
+            var domainOptions = new DomainOptions { ConnectionString = msSqlConnectionString };
+            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
@@ -78,7 +80,8 @@ namespace lvl.Ontology.Tests
         public void WhenDetecting_WhenOracleIsConfigured_OracleIsReturned()
         {
             var oracleConnectionString = @"Data Source=lvl;Integrated Security=yes;";
-            var services = new ServiceCollection().AddDomains(oracleConnectionString).BuildServiceProvider();
+            var domainOptions = new DomainOptions { ConnectionString = oracleConnectionString };
+            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);

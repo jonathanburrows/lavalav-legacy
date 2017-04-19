@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Seeder
 {
-    internal class TestDataSeeder
+    public class TestDataSeeder
     {
         private UserStore UserStore { get; }
         private IRepository<ApiResourceEntity> ApiResourceRepository { get; }

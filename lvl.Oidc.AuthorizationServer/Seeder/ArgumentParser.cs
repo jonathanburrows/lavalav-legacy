@@ -13,12 +13,13 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                 throw new ArgumentNullException(nameof(args));
             }
 
-            var connectionString = GetValue(args, "--connection-string");
             var seedTestData = GetFlag(args, "--seed-test-data");
+            var seedManditoryData = GetFlag(args, "--seed-manditory-data");
+
             return new OidcAuthorizationServerOptions
             {
-                ConnectionString = connectionString,
-                SeedTestData = seedTestData
+                SeedTestData = seedTestData,
+                SeedManditoryData = seedManditoryData
             };
         }
 

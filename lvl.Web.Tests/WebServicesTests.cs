@@ -64,7 +64,7 @@ namespace lvl.Web.Tests
         [Fact]
         public void AfterAddingWeb_ResolvingLoggingSettings_ReturnsValue()
         {
-            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingOptions>();
 
             Assert.NotNull(loggingSettings);
         }

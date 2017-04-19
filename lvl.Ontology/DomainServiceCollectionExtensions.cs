@@ -3,6 +3,8 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
+using lvl.Ontology.Conventions;
+using lvl.Ontology.Database;
 using lvl.Ontology.Naming;
 using NHibernate.Tool.hbm2ddl;
 using System;
@@ -26,7 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The original service collection, with a configuration registered.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/></exception>
         /// <remarks>If the connection string is null, then it will use SQLite</remarks>
-        public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, string connectionString = null)
+        public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, DomainOptions domainOptions = null)
         {
             if (serviceCollection == null)
             {
@@ -37,7 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var configuration = Fluently
                 .Configure()
-                .Database(ConstructDatabaseConnection(connectionString))
+                .Database(ConstructDatabaseConnection(domainOptions?.ConnectionString))
                 .AddReferencedEntities(callingAssembly)
                 .BuildConfiguration();
 

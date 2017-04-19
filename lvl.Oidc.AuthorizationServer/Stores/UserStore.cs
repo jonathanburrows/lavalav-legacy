@@ -87,6 +87,41 @@ namespace lvl.Oidc.AuthorizationServer.Stores
             return users.Items.SingleOrDefault();
         }
 
+        public async Task<User> AddLocalUserAsync(string username, string password)
+        {
+            if(username == null)
+            {
+                throw new ArgumentNullException(nameof(username), "Please give a username");
+            }
+            if(password == null)
+            {
+                throw new ArgumentNullException(nameof(password), "Please give a password");
+            }
+
+            var matchingUsersQuery = new Query<User>().Where(u => u.Username.ToLower() == username.ToLower());
+            var matchingUsers = await UserRepository.GetAsync(matchingUsersQuery);
+            if(matchingUsers.Count > 0)
+            {
+                throw new InvalidOperationException("Username already taken");
+            }
+
+            var claims = new[] { new ClaimEntity { Type = JwtClaimTypes.Name, Value = username } };
+
+            var salt = PasswordHasher.GetSalt();
+            var hashedPassword = PasswordHasher.HashPassword(password, salt);
+
+            var user = new User
+            {
+                SubjectId = username,
+                Salt = salt,
+                HashedPassword = hashedPassword,
+                Username = username
+            };
+            await UserRepository.CreateAsync(user);
+
+            return user;
+        }
+
         public async Task<User> AddExternalUser(string provider, string userId, IEnumerable<Claim> externalClaims)
         {
             if (provider == null)

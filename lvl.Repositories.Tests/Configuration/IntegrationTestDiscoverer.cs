@@ -1,4 +1,4 @@
-﻿using lvl.Ontology;
+﻿using lvl.Ontology.Database;
 using lvl.Repositories.Tests.Fixtures;
 using System;
 using System.Collections.Concurrent;

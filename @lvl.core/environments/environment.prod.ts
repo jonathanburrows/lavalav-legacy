@@ -1,4 +1,4 @@
-export var environment = {
+export const environment = {
     production: true,
     useE2eModule: false
 };

@@ -83,6 +83,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "@lvl.oidc", "@lvl.oidc\", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "@lvl.oidc-seeder", "@lvl.oidc-seeder\@lvl.oidc-seeder.csproj", "{AC03A3C5-057C-44A6-9B94-E6140DF2F48B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lvl.Oidc.AccessTokens", "lvl.Oidc.AccessTokens\lvl.Oidc.AccessTokens.csproj", "{A0E3D627-17FB-4B8D-9114-461CD317EBD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -215,6 +217,14 @@ Global
 		{AC03A3C5-057C-44A6-9B94-E6140DF2F48B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC03A3C5-057C-44A6-9B94-E6140DF2F48B}.Release|x64.ActiveCfg = Release|Any CPU
 		{AC03A3C5-057C-44A6-9B94-E6140DF2F48B}.Release|x64.Build.0 = Release|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Debug|x64.Build.0 = Debug|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Release|x64.ActiveCfg = Release|Any CPU
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,5 +246,6 @@ Global
 		{F8E4A4F6-12F0-476F-ACC5-F49492FC7741} = {EDDD5902-738F-4998-88EF-BAA42A8800FA}
 		{F691E074-7721-4396-9F16-DEA17E2C12EB} = {EDDD5902-738F-4998-88EF-BAA42A8800FA}
 		{AC03A3C5-057C-44A6-9B94-E6140DF2F48B} = {EDDD5902-738F-4998-88EF-BAA42A8800FA}
+		{A0E3D627-17FB-4B8D-9114-461CD317EBD4} = {EDDD5902-738F-4998-88EF-BAA42A8800FA}
 	EndGlobalSection
 EndGlobal

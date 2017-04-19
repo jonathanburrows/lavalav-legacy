@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Seeder
 {
-    internal class ManditoryDataSeeder
+    public class ManditoryDataSeeder
     {
         private IRepository<IdentityResourceEntity> IdentityResourceRepository { get; }
 

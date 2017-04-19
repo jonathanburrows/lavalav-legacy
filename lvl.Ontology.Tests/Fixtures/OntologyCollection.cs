@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using lvl.Ontology.Database;
+using Xunit;
 
 namespace lvl.Ontology.Tests.Fixtures
 {

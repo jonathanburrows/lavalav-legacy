@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The given service collection with types registered against it.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/> is null.</exception>
         /// <exception cref="InvalidOperationException">AddDomains and AddRepositories haven't been called.</exception>
-        public static IServiceCollection AddWeb(this IServiceCollection serviceCollection, WebSettings webSettings = null)
+        public static IServiceCollection AddWeb(this IServiceCollection serviceCollection, WebOptions webSettings = null)
         {
             if (serviceCollection == null)
             {
@@ -43,10 +43,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException($"{nameof(RepositoryServiceCollectionExtensions.AddRepositories)} has not been called");
             }
 
-            var loggingSettings = webSettings?.Logging ?? new LoggingSettings();
+            var loggingSettings = webSettings?.Logging ?? new LoggingOptions();
             serviceCollection.AddSingleton(loggingSettings);
 
-            var corsSettings = webSettings?.Cors ?? new CorsSettings();
+            var corsSettings = webSettings?.Cors ?? new CorsOptions();
             serviceCollection.AddSingleton(corsSettings);
 
             Action<JsonSerializerSettings> configureJson = options =>

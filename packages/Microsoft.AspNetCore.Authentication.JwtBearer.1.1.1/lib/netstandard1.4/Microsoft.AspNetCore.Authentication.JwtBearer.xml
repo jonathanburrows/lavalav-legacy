@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.Authentication.JwtBearer</name>
+    </assembly>
+    <members>
+        <member name="F:Microsoft.Extensions.Internal.TaskCache.CompletedTask">
+            <summary>
+            A <see cref="T:System.Threading.Tasks.Task"/> that's already completed successfully.
+            </summary>
+            <remarks>
+            We're caching this in a static readonly field to make it more inlinable and avoid the volatile lookup done
+            by <c>Task.CompletedTask</c>.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Extensions.Internal.TaskCache`1.DefaultCompletedTask">
+            <summary>
+            Gets a completed <see cref="T:System.Threading.Tasks.Task"/> with the value of <c>default(T)</c>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Builder.JwtBearerAppBuilderExtensions">
+            <summary>
+            Extension methods to add OpenIdConnect Bearer authentication capabilities to an HTTP application pipeline.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.JwtBearerAppBuilderExtensions.UseJwtBearerAuthentication(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds the <see cref="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware"/> middleware to the specified <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>, which enables Bearer token processing capabilities.
+            This middleware understands appropriately
+            formatted and secured tokens which appear in the request header. If the Options.AuthenticationMode is Active, the
+            claims within the bearer token are added to the current request's IPrincipal User. If the Options.AuthenticationMode 
+            is Passive, then the current request is not modified, but IAuthenticationManager AuthenticateAsync may be used at
+            any time to obtain the claims from the request's bearer token.
+            See also http://tools.ietf.org/html/rfc6749
+            </summary>
+            <param name="app">The <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> to add the middleware to.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.JwtBearerAppBuilderExtensions.UseJwtBearerAuthentication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Builder.JwtBearerOptions)">
+            <summary>
+            Adds the <see cref="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware"/> middleware to the specified <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>, which enables Bearer token processing capabilities.
+            This middleware understands appropriately
+            formatted and secured tokens which appear in the request header. If the Options.AuthenticationMode is Active, the
+            claims within the bearer token are added to the current request's IPrincipal User. If the Options.AuthenticationMode 
+            is Passive, then the current request is not modified, but IAuthenticationManager AuthenticateAsync may be used at
+            any time to obtain the claims from the request's bearer token.
+            See also http://tools.ietf.org/html/rfc6749
+            </summary>
+            <param name="app">The <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> to add the middleware to.</param>
+            <param name="options">A  <see cref="T:Microsoft.AspNetCore.Builder.JwtBearerOptions"/> that specifies options for the middleware.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Builder.JwtBearerOptions">
+            <summary>
+            Options class provides information needed to control Bearer Authentication middleware behavior
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.JwtBearerOptions.#ctor">
+            <summary>
+            Creates an instance of bearer authentication options with default values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.RequireHttpsMetadata">
+            <summary>
+            Gets or sets if HTTPS is required for the metadata address or authority.
+            The default is true. This should be disabled only in development environments.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.MetadataAddress">
+            <summary>
+            Gets or sets the discovery endpoint for obtaining metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.Authority">
+            <summary>
+            Gets or sets the Authority to use when making OpenIdConnect calls.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.Audience">
+            <summary>
+            Gets or sets the audience for any received OpenIdConnect token.
+            </summary>
+            <value>
+            The expected audience for any received OpenIdConnect token.
+            </value>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.Challenge">
+            <summary>
+            Gets or sets the challenge to put in the "WWW-Authenticate" header.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.Events">
+            <summary>
+            The object provided by the application to process events raised by the bearer authentication middleware.
+            The application may implement the interface fully, or it may create an instance of JwtBearerAuthenticationEvents
+            and assign delegates only to the events it wants to process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.BackchannelHttpHandler">
+            <summary>
+            The HttpMessageHandler used to retrieve metadata.
+            This cannot be set at the same time as BackchannelCertificateValidator unless the value
+            is a WebRequestHandler.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.BackchannelTimeout">
+            <summary>
+            Gets or sets the timeout when using the backchannel to make an http call.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.Configuration">
+            <summary>
+            Configuration provided directly by the developer. If provided, then MetadataAddress and the Backchannel properties
+            will not be used. This information should not be updated during request processing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.ConfigurationManager">
+            <summary>
+            Responsible for retrieving, caching, and refreshing the configuration from metadata.
+            If not provided, then one will be created using the MetadataAddress and Backchannel properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.RefreshOnIssuerKeyNotFound">
+            <summary>
+            Gets or sets if a metadata refresh should be attempted after a SecurityTokenSignatureKeyNotFoundException. This allows for automatic
+            recovery in the event of a signature key rollover. This is enabled by default.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.SecurityTokenValidators">
+            <summary>
+            Gets the ordered list of <see cref="T:Microsoft.IdentityModel.Tokens.ISecurityTokenValidator"/> used to validate access tokens.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.TokenValidationParameters">
+            <summary>
+            Gets or sets the parameters used to validate identity tokens.
+            </summary>
+            <remarks>Contains the types and definitions required for validating a token.</remarks>
+            <exception cref="T:System.ArgumentNullException">if 'value' is null.</exception>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.SaveToken">
+            <summary>
+            Defines whether the bearer token should be stored in the
+            <see cref="T:Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/> after a successful authorization.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.IncludeErrorDetails">
+            <summary>
+            Defines whether the token validation errors should be returned to the caller.
+            Enabled by default, this option can be disabled to prevent the JWT middleware
+            from returning an error and an error_description in the WWW-Authenticate header.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults">
+            <summary>
+            Default values used by bearer authentication.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme">
+            <summary>
+            Default value for AuthenticationScheme property in the JwtBearerAuthenticationOptions
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync">
+            <summary>
+            Searches the 'Authorization' header for a 'Bearer' token. If the 'Bearer' token is found, it is validated using <see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> set in the options.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware">
+            <summary>
+            Bearer authentication middleware component which is added to an HTTP pipeline. This class is not
+            created by application code directly, instead it is added by calling the the IAppBuilder UseJwtBearerAuthentication
+            extension method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Builder.JwtBearerOptions})">
+            <summary>
+            Bearer authentication component which is added to an HTTP pipeline. This constructor is not
+            called by application code directly, instead it is added by calling the the IAppBuilder UseJwtBearerAuthentication 
+            extension method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware.CreateHandler">
+            <summary>
+            Called by the AuthenticationMiddleware base class to create a per-request handler. 
+            </summary>
+            <returns>A new instance of the request handler</returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.JwtBearer.IJwtBearerEvents">
+            <summary>
+            Specifies events which the <see cref="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware"/> invokes to enable developer control over the authentication process.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.IJwtBearerEvents.AuthenticationFailed(Microsoft.AspNetCore.Authentication.JwtBearer.AuthenticationFailedContext)">
+            <summary>
+            Invoked if exceptions are thrown during request processing. The exceptions will be re-thrown after this event unless suppressed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.IJwtBearerEvents.MessageReceived(Microsoft.AspNetCore.Authentication.JwtBearer.MessageReceivedContext)">
+            <summary>
+            Invoked when a protocol message is first received.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.IJwtBearerEvents.TokenValidated(Microsoft.AspNetCore.Authentication.JwtBearer.TokenValidatedContext)">
+            <summary>
+            Invoked after the security token has passed validation and a ClaimsIdentity has been generated.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.IJwtBearerEvents.Challenge(Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerChallengeContext)">
+            <summary>
+            Invoked to apply a challenge sent back to the caller.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerChallengeContext.AuthenticateFailure">
+            <summary>
+            Any failures encountered during the authentication process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerChallengeContext.Error">
+            <summary>
+            Gets or sets the "error" value returned to the caller as part
+            of the WWW-Authenticate header. This property may be null when
+            <see cref="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.IncludeErrorDetails"/> is set to <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerChallengeContext.ErrorDescription">
+            <summary>
+            Gets or sets the "error_description" value returned to the caller as part
+            of the WWW-Authenticate header. This property may be null when
+            <see cref="P:Microsoft.AspNetCore.Builder.JwtBearerOptions.IncludeErrorDetails"/> is set to <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerChallengeContext.ErrorUri">
+            <summary>
+            Gets or sets the "error_uri" value returned to the caller as part of the
+            WWW-Authenticate header. This property is always null unless explicitly set.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents">
+            <summary>
+            Specifies events which the <see cref="T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware"/> invokes to enable developer control over the authentication process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnAuthenticationFailed">
+            <summary>
+            Invoked if exceptions are thrown during request processing. The exceptions will be re-thrown after this event unless suppressed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnMessageReceived">
+            <summary>
+            Invoked when a protocol message is first received.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnTokenValidated">
+            <summary>
+            Invoked after the security token has passed validation and a ClaimsIdentity has been generated.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnChallenge">
+            <summary>
+            Invoked before a challenge is sent back to the caller.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.MessageReceivedContext.Token">
+            <summary>
+            Bearer Token. This will give application an opportunity to retrieve token from an alternation location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.Resources.Exception_OptionMustBeProvided">
+            <summary>
+            The '{0}' option must be provided.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.Resources.FormatException_OptionMustBeProvided(System.Object)">
+            <summary>
+            The '{0}' option must be provided.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.JwtBearer.Resources.Exception_ValidatorHandlerMismatch">
+            <summary>
+            An ICertificateValidator cannot be specified at the same time as an HttpMessageHandler unless it is a WebRequestHandler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.JwtBearer.Resources.FormatException_ValidatorHandlerMismatch">
+            <summary>
+            An ICertificateValidator cannot be specified at the same time as an HttpMessageHandler unless it is a WebRequestHandler.
+            </summary>
+        </member>
+    </members>
+</doc>

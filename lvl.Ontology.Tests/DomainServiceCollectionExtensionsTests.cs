@@ -82,7 +82,7 @@ namespace lvl.Ontology.Tests
         public void IfSqlServerConnectionString_WhenAddingDomain_SqlServerIsConfigured(string sqlServerConnectionString)
         {
             var services = new ServiceCollection()
-                .AddDomains(sqlServerConnectionString)
+                .AddDomains(new DomainOptions { ConnectionString = sqlServerConnectionString })
                 .BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
@@ -99,7 +99,7 @@ namespace lvl.Ontology.Tests
         public void IfOracleConnectionString_WhenAddingDomain_OracleIsConfigured(string oracleConnectionString)
         {
             var services = new ServiceCollection()
-                .AddDomains(oracleConnectionString)
+                .AddDomains(new DomainOptions { ConnectionString = oracleConnectionString })
                 .BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
@@ -115,7 +115,8 @@ namespace lvl.Ontology.Tests
         public void IfInvalidConnectionString_WhenAddingDomain_ArgumentExceptionIsThrown(string invalidConnectionString)
         {
             var serviceCollection = new ServiceCollection();
-            Assert.Throws<ArgumentException>(() => serviceCollection.AddDomains(invalidConnectionString));
+            var domainOptions = new DomainOptions { ConnectionString = invalidConnectionString };
+            Assert.Throws<ArgumentException>(() => serviceCollection.AddDomains(domainOptions));
         }
 
         /// <summary>Used to test classes embedded in application</summary>

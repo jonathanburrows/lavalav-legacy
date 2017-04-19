@@ -1,4 +1,5 @@
-﻿using lvl.Web;
+﻿using lvl.Ontology;
+using lvl.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +10,9 @@ namespace lvl.Oidc.AuthorizationServer
 {
     public class Startup
     {
+        private DomainOptions DomainOptions { get; }
         private OidcAuthorizationServerOptions OidcAuthorizationServerOptions { get; }
-        private WebSettings WebOptions { get; }
+        private WebOptions WebOptions { get; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -19,14 +21,16 @@ namespace lvl.Oidc.AuthorizationServer
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddUserSecrets("2b0f19c1-3546-4658-9715-f6353a59dff8")
                 .Build();
+
             OidcAuthorizationServerOptions = new OidcAuthorizationServerOptions(configuration);
-            WebOptions = new WebSettings(configuration);
+            WebOptions = new WebOptions(configuration);
+            DomainOptions = new DomainOptions(configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDomains(OidcAuthorizationServerOptions.ConnectionString)
+                .AddDomains(DomainOptions)
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb(WebOptions)

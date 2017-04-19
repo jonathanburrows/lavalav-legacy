@@ -7,7 +7,6 @@ namespace lvl.Oidc.AuthorizationServer
 {
     public class OidcAuthorizationServerOptions
     {
-        public string ConnectionString { get; set; }
         public bool SeedTestData { get; set; }
         public bool SeedManditoryData { get; set; }
         public IList<ExternalProvider> WindowsProviders { get; set; } = new List<ExternalProvider>();
@@ -21,8 +20,6 @@ namespace lvl.Oidc.AuthorizationServer
         public OidcAuthorizationServerOptions(IConfiguration configuration)
         {
             configuration.GetSection("oidc:authorization-server").Bind(this);
-
-            ConnectionString = ConnectionString ?? configuration.GetValue<string>("connection-string");
         }
     }
 }

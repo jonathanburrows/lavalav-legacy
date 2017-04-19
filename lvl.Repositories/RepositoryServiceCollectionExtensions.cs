@@ -1,4 +1,4 @@
-﻿using lvl.Ontology;
+﻿using lvl.Ontology.Database;
 using lvl.Repositories;
 using System;
 

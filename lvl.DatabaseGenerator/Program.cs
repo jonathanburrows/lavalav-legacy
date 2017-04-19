@@ -26,7 +26,7 @@ namespace lvl.DatabaseGenerator
             assemblyLoader.Load(options.AssemblyPath);
 
             var services = new ServiceCollection()
-                .AddDomains(options.ConnectionString)
+                .AddDomains(new DomainOptions { ConnectionString = options.ConnectionString })
                 .AddDatabaseGeneration()
                 .BuildServiceProvider();
             var scriptRunner = services.GetRequiredService<ScriptRunner>();
