@@ -4,7 +4,12 @@ using lvl.Oidc.AuthorizationServer;
 using lvl.Oidc.AuthorizationServer.Seeder;
 using lvl.Oidc.AuthorizationServer.Services;
 using lvl.Oidc.AuthorizationServer.Stores;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.FileProviders;
 using System;
+using System.Reflection;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -28,13 +33,18 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryCaching();
 
+            var assembly = typeof(OidcAuthorizationServerServiceCollectionExtensions).GetTypeInfo().Assembly;
+            var embeddedFileProvider = new EmbeddedFileProvider(assembly);
+
             serviceCollection
                 .AddAuthorization()
+                .Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(embeddedFileProvider))
                 .AddScoped<PasswordHasher>()
                 .AddScoped<IClientStore, ClientStore>()
                 .AddScoped<IPersistedGrantStore, PersistedGrantStore>()
                 .AddScoped<IResourceStore, ResourceStore>()
                 .AddScoped<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>()
+                .AddScoped<IActionContextAccessor, ActionContextAccessor>()
                 .AddScoped<UserStore>()
                 .AddScoped<ExternalProviderNegotiator>()
                 .AddScoped<ArgumentParser>()

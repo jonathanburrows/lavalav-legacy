@@ -16,17 +16,8 @@ namespace lvl.Web.Logging
 
         public ErrorLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
-            if (next == null)
-            {
-                throw new ArgumentNullException(nameof(next));
-            }
-            if (loggerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(loggerFactory));
-            }
-
-            Next = next;
-            LoggerFactory = loggerFactory;
+            Next = next ?? throw new ArgumentNullException(nameof(next));
+            LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
 
         /// <summary>

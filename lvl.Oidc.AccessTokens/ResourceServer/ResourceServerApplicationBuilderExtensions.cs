@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.Builder
                 throw new InvalidOperationException($"{nameof(options)}.{nameof(options.ApiSecret)} is null.");
             }
 
-            return applicationBuilder.UseIdentityServerAuthentication(options);
+            return applicationBuilder.UseIdentityServerAuthentication(options.ToIdentityServer());
         }
     }
 }
