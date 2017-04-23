@@ -1,4 +1,5 @@
 ﻿using lvl.Oidc.AccessTokens.ResourceServer;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Microsoft.AspNetCore.Builder
@@ -7,12 +8,12 @@ namespace Microsoft.AspNetCore.Builder
     {
         public static IApplicationBuilder UseResourceServer(this IApplicationBuilder applicationBuilder, ResourceServerOptions options)
         {
-            if(applicationBuilder == null)
+            if (applicationBuilder == null)
             {
                 throw new ArgumentNullException();
             }
 
-            if(options == null)
+            if (options == null)
             {
                 throw new ArgumentNullException(nameof(options));
             }
@@ -29,7 +30,15 @@ namespace Microsoft.AspNetCore.Builder
                 throw new InvalidOperationException($"{nameof(options)}.{nameof(options.ApiSecret)} is null.");
             }
 
-            return applicationBuilder.UseIdentityServerAuthentication(options.ToIdentityServer());
+            return applicationBuilder
+                .UseCors(o =>
+                {
+                    o.AllowAnyOrigin();
+                    o.AllowAnyMethod();
+                    o.AllowAnyHeader();
+                    o.AllowCredentials();
+                })
+                .UseIdentityServerAuthentication(options.ToIdentityServer());
         }
     }
 }

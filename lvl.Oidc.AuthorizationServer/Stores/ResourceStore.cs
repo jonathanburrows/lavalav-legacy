@@ -60,10 +60,10 @@ namespace lvl.Oidc.AuthorizationServer.Stores
         public async Task<Resources> GetAllResources()
         {
             var identityResources = await IdentityResourceRepository.GetAsync();
-            var boxedIdentityResources = identityResources.Select(ir => ir.ToIdentityServer());
+            var boxedIdentityResources = identityResources.Select(ir => ir.ToIdentityServer()).ToList();
 
             var apiResources = await ApiResourceRepository.GetAsync();
-            var boxedApiResources = apiResources.Select(ar => ar.ToIdentityServer());
+            var boxedApiResources = apiResources.Select(ar => ar.ToIdentityServer()).ToList();
 
             return new Resources(boxedIdentityResources, boxedApiResources);
         }

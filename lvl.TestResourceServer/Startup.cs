@@ -1,4 +1,7 @@
 ﻿using lvl.Oidc.AccessTokens.ResourceServer;
+using lvl.Web;
+using lvl.Web.Cors;
+using lvl.Web.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,11 +16,22 @@ namespace lvl.TestResourceServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var webOptions = new WebOptions
+            {
+                Cors = new CorsOptions
+                {
+                    AllowOrigins = new[] { "http://localhost:4200" }
+                },
+                Logging = new LoggingOptions
+                {
+                    LogLevel = LogLevel.Error
+                }
+            };
             services
                 .AddDomains()
                 .AddDatabaseGeneration()
                 .AddRepositories()
-                .AddWeb()
+                .AddWeb(webOptions)
                 .AddResourceServer();
         }
 
@@ -27,13 +41,16 @@ namespace lvl.TestResourceServer
             {
                 ApiName = "test-resource-server",
                 Authority = "http://localhost:65170",
-               // Authority = url,
+                // Authority = url,
                 ApiSecret = "secret",
                 RequireHttpsMetadata = false
             };
-            
+
             app.UseResourceServer(options)
                 .UseWeb();
+
+            var databaseGenerator = app.ApplicationServices.GetRequiredService<DatabaseGenerator.DatabaseMigrator>();
+            databaseGenerator.Migrate();
         }
         public static void Main(string[] args)
         {

@@ -1,11 +1,13 @@
 ﻿using lvl.DatabaseGenerator;
 using lvl.Oidc.AuthorizationServer;
 using lvl.Oidc.AuthorizationServer.Seeder;
+using lvl.Ontology;
+using lvl.Web;
+using lvl.Web.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace lvl.TestAuthorizationServer
 {
@@ -13,6 +15,16 @@ namespace lvl.TestAuthorizationServer
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            var domainOptions = new DomainOptions
+            {
+                ConnectionString = "Server=.;Database=test;Trusted_Connection=True;"
+            };
+
+            var webOptions = new WebOptions
+            {
+                Logging = new LoggingOptions { LogLevel = LogLevel.Error }
+            };
+
             var authorizationOptions = new OidcAuthorizationServerOptions
             {
                 SeedManditoryData = true,
@@ -20,10 +32,10 @@ namespace lvl.TestAuthorizationServer
             };
 
             services
-                .AddDomains()
+                .AddDomains(domainOptions)
                 .AddDatabaseGeneration()
                 .AddRepositories()
-                .AddWeb()
+                .AddWeb(webOptions)
                 .AddOidcAuthorizationServer(authorizationOptions);
         }
 

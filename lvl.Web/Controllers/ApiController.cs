@@ -1,6 +1,7 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories;
 using lvl.Web.Serialization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace lvl.Web.Controllers
     /// Provides restful endpoints for all entities.
     /// </summary>
     [Route("[controller]")]
+    [Authorize]
     public class ApiController : Controller
     {
         private TypeResolver TypeResolver { get; }
@@ -20,22 +22,9 @@ namespace lvl.Web.Controllers
 
         public ApiController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, EntityDeserializer entityDeserializer)
         {
-            if (typeResolver == null)
-            {
-                throw new ArgumentNullException(nameof(typeResolver));
-            }
-            if (repositoryFactory == null)
-            {
-                throw new ArgumentNullException(nameof(repositoryFactory));
-            }
-            if (entityDeserializer == null)
-            {
-                throw new ArgumentNullException(nameof(entityDeserializer));
-            }
-
-            TypeResolver = typeResolver;
-            RepositoryFactory = repositoryFactory;
-            EntityDeserializer = entityDeserializer;
+            TypeResolver = typeResolver ?? throw new ArgumentNullException(nameof(typeResolver));
+            RepositoryFactory = repositoryFactory ?? throw new ArgumentNullException(nameof(repositoryFactory));
+            EntityDeserializer = entityDeserializer ?? throw new ArgumentNullException(nameof(entityDeserializer));
         }
 
         /// <summary>

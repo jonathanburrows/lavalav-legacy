@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,28 +10,30 @@ namespace lvl.Oidc.AuthorizationServer.Models
     [Table(nameof(ApiResource), Schema = "oidc")]
     public class ApiResourceEntity : IEntity, IAggregateRoot
     {
-        public int Id { get; set; }
+        public int Id { get; set; }/// <summary>
+                                   /// Indicates if this resource is enabled. Defaults to true.
+                                   /// </summary>
+        public bool Enabled { get; set; } = true;
 
-        //
-        // Summary:
-        //     Indicates if this API is enabled. Defaults to true.
-        public bool Enabled { get; set; }
-
-        //
-        // Summary:
-        //     The unique name of the API. This value is used for authentication with introspection
-        //     and will be added to the audience of the outgoing access token.
+        /// <summary>
+        /// The unique name of the resource.
+        /// </summary>
         public string Name { get; set; }
 
-        //
-        // Summary:
-        //     Display name of the API resource.
+        /// <summary>
+        /// Display name of the resource.
+        /// </summary>
         public string DisplayName { get; set; }
 
-        //
-        // Summary:
-        //     Description of the API resource.
+        /// <summary>
+        /// Description of the resource.
+        /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// List of accociated user claims that should be included when this resource is requested.
+        /// </summary>
+        public ICollection<UserClaim> UserClaims { get; set; } = new HashSet<UserClaim>();
 
         //
         // Summary:
@@ -40,13 +43,21 @@ namespace lvl.Oidc.AuthorizationServer.Models
 
         //
         // Summary:
-        //     List of accociated user claims that should be included in the access token.
-        public ICollection<UserClaim> UserClaims { get; set; }
-
-        //
-        // Summary:
         //     An API must have at least one scope. Each scope can have different settings.
         public ICollection<ScopeEntity> Scopes { get; set; }
+
+        public ApiResourceEntity() { }
+
+        public ApiResourceEntity(string name, string displayName)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            DisplayName = displayName ?? throw new ArgumentNullException(nameof(displayName));
+
+            Scopes = new[]
+            {
+                new ScopeEntity{ Name = Name, DisplayName = DisplayName }
+            };
+        }
 
         public ApiResource ToIdentityServer()
         {

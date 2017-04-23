@@ -48,6 +48,9 @@
     <Reference Include="Microsoft.AspNetCore.Authentication.JwtBearer, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Authentication.JwtBearer.1.1.1\lib\net451\Microsoft.AspNetCore.Authentication.JwtBearer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cors, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cors.1.1.1\lib\net451\Microsoft.AspNetCore.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.1.1.1\lib\net451\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
     </Reference>

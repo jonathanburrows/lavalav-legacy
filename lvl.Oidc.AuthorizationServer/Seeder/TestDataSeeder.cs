@@ -56,7 +56,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
         {
             var apiResources = new[]
             {
-                new ApiResourceEntity { Name = "resource-server", Description = "Resource Server" }
+                new ApiResourceEntity("test-resource-server", "Test Resource Server")
             };
 
             var existingResources = await ApiResourceRepository.GetAsync();
@@ -77,7 +77,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     ClientId = "test-implicit-client",
                     ClientName = "Test implicit client",
                     ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
-                    AllowedGrantTypes = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }),
+                    AllowedGrantTypes = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }).ToList(),
 
                     RequireConsent = true,
                     AllowAccessTokensViaBrowser = true,
@@ -102,7 +102,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     ClientName = "Test Resource Owner Client",
                     ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
                     ClientUri = "http://localhost:4200",
-                    AllowedGrantTypes = new []{ GrantType.ResourceOwnerPassword, GrantType.AuthorizationCode } .Select(gt => new GrantTypeEntity { Name = gt }),
+                    AllowedGrantTypes = new []{ GrantType.ResourceOwnerPassword, GrantType.AuthorizationCode } .Select(gt => new GrantTypeEntity { Name = gt }).ToList(),
 
                     RequireConsent = true,
                     AllowAccessTokensViaBrowser = true,

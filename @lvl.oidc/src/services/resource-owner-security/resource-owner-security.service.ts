@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { StorageService } from '@lvl/core';
-import { OidcConfiguration } from '../oidc-configuration';
+import { OidcOptions } from '../oidc-options';
 import { Credentials, SecurityService } from '../security';
 import { BearerToken, TokenService } from '../token';
 import { TokenRequestOptions } from './token-request-options';
@@ -50,11 +50,11 @@ export class ResourceOwnerSecurityService extends SecurityService {
     }
 
     private requestToken(tokenOptions: TokenRequestOptions): Observable<BearerToken> {
-        tokenOptions.client_id = this.oidcConfiguration.clientId;
-        tokenOptions.client_secret = this.oidcConfiguration.clientSecret;
-        tokenOptions.scope = ['openid', 'profile', 'offline_access'].join(' ');
+        tokenOptions.client_id = this.oidcOptions.clientId;
+        tokenOptions.client_secret = this.oidcOptions.clientSecret;
+        tokenOptions.scope = this.oidcOptions.scopes.join(' ');
 
-        const url = `${this.oidcConfiguration.authorizationServerUrl}/connect/token`;
+        const url = `${this.oidcOptions.authorizationServerUrl}/connect/token`;
         const headers = new Headers({ 'content-type': 'application/x-www-form-urlencoded' });
         const urlEncodedBody = this.urlEncodeBody(tokenOptions)
 

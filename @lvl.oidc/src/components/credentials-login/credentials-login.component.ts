@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
+import { ApiService } from '@lvl/core';
 import { Credentials, SecurityService } from '../../services';
 
 @Component({
@@ -17,7 +18,7 @@ export class CredentialsLoginComponent implements OnInit {
     public passwordValidationMessage: string;
     public passwordControl: FormControl;
 
-    constructor(private securityService: SecurityService) {
+    constructor(private securityService: SecurityService, private apiService: ApiService) {
         this.model = { username: null, password: null };
     }
 
@@ -29,4 +30,13 @@ export class CredentialsLoginComponent implements OnInit {
     public login() {
         this.securityService.login(this.model);
     }
+
+    public request() {
+        debugger;
+        this.apiService.get(Kitten).subscribe(x => {
+            debugger;
+        });
+    }
 }
+
+class Kitten { }

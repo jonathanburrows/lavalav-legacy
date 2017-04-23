@@ -6,10 +6,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 
-import { CoreModule } from '@lvl/core';
+import { CoreModule, HeadersService } from '@lvl/core';
 
 import { OidcRouterModule } from './oidc.router.module';
-
 
 import {
     AppComponent,
@@ -20,9 +19,10 @@ import {
 } from './components';
 
 import {
+    BearerHeadersService,
     ExternalProviderService,
     ImplicitSecurityService,
-    OidcConfiguration,
+    OidcOptions,
     ResourceOwnerSecurityService,
     SecurityService,
     TokenService
@@ -54,33 +54,31 @@ import {
     ],
     providers: [
         ExternalProviderService,
+        { provide: HeadersService, useClass: BearerHeadersService },
         TokenService
     ],
     bootstrap: [AppComponent]
 })
 export class OidcModule {
     static useImplicitFlow(/*options: (configuration: OidcConfiguration) => void*/): ModuleWithProviders {
-        const oidcConfiguration = new OidcConfiguration();
+        const oidcOptions = new OidcOptions();
         //options(oidcConfiguration);
 
         return {
             ngModule: OidcModule,
             providers: [
                 { provide: SecurityService, useClass: ImplicitSecurityService },
-                { provide: OidcConfiguration, useValue: oidcConfiguration }
+                { provide: OidcOptions, useValue: oidcOptions }
             ]
         };
     }
 
-    static useResourceOwnerFlow(oidcConfiguration: OidcConfiguration/*options: (configuration: OidcConfiguration) => void*/): ModuleWithProviders {
-        //const oidcConfiguration = new OidcConfiguration();
-        //options(oidcConfiguration);
-
+    static useResourceOwnerFlow(oidcOptions: OidcOptions): ModuleWithProviders {
         return {
             ngModule: OidcModule,
             providers: [
                 { provide: SecurityService, useClass: ResourceOwnerSecurityService },
-                { provide: OidcConfiguration, useValue: oidcConfiguration }
+                { provide: OidcOptions, useValue: oidcOptions }
             ]
         };
     }

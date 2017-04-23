@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 
 import { StorageService } from '@lvl/core';
 
-import { OidcConfiguration } from '../oidc-configuration';
+import { OidcOptions } from '../oidc-options';
 import { ImplicitAuthorizationOptions } from './implicit-authorization-options';
 import { ImplicitLogoffOptions } from './implicit-logoff-options';
 import { SecurityService } from '../security';
@@ -34,11 +34,11 @@ export class ImplicitSecurityService extends SecurityService {
         const state = Date.now() + '' + Math.random();
         this.storageService.setItem(this.stateKey, state);
 
-        const scopes = ['openid', 'token', ...this.oidcConfiguration.scopes].join(' ');
+        const scopes = ['openid', 'token', ...this.oidcOptions.scopes].join(' ');
 
         const options: ImplicitAuthorizationOptions = {
-            client_id: this.oidcConfiguration.clientSecret,
-            redirect_uri: `${this.oidcConfiguration.clientUrl}/account/signin-oidc`,
+            client_id: this.oidcOptions.clientSecret,
+            redirect_uri: `${this.oidcOptions.clientUrl}/account/signin-oidc`,
             response_type: 'id_token token',
             scope: scopes,
             id_token_hint: idTokenHint,
@@ -48,7 +48,7 @@ export class ImplicitSecurityService extends SecurityService {
         };
 
         const queryParameters = this.convertLiteralToQueryParameters(options);
-        return `${this.oidcConfiguration.authorizationServerUrl}/connect/authorize?${queryParameters}`;
+        return `${this.oidcOptions.authorizationServerUrl}/connect/authorize?${queryParameters}`;
     }
 
     public login() {
@@ -80,11 +80,11 @@ export class ImplicitSecurityService extends SecurityService {
     public logout() {
         const options: ImplicitLogoffOptions = {
             id_token_hint: this.tokenService.bearerToken.id_token,
-            post_logout_redirect_uri: this.oidcConfiguration.clientUrl
+            post_logout_redirect_uri: this.oidcOptions.clientUrl
         };
 
         const queryParameters = this.convertLiteralToQueryParameters(options);
-        const url = `${this.oidcConfiguration.authorizationServerUrl}/connect/endsession?${queryParameters}`;
+        const url = `${this.oidcOptions.authorizationServerUrl}/connect/endsession?${queryParameters}`;
 
         this.tokenService.bearerToken = null;
         window.location.href = url;

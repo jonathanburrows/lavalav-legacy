@@ -69,7 +69,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         /// Specifies the allowed grant types (legal combinations of AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials). Defaults to Implicit.
         /// </summary>
-        public IEnumerable<GrantTypeEntity> AllowedGrantTypes { get; set; } = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt });
+        public ICollection<GrantTypeEntity> AllowedGrantTypes { get; set; } = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }).ToList();
 
         /// <summary>
         /// Specifies whether a proof key is required for authorization code based token requests

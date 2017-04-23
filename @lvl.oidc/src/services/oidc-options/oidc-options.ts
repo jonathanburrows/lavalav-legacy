@@ -1,9 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 
 @Injectable()
-export class OidcConfiguration {
+export class OidcOptions {
     public authorizationServerUrl: string;
-    public resourceServerUrl: string;
     public clientUrl: string;
     public clientId: string;
     public clientSecret: string;

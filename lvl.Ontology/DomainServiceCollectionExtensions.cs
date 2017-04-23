@@ -90,16 +90,17 @@ namespace Microsoft.Extensions.DependencyInjection
                 .Where(t => typeof(IEntity).IsAssignableFrom(t))
                 .IgnoreBase<IEntity>();
 
-            foreach (var assembly in assemblies)
-            {
-                assemblyMapping.AddMappingsFromAssembly(assembly);
-                assemblyMapping.Conventions.AddAssembly(assembly);
-                assemblyMapping.UseOverridesFromAssembly(assembly);
-            }
+            //foreach (var assembly in assemblies)
+            //{
+            //    assemblyMapping.AddMappingsFromAssembly(assembly);
+            //    assemblyMapping.Conventions.AddAssembly(assembly);
+            //    assemblyMapping.UseOverridesFromAssembly(assembly);
+            //}
 
             var conventions = assemblyMapping.Conventions;
 
             conventions.Add(DefaultCascade.All());
+            conventions.Add(DefaultLazy.Never());
             conventions.Add(LazyLoad.Never());
             conventions.Add(ForeignKey.EndsWith("Id"));
             conventions.Add<StringLengthConvention>();

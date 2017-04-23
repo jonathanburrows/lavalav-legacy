@@ -42,7 +42,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         // Summary:
         //     Specifies whether this scope is shown in the discovery document. Defaults to
         //     true.
-        public bool ShowInDiscoveryDocument { get; set; }
+        public bool ShowInDiscoveryDocument { get; set; } = true;
 
         //
         // Summary:

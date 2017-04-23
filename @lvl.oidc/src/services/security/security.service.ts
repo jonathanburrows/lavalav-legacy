@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { StorageService } from '@lvl/core';
+import { HeadersService, StorageService } from '@lvl/core';
 
-import { OidcConfiguration } from '../oidc-configuration';
+import { OidcOptions } from '../oidc-options';
 import { Credentials } from './credentials';
 import { BearerToken, TokenService } from '../token';
 
@@ -40,8 +40,9 @@ export abstract class SecurityService {
         protected http: Http,
         protected router: Router,
         protected tokenService: TokenService,
-        protected oidcConfiguration: OidcConfiguration,
-        protected storageService: StorageService
+        protected oidcOptions: OidcOptions,
+        protected storageService: StorageService,
+        protected headersService: HeadersService
     ) {
 
         this.tokenService.tokenHalflife.subscribe(_ => this.refreshToken());
@@ -58,22 +59,9 @@ export abstract class SecurityService {
     public abstract refreshToken(): Observable<BearerToken>;
 
     protected getUserData(): Observable<string[]> {
-        const headers = this.getHeaders();
-        const userInfoUrl = `${this.oidcConfiguration.authorizationServerUrl}/connect/userinfo`;
+        const headers = this.headersService.getHeaders();
+        const userInfoUrl = `${this.oidcOptions.authorizationServerUrl}/connect/userinfo`;
         return this.http.get(userInfoUrl, { headers: headers }).map(result => result.json());
-    }
-
-    public getHeaders() {
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        });
-
-        if (this.tokenService.bearerToken) {
-            headers.append('Authorization', `Bearer ${this.tokenService.bearerToken.access_token}`);
-        }
-
-        return headers;
     }
 
     protected handleError(error: any) {

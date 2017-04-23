@@ -1,6 +1,5 @@
 ﻿using lvl.Ontology;
 using lvl.Repositories.Querying;
-using Newtonsoft.Json;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -47,11 +46,6 @@ namespace lvl.Repositories
                     Count = count,
                     Items = items
                 };
-
-                // Force the collection to load, due to a limitation in asp.core serialization.
-                // Please replace with something more elegant.
-                var settings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-                JsonConvert.SerializeObject(items, settings);
 
                 return await Task.FromResult(queryResult);
             }

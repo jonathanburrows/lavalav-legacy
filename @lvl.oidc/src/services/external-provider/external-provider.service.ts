@@ -5,14 +5,14 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { ExternalProvider } from './external-provider';
-import { OidcConfiguration } from '../oidc-configuration';
+import { OidcOptions } from '../oidc-options';
 import { SecurityService } from '../security';
 
 @Injectable()
 export class ExternalProviderService {
     constructor(
         private http: Http,
-        private oidcConfiguration: OidcConfiguration,
+        private oidcConfiguration: OidcOptions,
         private router: Router,
         private securityService: SecurityService
     ) { }

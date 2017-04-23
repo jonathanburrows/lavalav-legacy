@@ -4,7 +4,10 @@ using lvl.Web.Cors;
 using lvl.Web.Logging;
 using lvl.Web.OData;
 using lvl.Web.Serialization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -68,6 +71,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddCors()
                 .Configure(configureJson)
                 .AddMvcCore()
+                .AddAuthorization()
                 .AddViewLocalization()
                 .AddJsonFormatters(configureJson)
                 .AddApplicationPart(typeof(WebServiceCollectionExtensions).Assembly)
