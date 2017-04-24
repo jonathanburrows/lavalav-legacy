@@ -1,9 +1,10 @@
 ﻿using lvl.Oidc.AccessTokens.ResourceServer;
+using lvl.Oidc.AuthorizationServer;
+using lvl.Ontology;
 using lvl.Web;
-using lvl.Web.Cors;
-using lvl.Web.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
@@ -12,51 +13,51 @@ namespace lvl.TestResourceServer
 {
     public class Startup
     {
-        //const string url = "http://localhost:5001";
+        private IConfiguration Configuration { get; }
+
+        public Startup(IHostingEnvironment env)
+        {
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                .AddUserSecrets("2b0f19c1-3546-4658-9715-f6353a59dff8")
+                .Build();
+
+        }
+        const string url = "http://localhost:56182";
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var webOptions = new WebOptions
-            {
-                Cors = new CorsOptions
-                {
-                    AllowOrigins = new[] { "http://localhost:4200" }
-                },
-                Logging = new LoggingOptions
-                {
-                    LogLevel = LogLevel.Error
-                }
-            };
+            var oidcAuthorizationServerOptions = new OidcAuthorizationServerOptions(Configuration);
+            var webOptions = new WebOptions(Configuration);
+            var domainOptions = new DomainOptions(Configuration);
+            var resourceServerOptions = new ResourceServerOptions(Configuration);
+
             services
-                .AddDomains()
+                .AddDomains(domainOptions)
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb(webOptions)
-                .AddResourceServer();
+                .AddOidcAuthorizationServer(oidcAuthorizationServerOptions)
+                .AddResourceServer(resourceServerOptions);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            var options = new ResourceServerOptions
-            {
-                ApiName = "test-resource-server",
-                Authority = "http://localhost:65170",
-                // Authority = url,
-                ApiSecret = "secret",
-                RequireHttpsMetadata = false
-            };
-
-            app.UseResourceServer(options)
+            app.UseOidcAuthorizationServer()
+                .UseResourceServer()
                 .UseWeb();
 
             var databaseGenerator = app.ApplicationServices.GetRequiredService<DatabaseGenerator.DatabaseMigrator>();
             databaseGenerator.Migrate();
         }
+
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-                //.UseUrls(url)
+                .UseUrls(url)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

@@ -7,6 +7,10 @@
     <AssemblyName>@lvl.oidc-seeder</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\lvl.Oidc.AuthorizationServer\lvl.Oidc.AuthorizationServer.csproj" />
   </ItemGroup>

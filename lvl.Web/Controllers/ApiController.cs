@@ -13,7 +13,6 @@ namespace lvl.Web.Controllers
     /// Provides restful endpoints for all entities.
     /// </summary>
     [Route("[controller]")]
-    [Authorize]
     public class ApiController : Controller
     {
         private TypeResolver TypeResolver { get; }

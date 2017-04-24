@@ -12,6 +12,7 @@ namespace lvl.Web
     {
         public LoggingOptions Logging { get; set; }
         public CorsOptions Cors { get; set; }
+        public string Url { get; set; }
 
         public WebOptions() { }
 
@@ -21,6 +22,8 @@ namespace lvl.Web
             {
                 throw new ArgumentNullException(nameof(configuration));
             }
+
+            configuration.Bind(this);
 
             Logging = new LoggingOptions();
             configuration.GetSection("logging").Bind(Logging);

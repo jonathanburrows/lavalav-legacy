@@ -14,7 +14,7 @@ namespace lvl.Oidc.AccessTokens.ResourceServer
 
         public ResourceServerOptions(IConfiguration configuration)
         {
-            configuration.GetSection("resource-server").Bind(this);
+            configuration.GetSection("oidc:resource-server").Bind(this);
         }
 
         public IdentityServerAuthenticationOptions ToIdentityServer()

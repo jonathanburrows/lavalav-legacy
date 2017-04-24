@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\lvl.Oidc.AccessTokens\lvl.Oidc.AccessTokens.csproj" />
+    <ProjectReference Include="..\lvl.Oidc.AuthorizationServer\lvl.Oidc.AuthorizationServer.csproj" />
     <ProjectReference Include="..\lvl.Web\lvl.Web.csproj" />
   </ItemGroup>
 

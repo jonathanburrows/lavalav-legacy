@@ -1,4 +1,5 @@
-﻿using lvl.Oidc.AccessTokens.ResourceServer;
+﻿using IdentityModel.Client;
+using lvl.Oidc.AccessTokens.ResourceServer;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -6,29 +7,15 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class ResourceServerApplicationBuilderExtensions
     {
-        public static IApplicationBuilder UseResourceServer(this IApplicationBuilder applicationBuilder, ResourceServerOptions options)
+        public static IApplicationBuilder UseResourceServer(this IApplicationBuilder applicationBuilder)
         {
             if (applicationBuilder == null)
             {
                 throw new ArgumentNullException();
             }
 
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-            if (options.Authority == null)
-            {
-                throw new InvalidOperationException($"{nameof(options)}.{nameof(options.Authority)} is null.");
-            }
-            if (options.ApiName == null)
-            {
-                throw new InvalidOperationException($"{nameof(options)}.{nameof(options.ApiName)} is null.");
-            }
-            if (options.ApiSecret == null)
-            {
-                throw new InvalidOperationException($"{nameof(options)}.{nameof(options.ApiSecret)} is null.");
-            }
+            var resourceServerOptions = applicationBuilder.ApplicationServices.GetRequiredService<ResourceServerOptions>();
+            var identityServerOptions = resourceServerOptions.ToIdentityServer();
 
             return applicationBuilder
                 .UseCors(o =>
@@ -38,7 +25,7 @@ namespace Microsoft.AspNetCore.Builder
                     o.AllowAnyHeader();
                     o.AllowCredentials();
                 })
-                .UseIdentityServerAuthentication(options.ToIdentityServer());
+                .UseIdentityServerAuthentication(identityServerOptions);
         }
     }
 }
