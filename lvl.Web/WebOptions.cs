@@ -25,11 +25,8 @@ namespace lvl.Web
 
             configuration.Bind(this);
 
-            Logging = new LoggingOptions();
-            configuration.GetSection("logging").Bind(Logging);
-
-            Cors = new CorsOptions();
-            configuration.GetSection("cors").Bind(Cors);
+            Logging = new LoggingOptions(configuration);
+            Cors = new CorsOptions(configuration);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using IdentityModel.Client;
-using lvl.Oidc.AccessTokens.ResourceServer;
+﻿using lvl.Oidc.AccessTokens.ResourceServer;
+using lvl.Web.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -16,13 +17,15 @@ namespace Microsoft.AspNetCore.Builder
 
             var resourceServerOptions = applicationBuilder.ApplicationServices.GetRequiredService<ResourceServerOptions>();
             var identityServerOptions = resourceServerOptions.ToIdentityServer();
+            var corsOptions = applicationBuilder.ApplicationServices.GetRequiredService<CorsOptions>();
 
             return applicationBuilder
                 .UseCors(o =>
                 {
-                    o.AllowAnyOrigin();
-                    o.AllowAnyMethod();
-                    o.AllowAnyHeader();
+                    o.WithMethods(corsOptions.AllowMethods.ToArray());
+                    o.WithHeaders(corsOptions.AllowHeaders.ToArray());
+                    o.WithOrigins(corsOptions.AllowOrigins.ToArray());
+                    o.WithExposedHeaders(corsOptions.ExposedHeaders.ToArray());
                     o.AllowCredentials();
                 })
                 .UseIdentityServerAuthentication(identityServerOptions);

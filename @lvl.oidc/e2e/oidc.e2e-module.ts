@@ -15,7 +15,7 @@ import { AppComponent, OidcModule } from '../src';
             resourceServerUrl: 'http://localhost:56182'
         }),
         OidcModule.useResourceOwnerFlow({
-            authorizationServerUrl: 'http://localhost:65170',
+            authorizationServerUrl: 'http://localhost:56182',
             clientUrl: 'http://localhost:4200',
             clientId: 'test-resource-owner-client',
             clientSecret: 'secret',

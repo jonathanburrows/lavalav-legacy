@@ -5,8 +5,9 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
 
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-    <PreBuildEvent Condition="'$(Configuration)' == 'Debug' And '$(OnOutputUpdated)' == ''">npm run build.dev.login</PreBuildEvent>
-    <PreBuildEvent Condition="'$(Configuration)' != 'Debug' And '$(OnOutputUpdated)' == ''">npm run build.prod.login</PreBuildEvent>
+
+    <PreBuildEvent Condition="'$(Configuration)' == 'Debug' And '$(OnOutputUpdated)' == '' And '$(BuildAngularComponents)' != 'false'">npm run build.dev.login</PreBuildEvent>
+    <PreBuildEvent Condition="'$(Configuration)' != 'Debug' And '$(OnOutputUpdated)' == '' And '$(BuildAngularComponents)' != 'false'">npm run build.prod.login</PreBuildEvent>
     <UserSecretsId>67f4aec3-f4b8-48c9-a29a-6809a2b83945</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
@@ -66,9 +67,16 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,13 +1,12 @@
 ﻿using lvl.Repositories;
+using lvl.Repositories.Authorization;
 using lvl.Web;
+using lvl.Web.Authorization;
 using lvl.Web.Cors;
 using lvl.Web.Logging;
 using lvl.Web.OData;
 using lvl.Web.Serialization;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -67,6 +66,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<ODataConventionParser>()
                 .AddScoped<ODataQueryParser>()
                 .AddScoped<IHttpContextAccessor, HttpContextAccessor>()
+                .AddScoped<AggregateRootFilter, AuthorizationFilter>()
+                .AddScoped<NHibernate.IInterceptor, AuthorizationInterceptor>()
                 .AddOptions()
                 .AddCors()
                 .Configure(configureJson)

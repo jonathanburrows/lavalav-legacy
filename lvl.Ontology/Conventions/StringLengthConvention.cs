@@ -22,7 +22,7 @@ namespace lvl.Ontology.Conventions
             var property = instance.EntityType.GetProperty(instance.Name);
             var stringLengthAttribute = property.GetCustomAttribute<StringLengthAttribute>();
             var length = stringLengthAttribute?.MaximumLength ?? defaultLength;
-
+            
             instance.Length(length);
         }
     }

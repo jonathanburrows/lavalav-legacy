@@ -2,8 +2,10 @@
 using lvl.Oidc.AuthorizationServer;
 using lvl.Oidc.AuthorizationServer.Middleware;
 using lvl.Oidc.AuthorizationServer.ViewModels;
+using lvl.Web.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -17,9 +19,17 @@ namespace Microsoft.AspNetCore.Builder
             }
 
             var options = applicationBuilder.ApplicationServices.GetRequiredService<OidcAuthorizationServerOptions>();
+            var corsSettings = applicationBuilder.ApplicationServices.GetRequiredService<CorsOptions>();
 
             return applicationBuilder
-                .UseCors(o => o.AllowAnyOrigin())
+                .UseCors(o =>
+                {
+                    o.AllowAnyHeader();
+                    o.AllowAnyMethod();
+                    o.AllowCredentials();
+                    o.WithOrigins(corsSettings.AllowOrigins.ToArray());
+                    o.WithExposedHeaders(corsSettings.ExposedHeaders.ToArray());
+                })
                 .UseCookieAuthentication()
                 .UseIdentityServer()
                 .UseFacebook(options.Facebook)

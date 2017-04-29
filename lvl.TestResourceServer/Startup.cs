@@ -1,5 +1,7 @@
-﻿using lvl.Oidc.AccessTokens.ResourceServer;
+﻿using lvl.DatabaseGenerator;
+using lvl.Oidc.AccessTokens.ResourceServer;
 using lvl.Oidc.AuthorizationServer;
+using lvl.Oidc.AuthorizationServer.Seeder;
 using lvl.Ontology;
 using lvl.Web;
 using Microsoft.AspNetCore.Builder;
@@ -63,6 +65,23 @@ namespace lvl.TestResourceServer
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
+
+            var databaseGenerator = host.Services.GetRequiredService<DatabaseMigrator>();
+            databaseGenerator.Migrate();
+
+            var options = host.Services.GetRequiredService<OidcAuthorizationServerOptions>();
+
+            if (options.SeedManditoryData)
+            {
+                var manditoryDataSeeder = host.Services.GetRequiredService<ManditoryDataSeeder>();
+                manditoryDataSeeder.SeedAsync().Wait();
+            }
+
+            if (options.SeedTestData)
+            {
+                var testDataSeeder = host.Services.GetRequiredService<TestDataSeeder>();
+                testDataSeeder.SeedAsync().Wait();
+            }
 
             host.Run();
         }

@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Repositories.Authorization;
 using lvl.Repositories.Querying;
 using NHibernate.Linq;
 using System;
@@ -12,10 +13,12 @@ namespace lvl.Repositories
     public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : class, IEntity
     {
         private SessionProvider SessionProvider { get; }
+        private AggregateRootFilter AggregateRootFilter { get; }
 
-        public Repository(SessionProvider sessionProvider)
+        public Repository(SessionProvider sessionProvider, AggregateRootFilter aggregateRootFilter)
         {
             SessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));
+            AggregateRootFilter = aggregateRootFilter ?? throw new ArgumentNullException(nameof(aggregateRootFilter));
         }
 
         /// <inheritdoc />
@@ -23,8 +26,9 @@ namespace lvl.Repositories
         {
             using (var session = SessionProvider.GetSession())
             {
-                var entities = session.Query<TEntity>().ToList();
-                return Task.FromResult(entities.AsEnumerable());
+                var entities = session.Query<TEntity>();
+                var authorized = AggregateRootFilter.Filter(entities).ToList();
+                return Task.FromResult(authorized.AsEnumerable());
             }
         }
 
@@ -39,8 +43,9 @@ namespace lvl.Repositories
             using (var session = SessionProvider.GetSession())
             {
                 var unfiltered = session.Query<TEntity>();
-                var items = query.Apply(unfiltered).ToList();
-                var count = query.Count(unfiltered);
+                var authorized = AggregateRootFilter.Filter(unfiltered);
+                var items = query.Apply(authorized).ToList();
+                var count = query.Count(authorized);
                 var queryResult = new QueryResult<TResult>
                 {
                     Count = count,
@@ -53,11 +58,6 @@ namespace lvl.Repositories
 
         async Task<IQueryResult> IRepository.GetAsync(IQuery query)
         {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
             dynamic boxedQuery = query;
             return await GetAsync(boxedQuery);
         }
@@ -135,7 +135,7 @@ namespace lvl.Repositories
                 {
                     throw new InvalidOperationException($"There exists no {typeof(TEntity).FullName} with the id of {updating.Id} to update");
                 }
-                session.Update(updating);
+                session.Merge(updating);
                 transaction.Commit();
             }
 

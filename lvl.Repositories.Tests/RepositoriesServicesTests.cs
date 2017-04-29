@@ -108,7 +108,7 @@ namespace lvl.Repositories.Tests
         // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
         private class MockRepository<TEntity> : Repository<TEntity> where TEntity : class, IEntity
         {
-            public MockRepository(SessionProvider sessionManager) : base(sessionManager) { }
+            public MockRepository(SessionProvider sessionManager) : base(sessionManager, null) { }
         }
     }
 

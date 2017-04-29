@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using lvl.Repositories.Authorization;
+using NHibernate;
 using System;
 
 namespace lvl.Repositories
@@ -10,16 +11,18 @@ namespace lvl.Repositories
     public class SessionProvider
     {
         protected ISessionFactory SessionFactory { get; }
+        protected IInterceptor Interceptor { get; }
 
-        public SessionProvider(ISessionFactory sessionFactory)
+        public SessionProvider(ISessionFactory sessionFactory, IInterceptor interceptor)
         {
             SessionFactory = sessionFactory ?? throw new ArgumentNullException(nameof(sessionFactory));
+            Interceptor = interceptor ?? throw new ArgumentNullException(nameof(interceptor));
         }
 
         /// <summary>
         /// Constructs and returns a session.
         /// </summary>
         /// <returns>The constructed session</returns>
-        public virtual ISession GetSession() => SessionFactory.OpenSession();
+        public virtual ISession GetSession() => SessionFactory.OpenSession(Interceptor);
     }
 }

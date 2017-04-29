@@ -28,4 +28,8 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\lvl.Web\lvl.Web.csproj" />
+  </ItemGroup>
 </Project>

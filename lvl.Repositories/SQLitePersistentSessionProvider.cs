@@ -15,7 +15,8 @@ namespace lvl.Repositories
         private static object ConnectionLock { get; } = new object();
         private static IDbConnection Connection { get; set; }
 
-        public SQLitePersistentSessionProvider(ISessionFactory sessionFactory, DatabaseCreator databaseCreator, Configuration configuration) : base(sessionFactory)
+        public SQLitePersistentSessionProvider(ISessionFactory sessionFactory, IInterceptor interceptor, DatabaseCreator databaseCreator, Configuration configuration)
+            : base(sessionFactory, interceptor)
         {
             if (sessionFactory == null)
             {
@@ -40,6 +41,6 @@ namespace lvl.Repositories
         }
 
         /// <inheritdoc />
-        public override ISession GetSession() => SessionFactory.OpenSession(Connection);
+        public override ISession GetSession() => SessionFactory.OpenSession(Connection, Interceptor);
     }
 }

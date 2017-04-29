@@ -46,6 +46,7 @@ namespace Microsoft.AspNetCore.Builder
                 corsBuilder.WithHeaders(corsSettings.AllowHeaders.ToArray());
                 corsBuilder.WithOrigins(corsSettings.AllowOrigins.ToArray());
                 corsBuilder.WithExposedHeaders(corsSettings.ExposedHeaders.ToArray());
+                corsBuilder.AllowCredentials();
             };
 
             // sets up the default routs before calling the given configuration method.

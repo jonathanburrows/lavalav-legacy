@@ -1,5 +1,7 @@
 ﻿using lvl.Ontology.Database;
 using lvl.Repositories;
+using lvl.Repositories.Authorization;
+using NHibernate;
 using System;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's extension convention.
@@ -34,10 +36,12 @@ namespace Microsoft.Extensions.DependencyInjection
             var databaseDetector = new DatabaseDetector();
             var databaseVendor = databaseDetector.GetConfigurationsVendor(configuration);
             var sessionManager = databaseVendor == DatabaseVendor.SQLite ? typeof(SQLitePersistentSessionProvider) : typeof(SessionProvider);
-            
+
             serviceCollection
                 .AddScoped<TypeResolver>()
                 .AddScoped<RepositoryFactory>()
+                .AddScoped<IInterceptor, EmptyInterceptor>()
+                .AddScoped<AggregateRootFilter>()
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped(typeof(SessionProvider), sessionManager)
                 .AddScoped(_ => configuration.BuildSessionFactory());

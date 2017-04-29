@@ -3,6 +3,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using lvl.Ontology.Conventions;
 using lvl.Ontology.Database;
 using lvl.Ontology.Naming;
@@ -42,6 +43,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 .Database(ConstructDatabaseConnection(domainOptions?.ConnectionString))
                 .AddReferencedEntities(callingAssembly)
                 .BuildConfiguration();
+
+            foreach(var classMapping in configuration.ClassMappings)
+            {
+                classMapping.SelectBeforeUpdate = true;
+            }
 
             var namingApplier = new NamingApplier();
             configuration.ClassMappings.ToList().ForEach(namingApplier.Apply);
@@ -88,7 +94,8 @@ namespace Microsoft.Extensions.DependencyInjection
             var assemblyMapping = AutoMap
                 .Assemblies(assemblies)
                 .Where(t => typeof(IEntity).IsAssignableFrom(t))
-                .IgnoreBase<IEntity>();
+                .IgnoreBase<IEntity>()
+                .AddFilter<OwnedByUserFilter>();
 
             //foreach (var assembly in assemblies)
             //{
