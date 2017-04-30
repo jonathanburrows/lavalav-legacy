@@ -11,6 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "connect/authorize?client_id=test-implicit-client&redirect_uri=http%3A%2F%2Flocalhost%3A0000&response_type=id_token%20token&scope=test-resource-server%20openid%20profile&nonce=123&state=123",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

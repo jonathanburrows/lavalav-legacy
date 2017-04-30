@@ -6,8 +6,9 @@
 
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
 
-    <PreBuildEvent Condition="'$(Configuration)' == 'Debug' And '$(OnOutputUpdated)' == '' And '$(BuildAngularComponents)' != 'false'">npm run build.dev.login</PreBuildEvent>
-    <PreBuildEvent Condition="'$(Configuration)' != 'Debug' And '$(OnOutputUpdated)' == '' And '$(BuildAngularComponents)' != 'false'">npm run build.prod.login</PreBuildEvent>
+    <PreBuildEvent Condition="'$(Configuration)' == 'Debug' And '$(OnOutputUpdated)' == '' And '$(BuildAngularComponents)' != 'false'">npm run build.dev</PreBuildEvent>
+    <PreBuildEvent Condition="'$(Configuration)' != 'Debug' And '$(OnOutputUpdated)' == '' And '$(BuildAngularComponents)' != 'false'">npm run build.prod</PreBuildEvent>
+
     <UserSecretsId>67f4aec3-f4b8-48c9-a29a-6809a2b83945</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>

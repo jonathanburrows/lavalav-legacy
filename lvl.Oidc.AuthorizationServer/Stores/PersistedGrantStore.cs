@@ -39,7 +39,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
             var query = new Query<PersistedGrantEntity>().Where(pg => pg.Key == key);
             var grants = await PersistedGrantRepository.GetAsync(query);
-            return grants.Items.Single().ToIdentityPersistedGrant();
+            return grants.Items.SingleOrDefault()?.ToIdentityPersistedGrant();
         }
 
         public async Task RemoveAllAsync(string subjectId, string clientId)

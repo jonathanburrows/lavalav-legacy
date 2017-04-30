@@ -10,6 +10,7 @@ using System;
 using System.Reflection;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using IdentityServer4.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -22,8 +23,14 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(serviceCollection));
             }
 
+            Action<IdentityServerOptions> identityServerOptions = o =>
+            {
+                o.UserInteraction.LoginUrl = "/oidc/login";
+                o.UserInteraction.LogoutUrl = "/oidc/logout";
+            };
+
             serviceCollection
-                .AddIdentityServer()
+                .AddIdentityServer(identityServerOptions)
                 .AddClientStore<ClientStore>()
                 .AddClientStoreCache<ClientStore>()
                 .AddResourceStore<ResourceStore>()
