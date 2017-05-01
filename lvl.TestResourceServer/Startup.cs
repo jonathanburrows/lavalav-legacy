@@ -47,12 +47,12 @@ namespace lvl.TestResourceServer
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var databaseGenerator = app.ApplicationServices.GetRequiredService<DatabaseGenerator.DatabaseMigrator>();
+            databaseGenerator.Migrate();
+
             app.UseOidcAuthorizationServer()
                 .UseResourceServer()
                 .UseWeb();
-
-            var databaseGenerator = app.ApplicationServices.GetRequiredService<DatabaseGenerator.DatabaseMigrator>();
-            databaseGenerator.Migrate();
         }
 
         public static void Main(string[] args)

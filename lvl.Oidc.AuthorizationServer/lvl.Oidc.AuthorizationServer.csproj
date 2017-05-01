@@ -14,7 +14,6 @@
   <ItemGroup>
     <Content Include="wwwroot\src\consent\consent.component.html" />
     <Content Include="wwwroot\src\consent\consent.component.ts" />
-    <Content Include="wwwroot\src\consent\login.component.html" />
     <Content Include="wwwroot\src\consent\consent.html">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -69,6 +68,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>

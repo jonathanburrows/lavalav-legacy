@@ -1,0 +1,73 @@
+﻿:host {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.consent {
+    max-width: 240px;
+    padding-bottom: 8px;
+}
+
+.consent__content {
+    padding-bottom: 0;
+}
+
+.consent__header {
+    margin-bottom: 0;
+}
+
+.consent__header-title {
+    margin-left: -8px;
+}
+
+.mat-card-header-text {
+    margin: 0;
+}
+
+.consent__external-providers--or-title {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.38);
+    font-style: italic;
+    left: calc(50% - 4px);
+    padding: 8px;
+    position: relative;
+    z-index: 3;
+}
+
+.consent__content--message {
+    margin-bottom: 16px;
+}
+
+.consent__content--app-name {
+    font-style: italic;
+}
+
+.consent__input {
+    background-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.mat-input-error {
+    float: right;
+}
+
+.consent__button-panel {
+    padding-top: 16px;
+}
+
+@media only screen and (max-width: 480px) {
+    .consent__input-container {
+        width: 100%;
+    }
+
+    .consent__actions--external-provider {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 481px) {
+    .consent__input-container {
+        width: 240px;
+    }
+}

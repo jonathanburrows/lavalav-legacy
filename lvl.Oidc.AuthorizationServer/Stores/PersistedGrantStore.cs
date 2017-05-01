@@ -100,9 +100,12 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
             var query = new Query<PersistedGrantEntity>().Where(pg => pg.Key == key);
             var grantsToRemove = await PersistedGrantRepository.GetAsync(query);
-            var grantToRemove = grantsToRemove.Items.Single();
 
-            await PersistedGrantRepository.DeleteAsync(grantToRemove);
+            if (grantsToRemove.Items.Any())
+            {
+                var grantToRemove = grantsToRemove.Items.Single();
+                await PersistedGrantRepository.DeleteAsync(grantToRemove);
+            }
         }
 
         public async Task StoreAsync(PersistedGrant grant)

@@ -27,6 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 o.UserInteraction.LoginUrl = "/oidc/login";
                 o.UserInteraction.LogoutUrl = "/oidc/logout";
+                o.UserInteraction.ConsentUrl = "/oidc/consent";
             };
 
             serviceCollection

@@ -1,1 +1,60 @@
-﻿I am a consent form.
+﻿<md-card class="consent">
+    <form ngNoForm
+          name="consent__form"
+          action="/oidc/Consent"
+          method="post">
+
+        <md-card-header class="consent__header">
+            <md-card-title class="consent__header-title">Permissions</md-card-title>
+        </md-card-header>
+
+        <md-card-content class="consent__content">
+            <div class="consent__content--message">
+                <span class="consent__content--app-name">{{model.clientName}}</span> wants to access some things. Are you ok with:
+            </div>
+
+            <md-checkbox [(ngModel)]="item.checked"
+                         name="scopesConsented"
+                         class="consented__input-container"
+                         [value]="item.name"
+                         [disabled]="item.required"
+                         *ngFor="let item of model.identityScopes">
+
+                {{item.displayName}}
+
+                <input *ngIf="item.required" type="hidden" name="scopesConsented" [value]="item.name" />
+            </md-checkbox>
+
+            <md-checkbox [(ngModel)]="item.checked"
+                         name="scopesConsented"
+                         class="consented__input-container"
+                         [value]="item.name"
+                         [disabled]="item.required"
+                         *ngFor="let item of model.resourceScopes">                
+                
+                {{item.displayName}}
+
+                <input *ngIf="item.required" type="hidden" name="scopesConsented" [value]="item.name" />
+            </md-checkbox>
+
+            <input type="hidden" name="returnUrl" [(ngModel)]="model.returnUrl" />
+
+            <div class="consent__button-panel">
+                <button md-raised-button
+                        color="accent"
+                        type="submit"
+                        name="confirmed"
+                        value="true">
+                    Grant
+                </button>
+                <button md-button
+                        color="accent"
+                        type="submit"
+                        name="confirmed"
+                        value="false">
+                    Cancel
+                </button>
+            </div>
+        </md-card-content>
+    </form>
+</md-card>

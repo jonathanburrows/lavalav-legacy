@@ -12,7 +12,7 @@
     "build.prod.consent": "ng build --prod --aot --progress=false --output-path=./wwwroot/dist/consent --app=consent",
 
     "build.dev": "npm run build.dev.login && npm run build.dev.consent",
-    "build.prod": "npm run build.prod.login && npm run build.prod.login",
+    "build.prod": "npm run build.prod.login && npm run build.prod.consent",
 
     "test": "ng test",
     "lint": "ng lint",
