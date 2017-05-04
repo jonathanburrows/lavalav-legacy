@@ -94,7 +94,7 @@ namespace lvl.Web.Tests
         {
             var webSettings = new WebSettings
             {
-                Logging = new LoggingSettings
+                Logging = new LoggingOptions
                 {
                     LogLevel = logLevel
                 }

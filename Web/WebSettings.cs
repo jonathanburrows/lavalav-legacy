@@ -10,8 +10,8 @@ namespace lvl.Web
     /// </summary>
     public class WebSettings
     {
-        public LoggingSettings Logging { get; set; }
-        public CorsSettings Cors { get; set; }
+        public LoggingOptions Logging { get; set; }
+        public CorsOptions Cors { get; set; }
 
         public WebSettings() { }
 
@@ -22,10 +22,10 @@ namespace lvl.Web
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            Logging = new LoggingSettings();
+            Logging = new LoggingOptions();
             configuration.GetSection("logging").Bind(Logging);
 
-            Cors = new CorsSettings();
+            Cors = new CorsOptions();
             configuration.GetSection("cors").Bind(Cors);
         }
     }

@@ -11,12 +11,12 @@ namespace lvl.Web.Logging
     /// </summary>
     internal class DatabaseLoggerProvider : ILoggerProvider
     {
-        private LoggingSettings Settings { get; }
+        private LoggingOptions Settings { get; }
         private ConcurrentDictionary<string, DatabaseLogger> Loggers { get; }
         private IRepository<LogEntry> LogEntryRepository { get; }
         private IHttpContextAccessor HttpContextAccessor { get; }
 
-        public DatabaseLoggerProvider(LoggingSettings settings, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
+        public DatabaseLoggerProvider(LoggingOptions settings, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
         {
             if (settings == null)
             {

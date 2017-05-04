@@ -7,13 +7,13 @@ namespace lvl.Repositories.Tests.Configuration
     /// </summary>
     internal class ConfigurationReader
     {
-        public static IntegrationSettings IntegrationSettings { get; }
+        public static IntegrationOptions IntegrationSettings { get; }
 
         static ConfigurationReader()
         {
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
-            IntegrationSettings = configuration.Get<IntegrationSettings>();
+            IntegrationSettings = configuration.Get<IntegrationOptions>();
         }
     }
 }

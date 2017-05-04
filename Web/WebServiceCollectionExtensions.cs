@@ -43,10 +43,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException($"{nameof(RepositoryServiceCollectionExtensions.AddRepositories)} has not been called");
             }
 
-            var loggingSettings = webSettings?.Logging ?? new LoggingSettings();
+            var loggingSettings = webSettings?.Logging ?? new LoggingOptions();
             serviceCollection.AddSingleton(loggingSettings);
 
-            var corsSettings = webSettings?.Cors ?? new CorsSettings();
+            var corsSettings = webSettings?.Cors ?? new CorsOptions();
             serviceCollection.AddSingleton(corsSettings);
 
             Action<JsonSerializerSettings> configureJson = options =>

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace lvl.Web.Cors
 {
-    public class CorsSettings
+    public class CorsOptions
     {
         public IEnumerable<string> AllowHeaders { get; set; } = Enumerable.Empty<string>();
         public IEnumerable<string> AllowMethods { get; set; } = Enumerable.Empty<string>();

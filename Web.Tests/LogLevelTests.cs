@@ -33,7 +33,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsDebug_LogEntryIsAdded()
         {
-            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Debug;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
@@ -48,7 +48,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanDebug_LogEntryIsNotAdded()
         {
-            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Information;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
@@ -63,7 +63,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsInformation_LogEntryIsAdded()
         {
-            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Information;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
@@ -78,7 +78,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanInformation_LogEntryIsNotAdded()
         {
-            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Warning;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";
@@ -93,7 +93,7 @@ namespace lvl.Web.Tests
         [Fact]
         public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanTrace_LogEntryIsNotAdded()
         {
-            var loggingSettings = Services.GetRequiredService<LoggingSettings>();
+            var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Debug;
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var url = $"/api/{nameof(Moon)}";

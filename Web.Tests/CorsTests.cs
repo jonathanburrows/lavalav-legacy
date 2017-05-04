@@ -17,7 +17,7 @@ namespace lvl.Web.Tests
     [Collection(WebCollection.Name)]
     public class CorsTests
     {
-        private static CorsSettings Settings { get; } = new CorsSettings
+        private static Cors.CorsOptions Settings { get; } = new Cors.CorsOptions
         {
             AllowMethods = new[] { "GET", "POST", "PUT", "DELETE", "NON-STANDARD" },
             AllowOrigins = new[] { "http://localhost/" },

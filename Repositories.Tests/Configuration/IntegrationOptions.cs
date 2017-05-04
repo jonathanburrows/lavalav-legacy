@@ -3,10 +3,10 @@
     /// <summary>
     /// Information about each database being used in the integration tests.
     /// </summary>
-    public class IntegrationSettings
+    public class IntegrationOptions
     {
-        public DatabaseSettings MsSql { get; set; }
+        public DatabaseOptions MsSql { get; set; }
 
-        public DatabaseSettings Oracle { get; set; }
+        public DatabaseOptions Oracle { get; set; }
     }
 }

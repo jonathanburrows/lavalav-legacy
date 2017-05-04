@@ -34,7 +34,7 @@ namespace Microsoft.AspNetCore.Builder
                 throw new ArgumentNullException(nameof(configureRoutes));
             }
 
-            var corsSettings = applicationBuilder.ApplicationServices.GetService<CorsSettings>();
+            var corsSettings = applicationBuilder.ApplicationServices.GetService<lvl.Web.Cors.CorsOptions>();
             if (corsSettings == null)
             {
                 throw new InvalidOperationException($"{nameof(WebServiceCollectionExtensions.AddWeb)} has not been called.");

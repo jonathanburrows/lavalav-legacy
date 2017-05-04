@@ -3,7 +3,7 @@
     /// <summary>
     /// Information specific to a database.
     /// </summary>
-    public class DatabaseSettings
+    public class DatabaseOptions
     {
         public string ConnectionString { get; set; }
 
