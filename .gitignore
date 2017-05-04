@@ -8,3 +8,4 @@ dist/
 *.xproj.user
 project.lock.json
 ~$*
+packages/
