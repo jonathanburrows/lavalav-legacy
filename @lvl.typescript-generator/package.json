@@ -1,8 +1,0 @@
-{
-  "name": "@lvl/typescript-generator",
-  "version": "1.0.0",
-  "description": "",
-  "bin": "./bin/Debug/net461/win7-x64/@lvl.typescript-generator.exe",
-  "author": "jburrows",
-  "license": "UNLICENSED"
-}

@@ -7,7 +7,7 @@ dotnet-runner &gt;project-path&lt; [args]
 
 
 ## Example
-dotnet-runner ../@lvl.typescript-generator --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators
+dotnet-runner ../TypeScriptGenerator --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators
 
 
 ## Options

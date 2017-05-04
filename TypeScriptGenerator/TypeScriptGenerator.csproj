@@ -3,7 +3,7 @@
   <PropertyGroup>
     <VersionPrefix>0.0.0</VersionPrefix>
     <TargetFramework>net461</TargetFramework>
-    <AssemblyName>@lvl.typescript-generator</AssemblyName>
+    <AssemblyName>lvl.TypeScriptGenerator</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>@lvl.typescript-generator</PackageId>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
@@ -11,9 +11,14 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>lvl.TypeScriptGenerator</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
