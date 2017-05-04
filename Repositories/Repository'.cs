@@ -28,7 +28,7 @@ namespace lvl.Repositories
                 return Task.FromResult(entities.AsEnumerable());
             }
         }
-        
+
         async Task<IEnumerable<IEntity>> IRepository.GetAsync()
         {
             return await GetAsync();
@@ -39,7 +39,7 @@ namespace lvl.Repositories
         {
             using (var session = SessionProvider.GetSession())
             {
-                var unfiltered = session.Query<TEntity>(); 
+                var unfiltered = session.Query<TEntity>();
                 var items = query.Apply(unfiltered).ToList();
                 var count = query.Count(unfiltered);
                 var queryResult = new QueryResult<TResult>
@@ -56,7 +56,7 @@ namespace lvl.Repositories
                 return await Task.FromResult(queryResult);
             }
         }
-        
+
         async Task<IQueryResult> IRepository.GetAsync(IQuery query)
         {
             if (query == null)
@@ -77,7 +77,7 @@ namespace lvl.Repositories
                 return Task.FromResult(entity);
             }
         }
-        
+
         async Task<IEntity> IRepository.GetAsync(int id)
         {
             return await GetAsync(id);
@@ -96,15 +96,20 @@ namespace lvl.Repositories
             }
 
             using (var session = SessionProvider.GetSession())
-            using (var transaction = session.BeginTransaction())
             {
-                session.Save(creating);
-                transaction.Commit();
+                lock (session.Connection)
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.Save(creating);
+                        transaction.Commit();
+                    }
+                }
             }
 
             return Task.FromResult(creating);
         }
-        
+
         async Task<IEntity> IRepository.CreateAsync(IEntity creating)
         {
             var boxed = creating as TEntity;
@@ -129,19 +134,24 @@ namespace lvl.Repositories
             }
 
             using (var session = SessionProvider.GetSession())
-            using (var transaction = session.BeginTransaction())
             {
-                if (session.QueryOver<TEntity>().Where(x => x.Id == updating.Id).RowCount() == 0)
+                lock (session.Connection)
                 {
-                    throw new InvalidOperationException($"There exists no {typeof(TEntity).FullName} with the id of {updating.Id} to update");
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        if (session.QueryOver<TEntity>().Where(x => x.Id == updating.Id).RowCount() == 0)
+                        {
+                            throw new InvalidOperationException($"There exists no {typeof(TEntity).FullName} with the id of {updating.Id} to update");
+                        }
+                        session.Update(updating);
+                        transaction.Commit();
+                    }
                 }
-                session.Update(updating);
-                transaction.Commit();
             }
 
             return Task.FromResult(updating);
         }
-        
+
         async Task<IEntity> IRepository.UpdateAsync(IEntity updating)
         {
             var boxed = updating as TEntity;
@@ -166,15 +176,20 @@ namespace lvl.Repositories
             }
 
             using (var session = SessionProvider.GetSession())
-            using (var transaction = session.BeginTransaction())
             {
-                if (session.QueryOver<TEntity>().Where(x => x.Id == deleting.Id).RowCount() == 0)
+                lock (session.Connection)
                 {
-                    throw new InvalidOperationException($"There exists no {typeof(TEntity).FullName} with the id of {deleting.Id} to delete");
-                }
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        if (session.QueryOver<TEntity>().Where(x => x.Id == deleting.Id).RowCount() == 0)
+                        {
+                            throw new InvalidOperationException($"There exists no {typeof(TEntity).FullName} with the id of {deleting.Id} to delete");
+                        }
 
-                session.Delete(deleting);
-                transaction.Commit();
+                        session.Delete(deleting);
+                        transaction.Commit();
+                    }
+                }
             }
 
             return Task.FromResult(deleting);
