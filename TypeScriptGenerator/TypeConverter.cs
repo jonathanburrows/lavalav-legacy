@@ -22,7 +22,7 @@ namespace lvl.TypescriptGenerator
         /// <returns>The content of the converted typescript type.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="converting"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="generationOptions"/> is null.</exception>
-        public TypeScriptType CsToTypeScript(Type converting, GenerationOptions generationOptions)
+        public TypeScriptType CsToTypeScript(Type converting, TypeScriptGenerationOptions generationOptions)
         {
             if (converting == null)
             {
@@ -58,7 +58,7 @@ namespace lvl.TypescriptGenerator
         /// <param name="propertyInfo">The property to be converted.</param>
         /// <param name="generationOptions">The mapping of namespace to package directory.</param>
         /// <returns>The converted property.</returns>
-        private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, GenerationOptions generationOptions)
+        private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, TypeScriptGenerationOptions generationOptions)
         {
             var decoratorBin = generationOptions.DecoratorPath;
 
@@ -135,7 +135,7 @@ namespace lvl.TypescriptGenerator
         /// <param name="imported">The type which will have a shallow conversion done.</param>
         /// <param name="generationOptions">The options, including mapping to different npm packages.</param>
         /// <returns>The shallow converted type which can be used for imports.</returns>
-        private TypeScriptType ConvertImportedType(Type imported, GenerationOptions generationOptions)
+        private TypeScriptType ConvertImportedType(Type imported, TypeScriptGenerationOptions generationOptions)
         {
             if (imported.IsArray)
             {
@@ -170,7 +170,7 @@ namespace lvl.TypescriptGenerator
             }
         }
 
-        private string GetPathForType(Type type, GenerationOptions generationOptions)
+        private string GetPathForType(Type type, TypeScriptGenerationOptions generationOptions)
         {
             var packageForNamespace = generationOptions.PackageForNamespace;
             if (type == typeof(string) || type.IsValueType)

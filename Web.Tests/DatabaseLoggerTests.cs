@@ -92,7 +92,7 @@ namespace lvl.Web.Tests
 
         private IServiceProvider GetLoggerServicesWithLogLevel(LogLevel logLevel)
         {
-            var webSettings = new WebSettings
+            var webSettings = new WebOptions
             {
                 Logging = new LoggingOptions
                 {

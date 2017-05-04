@@ -31,7 +31,7 @@ namespace lvl.TypescriptGenerator
         /// <exception cref="ArgumentException">Multiple decorator paths were specified.</exception>
         /// <exception cref="ArgumentException">The same C# Namespace was mapped twice.</exception>
         /// <exception cref="FileNotFoundException">The given assembly could not be found.</exception>
-        public GenerationOptions Parse(string[] args)
+        public TypeScriptGenerationOptions Parse(string[] args)
         {
             if (args == null)
             {
@@ -93,7 +93,7 @@ namespace lvl.TypescriptGenerator
 
             var packagesForNamespace = namespaceToPackages.ToDictionary(GetKey, GetValue);
 
-            return new GenerationOptions
+            return new TypeScriptGenerationOptions
             {
                 AssemblyPath = assemblyPath,
                 OutputBin = outputBin,

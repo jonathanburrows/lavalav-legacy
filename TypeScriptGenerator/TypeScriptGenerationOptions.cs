@@ -5,7 +5,7 @@ namespace lvl.TypescriptGenerator
     /// <summary>
     /// Configurations on how the typescript will be generated.
     /// </summary>
-    public class GenerationOptions
+    public class TypeScriptGenerationOptions
     {
         /// <summary>The path to the assembly which contains the models to be generated.</summary>
         public string AssemblyPath { get; set; }

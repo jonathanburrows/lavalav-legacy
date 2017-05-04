@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace lvl.Web.Cors
@@ -9,5 +11,22 @@ namespace lvl.Web.Cors
         public IEnumerable<string> AllowMethods { get; set; } = Enumerable.Empty<string>();
         public IEnumerable<string> AllowOrigins { get; set; } = Enumerable.Empty<string>();
         public IEnumerable<string> ExposedHeaders { get; set; } = Enumerable.Empty<string>();
+
+        public CorsOptions() { }
+
+        public CorsOptions(IConfiguration configuration)
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            AllowHeaders = GetCollection(configuration, nameof(AllowHeaders));
+            AllowMethods = GetCollection(configuration, nameof(AllowMethods));
+            AllowOrigins = GetCollection(configuration, nameof(AllowOrigins));
+            ExposedHeaders = GetCollection(configuration, nameof(ExposedHeaders));
+        }
+
+        private IEnumerable<string> GetCollection(IConfiguration configuration, string key) => configuration.GetSection($"cors:{key}").GetChildren().Select(c => c.Value);
     }
 }

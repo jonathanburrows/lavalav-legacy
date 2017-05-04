@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     /// Registers all services specific to generate databases.
     /// </summary>
-    public static class DatabaseGeneratorServiceCollectionExtensions
+    public static class DatabaseGenerationServiceCollectionExtensions
     {
         /// <summary>
         /// Registers all services specific to generate databases.

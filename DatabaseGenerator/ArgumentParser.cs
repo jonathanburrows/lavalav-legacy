@@ -33,7 +33,7 @@ namespace lvl.DatabaseGenerator
         /// <exception cref="ArgumentException">A required argument was missing from the arguments</exception>
         /// <exception cref="ArgumentException">A required argument flag was provided with no value</exception>
         /// <exception cref="ArgumentException">An optional argument flag was provided with no value</exception>
-        public GenerationOptions Parse(string[] args)
+        public DatabaseGenerationOptions Parse(string[] args)
         {
             if (args == null)
             {
@@ -82,7 +82,7 @@ namespace lvl.DatabaseGenerator
                 }
             }
 
-            var generationOptions = new GenerationOptions();
+            var generationOptions = new DatabaseGenerationOptions();
 
             var connectionStringIndex = IndexOf(args, ConnectionStringKey);
             generationOptions.ConnectionString = args[connectionStringIndex + 1];

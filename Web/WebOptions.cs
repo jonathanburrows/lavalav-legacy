@@ -8,25 +8,22 @@ namespace lvl.Web
     /// <summary>
     /// Wrapper for all settings.
     /// </summary>
-    public class WebSettings
+    public class WebOptions
     {
         public LoggingOptions Logging { get; set; }
         public CorsOptions Cors { get; set; }
 
-        public WebSettings() { }
+        public WebOptions() { }
 
-        public WebSettings(IConfiguration configuration)
+        public WebOptions(IConfiguration configuration)
         {
             if (configuration == null)
             {
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            Logging = new LoggingOptions();
-            configuration.GetSection("logging").Bind(Logging);
-
-            Cors = new CorsOptions();
-            configuration.GetSection("cors").Bind(Cors);
+            Logging = new LoggingOptions(configuration);
+            Cors = new CorsOptions(configuration);
         }
     }
 }

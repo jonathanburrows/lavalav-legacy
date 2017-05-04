@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The given service collection with types registered against it.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/> is null.</exception>
         /// <exception cref="InvalidOperationException">AddDomains and AddRepositories haven't been called.</exception>
-        public static IServiceCollection AddWeb(this IServiceCollection serviceCollection, WebSettings webSettings = null)
+        public static IServiceCollection AddWeb(this IServiceCollection serviceCollection, WebOptions webSettings = null)
         {
             if (serviceCollection == null)
             {

@@ -1,9 +1,12 @@
-﻿namespace lvl.DatabaseGenerator
+﻿using Microsoft.Extensions.Configuration;
+using System;
+
+namespace lvl.DatabaseGenerator
 {
     /// <summary>
     /// Configurations on how a database will be generated.
     /// </summary>
-    public class GenerationOptions
+    public class DatabaseGenerationOptions
     {
         /// <summary>The connection to the database which will be created/migrated.</summary>
         public string ConnectionString { get; set; }
@@ -22,5 +25,17 @@
 
         /// <summary>Will prevent the database from being changed, and will output a report instead.</summary>
         public bool DryRun { get; set; }
+
+        public DatabaseGenerationOptions() { }
+
+        public DatabaseGenerationOptions(IConfiguration configuration)
+        {
+            if(configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            configuration.GetSection("database-generation").Bind(this);
+        }
     }
 }

@@ -11,12 +11,12 @@ namespace lvl.TypeScriptGenerator.Tests
     public class TypeConverterTests
     {
         private TypeConverter TypeConverter { get; }
-        private GenerationOptions GenerationOptions { get; }
+        private TypeScriptGenerationOptions GenerationOptions { get; }
 
         public TypeConverterTests()
         {
             TypeConverter = new TypeConverter();
-            GenerationOptions = new GenerationOptions
+            GenerationOptions = new TypeScriptGenerationOptions
             {
                 DecoratorPath = "@lvl/front-end",
                 PackageForNamespace = new Dictionary<string, string>
