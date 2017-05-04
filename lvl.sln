@@ -38,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Web", "lvl.Web\lvl.Web.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.TestWebSite", "lvl.TestWebSite\lvl.TestWebSite.csproj", "{6C74B9A1-159E-4957-96E6-70441F9558FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "@lvl.typescript-generator.Tests", "@lvl.typescript-generator.Tests\@lvl.typescript-generator.Tests.csproj", "{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScriptGenerator.Tests", "TypeScriptGenerator.Tests\TypeScriptGenerator.Tests.csproj", "{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lvl.Web.Tests", "lvl.Web.Tests\lvl.Web.Tests.csproj", "{54DB915F-1742-4B6D-B15F-6F451FC6E223}"
 EndProject
