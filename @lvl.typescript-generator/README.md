@@ -7,7 +7,7 @@ To provide a way of generating a set of TypeScript models for C# POCOs
 
 
 ## Example
-@lvl.typescript-generator --assembly-path=lvl.TestDomain.dll --output-bin=&gt;src/models&lt; lvl.Ontology=&gt;@lvl/core&lt;
+@lvl.typescript-generator --assembly-path=lvl.TestDomain.dll --output-bin=&gt;src/models&lt; lvl.Ontology=&gt;@lvl/front-end&lt;
 
 
 ## Options
@@ -20,7 +20,7 @@ The directory where the generated files will be placed.
 
 
 **--decorator-path** *(optional)*
-The path, relative to the output bin, to where the decorators can be found. If not provided, the default will be @lvl/core. This is intended for classes within @lvl/core, which cant reference itself.
+The path, relative to the output bin, to where the decorators can be found. If not provided, the default will be @lvl/front-end. This is intended for classes within @lvl/front-end, which cant reference itself.
 
 
 **C# Namespace** *(multiple allowed)*

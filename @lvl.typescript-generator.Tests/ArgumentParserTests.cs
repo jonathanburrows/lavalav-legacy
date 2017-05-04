@@ -86,8 +86,8 @@ namespace lvl.TypeScriptGenerator.Tests
             {
                 "--assembly-path=lvl.Ontology.dll",
                 "--output-bin=./",
-                "lvl.Ontology=@lvl/core",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end",
+                "lvl.Ontology=@lvl/front-end"
             };
 
             Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
@@ -102,7 +102,7 @@ namespace lvl.TypeScriptGenerator.Tests
                 $"--assembly-path={assemblyPath}",
                 "--output-bin=./",
                 "--decorator-path=./",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end"
             };
 
             var generationOptions = ArgumentParser.Parse(args);
@@ -119,7 +119,7 @@ namespace lvl.TypeScriptGenerator.Tests
                 "--output-bin=./",
                 $"--assembly-path={assemblyPath}",
                 "--decorator-path=./",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end"
             };
 
             var generationOptions = ArgumentParser.Parse(args);
@@ -135,7 +135,7 @@ namespace lvl.TypeScriptGenerator.Tests
             {
                 "--output-bin=./",
                 "--decorator-path=./",
-                "lvl.Ontology=@lvl/core",
+                "lvl.Ontology=@lvl/front-end",
                 $"--assembly-path={assemblyPath}"
             };
 
@@ -153,7 +153,7 @@ namespace lvl.TypeScriptGenerator.Tests
                 $"--output-bin={outputBin}",
                 "--assembly-path=lvl.Ontology.dll",
                 "--decorator-path=./",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end"
             };
 
             var generationOptions = ArgumentParser.Parse(args);
@@ -170,7 +170,7 @@ namespace lvl.TypeScriptGenerator.Tests
                 "--assembly-path=lvl.Ontology.dll",
                 $"--output-bin={outputBin}",
                 "--decorator-path=./",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end"
             };
 
             var generationOptions = ArgumentParser.Parse(args);
@@ -186,7 +186,7 @@ namespace lvl.TypeScriptGenerator.Tests
             {
                 "--assembly-path=lvl.Ontology.dll",
                 "--decorator-path=./",
-                "lvl.Ontology=@lvl/core",
+                "lvl.Ontology=@lvl/front-end",
                 $"--output-bin={outputBin}"
             };
 
@@ -204,7 +204,7 @@ namespace lvl.TypeScriptGenerator.Tests
                 $"--decorator-path={decoratorPath}",
                 "--assembly-path=lvl.Ontology.dll",
                 "--output-bin=./",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end"
             };
 
             var generationOptions = ArgumentParser.Parse(args);
@@ -221,7 +221,7 @@ namespace lvl.TypeScriptGenerator.Tests
                 "--assembly-path=lvl.Ontology.dll",
                 $"--decorator-path={decoratorPath}",
                 "--output-bin=./",
-                "lvl.Ontology=@lvl/core"
+                "lvl.Ontology=@lvl/front-end"
             };
 
             var generationOptions = ArgumentParser.Parse(args);
@@ -237,7 +237,7 @@ namespace lvl.TypeScriptGenerator.Tests
             {
                 "--assembly-path=lvl.Ontology.dll",
                 "--output-bin=./",
-                "lvl.Ontology=@lvl/core",
+                "lvl.Ontology=@lvl/front-end",
                 $"--decorator-path={decoratorPath}"
             };
 
@@ -250,7 +250,7 @@ namespace lvl.TypeScriptGenerator.Tests
         public void Namespace_WhenFirstInArguments_ReturnsValue()
         {
             var namespaceKey = "lvl.Ontology";
-            var namespacePackage = "@lvl/core";
+            var namespacePackage = "@lvl/front-end";
             var args = new[]
             {
                 $"{namespaceKey}={namespacePackage}",
@@ -269,7 +269,7 @@ namespace lvl.TypeScriptGenerator.Tests
         public void Namespace_WhenSecondInArguments_ReturnsValue()
         {
             var namespaceKey = "lvl.Ontology";
-            var namespacePackage = "@lvl/core";
+            var namespacePackage = "@lvl/front-end";
             var args = new[]
             {
                 "--assembly-path=lvl.Ontology.dll",
@@ -288,7 +288,7 @@ namespace lvl.TypeScriptGenerator.Tests
         public void Namespace_WhenLastInArguments_ReturnsValue()
         {
             var namespaceKey = "lvl.Ontology";
-            var namespacePackage = "@lvl/core";
+            var namespacePackage = "@lvl/front-end";
             var args = new[]
             {
                 "--assembly-path=lvl.Ontology.dll",
@@ -310,7 +310,7 @@ namespace lvl.TypeScriptGenerator.Tests
             {
                 "--assembly-path=lvl.Ontology.dll",
                 "--output-bin=./",
-                "lvl.Ontology=@lvl/core",
+                "lvl.Ontology=@lvl/front-end",
                 "lvl.TestDomain=@lvl/test-domain"
             };
 

@@ -1,5 +1,5 @@
 {
-  "name": "@lvl/core",
+  "name": "@lvl/front-end",
   "version": "1.0.0",
   "description": "",
   "main": "dist/bundles/core.umd.js",

@@ -18,7 +18,7 @@ namespace lvl.TypeScriptGenerator.Tests
             TypeConverter = new TypeConverter();
             GenerationOptions = new GenerationOptions
             {
-                DecoratorPath = "@lvl/core",
+                DecoratorPath = "@lvl/front-end",
                 PackageForNamespace = new Dictionary<string, string>
                 {
                     ["lvl.ExternalLibrary"] = "@lvl/external-library",
