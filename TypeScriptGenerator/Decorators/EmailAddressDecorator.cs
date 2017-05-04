@@ -9,12 +9,7 @@ namespace lvl.TypescriptGenerator.Decorators
     {
         public EmailAddressDecorator(string decoratorPath)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
-
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
             Name = "EmailAddress";
         }
 

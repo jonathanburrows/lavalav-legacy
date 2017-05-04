@@ -80,7 +80,7 @@ namespace lvl.Web.Tests
         [Fact]
         public void WhenAddingWebWithoutRepositories_InvalidOperationExceptionIsThrown()
         {
-            var serviceCollection = new ServiceCollection().AddDomains();
+            var serviceCollection = new ServiceCollection().AddDomains(new DomainOptions());
 
             Assert.Throws<InvalidOperationException>(() => serviceCollection.AddWeb());
         }

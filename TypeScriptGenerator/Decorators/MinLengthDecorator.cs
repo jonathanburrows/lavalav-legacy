@@ -12,16 +12,12 @@ namespace lvl.TypescriptGenerator.Decorators
 
         public MinLengthDecorator(string decoratorPath, MinLengthAttribute minLengthAttribute)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
             if (minLengthAttribute == null)
             {
                 throw new ArgumentNullException(nameof(minLengthAttribute));
             }
 
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
             Length = minLengthAttribute.Length;
             Name = "MinLength";
         }

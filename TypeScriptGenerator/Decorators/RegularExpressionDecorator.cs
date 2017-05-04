@@ -12,16 +12,12 @@ namespace lvl.TypescriptGenerator.Decorators
 
         public RegularExpressionDecorator(string decoratorPath, RegularExpressionAttribute regularExpressionAttribute)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
             if (regularExpressionAttribute == null)
             {
                 throw new ArgumentNullException(nameof(regularExpressionAttribute));
             }
 
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
             Pattern = regularExpressionAttribute.Pattern;
             Name = "RegularExpression";
         }

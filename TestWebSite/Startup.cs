@@ -12,7 +12,7 @@ namespace lvl.TestWebSite
         public virtual void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDomains()
+                .AddDomains(new DomainOptions())
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb();

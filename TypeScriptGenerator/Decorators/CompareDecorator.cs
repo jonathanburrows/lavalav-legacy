@@ -13,17 +13,13 @@ namespace lvl.TypescriptGenerator.Decorators
 
         public CompareDecorator(string decoratorPath, CompareAttribute compareAttribute)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
             if (compareAttribute == null)
             {
                 throw new ArgumentNullException(nameof(compareAttribute));
             }
 
             Name = "Compare";
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
             OtherProperty = compareAttribute.OtherProperty.ToPascal();
         }
 

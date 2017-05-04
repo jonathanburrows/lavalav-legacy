@@ -28,6 +28,14 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
+        public void AfterAddingDomains_WhenResolvingDomainOptions_ValueIsReturned()
+        {
+            var domainOptions = Services.GetRequiredService<DomainOptions>();
+
+            Assert.NotNull(domainOptions);
+        }
+
+        [Fact]
         public void ModelsInReferencedAssemblies_WhenAddingDomains_AreAddedToNHibernateConfig()
         {
             var configuration = Services.GetRequiredService<Configuration>();
@@ -50,9 +58,10 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void ModelsAlreadyAdded_WhenAddingDomains_AreNotAddedAgain()
         {
+            var domainOptions = new DomainOptions();
             var services = new ServiceCollection()
-                .AddDomains()
-                .AddDomains()
+                .AddDomains(domainOptions)
+                .AddDomains(domainOptions)
                 .BuildServiceProvider();
 
             var configuration = services.GetRequiredService<Configuration>();
@@ -65,7 +74,8 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void IfNoConnectionString_WhenAddingDomain_SqlLiteIsConfigured()
         {
-            var services = new ServiceCollection().AddDomains().BuildServiceProvider();
+            var domainOptions = new DomainOptions();
+            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
@@ -81,8 +91,9 @@ namespace lvl.Ontology.Tests
         [InlineData(@"Data Source=.;Initial Catalog=lvl;Integrated Security=SSPI;User ID=.\admin;Password=password;")]
         public void IfSqlServerConnectionString_WhenAddingDomain_SqlServerIsConfigured(string sqlServerConnectionString)
         {
+            var domainOptions = new DomainOptions { ConnectionString = sqlServerConnectionString };
             var services = new ServiceCollection()
-                .AddDomains(sqlServerConnectionString)
+                .AddDomains(domainOptions)
                 .BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
@@ -98,8 +109,9 @@ namespace lvl.Ontology.Tests
         [InlineData(@"Data Source=lvl;User Id=admin;Password=password;Integrated Security=no;")]
         public void IfOracleConnectionString_WhenAddingDomain_OracleIsConfigured(string oracleConnectionString)
         {
+            var domainOptions = new DomainOptions { ConnectionString = oracleConnectionString };
             var services = new ServiceCollection()
-                .AddDomains(oracleConnectionString)
+                .AddDomains(domainOptions)
                 .BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
@@ -114,8 +126,18 @@ namespace lvl.Ontology.Tests
         [InlineData("not a connection string")]
         public void IfInvalidConnectionString_WhenAddingDomain_ArgumentExceptionIsThrown(string invalidConnectionString)
         {
+            var domainOptions = new DomainOptions { ConnectionString = invalidConnectionString };
             var serviceCollection = new ServiceCollection();
-            Assert.Throws<ArgumentException>(() => serviceCollection.AddDomains(invalidConnectionString));
+
+            Assert.Throws<ArgumentException>(() => serviceCollection.AddDomains(domainOptions));
+        }
+
+        [Theory]
+        [InlineData("not a connection string")]
+        public void IfNullDomainOptions_WhenAddingDomain_ArgumentNullExceptionIsThrown(string invalidConnectionString)
+        {
+            var serviceCollection = new ServiceCollection();
+            Assert.Throws<ArgumentNullException>(() => serviceCollection.AddDomains(null));
         }
 
         /// <summary>Used to test classes embedded in application</summary>

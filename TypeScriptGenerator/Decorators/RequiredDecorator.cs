@@ -9,12 +9,7 @@ namespace lvl.TypescriptGenerator.Decorators
     {
         public RequiredDecorator(string decoratorBin)
         {
-            if (decoratorBin == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorBin));
-            }
-
-            ModulePath = decoratorBin;
+            ModulePath = decoratorBin ?? throw new ArgumentNullException(nameof(decoratorBin));
             Name = "Required";
         }
 

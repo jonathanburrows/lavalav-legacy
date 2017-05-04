@@ -21,26 +21,33 @@ namespace Microsoft.Extensions.DependencyInjection
         /// and maps all models inheriting from IEntity
         /// </summary>
         /// <param name="serviceCollection">The services the configuration will be registered to.</param>
-        /// <param name="connectionString">The connection string to the database</param>
+        /// <param name="domainOptions">The options, including the connection string to the database.</param>
         /// <returns>The original service collection, with a configuration registered.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/></exception>
+        /// <exception cref="DomainOptions"><paramref name="domainOptions"/></exception>
         /// <remarks>If the connection string is null, then it will use SQLite</remarks>
-        public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, string connectionString = null)
+        public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, DomainOptions domainOptions)
         {
             if (serviceCollection == null)
             {
                 throw new ArgumentNullException(nameof(serviceCollection));
+            }
+            if(domainOptions == null)
+            {
+                throw new ArgumentNullException(nameof(domainOptions));
             }
 
             var callingAssembly = Assembly.GetCallingAssembly();
 
             var configuration = Fluently
                 .Configure()
-                .Database(ConstructDatabaseConnection(connectionString))
+                .Database(ConstructDatabaseConnection(domainOptions.ConnectionString))
                 .AddReferencedEntities(callingAssembly)
                 .BuildConfiguration();
 
-            serviceCollection.AddSingleton(_ => configuration);
+            serviceCollection
+                .AddSingleton(domainOptions)
+                .AddSingleton(_ => configuration);
 
             return serviceCollection;
         }

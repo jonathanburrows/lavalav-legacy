@@ -9,13 +9,8 @@ namespace lvl.TypescriptGenerator.Decorators
     {
         public CreditCardDecorator(string decoratorPath)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
-
             Name = "CreditCard";
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
         }
 
         public override string ToTypeScript() => "@CreditCard()";

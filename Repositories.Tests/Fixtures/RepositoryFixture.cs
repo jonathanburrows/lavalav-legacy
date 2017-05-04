@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using lvl.Ontology;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace lvl.Repositories.Tests.Fixtures
@@ -10,7 +11,7 @@ namespace lvl.Repositories.Tests.Fixtures
         protected RepositoryFixture(string connectionString)
         {
             ServiceProvider = new ServiceCollection()
-                .AddDomains(connectionString)
+                .AddDomains(new DomainOptions { ConnectionString = connectionString })
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .BuildServiceProvider();

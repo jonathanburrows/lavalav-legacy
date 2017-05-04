@@ -54,7 +54,7 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void WhenDetecting_WhenSQLiteIsConfigured_SQLiteIsReturned()
         {
-            var services = new ServiceCollection().AddDomains().BuildServiceProvider();
+            var services = new ServiceCollection().AddDomains(new DomainOptions()).BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
@@ -65,8 +65,8 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void WhenDetecting_WhenMsSqlIsConfigured_MsSqlIsReturned()
         {
-            var msSqlConnectionString = @"Server=.;Database=lvl;Trusted_Connection=True;";
-            var services = new ServiceCollection().AddDomains(msSqlConnectionString).BuildServiceProvider();
+            var domainOptions = new DomainOptions { ConnectionString = @"Server=.;Database=lvl;Trusted_Connection=True;" };
+            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
@@ -77,8 +77,8 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void WhenDetecting_WhenOracleIsConfigured_OracleIsReturned()
         {
-            var oracleConnectionString = @"Data Source=lvl;Integrated Security=yes;";
-            var services = new ServiceCollection().AddDomains(oracleConnectionString).BuildServiceProvider();
+            var domainOptions = new DomainOptions { ConnectionString = @"Data Source=lvl;Integrated Security=yes;" };
+            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);

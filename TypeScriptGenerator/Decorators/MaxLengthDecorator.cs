@@ -12,16 +12,12 @@ namespace lvl.TypescriptGenerator.Decorators
 
         public MaxLengthDecorator(string decoratorPath, MaxLengthAttribute maxLengthAttribute)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
             if (maxLengthAttribute == null)
             {
                 throw new ArgumentNullException(nameof(maxLengthAttribute));
             }
 
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
             Length = maxLengthAttribute.Length;
             Name = "MaxLength";
         }

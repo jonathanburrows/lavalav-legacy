@@ -13,16 +13,12 @@ namespace lvl.TypescriptGenerator.Decorators
 
         public RangeDecorator(string decoratorPath, RangeAttribute rangeAttribute)
         {
-            if (decoratorPath == null)
-            {
-                throw new ArgumentNullException(nameof(decoratorPath));
-            }
             if (rangeAttribute == null)
             {
                 throw new ArgumentNullException(nameof(rangeAttribute));
             }
 
-            ModulePath = decoratorPath;
+            ModulePath = decoratorPath ?? throw new ArgumentNullException(nameof(decoratorPath));
             Minimum = rangeAttribute.Minimum;
             Maximum = rangeAttribute.Maximum;
             Name = "Range";

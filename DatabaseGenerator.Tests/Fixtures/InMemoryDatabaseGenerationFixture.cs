@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using lvl.Ontology;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace lvl.DatabaseGenerator.Tests.Fixtures
@@ -10,7 +11,7 @@ namespace lvl.DatabaseGenerator.Tests.Fixtures
         public InMemoryDatabaseGenerationFixture()
         {
             ServiceProvider = new ServiceCollection()
-                .AddDomains()
+                .AddDomains(new DomainOptions())
                 .AddDatabaseGeneration()
                 .BuildServiceProvider();
         }

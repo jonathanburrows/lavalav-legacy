@@ -109,9 +109,9 @@ namespace lvl.DatabaseGenerator
             return generationOptions;
         }
 
-        private int IndexOf(string[] args, string key)
+        private static int IndexOf(IReadOnlyList<string> args, string key)
         {
-            for (var i = 0; i < args.Length; i++)
+            for (var i = 0; i < args.Count; i++)
             {
                 if (args[i].Equals(key, StringComparison.InvariantCultureIgnoreCase))
                 {
