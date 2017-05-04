@@ -1,9 +1,7 @@
-﻿using lvl.Web.Cors;
-using lvl.Web.Logging;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace lvl.Web
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Wrapper for all settings.

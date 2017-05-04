@@ -1,4 +1,4 @@
-﻿namespace lvl.Repositories.Tests.Configuration
+﻿namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Information about each database being used in the integration tests.

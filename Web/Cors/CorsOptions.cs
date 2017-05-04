@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace lvl.Web.Cors
+namespace Microsoft.Extensions.DependencyInjection
 {
     public class CorsOptions
     {

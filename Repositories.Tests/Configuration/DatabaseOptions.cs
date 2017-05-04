@@ -1,4 +1,4 @@
-﻿namespace lvl.Repositories.Tests.Configuration
+﻿namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Information specific to a database.

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace lvl.DatabaseGenerator
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Configurations on how a database will be generated.

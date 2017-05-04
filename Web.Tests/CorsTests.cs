@@ -1,6 +1,5 @@
 ﻿using Xunit;
 using Microsoft.Extensions.DependencyInjection;
-using lvl.Web.Cors;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using lvl.TestDomain;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace lvl.Web.Tests
     [Collection(WebCollection.Name)]
     public class CorsTests
     {
-        private static Cors.CorsOptions Settings { get; } = new Cors.CorsOptions
+        private static Microsoft.Extensions.DependencyInjection.CorsOptions Settings { get; } = new Microsoft.Extensions.DependencyInjection.CorsOptions
         {
             AllowMethods = new[] { "GET", "POST", "PUT", "DELETE", "NON-STANDARD" },
             AllowOrigins = new[] { "http://localhost/" },

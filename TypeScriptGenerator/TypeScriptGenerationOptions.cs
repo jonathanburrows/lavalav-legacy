@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace lvl.TypescriptGenerator
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Configurations on how the typescript will be generated.

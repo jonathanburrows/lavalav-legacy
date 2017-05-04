@@ -4,6 +4,7 @@ using lvl.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using System.Security.Claims;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace lvl.Web.Logging
 {

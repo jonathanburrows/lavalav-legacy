@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using lvl.TypescriptGenerator.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace lvl.TypescriptGenerator
 {

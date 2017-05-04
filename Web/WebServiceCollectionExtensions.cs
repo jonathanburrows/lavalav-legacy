@@ -1,6 +1,4 @@
 ﻿using lvl.Repositories;
-using lvl.Web;
-using lvl.Web.Cors;
 using lvl.Web.Logging;
 using lvl.Web.OData;
 using lvl.Web.Serialization;

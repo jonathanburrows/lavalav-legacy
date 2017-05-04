@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace lvl.Web.Logging
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Configurations for logging.
