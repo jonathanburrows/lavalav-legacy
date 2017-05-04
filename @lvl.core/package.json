@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/bundles/core.umd.js",
   "scripts": {
-    "generate-models": "node dotnet-runner.js ../@lvl.typescript-generator --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
-  
+    "generate-models": "dotnet run --project ../@lvl.typescript-generator/@lvl.typescript-generator.csproj -- --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
+
     "test": "ng test"
   },
   "dependencies": {
@@ -43,9 +43,6 @@
     "ts-node": "2.0.0",
     "tslint": "4.5.0",
     "typescript": "2.2.2"
-  },
-  "bin": {
-    "dotnet-runner": "dotnet-runner.js"
   },
   "author": "jburrows",
   "license": "UNLISENCED"
