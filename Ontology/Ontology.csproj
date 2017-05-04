@@ -3,25 +3,29 @@
   <PropertyGroup>
     <VersionPrefix>0.0.0</VersionPrefix>
     <TargetFramework>net461</TargetFramework>
-    <AssemblyName>lvl.Repositories</AssemblyName>
-    <PackageId>lvl.Repositories</PackageId>
+    <AssemblyName>lvl.Ontology</AssemblyName>
+    <PackageId>lvl.Ontology</PackageId>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>lvl.Ontology</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lvl.DatabaseGenerator\lvl.DatabaseGenerator.csproj" />
-    <ProjectReference Include="..\lvl.Ontology\lvl.Ontology.csproj" />
+    <EmbeddedResource Include="x86\*.*;x64\*.*" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+    <None Update="x86\**\*;x64\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="System.Data.Common" Version="4.1.0" />
-    <PackageReference Include="System.Linq.Dynamic" Version="1.0.7" />
+    <PackageReference Include="FluentNHibernate" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="12.1.24160719" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.103" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

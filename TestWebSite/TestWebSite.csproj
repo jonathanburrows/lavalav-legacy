@@ -9,6 +9,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>lvl.TestWebSite</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,10 +17,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lvl.Ontology\lvl.Ontology.csproj" />
-    <ProjectReference Include="..\lvl.Repositories\lvl.Repositories.csproj" />
-    <ProjectReference Include="..\lvl.TestDomain\lvl.TestDomain.csproj" />
-    <ProjectReference Include="..\lvl.Web\lvl.Web.csproj" />
+    <ProjectReference Include="..\Ontology\Ontology.csproj" />
+    <ProjectReference Include="..\Repositories\Repositories.csproj" />
+    <ProjectReference Include="..\TestDomain\TestDomain.csproj" />
+    <ProjectReference Include="..\Web\Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

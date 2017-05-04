@@ -3,21 +3,26 @@
   <PropertyGroup>
     <VersionPrefix>0.0.0</VersionPrefix>
     <TargetFramework>net461</TargetFramework>
-    <AssemblyName>lvl.TestDomain</AssemblyName>
-    <PackageId>lvl.TestDomain</PackageId>
+    <AssemblyName>lvl.Repositories</AssemblyName>
+    <PackageId>lvl.Repositories</PackageId>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <RootNamespace>lvl.Repositories</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lvl.Ontology\lvl.Ontology.csproj" />
+    <ProjectReference Include="..\DatabaseGenerator\DatabaseGenerator.csproj" />
+    <ProjectReference Include="..\Ontology\Ontology.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.Data.Common" Version="4.1.0" />
+    <PackageReference Include="System.Linq.Dynamic" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

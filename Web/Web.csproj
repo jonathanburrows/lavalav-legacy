@@ -8,11 +8,12 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>lvl.Web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lvl.Ontology\lvl.Ontology.csproj" />
-    <ProjectReference Include="..\lvl.Repositories\lvl.Repositories.csproj" />
+    <ProjectReference Include="..\Ontology\Ontology.csproj" />
+    <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,11 +11,12 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>lvl.Ontology.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lvl.Ontology\lvl.Ontology.csproj" />
-    <ProjectReference Include="..\lvl.TestDomain\lvl.TestDomain.csproj" />
+    <ProjectReference Include="..\Ontology\Ontology.csproj" />
+    <ProjectReference Include="..\TestDomain\TestDomain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
