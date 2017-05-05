@@ -91,6 +91,7 @@ namespace Microsoft.Extensions.DependencyInjection
             conventions.Add(ForeignKey.EndsWith("Id"));
             conventions.Add<MaxLengthConvention>();
             conventions.Add<RequiredConvention>();
+            conventions.Add<TableNamingConvention>();
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 
