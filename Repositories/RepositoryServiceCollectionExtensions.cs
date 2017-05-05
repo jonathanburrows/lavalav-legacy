@@ -1,6 +1,6 @@
-﻿using lvl.Ontology;
-using lvl.Repositories;
+﻿using lvl.Repositories;
 using System;
+using lvl.Ontology.Database;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's extension convention.
 namespace Microsoft.Extensions.DependencyInjection

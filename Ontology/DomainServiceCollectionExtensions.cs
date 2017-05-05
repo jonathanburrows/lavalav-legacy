@@ -4,9 +4,10 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using lvl.Ontology;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using lvl.Ontology.Database;
+using lvl.Ontology.Conventions;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -88,6 +89,7 @@ namespace Microsoft.Extensions.DependencyInjection
             conventions.Add(DefaultCascade.All());
             conventions.Add(LazyLoad.Never());
             conventions.Add(ForeignKey.EndsWith("Id"));
+            conventions.Add<RequiredConvention>();
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 

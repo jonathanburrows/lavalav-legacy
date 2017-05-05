@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace lvl.Ontology
+namespace lvl.Ontology.Database
 {
     /// <summary>
     /// This is a workaround fix for SQLite's requirement of SQLite.Interop.dll needing to be

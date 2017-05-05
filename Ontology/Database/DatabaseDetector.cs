@@ -2,7 +2,7 @@
 using NHibernate.Driver;
 using System.Text.RegularExpressions;
 
-namespace lvl.Ontology
+namespace lvl.Ontology.Database
 {
     /// <summary>
     /// Used to detect the vendor associated with a given connection string.

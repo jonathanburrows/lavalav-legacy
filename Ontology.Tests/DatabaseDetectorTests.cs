@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using System;
+using lvl.Ontology.Database;
 using Xunit;
 
 namespace lvl.Ontology.Tests

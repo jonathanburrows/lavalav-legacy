@@ -1,4 +1,4 @@
-﻿namespace lvl.Ontology
+﻿namespace lvl.Ontology.Database
 {
     public enum DatabaseVendor
     {

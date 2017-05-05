@@ -1,10 +1,10 @@
-﻿using lvl.Ontology;
-using lvl.Repositories.Tests.Fixtures;
+﻿using lvl.Repositories.Tests.Fixtures;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using lvl.Ontology.Database;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
