@@ -1,0 +1,1 @@
+﻿This was added here to support SQLite, which is very particular about where the dll is located.
