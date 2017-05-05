@@ -92,6 +92,7 @@ namespace Microsoft.Extensions.DependencyInjection
             conventions.Add<MaxLengthConvention>();
             conventions.Add<RequiredConvention>();
             conventions.Add<TableNamingConvention>();
+            conventions.Add<UniqueConvention>();
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 
