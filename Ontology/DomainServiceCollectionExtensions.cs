@@ -89,6 +89,7 @@ namespace Microsoft.Extensions.DependencyInjection
             conventions.Add(DefaultCascade.All());
             conventions.Add(LazyLoad.Never());
             conventions.Add(ForeignKey.EndsWith("Id"));
+            conventions.Add<MaxLengthConvention>();
             conventions.Add<RequiredConvention>();
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
