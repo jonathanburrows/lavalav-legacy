@@ -20,11 +20,11 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Registers all types required by web middleware.
         /// </summary>
         /// <param name="serviceCollection">The service collection which will have types registered against it.</param>
-        /// <param name="webSettings">Settings for how the web service will behave.</param>
+        /// <param name="webOptions">Settings for how the web service will behave.</param>
         /// <returns>The given service collection with types registered against it.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/> is null.</exception>
         /// <exception cref="InvalidOperationException">AddDomains and AddRepositories haven't been called.</exception>
-        public static IServiceCollection AddWeb(this IServiceCollection serviceCollection, WebOptions webSettings = null)
+        public static IServiceCollection AddWeb(this IServiceCollection serviceCollection, WebOptions webOptions = null)
         {
             if (serviceCollection == null)
             {
@@ -41,10 +41,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException($"{nameof(RepositoryServiceCollectionExtensions.AddRepositories)} has not been called");
             }
 
-            var loggingSettings = webSettings?.Logging ?? new LoggingOptions();
+            var loggingSettings = webOptions?.Logging ?? new LoggingOptions();
             serviceCollection.AddSingleton(loggingSettings);
 
-            var corsSettings = webSettings?.Cors ?? new CorsOptions();
+            var corsSettings = webOptions?.Cors ?? new CorsOptions();
             serviceCollection.AddSingleton(corsSettings);
 
             Action<JsonSerializerSettings> configureJson = options =>

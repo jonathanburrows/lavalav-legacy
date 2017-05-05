@@ -10,7 +10,7 @@ namespace lvl.Web.Tests.Fixtures
         public WebServiceProviderFixture()
         {
             ServiceProvider = new ServiceCollection()
-                .AddDomains(new DomainOptions())
+                .AddDomains()
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb()

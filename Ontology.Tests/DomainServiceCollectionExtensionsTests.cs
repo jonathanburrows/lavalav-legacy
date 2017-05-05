@@ -58,10 +58,9 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void ModelsAlreadyAdded_WhenAddingDomains_AreNotAddedAgain()
         {
-            var domainOptions = new DomainOptions();
             var services = new ServiceCollection()
-                .AddDomains(domainOptions)
-                .AddDomains(domainOptions)
+                .AddDomains()
+                .AddDomains()
                 .BuildServiceProvider();
 
             var configuration = services.GetRequiredService<Configuration>();
@@ -74,8 +73,7 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void IfNoConnectionString_WhenAddingDomain_SqlLiteIsConfigured()
         {
-            var domainOptions = new DomainOptions();
-            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
+            var services = new ServiceCollection().AddDomains().BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
@@ -130,14 +128,6 @@ namespace lvl.Ontology.Tests
             var serviceCollection = new ServiceCollection();
 
             Assert.Throws<ArgumentException>(() => serviceCollection.AddDomains(domainOptions));
-        }
-
-        [Theory]
-        [InlineData("not a connection string")]
-        public void IfNullDomainOptions_WhenAddingDomain_ArgumentNullExceptionIsThrown(string invalidConnectionString)
-        {
-            var serviceCollection = new ServiceCollection();
-            Assert.Throws<ArgumentNullException>(() => serviceCollection.AddDomains(null));
         }
 
         /// <summary>Used to test classes embedded in application</summary>

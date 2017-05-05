@@ -11,7 +11,7 @@ namespace lvl.DatabaseGenerator.Tests.Fixtures
         public InMemoryDatabaseGenerationFixture()
         {
             ServiceProvider = new ServiceCollection()
-                .AddDomains(new DomainOptions())
+                .AddDomains()
                 .AddDatabaseGeneration()
                 .BuildServiceProvider();
         }

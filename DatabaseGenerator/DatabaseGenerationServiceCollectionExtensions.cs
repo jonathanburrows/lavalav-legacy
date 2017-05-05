@@ -36,5 +36,5 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return serviceCollection;
         }
-    }
+    }                                                                                                    
 }

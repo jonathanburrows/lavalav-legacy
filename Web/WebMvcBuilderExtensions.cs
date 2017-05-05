@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft conventions.
 namespace Microsoft.AspNetCore.Builder
@@ -39,28 +41,30 @@ namespace Microsoft.AspNetCore.Builder
                 throw new InvalidOperationException($"{nameof(WebServiceCollectionExtensions.AddWeb)} has not been called.");
             }
 
-            Action<CorsPolicyBuilder> corsConfiguration = corsBuilder =>
+            var hostingEnvironment = applicationBuilder.ApplicationServices.GetService<IHostingEnvironment>();
+            if (hostingEnvironment?.EnvironmentName?.Equals("Development", StringComparison.OrdinalIgnoreCase) == true)
             {
-                corsBuilder.WithMethods(corsSettings.AllowMethods.ToArray());
-                corsBuilder.WithHeaders(corsSettings.AllowHeaders.ToArray());
-                corsBuilder.WithOrigins(corsSettings.AllowOrigins.ToArray());
-                corsBuilder.WithExposedHeaders(corsSettings.ExposedHeaders.ToArray());
-            };
-
-            // sets up the default routs before calling the given configuration method.
-            Action<IRouteBuilder> defaultRouteBuilder = routes =>
-            {
-                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
-                configureRoutes.Invoke(routes);
-            };
-
+                var loggingOptions = applicationBuilder.ApplicationServices.GetRequiredService<LoggingOptions>();
+                var loggerFactory = applicationBuilder.ApplicationServices.GetRequiredService<ILoggerFactory>();
+                loggerFactory.AddConsole(loggingOptions.LogLevel);
+            }
 
             return applicationBuilder
                 .UseMiddleware<ErrorLoggingMiddleware>()
-                .UseCors(corsConfiguration)
-                .UseMvc(defaultRouteBuilder);
+                .UseCors(corsBuilder =>
+                {
+                    corsBuilder.WithMethods(corsSettings.AllowMethods.ToArray());
+                    corsBuilder.WithHeaders(corsSettings.AllowHeaders.ToArray());
+                    corsBuilder.WithOrigins(corsSettings.AllowOrigins.ToArray());
+                    corsBuilder.WithExposedHeaders(corsSettings.ExposedHeaders.ToArray());
+                })
+                .UseMvc(routes =>
+                {
+                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    configureRoutes.Invoke(routes);
+                });
         }
-        
+
         /// <summary>
         /// Adds the middleware used in the API pipeline, and sets up routing.
         /// </summary>

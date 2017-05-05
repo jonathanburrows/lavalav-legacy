@@ -21,14 +21,8 @@ namespace lvl.Web.Logging
         private static AsyncLocal<LogScope> _current { get; } = new AsyncLocal<LogScope>();
         public static LogScope Current
         {
-            get
-            {
-                return _current.Value;
-            }
-            set
-            {
-                _current.Value = value;
-            }
+            get => _current.Value;
+            set => _current.Value = value;
         }
 
         public static IDisposable Push(object state)

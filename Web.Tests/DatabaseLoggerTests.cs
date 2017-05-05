@@ -100,7 +100,7 @@ namespace lvl.Web.Tests
                 }
             };
             return new ServiceCollection()
-                .AddDomains(new DomainOptions())
+                .AddDomains()
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddWeb(webSettings)

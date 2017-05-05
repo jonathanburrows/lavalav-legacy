@@ -52,7 +52,9 @@ namespace lvl.Web.Tests
         {
             const string getUrl = "/api/madeUpEntity";
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
+            var getResult = await Client.GetAsync(getUrl);
+
+            Assert.False(getResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -72,7 +74,9 @@ namespace lvl.Web.Tests
         {
             var getUrl = $"{Client.BaseAddress}api/{nameof(Moon)}/{int.MaxValue}";
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
+            var getResult = await Client.GetAsync(getUrl);
+
+            Assert.False(getResult.IsSuccessStatusCode);
         }
 
         [Theory]
@@ -110,7 +114,9 @@ namespace lvl.Web.Tests
         {
             var getUrl = "/api/madeUpEntity/1";
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetAsync(getUrl));
+            var getResult = await Client.GetAsync(getUrl);
+
+            Assert.False(getResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -136,7 +142,9 @@ namespace lvl.Web.Tests
             var postUrl = $"/api/{nameof(Moon)}";
             var nullContent = new StringContent("");
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => Client.PostAsync(postUrl, nullContent));
+            var postResult = await Client.PostAsync(postUrl, nullContent);
+
+            Assert.False(postResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -147,7 +155,9 @@ namespace lvl.Web.Tests
             var postingSerialized = JsonConvert.SerializeObject(posting);
             var postingContent = new StringContent(postingSerialized);
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PostAsync(postUrl, postingContent));
+            var postResult = await Client.PostAsync(postUrl, postingContent);
+
+            Assert.False(postResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -156,7 +166,9 @@ namespace lvl.Web.Tests
             var postUrl = $"/api/{nameof(Moon)}";
             var postingContent = new StringContent(@"{invalid: ""true""}");
 
-            await Assert.ThrowsAsync<JsonSerializationException>(() => Client.PostAsync(postUrl, postingContent));
+            var postResult = await Client.PostAsync(postUrl, postingContent);
+
+            Assert.False(postResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -167,7 +179,9 @@ namespace lvl.Web.Tests
             var postingSerialized = JsonConvert.SerializeObject(posting);
             var postingContent = new StringContent(postingSerialized);
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PostAsync(postUrl, postingContent));
+            var postResult = await Client.PostAsync(postUrl, postingContent);
+
+            Assert.False(postResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -195,7 +209,9 @@ namespace lvl.Web.Tests
             var putUrl = $"/api/{nameof(Moon)}";
             var nullContent = new StringContent("");
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => Client.PutAsync(putUrl, nullContent));
+            var putResult = await Client.PutAsync(putUrl, nullContent);
+
+            Assert.False(putResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -206,7 +222,9 @@ namespace lvl.Web.Tests
             var puttingSerialized = JsonConvert.SerializeObject(putting);
             var puttingContent = new StringContent(puttingSerialized);
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PutAsync(putUrl, puttingContent));
+            var putResult = await Client.PutAsync(putUrl, puttingContent);
+
+            Assert.False(putResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -215,7 +233,9 @@ namespace lvl.Web.Tests
             var putUrl = $"/api/{nameof(Moon)}";
             var puttingContent = new StringContent(@"{invalid: ""true""}");
 
-            await Assert.ThrowsAsync<JsonSerializationException>(() => Client.PutAsync(putUrl, puttingContent));
+            var putResult = await Client.PutAsync(putUrl, puttingContent);
+
+            Assert.False(putResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -226,7 +246,9 @@ namespace lvl.Web.Tests
             var puttingSerialized = JsonConvert.SerializeObject(putting);
             var puttingContent = new StringContent(puttingSerialized);
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.PutAsync(putUrl, puttingContent));
+            var putResult = await Client.PutAsync(putUrl, puttingContent);
+
+            Assert.False(putResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -261,7 +283,8 @@ namespace lvl.Web.Tests
                 Content = new StringContent(string.Empty)
             };
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => Client.SendAsync(deletingMessage));
+            var deleteResponse = await Client.SendAsync(deletingMessage);
+            Assert.False(deleteResponse.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -277,7 +300,8 @@ namespace lvl.Web.Tests
                 Content = deletingContent
             };
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.SendAsync(deletingMessage));
+            var deleteResult = await Client.SendAsync(deletingMessage);
+            Assert.False(deleteResult.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -290,7 +314,8 @@ namespace lvl.Web.Tests
                 Content = new StringContent(@"{invalid: ""true""}")
             };
 
-            await Assert.ThrowsAsync<JsonSerializationException>(() => Client.SendAsync(deletingMessage));
+            var deleteResponse = await Client.SendAsync(deletingMessage);
+            Assert.False(deleteResponse.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -306,7 +331,8 @@ namespace lvl.Web.Tests
                 Content = deletingContent
             };
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => Client.SendAsync(deletingMessage));
+            var deleteResult = await Client.SendAsync(deletingMessage);
+            Assert.False(deleteResult.IsSuccessStatusCode);
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local Used by reflection

@@ -54,7 +54,7 @@ namespace lvl.Ontology.Tests
         [Fact]
         public void WhenDetecting_WhenSQLiteIsConfigured_SQLiteIsReturned()
         {
-            var services = new ServiceCollection().AddDomains(new DomainOptions()).BuildServiceProvider();
+            var services = new ServiceCollection().AddDomains().BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
 
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);

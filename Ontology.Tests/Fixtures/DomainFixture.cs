@@ -10,7 +10,7 @@ namespace lvl.Ontology.Tests.Fixtures
         protected DomainFixture()
         {
             Services = new ServiceCollection()
-                .AddDomains(new DomainOptions())
+                .AddDomains()
                 .BuildServiceProvider();
         }
     }

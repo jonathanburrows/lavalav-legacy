@@ -12,12 +12,7 @@ namespace lvl.Web.Serialization
 
         public EntityDeserializer(IOptions<JsonSerializerSettings> jsonSerializerSettingsOptions)
         {
-            if (jsonSerializerSettingsOptions?.Value == null)
-            {
-                throw new ArgumentNullException(nameof(jsonSerializerSettingsOptions));
-            }
-
-            JsonSerializerSettings = jsonSerializerSettingsOptions.Value;
+            JsonSerializerSettings = jsonSerializerSettingsOptions?.Value ?? throw new ArgumentNullException(nameof(jsonSerializerSettingsOptions));
         }
 
         /// <summary>

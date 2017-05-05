@@ -50,7 +50,7 @@ namespace lvl.DatabaseGenerator
             PrintExceptions(migrator.Exceptions);
         }
 
-        private void PrintExceptions(IEnumerable<Exception> exceptions)
+        private static void PrintExceptions(IEnumerable<Exception> exceptions)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             foreach (var exception in exceptions)

@@ -24,18 +24,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="domainOptions">The options, including the connection string to the database.</param>
         /// <returns>The original service collection, with a configuration registered.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/></exception>
-        /// <exception cref="DomainOptions"><paramref name="domainOptions"/></exception>
         /// <remarks>If the connection string is null, then it will use SQLite</remarks>
-        public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, DomainOptions domainOptions)
+        public static IServiceCollection AddDomains(this IServiceCollection serviceCollection, DomainOptions domainOptions = null)
         {
             if (serviceCollection == null)
             {
                 throw new ArgumentNullException(nameof(serviceCollection));
             }
-            if(domainOptions == null)
-            {
-                throw new ArgumentNullException(nameof(domainOptions));
-            }
+            domainOptions = domainOptions ?? new DomainOptions();
 
             var callingAssembly = Assembly.GetCallingAssembly();
 

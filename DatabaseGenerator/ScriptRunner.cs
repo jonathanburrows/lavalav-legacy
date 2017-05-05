@@ -56,7 +56,7 @@ namespace lvl.DatabaseGenerator
             }
         }
 
-        private IEnumerable<string> GetOrderedScriptsFromDirectory(DirectoryInfo directory)
+        private static IEnumerable<string> GetOrderedScriptsFromDirectory(DirectoryInfo directory)
         {
             var scriptFiles = directory.EnumerateFiles().Where(file => file.Extension.Equals(".sql", StringComparison.InvariantCultureIgnoreCase));
             var orderedFiles = scriptFiles.OrderBy(file => file.Name);

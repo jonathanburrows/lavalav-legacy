@@ -64,7 +64,7 @@ namespace lvl.Repositories.Tests
         public void AfterOverridingRepository_WhenResolvingThroughServiceProvider_OverriddenTypeIsReturned()
         {
             var mockedServices = new ServiceCollection()
-                .AddDomains(new DomainOptions())
+                .AddDomains()
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddScoped<IRepository<Moon>, MockRepository<Moon>>()
@@ -79,7 +79,7 @@ namespace lvl.Repositories.Tests
         public void AfterOverridingRepository_WhenResolvingThroughFactory_OverridenTypeIsReturned()
         {
             var mockedServices = new ServiceCollection()
-                .AddDomains(new DomainOptions())
+                .AddDomains()
                 .AddDatabaseGeneration()
                 .AddRepositories()
                 .AddScoped<IRepository<Moon>, MockRepository<Moon>>()

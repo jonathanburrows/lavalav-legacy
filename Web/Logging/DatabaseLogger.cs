@@ -17,28 +17,16 @@ namespace lvl.Web.Logging
         private IRepository<LogEntry> LogEntryRepository { get; }
         private IHttpContextAccessor HttpContextAccessor { get; }
 
-        public DatabaseLogger(string name, LoggingOptions loggingSettings, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
+        public DatabaseLogger(string name, LoggingOptions loggingOptions, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (loggingSettings == null)
-            {
-                throw new ArgumentNullException(nameof(loggingSettings));
-            }
-            if (logEntryRepository == null)
-            {
-                throw new ArgumentNullException(nameof(logEntryRepository));
-            }
-            if (httpContextAccessor == null)
-            {
-                throw new ArgumentNullException(nameof(httpContextAccessor));
-            }
 
-            LoggingSettings = loggingSettings;
-            LogEntryRepository = logEntryRepository;
-            HttpContextAccessor = httpContextAccessor;
+            LoggingSettings = loggingOptions ?? throw new ArgumentNullException(nameof(loggingOptions));
+            LogEntryRepository = logEntryRepository ?? throw new ArgumentNullException(nameof(logEntryRepository));
+            HttpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public IDisposable BeginScope<TState>(TState state)

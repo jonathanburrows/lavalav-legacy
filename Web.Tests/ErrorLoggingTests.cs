@@ -5,9 +5,9 @@ using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using lvl.Repositories.Querying;
 using lvl.TestWebSite.Fixtures;
 using Xunit;
 
@@ -34,33 +34,39 @@ namespace lvl.Web.Tests
         public async Task WhenPerformingGetRequest_AndErrorOccurs_LogEntryIsAdded()
         {
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
-            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
+            var errorQuery = new Query<LogEntry>().Where(logEntry => logEntry.LogLevel == LogLevel.Error.ToString());
+            var errorsBefore = await repository.GetAsync(errorQuery);
             var url = $"/api/{nameof(Moon)}/{int.MaxValue}";
 
-            try
-            {
-                await Client.GetAsync(url);
-            }
-            catch
-            {
-                // ignored
-            }
+            await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
-            Assert.True(countBefore < countAfter);
+            var errorsAfter = await repository.GetAsync(errorQuery);
+            Assert.True(errorsBefore.Count < errorsAfter.Count);
         }
 
         [Fact]
         public async Task WhenPerformingGetRequest_AndFinishesSuccessfully_NoErrorLogEntryIsAdded()
         {
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
-            var countBefore = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
+            var errorQuery = new Query<LogEntry>().Where(logEntry => logEntry.LogLevel == LogLevel.Error.ToString());
             var url = $"/api/{nameof(Moon)}";
+            var errorsBefore = await repository.GetAsync(errorQuery);
 
             await Client.GetAsync(url);
 
-            var countAfter = (await repository.GetAsync()).Count(log => log.LogLevel == LogLevel.Error.ToString());
-            Assert.Equal(countAfter, countBefore);
+            var errorsAfter = await repository.GetAsync(errorQuery);
+            Assert.Equal(errorsBefore.Count, errorsAfter.Count);
+        }
+
+        [Fact]
+        public async Task WhenPerformingGetRequest_AndErrorOccurs_ErrorMessageIsInContent()
+        {
+            var getUrl = $"/api/{nameof(Moon)}/{int.MaxValue}";
+
+            var getResult = await Client.GetAsync(getUrl);
+            var getContent = await getResult.Content.ReadAsStringAsync();
+
+            Assert.Contains("Could not find", getContent);
         }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 namespace lvl.Web.Logging
 {
     /// <summary>
-    /// Catches any errors in the pipeline and logs them.
+    /// Catches any errors in the pipeline and logs them. Also attaches the error message to the response.
     /// </summary>
-    /// <remarks>Was done as MVC does not call Logging on default when an error occurs.</remarks>
     internal class ErrorLoggingMiddleware
     {
         private RequestDelegate Next { get; }
@@ -16,17 +15,8 @@ namespace lvl.Web.Logging
 
         public ErrorLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
-            if (next == null)
-            {
-                throw new ArgumentNullException(nameof(next));
-            }
-            if (loggerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(loggerFactory));
-            }
-
-            Next = next;
-            LoggerFactory = loggerFactory;
+            Next = next ?? throw new ArgumentNullException(nameof(next));
+            LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
 
         /// <summary>
@@ -56,7 +46,9 @@ namespace lvl.Web.Logging
                 }
                 finally
                 {
-                    throw e;
+                    httpContext.Response.Clear();
+                    httpContext.Response.StatusCode = 500;
+                    await httpContext.Response.WriteAsync(e.Message);
                 }
             }
         }

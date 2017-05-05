@@ -19,23 +19,10 @@ namespace lvl.Web.Logging
 
         public DatabaseLoggerProvider(LoggingOptions settings, IRepository<LogEntry> logEntryRepository, IHttpContextAccessor httpContextAccessor)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
-            if (logEntryRepository == null)
-            {
-                throw new ArgumentNullException(nameof(logEntryRepository));
-            }
-            if (httpContextAccessor == null)
-            {
-                throw new ArgumentNullException(nameof(httpContextAccessor));
-            }
-
-            Settings = settings;
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
             Loggers = new ConcurrentDictionary<string, DatabaseLogger>();
-            LogEntryRepository = logEntryRepository;
-            HttpContextAccessor = httpContextAccessor;
+            LogEntryRepository = logEntryRepository ?? throw new ArgumentNullException(nameof(logEntryRepository));
+            HttpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public ILogger CreateLogger(string categoryName)

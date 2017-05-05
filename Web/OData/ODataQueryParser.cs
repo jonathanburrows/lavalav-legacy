@@ -17,17 +17,8 @@ namespace lvl.Web.OData
 
         public ODataQueryParser(ODataConventionTokenizer conventionTokenizer, ODataConventionParser conventionParser)
         {
-            if (conventionTokenizer == null)
-            {
-                throw new ArgumentNullException(nameof(conventionTokenizer));
-            }
-            if (conventionParser == null) 
-            {
-                throw new ArgumentNullException(nameof(conventionParser));
-            }
-
-            ConventionTokenizer = conventionTokenizer;
-            ConventionParser = conventionParser;
+            ConventionTokenizer = conventionTokenizer ?? throw new ArgumentNullException(nameof(conventionTokenizer));
+            ConventionParser = conventionParser ?? throw new ArgumentNullException(nameof(ConventionParser));
         }
 
         /// <summary>
@@ -140,8 +131,7 @@ namespace lvl.Web.OData
 
         private static IEnumerable<string> GetCollectionParameter(IQueryCollection queryParameters, string key)
         {
-            StringValues values;
-            if (queryParameters.TryGetValue(key, out values))
+            if (queryParameters.TryGetValue(key, out StringValues values))
             {
                 return values.SelectMany(v => v.Split(','));
             }
