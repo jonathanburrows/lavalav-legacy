@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Ontology.Conventions;
 
 namespace lvl.TestDomain
 {
@@ -11,5 +12,8 @@ namespace lvl.TestDomain
         public decimal Mass { get; set; }
 
         public Planet Planet { get; set; }
+
+        [ForeignKeyId(typeof(Astronaut))]
+        public int? FirstPersonToStepFootId { get; set; }
     }
 }

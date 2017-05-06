@@ -15,15 +15,6 @@ namespace lvl.Ontology.Tests
 
         public TableNamingConventionTests(InMemoryDomainFixture domainFixture)
         {
-            if (domainFixture == null)
-            {
-                throw new ArgumentNullException(nameof(domainFixture));
-            }
-            if (domainFixture.Services == null)
-            {
-                throw new InvalidOperationException($"{nameof(domainFixture)}.{nameof(domainFixture.Services)} is null.");
-            }
-
             Configuration = domainFixture.Services.GetRequiredService<Configuration>();
         }
 

@@ -3,7 +3,6 @@ using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using NHibernate.Mapping;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Xunit;
@@ -17,21 +16,8 @@ namespace lvl.Ontology.Tests
 
         public MaxLengthConventionTests(InMemoryDomainFixture domainFixture)
         {
-            if (domainFixture == null)
-            {
-                throw new ArgumentNullException(nameof(domainFixture));
-            }
-            if (domainFixture.Services == null)
-            {
-                throw new InvalidOperationException($"{nameof(domainFixture)}.{nameof(domainFixture.Services)} is null.");
-            }
-
             var configuration = domainFixture.Services.GetRequiredService<Configuration>();
             ClassMapping = configuration.GetClassMapping(typeof(MaxLengthConventionPoco));
-            if (ClassMapping == null)
-            {
-                throw new InvalidOperationException($"{nameof(MaxLengthConventionPoco)} was not properly registered.");
-            }
         }
 
         [Fact]
@@ -40,7 +26,7 @@ namespace lvl.Ontology.Tests
             var property = ClassMapping.GetProperty(nameof(MaxLengthConventionPoco.PropertyWithoutAttribute));
             var column = (Column)property.ColumnIterator.Single();
 
-            Assert.Equal(column.Length, MaxLengthConvention.DefaultLength);
+            Assert.Equal(column.Length, 1024);
         }
 
         [Fact]

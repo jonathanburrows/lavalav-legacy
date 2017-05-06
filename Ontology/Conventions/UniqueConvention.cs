@@ -10,7 +10,7 @@ namespace lvl.Ontology.Conventions
     /// <summary>
     ///     Will mark database fields as unique, to help database integrity.
     /// </summary>
-    public class UniqueConvention : IPropertyConvention, IPropertyConventionAcceptance
+    internal class UniqueConvention : IPropertyConvention, IPropertyConventionAcceptance
     {
         /// <summary>
         ///     Determine if a property should be marked as unique.

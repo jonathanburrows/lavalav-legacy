@@ -12,7 +12,7 @@ namespace lvl.Ontology.Conventions
     /// <remarks>
     ///     The normal schema was not modified due to high maintence of supporting multiple schemas with nhibernate.
     /// </remarks>
-    public class TableNamingConvention : IClassConvention
+    internal class TableNamingConvention : IClassConvention
     {
         /// <summary>
         ///     Formats the table name into schema_tableName, so that tables can be grouped together in the same schema.

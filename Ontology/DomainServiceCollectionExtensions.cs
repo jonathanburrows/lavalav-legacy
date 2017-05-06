@@ -42,9 +42,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddReferencedEntities(callingAssembly)
                 .BuildConfiguration();
 
+            var foreignIdConvention = new ForeignKeyIdConvention(configuration);
+            foreignIdConvention.AddForeignKeyIds();
+
             serviceCollection
                 .AddSingleton(domainOptions)
                 .AddSingleton(_ => configuration);
+
 
             return serviceCollection;
         }
@@ -115,7 +119,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // this was done to prevent a preview release version of xunit from crashing
             var ontologyAssembly = typeof(IEntity).GetTypeInfo().Assembly;
-            if (!assembly.GetReferencedAssemblies().Any(ra => ra.FullName == ontologyAssembly.FullName)) {
+            if (assembly.GetReferencedAssemblies().All(ra => ra.FullName != ontologyAssembly.FullName))
+            {
                 return false;
             }
 

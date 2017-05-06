@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using NHibernate.Mapping;
-using System;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
@@ -15,21 +14,8 @@ namespace lvl.Ontology.Tests
 
         public RequiredConventionTests(InMemoryDomainFixture domainFixture)
         {
-            if(domainFixture == null)
-            {
-                throw new ArgumentNullException(nameof(domainFixture));
-            }
-            if(domainFixture.Services == null)
-            {
-                throw new InvalidOperationException($"{nameof(domainFixture)}.{nameof(domainFixture.Services)} is null.");
-            }
-
             var configuration = domainFixture.Services.GetRequiredService<Configuration>();
             ClassMapping = configuration.GetClassMapping(typeof(RequiredConventionPoco));
-            if(ClassMapping == null)
-            {
-                throw new InvalidOperationException($"{nameof(RequiredConventionPoco)} was not properly registered.");
-            }
         }
 
         [Fact]

@@ -11,12 +11,12 @@ namespace lvl.Ontology.Conventions
     /// <summary>
     ///     Will set the database precision for strings, to prevent overflows from happening.
     /// </summary>
-    public class MaxLengthConvention : IPropertyConvention, IPropertyConventionAcceptance
+    internal class MaxLengthConvention : IPropertyConvention, IPropertyConventionAcceptance
     {
         /// <summary>
         ///     Will be used to set all string lengths which arent explicitly set.
         /// </summary>
-        public const int DefaultLength = 1024;
+        private const int DefaultLength = 1024;
 
         /// <summary>
         ///     Determines if a property needs a string length specified for the database.
@@ -40,7 +40,7 @@ namespace lvl.Ontology.Conventions
         ///     
         ///     If the property has a MaxLengthAttribute, then it's value is used. Otherwise, the default length is set.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="criteria"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="instance"/> is null.</exception>
         /// <param name="instance">The property which will be marked.</param>
         public void Apply(IPropertyInstance instance)
         {

@@ -11,7 +11,7 @@ namespace lvl.Ontology.Conventions
     /// <summary>
     ///     Will mark database fields as not null, to prevent the database generator from damaging integrity.
     /// </summary>
-    public class RequiredConvention : IPropertyConvention, IPropertyConventionAcceptance
+    internal class RequiredConvention : IPropertyConvention, IPropertyConventionAcceptance
     {
         /// <summary>
         ///     Determines if a property should be marked as not-null.

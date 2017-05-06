@@ -14,7 +14,7 @@ namespace lvl.Ontology.Conventions
         /// <summary>
         ///     The of the schema which the entity will be placed in.
         /// </summary>
-        public string Name { get; }
+        internal string Name { get; }
 
         public SchemaAttribute(string name)
         {
