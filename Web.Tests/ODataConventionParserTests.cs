@@ -920,7 +920,7 @@ namespace lvl.Web.Tests
             Assert.NotEmpty(filteredResult.Items);
         }
 
-        private async Task ClearRepositoryAsync<TEntity>(IRepository<TEntity> repository) where TEntity : class, IEntity
+        private async Task ClearRepositoryAsync<TEntity>(IRepository<TEntity> repository) where TEntity : Entity
         {
             foreach (var clearing in await repository.GetAsync())
             {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace lvl.Repositories
 {
     /// <inheritdoc />
-    public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : class, IEntity
+    public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : Entity
     {
         private SessionProvider SessionProvider { get; }
 
@@ -29,7 +29,7 @@ namespace lvl.Repositories
             }
         }
 
-        async Task<IEnumerable<IEntity>> IRepository.GetAsync()
+        async Task<IEnumerable<Entity>> IRepository.GetAsync()
         {
             return await GetAsync();
         }
@@ -78,7 +78,7 @@ namespace lvl.Repositories
             }
         }
 
-        async Task<IEntity> IRepository.GetAsync(int id)
+        async Task<Entity> IRepository.GetAsync(int id)
         {
             return await GetAsync(id);
         }
@@ -110,7 +110,7 @@ namespace lvl.Repositories
             return Task.FromResult(creating);
         }
 
-        async Task<IEntity> IRepository.CreateAsync(IEntity creating)
+        async Task<Entity> IRepository.CreateAsync(Entity creating)
         {
             var boxed = creating as TEntity;
             if (creating == null)
@@ -152,7 +152,7 @@ namespace lvl.Repositories
             return Task.FromResult(updating);
         }
 
-        async Task<IEntity> IRepository.UpdateAsync(IEntity updating)
+        async Task<Entity> IRepository.UpdateAsync(Entity updating)
         {
             var boxed = updating as TEntity;
             if (updating == null)
@@ -195,7 +195,7 @@ namespace lvl.Repositories
             return Task.FromResult(deleting);
         }
 
-        async Task<IEntity> IRepository.DeleteAsync(IEntity deleting)
+        async Task<Entity> IRepository.DeleteAsync(Entity deleting)
         {
             var boxed = deleting as TEntity;
             if (deleting == null)

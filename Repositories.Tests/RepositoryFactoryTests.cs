@@ -43,7 +43,7 @@ namespace lvl.Repositories.Tests
 
         [IntegrationTest]
         public void WhenConstructing_AndTypeIsntEntity_ArgumentExceptionIsThrown()
-        { 
+        {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             Assert.Throws<ArgumentException>(() => repositoryFactory.Construct(typeof(NonEntity)));
         }
@@ -63,10 +63,7 @@ namespace lvl.Repositories.Tests
             Assert.Throws<TargetInvocationException>(() => repositoryFactory.Construct(typeof(UnmappedEntity)));
         }
 
-        private class UnmappedEntity : IEntity
-        {
-            public int Id { get; set; }
-        }
+        private class UnmappedEntity : Entity { }
 
         private class NonEntity { }
     }

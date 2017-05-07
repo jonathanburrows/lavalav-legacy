@@ -108,10 +108,7 @@ namespace lvl.Repositories.Tests
         public SQLiteTypeResolverTests(SQLiteRepositoryFixture repositoryFixture) : base(repositoryFixture) { }
 
         /// <summary>Dulpicate named class</summary>
-        public class Planet : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class Planet : Entity { }
     }
 
     [Collection(RepositoriesMsSqlCollection.Name)]

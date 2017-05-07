@@ -5,12 +5,10 @@ using System.ComponentModel.DataAnnotations;
 namespace lvl.Web.Logging
 {
     /// <summary>
-    /// Represents information about server actions to be recorded.
+    ///     Represents information about server actions to be recorded.
     /// </summary>
-    public class LogEntry : IEntity
+    public class LogEntry : Entity
     {
-        public int Id { get; set; }
-
         [Required]
         public string MachineName { get; set; }
 

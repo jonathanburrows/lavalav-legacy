@@ -26,10 +26,8 @@ namespace lvl.Ontology.Tests
             Assert.True(foreignKeys.Any(key => key.ReferencedEntityName == typeof(ChildSon).FullName));
         }
 
-        public class SingleChildParent : IEntity
+        public class SingleChildParent : Entity
         {
-            public int Id { get; set; }
-
             [ForeignKeyId(typeof(ChildSon))]
             public int ChildSonId { get; set; }
         }
@@ -43,10 +41,8 @@ namespace lvl.Ontology.Tests
             Assert.Equal(foreignKeys.Count(), 2);
         }
 
-        public class DoubleChildParent : IEntity
+        public class DoubleChildParent : Entity
         {
-            public int Id { get; set; }
-
             [ForeignKeyId(typeof(ChildSon))]
             public int ChildSonId { get; set; }
 
@@ -63,10 +59,8 @@ namespace lvl.Ontology.Tests
             Assert.Equal(entityReferences.Count(), 2);
         }
 
-        public class DoubleChildSameClassParent : IEntity
+        public class DoubleChildSameClassParent : Entity
         {
-            public int Id { get; set; }
-
             [ForeignKeyId(typeof(ChildSon))]
             public int ChildSonId { get; set; }
 
@@ -83,10 +77,8 @@ namespace lvl.Ontology.Tests
             Assert.True(foreignKeys.Any(key => key.ReferencedEntityName == typeof(SelfReferencingParent).FullName));
         }
 
-        public class SelfReferencingParent : IEntity
+        public class SelfReferencingParent : Entity
         {
-            public int Id { get; set; }
-
             [ForeignKeyId(typeof(SelfReferencingParent))]
             public int? SelfReferencingParentId { get; set; }
         }
@@ -101,22 +93,14 @@ namespace lvl.Ontology.Tests
             Assert.Equal(column.Name, nameof(UniquelyNamedParent.HelloWorld));
         }
 
-        public class UniquelyNamedParent : IEntity
+        public class UniquelyNamedParent : Entity
         {
-            public int Id { get; set; }
-
             [ForeignKeyId(typeof(ChildSon))]
             public int HelloWorld { get; set; }
         }
 
-        public class ChildSon : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class ChildSon : Entity { }
 
-        public class ChildDaughter : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class ChildDaughter : Entity { }
     }
 }

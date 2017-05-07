@@ -46,7 +46,7 @@ namespace lvl.Web.Controllers
         /// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
         /// <exception cref="InvalidOperationException"><paramref name="entityName"/> is not a mapped type.</exception>
         [HttpGet("{entityName}")]
-        public async Task<IEnumerable<IEntity>> Get(string entityName)
+        public async Task<IEnumerable<Entity>> Get(string entityName)
         {
             if (entityName == null)
             {
@@ -69,7 +69,7 @@ namespace lvl.Web.Controllers
         /// <exception cref="InvalidOperationException">No matching entity could be found</exception>
         /// <exception cref="InvalidOperationException"><paramref name="entityName"/> is not a mapped type</exception>
         [HttpGet("{entityName}/{id}")]
-        public async Task<IEntity> Get(string entityName, int id)
+        public async Task<Entity> Get(string entityName, int id)
         {
             if (entityName == null)
             {
@@ -100,7 +100,7 @@ namespace lvl.Web.Controllers
         /// <exception cref="InvalidOperationException">The given entity already has an identifier.</exception>
         /// <remarks>The entity to be created must be attached to the body.</remarks>
         [HttpPost("{entityName}")]
-        public async Task<IEntity> Post(string entityName)
+        public async Task<Entity> Post(string entityName)
         {
             if (entityName == null)
             {
@@ -127,7 +127,7 @@ namespace lvl.Web.Controllers
         /// <exception cref="InvalidOperationException">There exist no entity with that identifier.</exception>
         /// <remarks>The entity to be updated must be attached to the body.</remarks>
         [HttpPut("{entityName}")]
-        public async Task<IEntity> Put(string entityName)
+        public async Task<Entity> Put(string entityName)
         {
             if (entityName == null)
             {
@@ -154,7 +154,7 @@ namespace lvl.Web.Controllers
         /// <exception cref="InvalidOperationException">There exist no entity with that identifier.</exception>
         /// <remarks>The entity to be deleted must be attached to the body.</remarks>
         [HttpDelete("{entityName}")]
-        public async Task<IEntity> Delete(string entityName)
+        public async Task<Entity> Delete(string entityName)
         {
             if (entityName == null)
             {

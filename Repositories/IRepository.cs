@@ -14,7 +14,7 @@ namespace lvl.Repositories
         /// Gets all entities in the repository.
         /// </summary>
         /// <returns>All entities in the repository.</returns>
-        Task<IEnumerable<IEntity>> GetAsync();
+        Task<IEnumerable<Entity>> GetAsync();
 
         /// <summary>
         /// Applies an odata query to the entities, and returns the result.
@@ -29,7 +29,7 @@ namespace lvl.Repositories
         /// </summary>
         /// <param name="id">The identifier of the desired entity.</param>
         /// <returns>The matching entity if one exists, null if no matching entity.</returns>
-        Task<IEntity> GetAsync(int id);
+        Task<Entity> GetAsync(int id);
 
         /// <summary>
         /// Creates an entity with all properties, and updates the model with any generated values.
@@ -37,7 +37,7 @@ namespace lvl.Repositories
         /// <param name="creating">The entity to be added.</param>
         /// <returns>The model with all generated values.</returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="creating"/> cannot be null.</exception>
-        Task<IEntity> CreateAsync(IEntity creating);
+        Task<Entity> CreateAsync(Entity creating);
 
         /// <summary>
         /// Updates an entity, whos identifier matches the given model, with all the model's fields.
@@ -46,7 +46,7 @@ namespace lvl.Repositories
         /// <returns>The model with updated properties which were generated.</returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="updating"/> cannot be null.</exception>
         /// <exception cref="System.InvalidOperationException">There exists no entity with a matching id.</exception>
-        Task<IEntity> UpdateAsync(IEntity updating);
+        Task<Entity> UpdateAsync(Entity updating);
 
         /// <summary>
         /// Deletes an entity, whos identifier matches the given model.
@@ -55,6 +55,6 @@ namespace lvl.Repositories
         /// <returns>The model which was deleted.</returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="deleting"/> cannot be null.</exception>
         /// <exception cref="System.InvalidOperationException">There exists no entity with a matching id.</exception>
-        Task<IEntity> DeleteAsync(IEntity deleting);
+        Task<Entity> DeleteAsync(Entity deleting);
     }
 }

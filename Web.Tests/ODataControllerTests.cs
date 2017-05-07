@@ -255,7 +255,7 @@ namespace lvl.Web.Tests
             Assert.False(getResult.IsSuccessStatusCode);
         }
 
-        private async Task EmptyRepositoryAsync<TEntity>(IRepository<TEntity> emptying) where TEntity : class, IEntity
+        private async Task EmptyRepositoryAsync<TEntity>(IRepository<TEntity> emptying) where TEntity : Entity
         {
             foreach (var entity in await emptying.GetAsync())
             {

@@ -100,13 +100,10 @@ namespace lvl.Repositories.Tests
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
-        private class UnmappedEntity : IEntity
-        {
-            public int Id { get; set; }
-        }
+        private class UnmappedEntity : Entity { }
 
         // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
-        private class MockRepository<TEntity> : Repository<TEntity> where TEntity : class, IEntity
+        private class MockRepository<TEntity> : Repository<TEntity> where TEntity : Entity
         {
             public MockRepository(SessionProvider sessionManager) : base(sessionManager) { }
         }

@@ -336,9 +336,6 @@ namespace lvl.Web.Tests
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
-        private class UnmappedEntity : IEntity
-        {
-            public int Id { get; set; }
-        }
+        private class UnmappedEntity : Entity { }
     }
 }

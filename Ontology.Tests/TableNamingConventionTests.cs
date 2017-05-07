@@ -26,10 +26,7 @@ namespace lvl.Ontology.Tests
             Assert.Equal(mapping.Table.Name, $"lvl_{nameof(NoTableNameOrSchema)}");
         }
 
-        public class NoTableNameOrSchema : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class NoTableNameOrSchema : Entity { }
 
         [Fact]
         public void It_uses_custom_schema_attribute()
@@ -40,10 +37,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Schema("Schema")]
-        public class NoTableNameButSchema : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class NoTableNameButSchema : Entity { }
 
         [Fact]
         public void It_uses_table_attribute()
@@ -54,10 +48,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Table("TableOnly")]
-        public class TableNameNoSchema : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class TableNameNoSchema : Entity { }
 
         [Fact]
         public void It_can_set_both_table_and_schema()
@@ -68,10 +59,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Table("Table", Schema = "Schema")]
-        public class BothTableNameAndSchema : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class BothTableNameAndSchema : Entity { }
 
         [Fact]
         public void Table_attribute_overrides_custom_schema()
@@ -82,9 +70,6 @@ namespace lvl.Ontology.Tests
         }
 
         [Table("MyTable", Schema = "Override"), Schema("Overridden")]
-        public class TableOverridesSchema : IEntity
-        {
-            public int Id { get; set; }
-        }
+        public class TableOverridesSchema : Entity { }
     }
 }

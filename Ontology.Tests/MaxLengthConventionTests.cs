@@ -38,10 +38,8 @@ namespace lvl.Ontology.Tests
             Assert.Equal(column.Length, 1231);
         }
 
-        public class MaxLengthConventionPoco : IEntity
+        public class MaxLengthConventionPoco : Entity
         {
-            public int Id { get; set; }
-
             public string PropertyWithoutAttribute { get; set; }
 
             [MaxLength(1231)]

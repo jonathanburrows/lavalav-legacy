@@ -86,8 +86,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var assemblyMapping = AutoMap
                 .Assemblies(assemblies.ToArray())
-                .Where(t => typeof(IEntity).IsAssignableFrom(t))
-                .IgnoreBase<IEntity>();
+                .Where(t => typeof(Entity).IsAssignableFrom(t))
+                .IgnoreBase<Entity>();
 
             var conventions = assemblyMapping.Conventions;
             conventions.Add(DefaultCascade.All());
@@ -118,13 +118,13 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             // this was done to prevent a preview release version of xunit from crashing
-            var ontologyAssembly = typeof(IEntity).GetTypeInfo().Assembly;
+            var ontologyAssembly = typeof(Entity).GetTypeInfo().Assembly;
             if (assembly.GetReferencedAssemblies().All(ra => ra.FullName != ontologyAssembly.FullName))
             {
                 return false;
             }
 
-            return assembly.ExportedTypes.Any(t => typeof(IEntity).IsAssignableFrom(t));
+            return assembly.ExportedTypes.Any(t => typeof(Entity).IsAssignableFrom(t));
         }
     }
 }

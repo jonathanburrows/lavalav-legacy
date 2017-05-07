@@ -51,10 +51,8 @@ namespace lvl.Ontology.Tests
             Assert.False(column.Unique);
         }
 
-        public class UniqueConventionPoco : IEntity
+        public class UniqueConventionPoco : Entity
         {
-            public int Id { get; set; }
-
             [Unique]
             public string Unique { get; set; }
 

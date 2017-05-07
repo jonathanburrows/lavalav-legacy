@@ -36,7 +36,7 @@ namespace lvl.TypescriptGenerator
             var typeConverter = new TypeConverter();
 
             // Due to a dynamic load bug, typeof(IEntity) != typeof(IEntity), so use guid comparison also
-            var ientity = typeof(IEntity);
+            var ientity = typeof(Entity);
             var entityTypes = assembly.GetExportedTypes().Where(t => ientity.IsAssignableFrom(t) || t.GUID == ientity.GUID);
 
             // we want to get any possible errors before writing, generate typescript first

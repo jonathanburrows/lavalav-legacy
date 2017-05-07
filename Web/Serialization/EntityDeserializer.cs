@@ -25,7 +25,7 @@ namespace lvl.Web.Serialization
         /// <exception cref="ArgumentNullException"><paramref name="deserializing"/> is null.</exception> 
         /// <exception cref="ArgumentException"><paramref name="entityType"/> does not implement from IEntity.</exception>
         /// <exception cref="JsonSerializationException">The stream cannot be deserialized to the given type.</exception>
-        public IEntity Deserialize(Stream deserializing, Type entityType)
+        public Entity Deserialize(Stream deserializing, Type entityType)
         {
             if (deserializing == null)
             {
@@ -35,9 +35,9 @@ namespace lvl.Web.Serialization
             {
                 throw new ArgumentNullException(nameof(entityType));
             }
-            if (!typeof(IEntity).IsAssignableFrom(entityType))
+            if (!typeof(Entity).IsAssignableFrom(entityType))
             {
-                throw new ArgumentException($"cannot deserialize {entityType}, as it does not implement {nameof(IEntity)}");
+                throw new ArgumentException($"cannot deserialize {entityType}, as it does not implement {nameof(Entity)}");
             }
 
             using (var streamReader = new StreamReader(deserializing))
@@ -47,7 +47,7 @@ namespace lvl.Web.Serialization
                 {
                     throw new ArgumentNullException(nameof(deserializing));
                 }
-                return (IEntity)JsonConvert.DeserializeObject(serialized, entityType, JsonSerializerSettings);
+                return (Entity)JsonConvert.DeserializeObject(serialized, entityType, JsonSerializerSettings);
             }
         }
     }

@@ -131,9 +131,8 @@ namespace lvl.Ontology.Tests
         }
 
         /// <summary>Used to test classes embedded in application</summary>
-        public class ModelInExecutingClass : IEntity
+        public class ModelInExecutingClass : Entity
         {
-            public int Id { get; set; }
         }
     }
 }

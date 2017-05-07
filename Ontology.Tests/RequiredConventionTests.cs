@@ -66,10 +66,8 @@ namespace lvl.Ontology.Tests
             Assert.False(property.IsNullable);
         }
 
-        public class RequiredConventionPoco : IEntity
+        public class RequiredConventionPoco : Entity
         {
-            public int Id { get; set; }
-
             public int NonNullableWithoutAttribute { get; set; }
 
             [Required]
