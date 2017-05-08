@@ -63,7 +63,7 @@ namespace lvl.Repositories.Tests
             Assert.Throws<TargetInvocationException>(() => repositoryFactory.Construct(typeof(UnmappedEntity)));
         }
 
-        private class UnmappedEntity : Entity { }
+        private class UnmappedEntity : Entity, IAggregateRoot { }
 
         private class NonEntity { }
     }

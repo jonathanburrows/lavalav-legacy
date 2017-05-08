@@ -7,7 +7,7 @@ namespace lvl.Web.Logging
     /// <summary>
     ///     Represents information about server actions to be recorded.
     /// </summary>
-    public class LogEntry : Entity
+    public class LogEntry : Entity, IAggregateRoot
     {
         [Required]
         public string MachineName { get; set; }

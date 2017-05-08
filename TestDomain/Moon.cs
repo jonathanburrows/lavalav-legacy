@@ -3,7 +3,7 @@ using lvl.Ontology.Conventions;
 
 namespace lvl.TestDomain
 {
-    public class Moon : Entity
+    public class Moon : Entity, IAggregateRoot
     {
         public string Name { get; set; }
         public decimal Radius { get; set; }

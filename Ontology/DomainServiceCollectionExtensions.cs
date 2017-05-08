@@ -97,6 +97,7 @@ namespace Microsoft.Extensions.DependencyInjection
             conventions.Add<RequiredConvention>();
             conventions.Add<TableNamingConvention>();
             conventions.Add<UniqueConvention>();
+            conventions.Add<InvalidAggregateRootReferenceConvention>();
 
             fluentConfiguration.ExposeConfiguration(assemblyMapping.Configure);
 

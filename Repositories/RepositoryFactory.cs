@@ -37,7 +37,7 @@ namespace lvl.Repositories
         /// <typeparam name="TEntity">The type of repository to be constructed.</typeparam>
         /// <returns>The constructed repository.</returns>
         /// <exception cref="InvalidOperationException">The entity type is not mapped to nhibernate.</exception>
-        public IRepository<TEntity> Construct<TEntity>() where TEntity : Entity
+        public IRepository<TEntity> Construct<TEntity>() where TEntity : Entity, IAggregateRoot
         {
             var mappedClasses = Configuration.ClassMappings.Select(c => c.MappedClass);
             if (!mappedClasses.Contains(typeof(TEntity)))

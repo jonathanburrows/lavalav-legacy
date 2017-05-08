@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace lvl.Repositories
 {
     /// <inheritdoc />
-    public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : Entity
+    public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : Entity, IAggregateRoot
     {
         private SessionProvider SessionProvider { get; }
 

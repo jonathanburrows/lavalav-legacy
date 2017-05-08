@@ -2,7 +2,7 @@
 using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Xunit;
 

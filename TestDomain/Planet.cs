@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace lvl.TestDomain
 {
-    public class Planet : Entity
+    public class Planet : Entity, IAggregateRoot
     {
         public string Name { get; set; }
         public bool SupportsLife { get; set; }

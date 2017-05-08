@@ -26,7 +26,7 @@ namespace lvl.Ontology.Tests
             Assert.True(foreignKeys.Any(key => key.ReferencedEntityName == typeof(ChildSon).FullName));
         }
 
-        public class SingleChildParent : Entity
+        public class SingleChildParent : Entity, IAggregateRoot
         {
             [ForeignKeyId(typeof(ChildSon))]
             public int ChildSonId { get; set; }

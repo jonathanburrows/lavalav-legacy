@@ -1,11 +1,12 @@
-﻿using NHibernate.Cfg;
+﻿using lvl.Ontology;
+using NHibernate.Cfg;
 using System;
 using System.Linq;
 
 namespace lvl.Repositories
 {
     /// <summary>
-    /// Converts strings to mapped types.
+    ///     Converts strings to mapped types.
     /// </summary>
     public class TypeResolver
     {
@@ -17,18 +18,21 @@ namespace lvl.Repositories
         }
 
         /// <summary>
-        /// Gets the mapped class with a matching name.
+        ///     Gets the mapped class with a matching name.
         /// </summary>
         /// <param name="entityType">
-        /// The name of the type to get. 
-        /// May be either a fully qualified name, or just the class name</param>
-        /// <returns>The mapped type with the given name</returns>
+        ///     The name of the type to get. 
+        ///     May be either a fully qualified name, or just the class name</param>
+        /// <returns>
+        ///     The mapped type with the given name
+        /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="entityType"/> cannot be null</exception>
         /// <exception cref="InvalidOperationException">No class with that name was mapped</exception>
         /// <exception cref="InvalidOperationException">More than one class with that name was mapped</exception>
+        /// <exception cref="InvalidOperationException">Entity type does not implement IAggregateRoot</exception>
         /// <remarks>
-        /// Name comparisons are case insensitive.
-        /// Fully qualified names take presidence over class names
+        ///     Name comparisons are case insensitive.
+        ///     Fully qualified names take presidence over class names
         /// </remarks>
         public virtual Type Resolve(string entityType)
         {
@@ -55,12 +59,17 @@ namespace lvl.Repositories
             {
                 throw new InvalidOperationException($"More than one entity with the name {entityType} was mapped");
             }
-            else if (matchingClasses.Any())
+            else if (!matchingClasses.Any())
+            {
+                throw new InvalidOperationException($"No entity was mapped with the class or fully qualified name {entityType}");
+            }
+            else if (!typeof(IAggregateRoot).IsAssignableFrom(matchingClasses.Single()))
+            {
+                throw new InvalidOperationException($"{entityType} does not implement {nameof(IAggregateRoot)}");
+            }
+            else
             {
                 return matchingClasses.Single();
-            }
-            else {
-                throw new InvalidOperationException($"No entity was mapped with the class or fully qualified name {entityType}");
             }
         }
     }
