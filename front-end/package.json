@@ -2,11 +2,19 @@
   "name": "@lvl/front-end",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/bundles/core.umd.js",
+  "main": "dist/bundles/lvl-front-end.umd.js",
   "scripts": {
     "generate-models": "dotnet run --project ../TypeScriptGenerator/TypeScriptGenerator.csproj -- --assembly-path=../lvl.Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
 
-    "test": "ng test"
+    "build.dev": "ng build --progress=false --output-path=./dist/dev",
+    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open",
+
+    "build.prod": "ng build --progress=false --prod --aot --output-path=./dist/prod",
+    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open",
+
+    "lint": "ng lint",
+    "test": "ng test --single-run --progress=false",
+    "e2e": "ng e2e --progress=false"
   },
   "dependencies": {
     "@angular/common": "4.0.0",
@@ -22,6 +30,7 @@
     "hammerjs": "2.0.8",
     "rxjs": "5.1.1",
     "ts-helpers": "1.1.2",
+    "web-animations-js": "2.2.5",
     "zone.js": "0.8.5"
   },
   "devDependencies": {

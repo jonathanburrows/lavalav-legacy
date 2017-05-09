@@ -1,0 +1,47 @@
+﻿{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "@lvl/front-end"
+  },
+  "apps": [
+    {
+      "root": "e2e",
+      "outDir": "dist",
+      "assets": [],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "../polyfills.ts",
+      "test": "../test.ts",
+      "tsconfig": "../tsconfig.json",
+      "testTsconfig": "../tsconfig.json",
+      "prefix": "lvl",
+      "styles": [
+      ],
+      "scripts": [],
+      "environmentSource": "../environments/environment.ts",
+      "environments": {
+        "dev": "../environments/environment.ts",
+        "prod": "../environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "tslint.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {}
+  }
+}
