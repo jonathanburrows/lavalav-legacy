@@ -1,5 +1,6 @@
 ﻿/*  This file is responsible for calling themes within the front end module. */
 @import '~@angular/material/theming';
+@import '~normalize-scss/sass/normalize'
 
 @include mat-core();
 
@@ -14,3 +15,5 @@ $lvl-default-theme: mat-light-theme($primary-color, $accent-color, $warning-colo
 body {
     margin: 0;
 }
+
+@include normalize();
