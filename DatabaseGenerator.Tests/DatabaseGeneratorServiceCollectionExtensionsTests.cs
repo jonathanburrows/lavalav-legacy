@@ -30,8 +30,23 @@ namespace lvl.DatabaseGenerator.Tests
         }
 
         [Fact]
-        public void AfterAddingDatabaseGeneration_ResolvingScriptRunner_ReturnsValue() {
+        public void AfterAddingDatabaseGeneration_ResolvingScriptRunner_ReturnsValue()
+        {
             var scriptRunner = Services.GetRequiredService<ScriptRunner>();
+            Assert.NotNull(scriptRunner);
+        }
+
+        [Fact]
+        public void AfterAddingDatabaseGeneration_ResolvingDatabaseGenerationOptions_ReturnsValue()
+        {
+            var scriptRunner = Services.GetRequiredService<DatabaseGenerationOptions>();
+            Assert.NotNull(scriptRunner);
+        }
+
+        [Fact]
+        public void AfterAddingDatabaseGeneration_ResolvingDatabaseGenerationRunner_ReturnsValue()
+        {
+            var scriptRunner = Services.GetRequiredService<DatabaseGenerationRunner>();
             Assert.NotNull(scriptRunner);
         }
     }

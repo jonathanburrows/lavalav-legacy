@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The given provider, with all services registered.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/> is null.</exception>
         /// <exception cref="InvalidOperationException">AddDomains has not been called.</exception>
-        public static IServiceCollection AddDatabaseGeneration(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddDatabaseGeneration(this IServiceCollection serviceCollection, DatabaseGenerationOptions options = null)
         {
             if (serviceCollection == null)
             {
@@ -30,9 +30,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException($"{nameof(DomainServiceCollectionExtensions.AddDomains)} has not been called");
             }
 
+            options = options ?? new DatabaseGenerationOptions();
+
+            serviceCollection.AddSingleton(options);
             serviceCollection.AddScoped<DatabaseCreator>();
             serviceCollection.AddScoped<DatabaseMigrator>();
             serviceCollection.AddScoped<ScriptRunner>();
+            serviceCollection.AddScoped<DatabaseGenerationRunner>();
 
             return serviceCollection;
         }

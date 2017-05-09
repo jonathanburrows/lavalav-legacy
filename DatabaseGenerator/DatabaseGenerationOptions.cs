@@ -9,9 +9,6 @@ namespace Microsoft.Extensions.DependencyInjection
     /// </summary>
     public class DatabaseGenerationOptions
     {
-        /// <summary>The connection to the database which will be created/migrated.</summary>
-        public string ConnectionString { get; set; }
-
         /// <summary>The path to the application which references the models.</summary>
         public string AssemblyPath { get; set; }
 

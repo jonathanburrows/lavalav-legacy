@@ -1,6 +1,5 @@
 ﻿using lvl.Ontology;
 using Microsoft.Extensions.DependencyInjection;
-using NHibernate.Cfg;
 
 namespace lvl.DatabaseGenerator
 {
@@ -20,62 +19,31 @@ namespace lvl.DatabaseGenerator
         public static void Main(string[] args)
         {
             var argumentParser = new ArgumentParser();
-            var options = argumentParser.Parse(args);
+
+            var domainOptions = new DomainOptions
+            {
+                ConnectionString = argumentParser.GetRequired<string>(args, "--connection-string")
+            };
+
+            var databaseGenerationOptions = new DatabaseGenerationOptions
+            {
+                AssemblyPath = argumentParser.GetRequired<string>(args, "--assembly-path"),
+                DryRun = argumentParser.HasFlag(args, "--dry-run"),
+                Migrate = argumentParser.HasFlag(args, "--migrate"),
+                PostGenerationScriptBin = argumentParser.GetOptional<string>(args, "--post-generation-script-bin"),
+                PreGenerationScriptBin = argumentParser.GetOptional<string>(args, "--pre-generation-script-bin")
+            };
 
             var assemblyLoader = new AssemblyLoader();
-            assemblyLoader.Load(options.AssemblyPath);
+            assemblyLoader.Load(databaseGenerationOptions.AssemblyPath);
 
             var services = new ServiceCollection()
-                .AddDomains(new DomainOptions { ConnectionString = options.ConnectionString })
-                .AddDatabaseGeneration()
+                .AddDomains(domainOptions)
+                .AddDatabaseGeneration(databaseGenerationOptions)
                 .BuildServiceProvider();
-            var scriptRunner = services.GetRequiredService<ScriptRunner>();
-            var configuration = services.GetRequiredService<Configuration>();
 
-            using (var sessionFactory = configuration.BuildSessionFactory())
-            using (var session = sessionFactory.OpenSession())
-            using (var transaction = session.BeginTransaction())
-            {
-
-                if (options.PreGenerationScriptBin != null)
-                {
-                    scriptRunner.RunScriptsInDirectory(options.PreGenerationScriptBin);
-                }
-
-                if (options.Migrate)
-                {
-                    var databaseMigrator = services.GetRequiredService<DatabaseMigrator>();
-
-                    if (options.DryRun)
-                    {
-                        databaseMigrator.DryRun();
-                    }
-                    else
-                    {
-                        databaseMigrator.Migrate();
-                    }
-                }
-                else
-                {
-                    var databaseCreator = services.GetRequiredService<DatabaseCreator>();
-
-                    if (options.DryRun)
-                    {
-                        databaseCreator.DryRun();
-                    }
-                    else
-                    {
-                        databaseCreator.Create();
-                    }
-                }
-
-                if (options.PostGenerationScriptBin != null)
-                {
-                    scriptRunner.RunScriptsInDirectory(options.PostGenerationScriptBin);
-                }
-
-                transaction.Commit();
-            }
+            var databaseGenerationRunner = services.GetRequiredService<DatabaseGenerationRunner>();
+            databaseGenerationRunner.Run();
         }
     }
 }

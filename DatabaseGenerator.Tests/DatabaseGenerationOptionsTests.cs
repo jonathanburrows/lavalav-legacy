@@ -39,21 +39,6 @@ namespace lvl.DatabaseGenerator.Tests
         }
 
         [Fact]
-        public void It_sets_connection_string_when_present()
-        {
-            var connectionString = "Server=.;Instance=test;Integrated_Security=true";
-            var configurationOptions = new Dictionary<string, string>
-            {
-                [$"database-generation:{nameof(DatabaseGenerationOptions.ConnectionString)}"] = connectionString
-            };
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection(configurationOptions).Build();
-
-            var options = new DatabaseGenerationOptions(configuration);
-
-            Assert.Equal(options.ConnectionString, connectionString);
-        }
-
-        [Fact]
         public void It_sets_assembly_path_when_present()
         {
             var assemblyPath = "./assembly-path";

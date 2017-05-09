@@ -14,222 +14,253 @@ namespace lvl.DatabaseGenerator.Tests
             ArgumentParser = argumentParser ?? throw new ArgumentNullException(nameof(argumentParser));
         }
 
-        [Theory]
-        [InlineData("--connection-string hello --assembly-path world --migrate")]
-        [InlineData("--assembly-path world --connection-string hello --migrate")]
-        [InlineData("--migrate --assembly-path world --connection-string hello")]
-        public void WhenParsing_ConnectionStringIsPopulated_RegardlessOfPosition(string argumentLine)
+        [Fact]
+        public void Has_flag_will_throw_argument_null_exception_when_args_are_null()
         {
-            var args = argumentLine.Split(' ');
-
-            var options = ArgumentParser.Parse(args);
-
-            Assert.NotNull(options.ConnectionString);
+            Assert.Throws<ArgumentNullException>(() => ArgumentParser.HasFlag(null, ""));
         }
 
         [Fact]
-        public void WhenParsing_AndConnectionStringIsMissing_ThrowsArgumentException()
+        public void Has_flag_will_throw_argument_null_exception_when_flag_is_null()
         {
-            var argumentLine = "--assembly-path world --migrate";
-            var args = argumentLine.Split(' ');
-
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            Assert.Throws<ArgumentNullException>(() => ArgumentParser.HasFlag(new string[0], null));
         }
 
         [Fact]
-        public void WhenParsing_AndConnectionStringHasSwitchWithNoValue_ThrowsArgumentException()
+        public void Has_flag_will_throw_invalid_operation_exception_when_flag_doesnt_start_with_dashes()
         {
-            var argumentLine = "--assembly-path world --connection-string --migrate";
-            var args = argumentLine.Split(' ');
-
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
-        }
-
-        [Fact]
-        public void WhenPrasing_AndConnectionStringSwitchIsLast_ThrowsArgumentException()
-        {
-            var argumentLine = "--assembly-path world --migrate --connection-string";
-            var args = argumentLine.Split(' ');
-
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.HasFlag(new string[0], "target"));
         }
 
         [Theory]
-        [InlineData("--assembly-path world --connection-string hello --migrate")]
-        [InlineData("--migrate --assembly-path world --connection-string hello")]
-        [InlineData("--connection-string hello --migrate --assembly-path world")]
-        public void WhenParsing_AssemblyPathIsPopulated_RegardlessOfPosition(string argumentLine)
+        [InlineData("--target --unimportant --irrelevant thing")]
+        [InlineData("--unimportant --target --irrelevant thing")]
+        [InlineData("--unimportant --irrelevant thing --target")]
+        public void Has_flag_will_return_true_if_flag_is_found_regardless_of_order(string arg)
         {
-            var args = argumentLine.Split(' ');
+            var args = arg.Split(' ');
 
-            var options = ArgumentParser.Parse(args);
-
-            Assert.NotNull(options.AssemblyPath);
+            Assert.True(ArgumentParser.HasFlag(args, "--target"));
         }
 
         [Fact]
-        public void WhenParsing_AndAssemblyPathIsMissing_ThrowsArgumentException()
+        public void Has_flag_will_return_false_if_flag_is_not_found()
         {
-            var argumentLine = "--migrate --connection-string hello";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--irrelevant" };
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            Assert.False(ArgumentParser.HasFlag(args, "--target"));
         }
 
         [Fact]
-        public void WhenParsing_AndAssemblyPathHasSwitchWithNoValue_ThrowsArgumentException()
+        public void Has_flag_is_case_insensitive()
         {
-            var argumentLine = "--migrate --assembly-path --connection-string hello";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--tArGeT" };
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            Assert.True(ArgumentParser.HasFlag(args, "--target"));
         }
 
         [Fact]
-        public void WhenParsing_AndAssemblyPathSwitchIsLast_ThrowsArgumentException()
+        public void Get_optional_will_throw_argument_null_exception_when_args_are_null()
         {
-            var argumentLine = "--migrate --connection-string hello --assembly-path";
-            var args = argumentLine.Split(' ');
+            Assert.Throws<ArgumentNullException>(() => ArgumentParser.GetOptional<string>(null, ""));
+        }
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+        [Fact]
+        public void Get_optional_will_throw_argument_null_exception_when_key_is_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => ArgumentParser.GetOptional<string>(new string[0], null));
+        }
+
+        [Fact]
+        public void Get_optional_will_throw_invalid_operation_exception_when_next_value_is_key()
+        {
+            var args = new[] { "--target", "--next" };
+
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetOptional<string>(args, "--target"));
+        }
+
+        [Fact]
+        public void Get_optional_will_throw_invalid_operation_exception_when_key_is_last()
+        {
+            var args = new[] { "--first", "--target" };
+
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetOptional<string>(args, "--target"));
+        }
+
+        [Fact]
+        public void Get_optional_will_throw_invalid_operation_exception_when_key_doesnt_start_with_dashes()
+        {
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetOptional<string>(new string[0], "target"));
         }
 
         [Theory]
-        [InlineData("--pre-generation-script-bin world --connection-string hello --assembly-path world")]
-        [InlineData("--assembly-path hello --pre-generation-script-bin world --connection-string hello")]
-        [InlineData("--connection-string hello --assembly-path world --pre-generation-script-bin world")]
-        public void WhenParsing_PreGenerationIsPopulated_RegardlessOfPosition(string argumentLine)
+        [InlineData("--important value --unimportant --irrelevant thing")]
+        [InlineData("--unimportant --important value --irrelevant thing")]
+        [InlineData("--unimportant --irrelevant thing --important value")]
+        public void Get_optional_will_return_value_regardless_of_order(string arg)
         {
-            var args = argumentLine.Split(' ');
+            var args = arg.Split(' ');
 
-            var options = ArgumentParser.Parse(args);
+            var value = ArgumentParser.GetOptional<string>(args, "--important");
 
-            Assert.NotNull(options.PreGenerationScriptBin);
+            Assert.Equal(value, "value");
         }
 
         [Fact]
-        public void WhenParsing_AndPreGenerationIsntProvided_OptionsAreStillReturned()
+        public void Get_optional_is_case_insensitive()
         {
-            var argumentLine = "--migrate --connection-string hello --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--TarGet", "value" };
 
-            var options = ArgumentParser.Parse(args);
+            var value = ArgumentParser.GetOptional<string>(args, "--target");
 
-            Assert.Null(options.PreGenerationScriptBin);
+            Assert.Equal(value, "value");
         }
 
         [Fact]
-        public void WhenParsing_AndPreGenerationHasSwitchWithNoValue_ArgumentExceptionIsThrown()
+        public void Get_optional_will_return_default_if_key_not_found()
         {
-            var argumentLine = "--migrate --pre-generation-script-bin --connection-string hello --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new string[0];
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            var value = ArgumentParser.GetOptional<string>(args, "--non-existant");
+
+            Assert.Null(value);
         }
 
         [Fact]
-        public void WhenParsing_AndPreGenerationSwitchIsLast_ArgumentExceptionIsThrown()
+        public void Get_optional_can_parse_numbers()
         {
-            var argumentLine = "--migrate --connection-string hello --pre-generation-script-bin --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--target", "1" };
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            var value = ArgumentParser.GetOptional<int>(args, "--target");
+
+            Assert.Equal(value, 1);
+        }
+
+        [Fact]
+        public void Get_optional_can_parse_nullable_numbers()
+        {
+            var args = new[] { "--target", "1" };
+
+            var value = ArgumentParser.GetOptional<int?>(args, "--target");
+
+            Assert.Equal(value, 1);
+        }
+
+        [Fact]
+        public void Get_optional_will_parse_booleans()
+        {
+            var args = new[] { "--target", "true" };
+
+            var value = ArgumentParser.GetOptional<bool>(args, "--target");
+
+            Assert.Equal(value, true);
+        }
+
+        [Fact]
+        public void Get_required_will_throw_argument_null_exception_when_args_are_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => ArgumentParser.GetRequired<string>(null, ""));
+        }
+
+        [Fact]
+        public void Get_required_will_throw_argument_null_exception_when_key_is_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => ArgumentParser.GetRequired<string>(new string[0], null));
+        }
+
+        [Fact]
+        public void Get_required_will_throw_invalid_operation_exception_when_next_value_is_key()
+        {
+            var args = new[] { "--target", "--next" };
+
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetRequired<string>(args, "--target"));
+        }
+
+        [Fact]
+        public void Get_required_will_throw_invalid_operation_exception_when_key_is_last()
+        {
+            var args = new[] { "--first", "--target" };
+
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetRequired<string>(args, "--target"));
+        }
+
+        [Fact]
+        public void Get_required_will_throw_invalid_operation_exception_when_key_is_not_found()
+        {
+            var args = new[] { "--first", "--target" };
+
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetRequired<string>(args, "--target"));
+        }
+
+        [Fact]
+        public void Get_required_will_throw_invalid_operation_exception_when_key_does_not_start_with_dashes()
+        {
+            var args = new[] { "--target", "target" };
+
+            Assert.Throws<InvalidOperationException>(() => ArgumentParser.GetRequired<string>(args, "target"));
         }
 
         [Theory]
-        [InlineData("--post-generation-script-bin world --connection-string hello --assembly-path hello")]
-        [InlineData("--assembly-path hello --post-generation-script-bin world --connection-string hello")]
-        [InlineData("--connection-string hello --assembly-path world --post-generation-script-bin world")]
-        public void WhenParsing_PostGenerationIsPopulated_RegardlessOfPosition(string argumentLine)
+        [InlineData("--important value --unimportant --irrelevant thing")]
+        [InlineData("--unimportant --important value --irrelevant thing")]
+        [InlineData("--unimportant --irrelevant thing --important value")]
+        public void Get_required_will_return_value_regardless_of_order(string arg)
         {
-            var args = argumentLine.Split(' ');
+            var args = arg.Split(' ');
 
-            var options = ArgumentParser.Parse(args);
+            var value = ArgumentParser.GetOptional<string>(args, "--important");
 
-            Assert.NotNull(options.PostGenerationScriptBin);
+            Assert.Equal(value, "value");
         }
 
         [Fact]
-        public void WhenParsing_AndPostGenerationIsntProvided_OptionsAreStillReturned()
+        public void Get_required_is_case_insensitive()
         {
-            var argumentLine = "--migrate --connection-string hello --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--TarGet", "value" };
 
-            var options = ArgumentParser.Parse(args);
+            var value = ArgumentParser.GetRequired<string>(args, "--target");
 
-            Assert.Null(options.PostGenerationScriptBin);
+            Assert.Equal(value, "value");
         }
 
         [Fact]
-        public void WhenParsing_AndPostGenerationHasSwitchWithNoValue_ArgumentExceptionIsThrown()
+        public void Get_required_will_return_default_if_key_not_found()
         {
-            var argumentLine = "--migrate --post-generation-script-bin --connection-string hello --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new string[0];
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
+            var value = ArgumentParser.GetOptional<string>(args, "--non-existant");
+
+            Assert.Null(value);
         }
 
         [Fact]
-        public void WhenParsing_AndPostGenerationSwitchIsLast_ArgumentExceptionIsThrown()
+        public void Get_required_can_parse_numbers()
         {
-            var argumentLine = "--migrate --connection-string hello --assembly-path world --post-generation-script-bin";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--target", "1" };
 
-            Assert.Throws<ArgumentException>(() => ArgumentParser.Parse(args));
-        }
+            var value = ArgumentParser.GetOptional<int>(args, "--target");
 
-        [Theory]
-        [InlineData("--migrate --connection-string hello --assembly-path world")]
-        [InlineData("--assembly-path world --migrate --connection-string hello")]
-        [InlineData("--connection-string hello --assembly-path world --migrate")]
-        public void WhenParsing_MigrateIsFlaged_RegardlessOfPosition(string argumentLine)
-        {
-            var args = argumentLine.Split(' ');
-
-            var options = ArgumentParser.Parse(args);
-
-            Assert.True(options.Migrate);
+            Assert.Equal(value, 1);
         }
 
         [Fact]
-        public void WhenParsing_AndMigrateIsntProvided_OptionsAreStillReturned()
+        public void Get_required_can_parse_nullable_numbers()
         {
-            var argumentLine = "--connection-string hello --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--target", "1" };
 
-            var options = ArgumentParser.Parse(args);
+            var value = ArgumentParser.GetOptional<int?>(args, "--target");
 
-            Assert.False(options.Migrate);
-        }
-
-        [Theory]
-        [InlineData("--dry-run --connection-string hello --assembly-path world")]
-        [InlineData("--assembly-path world --dry-run --connection-string hello")]
-        [InlineData("--connection-string hello --assembly-path world --dry-run")]
-        public void WhenParsing_DryRunIsFlaged_RegardlessOfPosition(string argumentLine)
-        {
-            var args = argumentLine.Split(' ');
-
-            var options = ArgumentParser.Parse(args);
-
-            Assert.True(options.DryRun);
+            Assert.Equal(value, 1);
         }
 
         [Fact]
-        public void WhenParsing_AndDryRunIsntProvided_OptionsAreStillReturned()
+        public void Get_required_will_parse_booleans()
         {
-            var argumentLine = "--connection-string hello --assembly-path world";
-            var args = argumentLine.Split(' ');
+            var args = new[] { "--target", "true" };
 
-            var options = ArgumentParser.Parse(args);
+            var value = ArgumentParser.GetOptional<bool>(args, "--target");
 
-            Assert.False(options.DryRun);
-        }
-
-        [Fact]
-        public void WhenParsing_AndArgumentsAreNull_ArgumentNullExceptionIsThrown()
-        {
-            Assert.Throws<ArgumentNullException>(() => ArgumentParser.Parse(null));
+            Assert.Equal(value, true);
         }
     }
 }
