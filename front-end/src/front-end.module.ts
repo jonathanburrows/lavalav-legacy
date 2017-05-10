@@ -1,9 +1,14 @@
 ﻿import { NgModule } from '@angular/core';
 
-import { LocalStorageService, StorageService } from './services';
+import {
+    HeadersService,
+    LocalStorageService,
+    StorageService
+} from './services';
 
 @NgModule({
     providers: [
+        HeadersService,
         { provide: StorageService, useClass: LocalStorageService }
     ]
 })
