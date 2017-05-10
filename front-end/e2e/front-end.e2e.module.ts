@@ -18,7 +18,9 @@ import {
     imports: [
         BrowserModule,
         RouterModule.forRoot([]),
-        FrontEndModule
+        FrontEndModule.useWithOptions({
+            resourceServerUrl: 'http://localhost:5000'
+        })
     ],
     bootstrap: [AppE2eComponent]
 })
