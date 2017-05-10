@@ -2,6 +2,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
+import { FrontEndModule } from '../src';
+
 import {
     AppE2eComponent
 } from './components';
@@ -14,8 +16,9 @@ import {
         AppE2eComponent
     ],
     imports: [
+        BrowserModule,
         RouterModule.forRoot([]),
-        BrowserModule
+        FrontEndModule
     ],
     bootstrap: [AppE2eComponent]
 })
