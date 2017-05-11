@@ -36,8 +36,8 @@ namespace lvl.TypescriptGenerator
             var typeConverter = new TypeConverter();
 
             // Due to a dynamic load bug, typeof(IEntity) != typeof(IEntity), so use guid comparison also
-            var ientity = typeof(Entity);
-            var entityTypes = assembly.GetExportedTypes().Where(t => ientity.IsAssignableFrom(t) || t.GUID == ientity.GUID);
+            var baseTypes = new[] { typeof(Entity), typeof(IAggregateRoot), typeof(IAggregateScope<>) };
+            var entityTypes = assembly.GetExportedTypes().Where(t => baseTypes.Any(baseType => baseType.IsAssignableFrom(t) || t.GUID == baseType.GUID));
 
             // we want to get any possible errors before writing, generate typescript first
             var tsTypes = entityTypes.Select(t => typeConverter.CsToTypeScript(t, generationOptions)).ToList();

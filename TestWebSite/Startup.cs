@@ -11,11 +11,21 @@ namespace lvl.TestWebSite
     {
         public virtual void ConfigureServices(IServiceCollection services)
         {
+            var options = new WebOptions
+            {
+                Cors = new CorsOptions
+                {
+                    AllowOrigins = new[] { "*" },
+                    AllowHeaders = new[] { "*" },
+                    AllowMethods = new[] { "*" }
+                }
+            };
+
             services
                 .AddDomains()
                 .AddDatabaseGeneration()
                 .AddRepositories()
-                .AddWeb();
+                .AddWeb(options);
         }
 
         public virtual void Configure(IApplicationBuilder app)

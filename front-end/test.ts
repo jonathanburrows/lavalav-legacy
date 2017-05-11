@@ -12,6 +12,9 @@ import {
     platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
+import { TestFixtures } from './testing';
+import { FrontEndE2eModule } from './e2e/front-end.e2e.module';
+
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
 declare var require: any;
@@ -24,8 +27,9 @@ getTestBed().initTestEnvironment(
     BrowserDynamicTestingModule,
     platformBrowserDynamicTesting()
 );
-// Then we find all the tests.
+TestFixtures.initTestBed(FrontEndE2eModule, BrowserDynamicTestingModule, platformBrowserDynamicTesting());
 
+// Then we find all the tests.
 const srcContext = require.context('./src', true, /\.spec\.ts$/);
 srcContext.keys().map(srcContext);
 

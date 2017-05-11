@@ -39,7 +39,7 @@ namespace lvl.TypescriptGenerator
             }
 
             var tsType = converting.IsInterface ? (TypeScriptType)new TypeScriptInterface() : new TypeScriptClass { IsAbstract = converting.IsAbstract };
-            tsType.Name = converting.Name;
+            tsType.Name = GetTypeName(converting);
 
             if (converting.BaseType != typeof(object) && converting.BaseType != null)
             {
@@ -48,6 +48,7 @@ namespace lvl.TypescriptGenerator
 
             tsType.Interfaces = converting.GetInterfaces().Select(i => ConvertImportedType(i, generationOptions)).ToList();
             tsType.Properties = converting.GetProperties().Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
+            tsType.GenericArguments = converting.GetGenericArguments().Select(p => ConvertGenericArgument(p, generationOptions)).ToList();
             tsType.IsVisible = converting.IsVisible;
 
             return tsType;
@@ -171,6 +172,27 @@ namespace lvl.TypescriptGenerator
             }
         }
 
+        /// <summary>
+        ///     Provides information on generic type parameters and constraints.
+        /// </summary>
+        /// <param name="genericArgument">The generic argument type.</param>
+        /// <param name="generationOptions">The options, including mapping to different npm packages.</param>
+        /// <returns>The converted type for the generic argument.</returns>
+        private TypeScriptType ConvertGenericArgument(Type genericArgument, TypeScriptGenerationOptions generationOptions)
+        {
+            if (!genericArgument.IsGenericParameter)
+            {
+                throw new InvalidOperationException("Type is not a generic parameter");
+            }
+            var constraints = genericArgument.GetGenericParameterConstraints().Select(constraint => ConvertImportedType(constraint, generationOptions)).ToList();
+
+            return new TypeScriptClass
+            {
+                Name = genericArgument.Name,
+                GenericConstraints = constraints
+            };
+        }
+
         private string GetPathForType(Type type, TypeScriptGenerationOptions generationOptions)
         {
             var packageForNamespace = generationOptions.PackageForNamespace;
@@ -184,7 +206,8 @@ namespace lvl.TypescriptGenerator
             }
             else
             {
-                return $"./{type.Name.ToDashed()}";
+                var friendlyName = type.Name.Split('`')[0];
+                return $"./{friendlyName.ToDashed()}";
             }
         }
 
@@ -211,6 +234,11 @@ namespace lvl.TypescriptGenerator
             if (typeof(string).IsAssignableFrom(type))
             {
                 return "string";
+            }
+
+            if (type.IsGenericType)
+            {
+                return type.Name.Split('`')[0];
             }
 
             return type.Name;

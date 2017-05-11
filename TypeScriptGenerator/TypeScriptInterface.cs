@@ -25,17 +25,16 @@ namespace lvl.TypescriptGenerator
 
                 var name = p.Name.ToPascal();
 
-                return $"{name}{optionalStatement}: {typeStatement};";
+                return $"    {Environment.NewLine}{name}{optionalStatement}: {typeStatement};";
             });
-            return string.Join(Environment.NewLine + "    ", properties);
+            return string.Join("", properties);
         }
 
         /// <inheritdoc />
         public override string ToTypeScript()
         {
             return
-$@"{GetImportStatements()}export interface {Name} {GetImplementationStatements()}{{
-    {GetPropertyStatements()}
+$@"{GetImportStatements()}export interface {Name}{GetGenericStatements()} {GetImplementationStatements()}{{{GetPropertyStatements()}
 }}
 ";
         }

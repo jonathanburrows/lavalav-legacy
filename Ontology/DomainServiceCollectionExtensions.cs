@@ -91,6 +91,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var conventions = assemblyMapping.Conventions;
             conventions.Add(DefaultCascade.All());
+            conventions.Add(DefaultLazy.Never());
             conventions.Add(LazyLoad.Never());
             conventions.Add(ForeignKey.EndsWith("Id"));
             conventions.Add<MaxLengthConvention>();

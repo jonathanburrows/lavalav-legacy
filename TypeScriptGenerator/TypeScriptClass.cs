@@ -55,12 +55,54 @@ namespace lvl.TypescriptGenerator
             return string.Join(Environment.NewLine + "    ", properties);
         }
 
+        /// <summary>
+        /// Will generate the constructor, with the options for properties.
+        /// </summary>
+        /// <returns></returns>
+        private string GetConstructor() {
+            if (!Properties.Any())
+            {
+                return string.Empty;
+            }
+            else
+            {
+                var propertyAssignments = Properties.Select(property => {
+                    var name = property.Name.ToPascal();
+
+                    if (property.PropertyType.IsPrimitive)
+                    {
+                        return $"this.{name} = options.{name};";
+                    }
+                    else if (property.PropertyType.IsCollection)
+                    {
+                        return $"if (options.{name}) {{\r\n                this.{name} = options.{name}.map(p => new {property.PropertyType.Name}(p));\r\n            }}";
+                    }
+                    else
+                    {
+                        return $@"this.{name} = new {property.PropertyType.Name}(options.{name});";
+                    }
+                });
+
+                var propertyStatement = string.Join($"{Environment.NewLine}            ", propertyAssignments);
+
+                return
+$@"
+
+    constructor(options?: {Name}) {{
+        super();
+        if (options) {{
+            {propertyStatement}
+        }}
+    }}";
+            }
+        }
+
         /// <inheritdoc />
         public override string ToTypeScript()
         {
             return
-$@"{GetImportStatements()}export {GetAbstractStatement()}class {Name} {GetExtendStatement()}{GetImplementationStatements()}{{
-    {GetPropertyStatements()}
+$@"{GetImportStatements()}export {GetAbstractStatement()}class {Name}{GetGenericStatements()} {GetExtendStatement()}{GetImplementationStatements()}{{
+    {GetPropertyStatements()}{GetConstructor()}
 }}
 ";
         }

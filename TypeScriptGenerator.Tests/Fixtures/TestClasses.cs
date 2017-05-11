@@ -306,6 +306,32 @@ namespace lvl.TypeScriptGenerator.Tests.Fixtures
         SecondExternalLibrary.IFirstInterface FirstProperty { get; set; }
         ExternalLibrary.ISecondInterface SecondProperty { get; set; }
     }
+
+    public interface IGenericInterfaceNoConstraints<TType> { }
+
+    public interface IGenericInterfaceSingleConstraint<TBaseInterface> where TBaseInterface : IBareInterface { }
+
+    public interface IGenericInterfaceDoubleConstraint<T> where T : BareClass, IBareInterface { }
+
+    public interface IGenericDoubleInterface<TFirst, TSecond> { }
+
+    public class GenericInterfaceImporter
+    {
+        public IGenericInterfaceNoConstraints<IBareInterface> Property { get; set; }
+    }
+
+    public class GenericClassNoConstraint<TType> { }
+
+    public class GenericClassSingleConstraint<TBareClass> where TBareClass : BareClass { }
+
+    public class GenericClassDoubleConstraint<T> where T : BareClass, IBareInterface { }
+
+    public class GenericClassDouble<TFirst, TSecond> { }
+
+    public class GenericClassImporter
+    {
+        public GenericClassNoConstraint<BareClass> Property { get; set; }
+    }
 }
 
 namespace lvl.ExternalLibrary

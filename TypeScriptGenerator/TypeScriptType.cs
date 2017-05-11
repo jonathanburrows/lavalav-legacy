@@ -30,6 +30,13 @@ namespace lvl.TypescriptGenerator
         /// <summary>Represents the accessible properties for the type.</summary>
         public IList<TypeScriptProperty> Properties { get; set; }
 
+        /// <summary>Represents generic types.</summary>
+        public IList<TypeScriptType> GenericArguments { get; set; }
+
+        /// <summary>Represents constraints on the generic type.</summary>
+        /// <remarks>This means that this type is a generic argument. </remarks>
+        public IList<TypeScriptType> GenericConstraints { get; set; }
+
         /// <summary>Denotes if this is a global primative type.</summary>
         public bool IsPrimitive { get; set; }
 
@@ -106,8 +113,13 @@ namespace lvl.TypescriptGenerator
             }
 
             var propertyTypes = Properties.Select(p => p.PropertyType).Where(p => !p.IsPrimitive);
+
             var decoratorTypes = Properties.SelectMany(p => p.Decorators);
-            var dependencies = propertyTypes.Union(Interfaces).Union(decoratorTypes);
+
+            var constraintTypes = GenericArguments.SelectMany(g => g.GenericConstraints);
+
+            var dependencies = propertyTypes.Union(Interfaces).Union(decoratorTypes).Union(constraintTypes);
+
             if (BaseType != null)
             {
                 return dependencies.Union(new[] { BaseType }).OrderBy(d => d.ModulePath);
@@ -122,7 +134,7 @@ namespace lvl.TypescriptGenerator
         /// Will construct the necissary statements for interface implementation.
         /// </summary>
         /// <returns>The typescript for implementing interfaces.</returns>
-        public string GetImplementationStatements()
+        protected string GetImplementationStatements()
         {
             if (!Interfaces.Any())
             {
@@ -131,6 +143,24 @@ namespace lvl.TypescriptGenerator
 
             var interfaces = string.Join(", ", Interfaces.Select(i => i.Alias ?? i.Name));
             return $"implements {interfaces} ";
+        }
+
+        protected string GetGenericStatements()
+        {
+            if (!GenericArguments.Any())
+            {
+                return string.Empty;
+            }
+            else
+            {
+                var statements = GenericArguments.Select(ga =>
+                {
+                    var constraints = ga.GenericConstraints.Select(c => c.Name);
+                    var extends = constraints.Any() ? $" extends {string.Join(", ", constraints)}" : string.Empty;
+                    return $"{ga.Name}{extends}";
+                });
+                return $"<{string.Join(", ", statements)}>";
+            }
         }
 
         /// <summary>

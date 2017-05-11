@@ -1,6 +1,7 @@
 ﻿import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import {
+    ApiService,
     FrontEndOptions,
     HeadersService,
     LocalStorageService,
@@ -9,6 +10,7 @@ import {
 
 @NgModule({
     providers: [
+        ApiService,
         HeadersService,
         { provide: StorageService, useClass: LocalStorageService }
     ]

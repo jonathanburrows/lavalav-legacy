@@ -561,7 +561,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export class ManglingPropertyAndBaseClass extends FirstClass_1 {{{NewLine}    public firstProperty: FirstClass;", tsContent);
+            Assert.Matches($"export class ManglingPropertyAndBaseClass extends FirstClass_1 {{", tsContent);
         }
 
         [Fact]
@@ -815,6 +815,138 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsContent = tsType.ToTypeScript();
 
             Assert.StartsWith($"import {{ ISecondInterface }} from '@lvl/external-library';{NewLine}import {{ IFirstInterface }} from '@lvl/second-external-library';{NewLine}{NewLine}", tsContent);
+        }
+
+        [Fact]
+        public void Generic_interface_has_brackets_containing_type()
+        {
+            var type = typeof(IGenericInterfaceNoConstraints<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export interface IGenericInterfaceNoConstraints<TType> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_interface_with_constraint_shows_with_extends()
+        {
+            var type = typeof(IGenericInterfaceSingleConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export interface IGenericInterfaceSingleConstraint<TBaseInterface extends IBareInterface> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_interface_with_constraint_will_import_constraint()
+        {
+            var type = typeof(IGenericInterfaceSingleConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.StartsWith($"import {{ IBareInterface }} from './ibare-interface';{NewLine}{NewLine}", tsContent);
+        }
+
+        [Fact]
+        public void Generic_interface_with_two_constraints_shows_in_extends()
+        {
+            var type = typeof(IGenericInterfaceDoubleConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export interface IGenericInterfaceDoubleConstraint<T extends BareClass, IBareInterface> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_interface_with_two_types_shows_both()
+        {
+            var type = typeof(IGenericDoubleInterface<,>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export interface IGenericDoubleInterface<TFirst, TSecond> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_interface_being_imported_will_not_include_generic_parameter()
+        {
+            var type = typeof(GenericInterfaceImporter);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"import {{ IGenericInterfaceNoConstraints }} from './igeneric-interface-no-constraints';{NewLine}{NewLine}", tsContent);
+        }
+
+        [Fact]
+        public void Generic_class_has_brackets_containing_type()
+        {
+            var type = typeof(GenericClassNoConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export class GenericClassNoConstraint<TType> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_class_with_constraint_shows_with_extends()
+        {
+            var type = typeof(GenericClassSingleConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export class GenericClassSingleConstraint<TBareClass extends BareClass> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_class_with_constraint_will_import_constraint()
+        {
+            var type = typeof(GenericClassSingleConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.StartsWith($"import {{ BareClass }} from './bare-class';{NewLine}{NewLine}", tsContent);
+        }
+
+        [Fact]
+        public void Generic_class_with_two_constraints_shows_in_extends()
+        {
+            var type = typeof(GenericClassDoubleConstraint<>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export class GenericClassDoubleConstraint<T extends BareClass, IBareInterface> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_class_with_two_types_shows_both()
+        {
+            var type = typeof(GenericClassDouble<,>);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"export class GenericClassDouble<TFirst, TSecond> {{", tsContent);
+        }
+
+        [Fact]
+        public void Generic_class_being_imported_will_not_include_generic_parameter()
+        {
+            var type = typeof(GenericClassImporter);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains($"import {{ GenericClassNoConstraint }} from './generic-class-no-constraint';{NewLine}{NewLine}", tsContent);
         }
     }
 }
