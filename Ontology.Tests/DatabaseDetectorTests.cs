@@ -4,6 +4,8 @@ using NHibernate.Cfg;
 using System;
 using lvl.Ontology.Database;
 using Xunit;
+using System.Data.SqlClient;
+using FluentNHibernate.Cfg;
 
 namespace lvl.Ontology.Tests
 {
@@ -61,30 +63,6 @@ namespace lvl.Ontology.Tests
             var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
 
             Assert.Equal(databaseVendor, DatabaseVendor.SQLite);
-        }
-
-        [Fact]
-        public void WhenDetecting_WhenMsSqlIsConfigured_MsSqlIsReturned()
-        {
-            var domainOptions = new DomainOptions { ConnectionString = @"Server=.;Database=lvl;Trusted_Connection=True;" };
-            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
-            var configuration = services.GetRequiredService<Configuration>();
-
-            var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
-
-            Assert.Equal(DatabaseVendor.MsSql, databaseVendor);
-        }
-
-        [Fact]
-        public void WhenDetecting_WhenOracleIsConfigured_OracleIsReturned()
-        {
-            var domainOptions = new DomainOptions { ConnectionString = @"Data Source=lvl;Integrated Security=yes;" };
-            var services = new ServiceCollection().AddDomains(domainOptions).BuildServiceProvider();
-            var configuration = services.GetRequiredService<Configuration>();
-
-            var databaseVendor = DatabaseDetector.GetConfigurationsVendor(configuration);
-
-            Assert.Equal(databaseVendor, DatabaseVendor.Oracle);
         }
     }
 }

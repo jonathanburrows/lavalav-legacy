@@ -84,43 +84,6 @@ namespace lvl.Ontology.Tests
         }
 
         [Theory]
-        [InlineData(@"Server=.;Database=lvl;User Id=admin;Password=password;")]
-        [InlineData(@"Server=.;Database=lvl;Trusted_Connection=True;")]
-        [InlineData(@"Data Source=.;Initial Catalog=lvl;Integrated Security=SSPI;User ID=.\admin;Password=password;")]
-        public void IfSqlServerConnectionString_WhenAddingDomain_SqlServerIsConfigured(string sqlServerConnectionString)
-        {
-            var domainOptions = new DomainOptions { ConnectionString = sqlServerConnectionString };
-            var services = new ServiceCollection()
-                .AddDomains(domainOptions)
-                .BuildServiceProvider();
-            var configuration = services.GetRequiredService<Configuration>();
-
-            var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
-            var driver = configuration.GetProperty(driverKey);
-
-            var sqlServerDriver = typeof(SqlClientDriver).AssemblyQualifiedName;
-            Assert.Equal(sqlServerDriver, driver);
-        }
-
-        [Theory]
-        [InlineData(@"Data Source=lvl;Integrated Security=yes;")]
-        [InlineData(@"Data Source=lvl;User Id=admin;Password=password;Integrated Security=no;")]
-        public void IfOracleConnectionString_WhenAddingDomain_OracleIsConfigured(string oracleConnectionString)
-        {
-            var domainOptions = new DomainOptions { ConnectionString = oracleConnectionString };
-            var services = new ServiceCollection()
-                .AddDomains(domainOptions)
-                .BuildServiceProvider();
-            var configuration = services.GetRequiredService<Configuration>();
-
-            var driverKey = NHibernate.Cfg.Environment.ConnectionDriver;
-            var driver = configuration.GetProperty(driverKey);
-
-            var oracleDriver = typeof(OracleManagedDataClientDriver).AssemblyQualifiedName;
-            Assert.Equal(oracleDriver, driver);
-        }
-
-        [Theory]
         [InlineData("not a connection string")]
         public void IfInvalidConnectionString_WhenAddingDomain_ArgumentExceptionIsThrown(string invalidConnectionString)
         {

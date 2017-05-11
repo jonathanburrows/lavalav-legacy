@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using lvl.Ontology.Database;
 using lvl.Ontology.Conventions;
+using NHibernate.Tool.hbm2ddl;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -45,10 +46,11 @@ namespace Microsoft.Extensions.DependencyInjection
             var foreignIdConvention = new ForeignKeyIdConvention(configuration);
             foreignIdConvention.AddForeignKeyIds();
 
+            SchemaMetadataUpdater.QuoteTableAndColumns(configuration);
+
             serviceCollection
                 .AddSingleton(domainOptions)
                 .AddSingleton(_ => configuration);
-
 
             return serviceCollection;
         }
