@@ -7,7 +7,9 @@
     {
       "root": "e2e",
       "outDir": "dist",
-      "assets": [],
+      "assets": [
+        "assets"
+      ],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "../polyfills.ts",
@@ -16,6 +18,7 @@
       "testTsconfig": "../tsconfig.json",
       "prefix": "lvl",
       "styles": [
+        "global.scss"
       ],
       "scripts": [],
       "environmentSource": "../environments/environment.ts",

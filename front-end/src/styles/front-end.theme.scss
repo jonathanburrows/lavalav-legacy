@@ -1,0 +1,47 @@
+﻿/*  
+    This file is responsible for calling themes within the front end module. 
+    It is also responsible for declaring styles common across the front end module.
+*/
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+@import '~@angular/material/theming';
+@import '~normalize-scss/sass/normalize';
+
+@import 'front-end.variables';
+
+@mixin front-end-theme($theme) {
+    @include mat-core();
+    @include angular-material-theme($theme);
+    @include normalize();
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url(/assets/MaterialIcons-Regular.woff2) format('woff2'), url(/assets/MaterialIcons-Regular.woff) format('woff');
+}
+
+.material-icons {
+    direction: ltr;
+    display: inline-block;
+    font-family: 'Material Icons';
+    font-feature-settings: 'liga';
+    font-size: 24px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+}

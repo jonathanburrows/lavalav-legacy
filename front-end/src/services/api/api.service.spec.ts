@@ -74,7 +74,7 @@ describe(ApiService.name, () => {
 
             apiService.create(Planet, planet).subscribe(() => {
                 apiService.getCollection(Planet).subscribe(planets => {
-                    const planetWithMoon = planets.filter(p => p.moons && p.moons.length)[0]
+                    const planetWithMoon = planets.filter(p => p.moons && p.moons.length)[0];
 
                     expect(planetWithMoon.moons[0] instanceof Moon);
                 });

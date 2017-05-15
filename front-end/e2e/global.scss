@@ -1,0 +1,8 @@
+﻿@import '../theming.scss';
+
+$primary-color: mat-palette($mat-deep-purple);
+$accent-color: mat-palette($mat-pink);
+$warning-color: mat-palette($mat-red);
+$lvl-default-theme: mat-light-theme($primary-color, $accent-color, $warning-color);
+
+@include front-end-theme($lvl-default-theme);
