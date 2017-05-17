@@ -5,6 +5,6 @@
  */
 @Component({
     selector: 'lvl-e2e-app',
-    template: '<router-outlet></router-outlet>'
+    template: '<lvl-layout siteTitle="lavalav"><lvl-layout>'
 })
 export class AppE2eComponent { }

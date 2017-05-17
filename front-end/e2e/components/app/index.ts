@@ -1,1 +1,1 @@
-﻿export * from './app.e2e.module';
+﻿export * from './app.e2e.component';

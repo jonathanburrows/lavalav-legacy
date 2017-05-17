@@ -1,0 +1,350 @@
+﻿@import '../../styles/front-end.variables';
+@import '~@angular/material/theming';
+
+.side-nav {
+    background-color: white;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    cursor: default;
+    display: block;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    height: 100%;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    transform: translateX(0);
+    transition: transform $swift-ease-out-duration $swift-ease-out-timing-function;
+    z-index: 16;
+    width: map-get($portrait, side-nav-width);
+
+    @media screen and (max-width: $desktop-min-width) {
+        &:not(.show-side-nav) {
+            visibility: hidden;
+            transform: translateX(-100%);
+            transition: transform $swift-ease-in-duration $swift-ease-in-timing-function, visibility 1s linear $swift-ease-out-duration;
+        }
+    }
+
+    @media screen and (min-width: #{$desktop-min-width}) {
+        width: map-get($tablet, side-nav-width);
+    }
+
+    &__header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+        @media #{$portrait-screen} {
+            font-size: map-get($portrait, toolbar-font-size);
+            line-height: map-get($portrait, toolbar-height);
+            min-height: map-get($portrait, toolbar-height);
+            padding-left: map-get($portrait, screen-padding);
+            padding-right: map-get($portrait, screen-padding);
+        }
+
+        @media #{$landscape-screen} {
+            font-size: map-get($landscape, toolbar-font-size);
+            line-height: map-get($landscape, toolbar-height);
+            min-height: map-get($landscape, toolbar-height);
+            padding-left: map-get($landscape, screen-padding);
+            padding-right: map-get($landscape, screen-padding);
+        }
+
+        @media #{$tablet-screen} {
+            font-size: map-get($tablet, toolbar-font-size);
+            line-height: map-get($tablet, toolbar-height);
+            min-height: map-get($tablet, toolbar-height);
+            padding-left: map-get($tablet, screen-padding);
+            padding-right: map-get($tablet, screen-padding);
+        }
+
+        &__icon {
+            vertical-align: middle;
+
+            @media #{$portrait-screen} {
+                margin-right: map-get($portrait, screen-padding);
+                width: map-get($portrait, avatar-column-width);
+            }
+
+            @media #{$landscape-screen} {
+                margin-right: map-get($landscape, screen-padding);
+                width: map-get($landscape, avatar-column-width);
+            }
+
+            @media #{$tablet-screen} {
+                margin-right: map-get($tablet, screen-padding);
+                width: map-get($tablet, avatar-column-width);
+            }
+        }
+    }
+
+    &__group {
+        @media #{$portrait-screen} {
+            margin-top: map-get($portrait, content-margin-top);
+            padding-left: map-get($portrait, screen-padding);
+            padding-right: map-get($portrait, screen-padding);
+        }
+
+        @media #{$landscape-screen} {
+            margin-top: map-get($landscape, content-margin-top);
+            padding-left: map-get($landscape, screen-padding);
+            padding-right: map-get($landscape, screen-padding);
+        }
+
+        @media #{$tablet-screen} {
+            margin-top: map-get($tablet, content-margin-top);
+            padding-left: map-get($tablet, screen-padding);
+            padding-right: map-get($tablet, screen-padding);
+        }
+
+        &__title {
+            color: rgba(0, 0, 0, 0.54);
+            font-weight: 500;
+
+            @media #{$portrait-screen} {
+                font-size: map-get($portrait, body-font-size);
+                line-height: map-get($portrait, navigation-title-height);
+                min-height: map-get($portrait, navigation-title-height);
+            }
+
+            @media #{$landscape-screen} {
+                font-size: map-get($landscape, body-font-size);
+                line-height: map-get($landscape, navigation-title-height);
+                min-height: map-get($landscape, navigation-title-height);
+            }
+
+            @media #{$tablet-screen} {
+                font-size: map-get($tablet, body-font-size);
+                line-height: map-get($tablet, navigation-title-height);
+                min-height: map-get($tablet, navigation-title-height);
+            }
+        }
+
+        &__item {
+            @media #{$portrait-screen} {
+                line-height: map-get($portrait, navigation-item-height);
+                min-height: map-get($portrait, navigation-item-height);
+            }
+
+            @media #{$landscape-screen} {
+                line-height: map-get($landscape, navigation-item-height);
+                min-height: map-get($landscape, navigation-item-height);
+            }
+
+            @media #{$tablet-screen} {
+                line-height: map-get($tablet, navigation-item-height);
+                min-height: map-get($tablet, navigation-item-height);
+            }
+
+            &__icon {
+                color: rgba(0, 0, 0, 0.54);
+                vertical-align: middle;
+
+                @media #{$portrait-screen} {
+                    margin-right: map-get($portrait, screen-padding);
+                    width: map-get($portrait, avatar-column-width);
+                }
+
+                @media #{$landscape-screen} {
+                    margin-right: map-get($landscape, screen-padding);
+                    width: map-get($landscape, avatar-column-width);
+                }
+
+                @media #{$tablet-screen} {
+                    margin-right: map-get($tablet, screen-padding);
+                    width: map-get($tablet, avatar-column-width);
+                }
+            }
+        }
+    }
+
+    &__overlay {
+        height: 100%;
+        left: -100%;
+        position: fixed;
+        top: 0;
+        transition: background-color $swift-ease-out-duration $swift-ease-out-timing-function, left linear 0s $swift-ease-out-duration;
+        width: 100%;
+        z-index: 15;
+
+        @media screen and (max-width: $desktop-min-width) {
+            &.show-side-nav {
+                background-color: rgba(0, 0, 0, 0.5);
+                display: block;
+                transition: background-color $swift-ease-in-duration $swift-ease-in-timing-function;
+                left: 0;
+            }
+        }
+    }
+}
+
+/* Done so that a class can be applied to a row, but md-toolbar inserts its own no matter what. */
+/deep/ md-toolbar-row:first-of-type {
+    display: none !important;
+}
+
+.toolbar {
+    cursor: default;
+    position: fixed;
+    top: 0;
+    transition: margin-left $swift-ease-in-duration $swift-ease-in-timing-function;
+    z-index: 8;
+
+    @media #{$portrait-screen} {
+        font-size: map-get($portrait, toolbar-font-size);
+        min-height: map-get($portrait, toolbar-height);
+        padding-left: map-get($portrait, screen-padding);
+        padding-right: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        font-size: map-get($landscape, toolbar-font-size);
+        min-height: map-get($landscape, toolbar-height);
+        padding-left: map-get($landscape, screen-padding);
+        padding-right: map-get($landscape, screen-padding);
+    }
+
+    @media #{$tablet-screen} {
+        font-size: map-get($tablet, toolbar-font-size);
+        min-height: map-get($tablet, toolbar-height);
+        padding-left: map-get($tablet, screen-padding);
+        padding-right: map-get($tablet, screen-padding);
+    }
+
+    @media screen and (min-width: $desktop-min-width) {
+        font-size: map-get($tablet, toolbar-font-size);
+        min-height: map-get($tablet, toolbar-height);
+        margin-left: map-get($portrait, side-nav-width);
+        padding-left: map-get($tablet, screen-padding);
+        padding-right: map-get($tablet, screen-padding);
+        transition: margin-left $swift-ease-out-duration $swift-ease-out-timing-function;
+        width: calc(100% - #{map-get($portrait, side-nav-width)});
+    }
+
+    &__row {
+        font-weight: normal;
+
+        @media #{$portrait-screen} {
+            height: map-get($portrait, toolbar-height);
+        }
+
+        @media #{$landscape-screen} {
+            height: map-get($landscape, toolbar-height);
+        }
+
+        @media #{$tablet-screen} {
+            height: map-get($tablet, toolbar-height);
+        }
+    }
+
+    &__menu-icon {
+        vertical-align: middle;
+
+        @media #{$portrait-screen} {
+            cursor: pointer;
+            margin-right: map-get($portrait, screen-padding);
+            width: map-get($portrait, avatar-column-width);
+        }
+
+        @media #{$landscape-screen} {
+            cursor: pointer;
+            margin-right: map-get($landscape, screen-padding);
+            width: map-get($landscape, avatar-column-width);
+        }
+
+        @media #{$tablet-screen} {
+            cursor: pointer;
+            margin-right: map-get($tablet, screen-padding);
+            width: map-get($tablet, avatar-column-width);
+        }
+
+        @media screen and (min-width: $desktop-min-width) {
+            cursor: default;
+            margin-right: map-get($tablet, screen-padding);
+            visibility: hidden;
+            width: map-get($tablet, avatar-column-width);
+        }
+    }
+
+    &__filler {
+        flex: 1 1 auto;
+    }
+
+    &__search {
+        $close-icon-width: 24px;
+        $search-input-width: 240px;
+
+        height: 100%;
+        position: absolute;
+        right: -4px;
+        top: 0;
+        z-index: 9;
+
+        @media #{$portrait-screen} {
+            line-height: map-get($portrait, toolbar-height);
+            margin-right: map-get($portrait, screen-padding);
+        }
+
+        @media #{$landscape-screen} {
+            line-height: map-get($landscape, toolbar-height);
+            margin-right: map-get($landscape, screen-padding);
+        }
+
+        @media #{$tablet-screen} {
+            line-height: map-get($tablet, toolbar-height);
+            margin-right: map-get($tablet, screen-padding);
+        }
+
+        font-size: 16px;
+
+        &__icon {
+            cursor: pointer;
+            vertical-align: middle;
+
+            &--close {
+                margin-left: -$close-icon-width;
+                position: relative;
+            }
+        }
+
+        &__expander {
+            display: inline-block;
+            transition: width $swift-ease-in-duration $mat-fast-out-slow-in-timing-function;
+            overflow: hidden;
+            vertical-align: middle;
+            width: 0;
+            /* Maxheight was imposed since it was throwing the vertical align off for heights less than 54px */
+            @media #{$landscape-screen} {
+                max-height: map-get($landscape, toolbar-height);
+            }
+
+            &--expanded {
+                width: $search-input-width;
+            }
+        }
+
+        &__input {
+            padding-right: $close-icon-width;
+            width: $search-input-width;
+        }
+    }
+}
+
+.screen {
+    background-color: #f7f7f7;
+    transition: margin-left $swift-ease-in-duration $swift-ease-in-timing-function;
+
+    @media #{$portrait-screen} {
+        margin-top: map-get($portrait, toolbar-height);
+        padding-left: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        margin-top: map-get($landscape, toolbar-height);
+        padding-left: map-get($landscape, screen-padding);
+    }
+
+    @media #{$tablet-screen} {
+        margin-left: map-get($tablet, side-nav-width);
+        margin-top: map-get($tablet, toolbar-height);
+        padding-left: map-get($tablet, screen-padding);
+        transition: margin-left $swift-ease-out-duration $swift-ease-out-timing-function;
+    }
+}
