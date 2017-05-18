@@ -4,6 +4,9 @@ using System;
 // ReSharper disable once CheckNamespace In compliance with Microsoft's conventions.
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    ///     Contains options which will be used by all projects.
+    /// </summary>
     public class DomainOptions
     {
         /// <summary>

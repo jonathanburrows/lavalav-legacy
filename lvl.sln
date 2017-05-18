@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oidc", "oidc", "{E7667283-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer", "Oidc.AuthorizationServer\Oidc.AuthorizationServer.csproj", "{B06243DB-43F2-41E1-8931-7987B6992F92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer.Tests", "Oidc.AuthorizationServer.Tests\Oidc.AuthorizationServer.Tests.csproj", "{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -178,6 +180,14 @@ Global
 		{B06243DB-43F2-41E1-8931-7987B6992F92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B06243DB-43F2-41E1-8931-7987B6992F92}.Release|x64.ActiveCfg = Release|Any CPU
 		{B06243DB-43F2-41E1-8931-7987B6992F92}.Release|x64.Build.0 = Release|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Debug|x64.Build.0 = Debug|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,5 +207,6 @@ Global
 		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{742346D4-3DAE-46FA-B0D2-6D186F51E456} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{B06243DB-43F2-41E1-8931-7987B6992F92} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
+		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 	EndGlobalSection
 EndGlobal
