@@ -1,4 +1,6 @@
-﻿import { DefineValidationMetadata } from './validation-factory';
+﻿import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+import { DefineValidationMetadata } from './validation-factory';
 
 /** Specifies the maximum length of array or string data allowed in a property.
  *  @throws length has not been given a value.
@@ -13,16 +15,23 @@ export function MaxLength(length: number): PropertyDecorator {
             throw new Error(`@${MaxLength.name} on ${target.constructor.name} has a negative number.`);
         }
 
-        const isValid = (validating) => {
-            const value = validating[propertyKey];
+        const validator = maxLengthValidator(length);
+        DefineValidationMetadata(MaxLength.name, validator, target, propertyKey);
+    };
+}
 
-            if (!value) {
-                return true;
-            }
+function maxLengthValidator(length: number): ValidatorFn {
+    return (control: AbstractControl): { [name: string]: any } => {
+        if (!control) {
+            throw new Error('Control is null.');
+        }
 
-            return value.toString().length <= length;
-        };
-
-        DefineValidationMetadata(MaxLength.name, isValid, target, propertyKey);
+        if (control.value && control.value.length > length) {
+            return {
+                'maxLength': `${control.value.length}/${length}`
+            };
+        } else {
+            return null;
+        }
     };
 }

@@ -9,7 +9,7 @@
     <nav class="side-nav__group" *ngFor="let group of routeGroups">
         <header class="side-nav__group__title">{{group.group}}</header>
 
-        <section *ngFor="let route of group.routes" class="side-nav__group__item">
+        <section *ngFor="let route of group.routes" class="side-nav__group__item" routerLinkActive="active" routerLink="/{{route.path}}">
             <md-icon *ngIf="route.data.icon"
                      class="side-nav__group__item__icon"
                      [class.side-nav__group__item__icon--selected]="selectedRoute === route">
@@ -50,6 +50,6 @@
 </md-toolbar>
 
 <section class="screen">
-    <router-outlet *ngIf="contentType === 'router'"></router-outlet>
-    <ng-content *ngIf="contentType === 'content'"></ng-content>
+    <!-- Important: due to a bug in angular, make sure a selector is applied, otherwise it will render the root app twice. -->
+    <ng-content select="router-outlet"></ng-content>
 </section>

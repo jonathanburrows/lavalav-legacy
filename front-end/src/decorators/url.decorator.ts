@@ -1,18 +1,29 @@
-﻿import { DefineValidationMetadata } from './validation-factory';
+﻿import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+import { DefineValidationMetadata } from './validation-factory';
 
 /** Provides URL validation. */
 export function Url(): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
-        const isValid = (validating) => {
-            const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/i;
-            const value = validating[propertyKey];
+        const validator = urlValidator();
+        DefineValidationMetadata(Url.name, validator, target, propertyKey);
+    };
+}
 
-            if (!value) {
-                return true;
-            }
-            return urlRegex.test(value);
-        };
+function urlValidator(): ValidatorFn {
+    return (control: AbstractControl): { [name: string]: any } => {
+        if (!control) {
+            throw new Error('Control is null.');
+        }
 
-        DefineValidationMetadata(Url.name, isValid, target, propertyKey);
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/i;
+
+        if (control.value && !urlRegex.test(control.value)) {
+            return {
+                'url': 'Invalid url'
+            };
+        } else {
+            return null;
+        }
     };
 }

@@ -1,5 +1,4 @@
-﻿export * from './compare.decorator';
-export * from './credit-card.decorator';
+﻿export * from './credit-card.decorator';
 export * from './data-type.decorator';
 export * from './email-address.decorator';
 export * from './max-length.decorator';
@@ -9,3 +8,4 @@ export * from './range.decorator';
 export * from './regular-expression.decorator';
 export * from './required.decorator';
 export * from './url.decorator';
+export { ValidationKey } from './validation-factory';

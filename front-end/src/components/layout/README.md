@@ -17,7 +17,6 @@ Create a page structure which is compliant with material design, so applications
 | Name | Type | Description |
 | :--- | :--- | :--- |
 | siteTitle (optional) | string | The name which will appear on the toolbar |
-| contentType | router %7C content | Will render a router-outlet if "router", or ng-content if "content". Default is router. |
 
 
 

@@ -8,10 +8,11 @@ $tablet-screen: 'screen and (min-width: #{$tablet-min-width})';
 
 $portrait: (
   avatar-column-width: 32px,
-  body-font-size: 13px,
+  body-font-size: 14px,
   content-margin-top: 8px,
   content-margin-bottom: 8px,
   content-title-height: 72px,
+  content-title-font-size: 16px,
   list-item-height: 72px,
   side-nav-width: 240px,
   navigation-item-height: 48px,
@@ -24,10 +25,11 @@ $portrait: (
 
 $landscape: (
   avatar-column-width: 32px,
-  body-font-size: 13px,
+  body-font-size: 14px,
   content-margin-top: 8px,
   content-margin-bottom: 8px,
   content-title-height: 72px,
+  content-title-font-size: 16px,
   list-item-height: 64px,
   side-nav-width: 240px,
   navigation-item-height: 48px,
@@ -44,6 +46,7 @@ $tablet: (
   content-margin-top: 8px,
   content-margin-bottom: 8px,
   content-title-height: 80px,
+  content-title-font-size: 15px,
   list-item-height: 64px,
   side-nav-width: 240px,
   navigation-item-height: 48px,

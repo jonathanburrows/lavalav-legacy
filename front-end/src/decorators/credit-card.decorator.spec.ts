@@ -1,5 +1,8 @@
-﻿import { CreditCard } from './credit-card.decorator';
-import { GetValidationRules } from './validation-factory';
+﻿import { Type } from '@angular/core';
+import { ValidatorFn } from '@angular/forms';
+
+import { CreditCard } from './credit-card.decorator';
+import { ValidationKey } from './validation-factory';
 
 describe('CreditCard', () => {
     const validCreditCards: { number: number, vendor: string }[] = [
@@ -21,34 +24,41 @@ describe('CreditCard', () => {
 
     for (const validCreditCard of validCreditCards) {
         it(`is true when valid ${validCreditCard.vendor}`, () => {
-            const person = new Person();
-            person.creditCardNumber = validCreditCard.number;
-            const validationRules = GetValidationRules(person);
+            const validator = getValidator(Person, 'creditCardNumber');
+            const control: any = { value: validCreditCard.number };
 
-            const isValid = validationRules.every(rule => rule(person));
+            const errors = validator(control);
 
-            expect(isValid).toBe(true);
+            expect(errors).toBeNull();
         });
     }
 
     it('is false when not a known vendor', () => {
-        const person = new Person();
-        person.creditCardNumber = 1111111111111111;
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'creditCardNumber');
+        const control: any = { value: 1111111111111111 };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['creditCard']).toBeDefined();
     });
 
     it('is true when null', () => {
-        const person = new Person();
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'creditCardNumber');
+        const control: any = { value: null };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
+
+    function getValidator<T>(type: Type<T>, property: string): ValidatorFn {
+        const validators = Reflect.getMetadata(ValidationKey, type.prototype, property);
+        if (!validators) {
+            throw new Error(`No validator for ${type.name}.${property}`);
+        }
+
+        return validators[0];
+    }
 });
 
 class Person {

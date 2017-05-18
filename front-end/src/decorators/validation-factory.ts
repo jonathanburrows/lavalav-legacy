@@ -1,16 +1,18 @@
-﻿export const ValidationKey = '__validation';
+﻿import { ValidatorFn } from '@angular/forms';
+
+export const ValidationKey = '__validation';
 
 /** Adds a validation function to the metadata of a property.
  *  @param metadataKey the name of the validation to be added.
- *  @param validationFunction predicate to determine if property value is valid.
+ *  @param validatorFn predicate to determine if property value is valid.
  *  @param target the type of object which contains the property to be validating.
  *  @param propertyKey the name of the property to have the metadata assigned.
  */
-export function DefineValidationMetadata(metadataKey: string, validationFunction: ValidationFunction, target: Object, propertyKey: string) {
+export function DefineValidationMetadata(metadataKey: string, validatorFn: ValidatorFn, target: Object, propertyKey: string) {
     if (!metadataKey) {
         throw new Error('metadataKey has no value.');
     }
-    if (!validationFunction) {
+    if (!validatorFn) {
         throw new Error('validationFunction has no value.');
     }
     if (!target) {
@@ -20,23 +22,7 @@ export function DefineValidationMetadata(metadataKey: string, validationFunction
         throw new Error('propertyKey has no value.');
     }
 
-    Reflect.defineMetadata(metadataKey, validationFunction, target, propertyKey);
-
-    const validationRules: ValidationFunction[] = Reflect.getMetadata(ValidationKey, target, propertyKey) || [];
-    validationRules.push(validationFunction);
+    const validationRules: ValidatorFn[] = Reflect.getMetadata(ValidationKey, target, propertyKey) || [];
+    validationRules.push(validatorFn);
     Reflect.defineMetadata(ValidationKey, validationRules, target, propertyKey);
-
-    const parentValidationRules: ValidationFunction[] = Reflect.getMetadata(ValidationKey, target) || [];
-    parentValidationRules.push(validationFunction);
-    Reflect.defineMetadata(ValidationKey, validationRules, target);
 }
-
-export function GetValidationRules(target: Object): ValidationFunction[] {
-    if (!target) {
-        throw new Error('target is null');
-    }
-
-    return Reflect.getMetadata(ValidationKey, target) || [];
-}
-
-declare type ValidationFunction = (validating: Object) => boolean;

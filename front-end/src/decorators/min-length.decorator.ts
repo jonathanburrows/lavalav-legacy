@@ -1,4 +1,6 @@
-﻿import { DefineValidationMetadata } from './validation-factory';
+﻿import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+import { DefineValidationMetadata } from './validation-factory';
 
 /** Specifies the minimum length of array or string data allowed in a property.
  *  @param length {number} The minimum (inclusive) the value must be to be valid.
@@ -13,16 +15,23 @@ export function MinLength(length: number): PropertyDecorator {
             throw new Error(`@${MinLength.name} on ${target.constructor.name} has a negative number.`);
         }
 
-        const isValid = (validating) => {
-            const value = validating[propertyKey];
+        const validator = minLengthValidator(length);
+        DefineValidationMetadata(MinLength.name, validator, target, propertyKey);
+    };
+}
 
-            if (!value) {
-                return true;
-            }
+function minLengthValidator(length: number): ValidatorFn {
+    return (control: AbstractControl): { [name: string]: any } => {
+        if (!control) {
+            throw new Error('Control is null.');
+        }
 
-            return value.toString().length >= length;
-        };
-
-        DefineValidationMetadata(MinLength.name, isValid, target, propertyKey);
+        if (control.value && control.value.length < length) {
+            return {
+                'minLength': `${control.value.length}/${length}`
+            };
+        } else {
+            return null;
+        }
     };
 }

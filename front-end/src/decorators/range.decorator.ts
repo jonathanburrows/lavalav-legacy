@@ -1,4 +1,6 @@
-﻿import { DefineValidationMetadata } from './validation-factory';
+﻿import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+import { DefineValidationMetadata } from './validation-factory';
 
 /** Specifies the numeric range constraints for the value of a data field.
  *  @param minimum {number} The minimum value (inclusive) the property must be.
@@ -23,16 +25,23 @@ export function Range(minimum: number, maximum: number): PropertyDecorator {
             throw new Error(`@${Range.name} on ${target.constructor.name} has a minimum ${minimum} which is larger than the maximum ${maximum}`);
         }
 
-        const isValid = (validating) => {
-            const value = validating[propertyKey];
+        const validator = rangeValidator(minimum, maximum);
+        DefineValidationMetadata(Range.name, validator, target, propertyKey);
+    };
+}
 
-            if (!value) {
-                return true;
-            }
+function rangeValidator(minimum: number, maximum: number): ValidatorFn {
+    return (control: AbstractControl): { [name: string]: any } => {
+        if (!control) {
+            throw new Error('Control is null.');
+        }
 
-            return value >= minimum && value <= maximum;
-        };
-
-        DefineValidationMetadata(Range.name, isValid, target, propertyKey);
+        if (control.value >= minimum && control.value <= maximum) {
+            return null;
+        } else {
+            return {
+                'range': `Not between ${minimum} and ${maximum}`
+            };
+        }
     };
 }

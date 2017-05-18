@@ -29,6 +29,7 @@ namespace lvl.Ontology
                 throw new FileNotFoundException($"Assembly {assemblyFile.FullName} not found");
             }
 
+            // When resolving dependencies, they might be found in the same directory as the loaded dll, so check there.
             var assemblyDirectory = assemblyFile.Directory?.FullName ?? "./";
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {

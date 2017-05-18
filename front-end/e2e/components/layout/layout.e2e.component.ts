@@ -5,6 +5,6 @@
  */
 @Component({
     selector: 'lvl-e2e-layout',
-    template: ''
+    template: '123'
 })
 export class LayoutE2eComponent { }

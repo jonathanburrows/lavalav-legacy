@@ -1,138 +1,138 @@
-﻿import { DataType } from './data-type.decorator';
-import { GetValidationRules } from './validation-factory';
+﻿import { Type } from '@angular/core';
+import { ValidatorFn } from '@angular/forms';
+
+import { DataType } from './data-type.decorator';
+import { ValidationKey } from './validation-factory';
 
 describe(DataType.name, () => {
     it('is valid if property is null', () => {
-        const dateContainer = new DateContainer();
-        const rules = GetValidationRules(dateContainer);
+        const validator = getValidator(DateContainer, 'date');
+        const control: any = { value: null };
 
-        const isValid = rules.every(rule => rule(dateContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid if date is a number', () => {
-        const dateContainer = new DateContainer();
-        dateContainer.date = 3;
-        const rules = GetValidationRules(dateContainer);
+        const validator = getValidator(DateContainer, 'date');
+        const control: any = { value: 3 };
 
-        const isValid = rules.every(rule => rule(dateContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['dataType']).toBeDefined();
     });
 
     it('is valid if date is a date', () => {
-        const dateContainer = new DateContainer();
-        dateContainer.date = new Date();
-        const rules = GetValidationRules(dateContainer);
+        const validator = getValidator(DateContainer, 'date');
+        const control: any = { value: new Date() };
 
-        const isValid = rules.every(rule => rule(dateContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid if number is a boolean', () => {
-        const numberContainer = new NumberContainer();
-        numberContainer.number = true;
-        const rules = GetValidationRules(numberContainer);
+        const validator = getValidator(NumberContainer, 'number');
+        const control: any = { value: true };
 
-        const isValid = rules.every(rule => rule(numberContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['dataType']).toBeDefined();
     });
 
     it('is valid if number is primative number', () => {
-        const numberContainer = new NumberContainer();
-        numberContainer.number = 5;
-        const rules = GetValidationRules(numberContainer);
+        const validator = getValidator(NumberContainer, 'number');
+        const control: any = { value: 5 };
 
-        const isValid = rules.every(rule => rule(numberContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is valid if number is object number', () => {
-        const numberContainer = new NumberContainer();
+        const validator = getValidator(NumberContainer, 'number');
         // tslint:disable-next-line
-        numberContainer.number = new Number(5);
-        const rules = GetValidationRules(numberContainer);
+        const control: any = { value: new Number(5) };
 
-        const isValid = rules.every(rule => rule(numberContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid if boolean is string', () => {
-        const booleanContainer = new BooleanContainer();
-        booleanContainer.boolean = 'hello';
-        const rules = GetValidationRules(booleanContainer);
+        const validator = getValidator(BooleanContainer, 'boolean');
+        const control: any = { value: 'hello' };
 
-        const isValid = rules.every(rule => rule(booleanContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['dataType']).toBeDefined();
     });
 
     it('is valid if boolean is primative true', () => {
-        const booleanContainer = new BooleanContainer();
-        booleanContainer.boolean = true;
-        const rules = GetValidationRules(booleanContainer);
+        const validator = getValidator(BooleanContainer, 'boolean');
+        const control: any = { value: true };
 
-        const isValid = rules.every(rule => rule(booleanContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is valid if boolean is primative false', () => {
-        const booleanContainer = new BooleanContainer();
-        booleanContainer.boolean = false;
-        const rules = GetValidationRules(booleanContainer);
+        const validator = getValidator(BooleanContainer, 'boolean');
+        const control: any = { value: false };
 
-        const isValid = rules.every(rule => rule(booleanContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
-    it('is invalid if boolean is true object', () => {
-        const booleanContainer = new BooleanContainer();
+    it('is valid if boolean is true object', () => {
+        const validator = getValidator(BooleanContainer, 'boolean');
         // tslint:disable-next-line
-        booleanContainer.boolean = new Boolean(true);
-        const rules = GetValidationRules(booleanContainer);
+        const control: any = { value: new Boolean(true) };
 
-        const isValid = rules.every(rule => rule(booleanContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid if boolean is false object', () => {
-        const booleanContainer = new BooleanContainer();
+        const validator = getValidator(BooleanContainer, 'boolean');
         // tslint:disable-next-line
-        booleanContainer.boolean = new Boolean(false);
-        const rules = GetValidationRules(booleanContainer);
+        const control: any = { value: new Boolean(false) };
 
-        const isValid = rules.every(rule => rule(booleanContainer));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid if complex type is not correct', () => {
-        const parent = new Parent();
-        parent.child = 1;
-        const rules = GetValidationRules(parent);
+        const validator = getValidator(Parent, 'child');
+        const control: any = { value: 1 };
 
-        const isValid = rules.every(rule => rule(parent));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['dataType']).toBeDefined();
     });
 
     it('is valid if complex type is correct', () => {
-        const parent = new Parent();
-        parent.child = new Child();
-        const rules = GetValidationRules(parent);
+        const validator = getValidator(Parent, 'child');
+        const control: any = { value: new Child() };
 
-        const isValid = rules.every(rule => rule(parent));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
+
+    function getValidator<T>(type: Type<T>, property: string): ValidatorFn {
+        const validators = Reflect.getMetadata(ValidationKey, type.prototype, property);
+        if (!validators) {
+            throw new Error(`No validator for ${type.name}.${property}`);
+        }
+
+        return validators[0];
+    }
 });
 
 class DateContainer {

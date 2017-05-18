@@ -1,45 +1,54 @@
-﻿import { RegularExpression } from './regular-expression.decorator';
-import { GetValidationRules } from './validation-factory';
+﻿import { Type } from '@angular/core';
+import { ValidatorFn } from '@angular/forms';
+
+import { RegularExpression } from './regular-expression.decorator';
+import { ValidationKey } from './validation-factory';
 
 describe(RegularExpression.name, () => {
     it('is valid when value is null', () => {
-        const person = new Person();
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'description');
+        const control: any = { value: null };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid when the pattern doesnt match', () => {
-        const person = new Person();
-        person.description = 'hello';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'description');
+        const control: any = { value: 'hello' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['regularExpression']).toBeDefined();
     });
 
     it('is valid when the pattern matches', () => {
-        const person = new Person();
-        person.description = 'hello, world!';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'description');
+        const control: any = { value: 'hello, world!' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is valid when case insensitivity is detected', () => {
-        const person = new Person();
-        person.description = 'HELLO, WORLD!';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'description');
+        const control: any = { value: 'HELLO, WORLD!' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
+
+    function getValidator<T>(type: Type<T>, property: string): ValidatorFn {
+        const validators = Reflect.getMetadata(ValidationKey, type.prototype, property);
+        if (!validators) {
+            throw new Error(`No validator for ${type.name}.${property}`);
+        }
+
+        return validators[0];
+    }
 });
 
 class Person {

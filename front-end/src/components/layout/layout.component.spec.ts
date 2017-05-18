@@ -22,32 +22,6 @@ describe(LayoutComponent.name, () => {
         expect(sideNavTitle.textContent).toBe('my site title');
     });
 
-    it('will render router-outlet by default', () => {
-        fixture.detectChanges();
-
-        const routerOutlet = getElement('router-outlet');
-
-        expect(routerOutlet).not.toBeNull();
-    });
-
-    it('will render router-outlet if content type is "router"', () => {
-        component.contentType = 'router';
-        fixture.detectChanges();
-
-        const routerOutlet = getElement('router-outlet');
-
-        expect(routerOutlet).not.toBeNull();
-    });
-
-    it('will render ng-content if content type is "content"', () => {
-        component.contentType = 'content';
-        fixture.detectChanges();
-
-        const routerOutlet = fixture.debugElement.query(By.css('router-outlet'));
-
-        expect(routerOutlet).toBeNull();
-    });
-
     function getElement(query: string) {
         const debugElement = fixture.debugElement.query(By.css(query));
         if (!debugElement) {

@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 
 /**
@@ -9,7 +9,7 @@ import { Route, Router } from '@angular/router';
     templateUrl: 'layout.component.html',
     styleUrls: ['layout.component.scss']
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
     /* Will display on the side nav. */
     @Input() siteTitle: string;
 
@@ -19,53 +19,13 @@ export class LayoutComponent {
     /* Will display the search on the app bar. */
     showSearch = false;
 
-    /**
-     *  This will determine if a <router-outlet> or a <ng-content> is rendered in the page.
-     *  By default, it renders a router.
-     *  @remarks - a getter/setter was used for throwing an error if an invalid value is provided.
-     */
-    @Input()
-    get contentType(): 'router' | 'content' {
-        return this._contentType;
-    }
-    set contentType(value: 'router' | 'content') {
-        if (value !== 'router' && value !== 'content') {
-            throw new Error(`[content] attribute of lvl-layout set to ${value}, but the only allowed values are 'router' and 'content'`);
-        }
-        this._contentType = value;
-    }
-    private _contentType: 'router' | 'content' = 'router';
-
     /* Determines what will show up in the side navigation panel. */
-    get routeGroups(): { group: string, routes: Route[] }[] {
-        const groups: { group: string, routes: Route[] }[] = [];
-
-        const navigatableRoutes = this.router.config.filter(r => r.data && r.data['showInNavigation']);
-
-        // get the unique group names.
-        const groupNames = navigatableRoutes.map(r => <string>r.data['group']).filter((value, i, self) => self.indexOf(value) === i);
-
-        return groupNames.map(groupName => {
-            const routes = navigatableRoutes.filter(r => r.data['group'] === groupName);
-
-            if (!groupName) {
-                const routeDescriptions = routes.map(r => r.path).join(', ');
-                throw new Error(`The following urls were marked as navigatable, but have no group: ${routeDescriptions}`);
-            }
-
-            return {
-                group: groupName,
-                routes: routes
-            };
-        });
-    }
+    routeGroups: { group: string, routes: Route[] }[];
 
     /* Used to control the highlighting and title. */
     selectedRoute: Route;
 
-    constructor(private router: Router) {
-        this.router.events.subscribe(this.updateSelectedRoute.bind(this));
-    }
+    constructor(private router: Router) {}
 
     /**
      *  Will show navigation on smaller devices.
@@ -99,5 +59,35 @@ export class LayoutComponent {
         const fullRoute: string = route.urlAfterRedirect || route.url;
         const cleanRoute = fullRoute.startsWith('/') ? fullRoute.substr(1) : fullRoute;
         this.selectedRoute = this.router.config.filter(r => r.path === cleanRoute)[0];
+        this.closeSideNav();
+    }
+
+    ngOnInit() {
+        this.router.events.subscribe(this.updateSelectedRoute.bind(this));
+        this.updateRouteGroups();
+    }
+
+    /**
+     *  This was placed into a seperate method because having it called directly from a getter was causing an infinite loop.
+     *  @remarks - please fix the infinite loop issue, then remove this method.
+     */
+    private updateRouteGroups() {
+        const navigatableRoutes = this.router.config.filter(r => r.data && r.data['showInNavigation']);
+
+        const uniqueGroupNames = navigatableRoutes.map(r => <string>r.data['group']).filter((value, i, self) => self.indexOf(value) === i);
+
+        this.routeGroups = uniqueGroupNames.map(groupName => {
+            const routes = navigatableRoutes.filter(r => r.data['group'] === groupName);
+
+            if (!groupName) {
+                const routeDescriptions = routes.map(r => r.path).join(', ');
+                throw new Error(`The following urls were marked as navigatable, but have no group: ${routeDescriptions}`);
+            }
+
+            return {
+                group: groupName,
+                routes: routes
+            };
+        });
     }
 }

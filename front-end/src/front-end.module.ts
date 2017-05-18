@@ -1,18 +1,20 @@
 ﻿import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LayoutComponent } from './components';
+
 import {
     ApiService,
     FrontEndOptions,
     HeadersService,
     LocalStorageService,
-    StorageService
+    StorageService,
+    ValidationBuilder
 } from './services';
 
 @NgModule({
@@ -20,12 +22,15 @@ import {
         LayoutComponent
     ],
     exports: [
-        LayoutComponent
+        ReactiveFormsModule,
+        LayoutComponent,
+        MaterialModule
     ],
     providers: [
         ApiService,
         HeadersService,
-        { provide: StorageService, useClass: LocalStorageService }
+        { provide: StorageService, useClass: LocalStorageService },
+        ValidationBuilder
     ],
     imports: [
         BrowserAnimationsModule,
@@ -33,6 +38,7 @@ import {
         FormsModule,
         HttpModule,
         MaterialModule,
+        ReactiveFormsModule,
         RouterModule
     ]
 })

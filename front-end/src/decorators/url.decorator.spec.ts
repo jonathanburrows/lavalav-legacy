@@ -1,75 +1,81 @@
-﻿import { Url } from './url.decorator';
-import { GetValidationRules } from './validation-factory';
+﻿import { Type } from '@angular/core';
+import { ValidatorFn } from '@angular/forms';
+
+import { Url } from './url.decorator';
+import { ValidationKey } from './validation-factory';
 
 describe(Url.name, () => {
     it('is valid when the url has no value', () => {
-        const person = new Person();
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: null };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid when missing protocol', () => {
-        const person = new Person();
-        person.url = 'google.com';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: 'google.com' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['url']).toBeDefined();
     });
 
     it('is valid when given http protocol', () => {
-        const person = new Person();
-        person.url = 'http://google.com';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: 'http://google.com' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is valid when given https protocol', () => {
-        const person = new Person();
-        person.url = 'https://google.com';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: 'https://google.com' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is valid when given ftp protocol', () => {
-        const person = new Person();
-        person.url = 'ftp://google.com';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: 'ftp://google.com' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is valid when protocol is all uppercase', () => {
-        const person = new Person();
-        person.url = 'HTTP://google.com';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: 'HTTP://google.com' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(true);
+        expect(errors).toBeNull();
     });
 
     it('is invalid when using an unknown protocol', () => {
-        const person = new Person();
-        person.url = 'hggp://google.com';
-        const validationRules = GetValidationRules(person);
+        const validator = getValidator(Person, 'url');
+        const control: any = { value: 'hggp://google.com' };
 
-        const isValid = validationRules.every(rule => rule(person));
+        const errors = validator(control);
 
-        expect(isValid).toBe(false);
+        expect(errors['url']).toBeDefined();
     });
+
+    function getValidator<T>(type: Type<T>, property: string): ValidatorFn {
+        const validators = Reflect.getMetadata(ValidationKey, type.prototype, property);
+        if (!validators) {
+            throw new Error(`No validator for ${type.name}.${property}`);
+        }
+
+        return validators[0];
+    }
 });
 
 class Person {

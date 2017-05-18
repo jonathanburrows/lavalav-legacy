@@ -5,7 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { FrontEndModule } from '../src';
 import {
     AppE2eComponent,
-    LayoutE2eComponent
+    LayoutE2eComponent,
+    ValidatorsE2eComponent
 } from './components';
 
 const frontEndGroup = 'Front End';
@@ -17,14 +18,16 @@ const frontEndGroup = 'Front End';
 @NgModule({
     declarations: [
         AppE2eComponent,
-        LayoutE2eComponent
+        LayoutE2eComponent,
+        ValidatorsE2eComponent
     ],
     imports: [
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'lvl-layout' },
-            { path: 'lvl-layout', component: LayoutE2eComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } }
+            { path: '', pathMatch: 'full', redirectTo: 'lvl-validators' },
+            { path: 'lvl-layout', component: LayoutE2eComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
+            { path: 'lvl-validators', component: ValidatorsE2eComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
         ]),
         FrontEndModule.useWithOptions({
             resourceServerUrl: 'http://localhost:5000'
