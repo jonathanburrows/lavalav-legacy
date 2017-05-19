@@ -6,12 +6,12 @@ using lvl.Ontology.Database;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Provides a method to register all classes used to resolve repositories from a service provider
+    ///     Provides a method to register all classes used to resolve repositories from a service provider
     /// </summary>
     public static class RepositoryServiceCollectionExtensions
     {
         /// <summary>
-        /// Registers all classes used to resolve repositories.
+        ///     Registers all classes used to resolve repositories.
         /// </summary>
         /// <param name="serviceCollection">The service collection which will have the types registered against it</param>
         /// <returns>The given service collection, with the registered types.</returns>

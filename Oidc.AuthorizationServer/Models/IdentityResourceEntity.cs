@@ -2,6 +2,7 @@
 using lvl.Ontology;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -21,6 +22,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     The unique name of the resource.
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>

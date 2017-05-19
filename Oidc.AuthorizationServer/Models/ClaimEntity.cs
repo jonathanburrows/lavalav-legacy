@@ -8,7 +8,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     Allows a claim to be stored in the database.
     /// </summary>
     [Table(nameof(Claim), Schema = "oidc")]
-    public class ClaimEntity : Entity
+    public class ClaimEntity : Entity, IAggregateRoot
     {
         /// <summary>
         ///     Gets the claim type of the claim.

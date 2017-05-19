@@ -1,5 +1,6 @@
 ﻿using lvl.Ontology;
 using lvl.Ontology.Conventions;
+using System.ComponentModel.DataAnnotations;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
@@ -12,6 +13,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     A url to a site.
         /// </summary>
+        [Required]
         public string Name { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     The unique name of the user, includes the provider.
         /// </summary>
-        [Required]
+        [Required, Unique]
         public string SubjectId { get; set; }
 
         /// <summary>
