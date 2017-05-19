@@ -12,8 +12,8 @@ namespace lvl.Oidc.AuthorizationServer.Tests
     [Collection(nameof(OidcAuthorizationServerCollection))]
     public class CorsPolicyServiceTests
     {
-        private IRepository<ClientEntity> ClientRepository { get; set; }
-        private ICorsPolicyService CorsPolicyService { get; set; }
+        private IRepository<ClientEntity> ClientRepository { get; }
+        private ICorsPolicyService CorsPolicyService { get; }
 
         public CorsPolicyServiceTests(ServiceProviderFixture serviceProviderFixture)
         {

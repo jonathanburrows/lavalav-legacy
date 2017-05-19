@@ -2,6 +2,7 @@
 using lvl.Oidc.AuthorizationServer.Stores;
 using System;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using lvl.Oidc.AuthorizationServer.Seeder;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's extension convention.
 namespace Microsoft.Extensions.DependencyInjection
@@ -41,6 +42,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddAuthorization()
                 .AddScoped<PasswordHasher>()
                 .AddScoped<IActionContextAccessor, ActionContextAccessor>()
+                .AddScoped<ManditoryDataSeeder>()
+                .AddScoped<TestDataSeeder>()
+                .AddScoped<OidcAuthorizationServerSeeder>()
                 .AddScoped<UserStore>()
                 .AddSingleton(options ?? new OidcAuthorizationServerOptions());
 
