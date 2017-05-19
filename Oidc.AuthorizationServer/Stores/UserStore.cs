@@ -83,6 +83,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
         /// </summary>
         /// <param name="adding">The user to be stored.</param>
         /// <exception cref="ArgumentNullException"><paramref name="adding"/> is null.</exception>
+        /// <remarks>The assigned password should be unhashed.</remarks>
         /// <returns>The given user with generated id.</returns>
         public async Task<User> AddUserAsync(User adding)
         {
