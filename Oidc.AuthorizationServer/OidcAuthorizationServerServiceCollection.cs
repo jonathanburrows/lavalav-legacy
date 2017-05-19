@@ -34,7 +34,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 })
                 .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
-                .AddInMemoryCaching();
+                .AddInMemoryCaching()
+                .AddCorsPolicyService<CorsPolicyService>();
 
             serviceCollection
                 .AddAuthorization()

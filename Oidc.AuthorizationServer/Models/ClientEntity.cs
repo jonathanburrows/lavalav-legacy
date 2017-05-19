@@ -1,8 +1,10 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
 using lvl.Ontology;
+using lvl.Ontology.Conventions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -22,6 +24,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Unique ID of the client
         /// </summary>
+        [Unique, Required]
         public string ClientId { get; set; }
 
         /// <summary>
@@ -30,6 +33,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The protocol type.
         /// </value>
+        [Required]
         public string ProtocolType { get; set; } = IdentityServerConstants.ProtocolTypes.OpenIdConnect;
 
         /// <summary>
@@ -45,11 +49,13 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Client display name (used for logging and consent screen)
         /// </summary>
+        [Required]
         public string ClientName { get; set; }
 
         /// <summary>
         ///     URI to further information about client (used on consent screen)
         /// </summary>
+        [Required]
         public string ClientUri { get; set; }
 
         /// <summary>
