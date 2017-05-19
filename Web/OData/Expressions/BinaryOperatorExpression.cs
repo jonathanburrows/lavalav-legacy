@@ -10,17 +10,8 @@ namespace lvl.Web.OData.Expressions
 
         protected BinaryOperatorExpression(IExpression leftArgument, IExpression rightArgument)
         {
-            if (leftArgument == null)
-            {
-                throw new ArgumentNullException(nameof(leftArgument));
-            }
-            if (rightArgument == null)
-            {
-                throw new ArgumentNullException(nameof(rightArgument));
-            }
-
-            LeftArgument = leftArgument;
-            RightArgument = rightArgument;
+            LeftArgument = leftArgument ?? throw new ArgumentNullException(nameof(leftArgument));
+            RightArgument = rightArgument ?? throw new ArgumentNullException(nameof(rightArgument));
         }
 
         public virtual string CsString() => $"({LeftArgument.CsString()}) {Operator} ({RightArgument.CsString()})";

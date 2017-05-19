@@ -54,6 +54,7 @@
         /// </summary>
         public override int GetHashCode()
         {
+            // ReSharper disable once NonReadonlyMemberInGetHashCode Intended.
             var uniqueKey = GetType().ToString() + Id;
             return uniqueKey.GetHashCode();
         }
@@ -96,6 +97,7 @@
         /// <param name="b">Second entity to be compared.</param>
         public static bool operator !=(Entity a, Entity b) => !(a == b);
 
+        // ReSharper disable once EmptyConstructor added for classes in different solutions/projects.
         protected Entity() { }
     }
 }

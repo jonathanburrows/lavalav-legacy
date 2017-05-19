@@ -1,5 +1,4 @@
 ﻿using lvl.Web.Logging;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -35,7 +34,7 @@ namespace Microsoft.AspNetCore.Builder
                 throw new ArgumentNullException(nameof(configureRoutes));
             }
 
-            var corsSettings = applicationBuilder.ApplicationServices.GetService<Microsoft.Extensions.DependencyInjection.CorsOptions>();
+            var corsSettings = applicationBuilder.ApplicationServices.GetService<CorsOptions>();
             if (corsSettings == null)
             {
                 throw new InvalidOperationException($"{nameof(WebServiceCollectionExtensions.AddWeb)} has not been called.");

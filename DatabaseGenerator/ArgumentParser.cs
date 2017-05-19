@@ -14,7 +14,7 @@ namespace lvl.DatabaseGenerator
         ///     Checks if a given flag is in the list of arguments.
         /// </summary>
         /// <param name="args">The list of arguments which could potentially contain the key.</param>
-        /// <param name="key">The flag which is being searched for.</param>
+        /// <param name="flag">The flag which is being searched for.</param>
         /// <returns>
         ///     True if the flag is in the argument list, otherwise false.
         /// </returns>

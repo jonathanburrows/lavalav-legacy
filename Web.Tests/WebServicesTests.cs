@@ -1,5 +1,4 @@
-﻿using lvl.Web.Logging;
-using lvl.Web.OData;
+﻿using lvl.Web.OData;
 using lvl.Web.Serialization;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.AspNetCore.Cors.Infrastructure;

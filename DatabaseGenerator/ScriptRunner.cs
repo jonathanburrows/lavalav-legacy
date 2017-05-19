@@ -16,11 +16,7 @@ namespace lvl.DatabaseGenerator
 
         public ScriptRunner(Configuration configuration)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-            SessionFactory = configuration.BuildSessionFactory();
+            SessionFactory = configuration?.BuildSessionFactory() ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         /// <summary>

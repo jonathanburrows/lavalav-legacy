@@ -28,6 +28,8 @@ namespace lvl.Ontology.Tests
         public void It_will_have_a_virtual_id_property()
         {
             var idPropertyInfo = typeof(Entity).GetProperty(nameof(Entity.Id));
+
+            Assert.NotNull(idPropertyInfo);
         }
 
         [Fact]
@@ -36,6 +38,7 @@ namespace lvl.Ontology.Tests
             var a = new ComparisonEntity { Id = 1 };
             var b = new NonEntity();
 
+            // ReSharper disable once SuspiciousTypeConversion.Global Need to make sure equals isnt removed.
             Assert.False(a.Equals(b));
         }
 
@@ -62,6 +65,7 @@ namespace lvl.Ontology.Tests
             var a = new ComparisonEntity { Id = 1 };
             var b = new DifferentTypeEntity { Id = 1 };
 
+            // ReSharper disable once SuspiciousTypeConversion.Global Need to make sure equals isnt overriden/removed.
             Assert.False(a.Equals(b));
         }
 

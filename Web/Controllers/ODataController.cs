@@ -19,22 +19,9 @@ namespace lvl.Web.Controllers
 
         public ODataController(TypeResolver typeResolver, RepositoryFactory repositoryFactory, ODataQueryParser odataParser)
         {
-            if (typeResolver == null)
-            {
-                throw new ArgumentNullException(nameof(typeResolver));
-            }
-            if (repositoryFactory == null)
-            {
-                throw new ArgumentNullException(nameof(repositoryFactory));
-            }
-            if (odataParser == null)
-            {
-                throw new ArgumentNullException(nameof(odataParser));
-            }
-
-            TypeResolver = typeResolver;
-            RepositoryFactory = repositoryFactory;
-            ODataParser = odataParser;
+            TypeResolver = typeResolver ?? throw new ArgumentNullException(nameof(typeResolver));
+            RepositoryFactory = repositoryFactory ?? throw new ArgumentNullException(nameof(repositoryFactory));
+            ODataParser = odataParser ?? throw new ArgumentNullException(nameof(odataParser));
         }
 
         /// <summary>

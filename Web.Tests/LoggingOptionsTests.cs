@@ -37,6 +37,8 @@ namespace lvl.Web.Tests
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
 
             var options = new LoggingOptions(configuration);
+
+            Assert.NotNull(options);
         }
 
         [Fact]

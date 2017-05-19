@@ -561,7 +561,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Matches($"export class ManglingPropertyAndBaseClass extends FirstClass_1 {{", tsContent);
+            Assert.Matches("export class ManglingPropertyAndBaseClass extends FirstClass_1 {", tsContent);
         }
 
         [Fact]
@@ -825,7 +825,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export interface IGenericInterfaceNoConstraints<TType> {{", tsContent);
+            Assert.Contains("export interface IGenericInterfaceNoConstraints<TType> {", tsContent);
         }
 
         [Fact]
@@ -836,7 +836,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export interface IGenericInterfaceSingleConstraint<TBaseInterface extends IBareInterface> {{", tsContent);
+            Assert.Contains("export interface IGenericInterfaceSingleConstraint<TBaseInterface extends IBareInterface> {", tsContent);
         }
 
         [Fact]
@@ -858,7 +858,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export interface IGenericInterfaceDoubleConstraint<T extends BareClass, IBareInterface> {{", tsContent);
+            Assert.Contains("export interface IGenericInterfaceDoubleConstraint<T extends BareClass, IBareInterface> {", tsContent);
         }
 
         [Fact]
@@ -869,7 +869,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export interface IGenericDoubleInterface<TFirst, TSecond> {{", tsContent);
+            Assert.Contains("export interface IGenericDoubleInterface<TFirst, TSecond> {", tsContent);
         }
 
         [Fact]
@@ -891,7 +891,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export class GenericClassNoConstraint<TType> {{", tsContent);
+            Assert.Contains("export class GenericClassNoConstraint<TType> {", tsContent);
         }
 
         [Fact]
@@ -902,7 +902,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export class GenericClassSingleConstraint<TBareClass extends BareClass> {{", tsContent);
+            Assert.Contains("export class GenericClassSingleConstraint<TBareClass extends BareClass> {", tsContent);
         }
 
         [Fact]
@@ -924,7 +924,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export class GenericClassDoubleConstraint<T extends BareClass, IBareInterface> {{", tsContent);
+            Assert.Contains("export class GenericClassDoubleConstraint<T extends BareClass, IBareInterface> {", tsContent);
         }
 
         [Fact]
@@ -935,7 +935,7 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains($"export class GenericClassDouble<TFirst, TSecond> {{", tsContent);
+            Assert.Contains("export class GenericClassDouble<TFirst, TSecond> {", tsContent);
         }
 
         [Fact]

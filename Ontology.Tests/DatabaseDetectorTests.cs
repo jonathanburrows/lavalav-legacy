@@ -4,8 +4,6 @@ using NHibernate.Cfg;
 using System;
 using lvl.Ontology.Database;
 using Xunit;
-using System.Data.SqlClient;
-using FluentNHibernate.Cfg;
 
 namespace lvl.Ontology.Tests
 {

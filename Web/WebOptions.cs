@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
+// ReSharper disable once CheckNamespace In compliance with Microsoft conventions.
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>

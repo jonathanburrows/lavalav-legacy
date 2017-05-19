@@ -14,6 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Registers all services specific to generate databases.
         /// </summary>
         /// <param name="serviceCollection">The provider which will have the services registered.</param>
+        /// <param name="options">Options used when generating a database.</param>
         /// <returns>The given provider, with all services registered.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="serviceCollection"/> is null.</exception>
         /// <exception cref="InvalidOperationException">AddDomains has not been called.</exception>

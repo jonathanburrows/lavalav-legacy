@@ -1,4 +1,5 @@
-﻿namespace Microsoft.Extensions.DependencyInjection
+﻿// ReSharper disable once CheckNamespace In compliance with Microsoft's conventions.
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Information specific to a database.

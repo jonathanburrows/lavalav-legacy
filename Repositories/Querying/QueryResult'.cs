@@ -20,15 +20,8 @@ namespace lvl.Repositories.Querying
 
         IEnumerable IQueryResult.Items
         {
-            get
-            {
-                return Items;
-            }
-
-            set
-            {
-                Items = (IEnumerable<TResult>)value;
-            }
+            get => Items;
+            set => Items = (IEnumerable<TResult>)value;
         }
     }
 }

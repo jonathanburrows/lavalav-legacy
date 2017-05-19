@@ -9,5 +9,6 @@
     /// <typeparam name="TAggregateRoot">
     ///     A reference to the root entity, which represents which business process the aggregate scope belongs to.
     /// </typeparam>
+    // ReSharper disable once UnusedTypeParameter Used semantically, not functionally.
     public interface IAggregateScope<TAggregateRoot> where TAggregateRoot : IAggregateRoot { }
 }

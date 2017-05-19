@@ -179,10 +179,10 @@ namespace lvl.Oidc.AuthorizationServer.Stores
         /// </summary>
         /// <param name="provider">The provider which authenticate the user.</param>
         /// <param name="userId">The unique (for the provider) identifier of the user</param>
-        /// <param name="claims">Information about the identity of the user.</param>
+        /// <param name="externalClaims">Information about the identity of the user.</param>
         /// <exception cref="ArgumentNullException"><paramref name="provider"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="userId"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="claims"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="externalClaims"/> is null.</exception>
         /// <exception cref="InvalidOperationException">Multiple names were specified for the user.</exception>
         /// <returns>The created user.</returns>
         public async Task<User> AddExternalUserAsync(string provider, string userId, IEnumerable<Claim> externalClaims)
@@ -202,12 +202,12 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
             var subjectId = CryptoRandom.CreateUniqueId();
 
-            var claims = TransformExternalClaims(externalClaims);
+            var claims = TransformExternalClaims(externalClaims).ToList();
 
-            var nameClaims = claims.Where(claim => claim.Type == JwtClaimTypes.Name);
-            if (nameClaims.Count() > 1)
+            var nameClaims = claims.Where(claim => claim.Type == JwtClaimTypes.Name).ToList();
+            if (nameClaims.Count > 1)
             {
-                throw new InvalidOperationException($"{nameClaims.Count()} name claims found.");
+                throw new InvalidOperationException($"{nameClaims.Count} name claims found.");
             }
             var username = nameClaims.FirstOrDefault()?.Value ?? subjectId;
 

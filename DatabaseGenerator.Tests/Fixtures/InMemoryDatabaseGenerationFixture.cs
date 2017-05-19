@@ -1,5 +1,4 @@
-﻿using lvl.Ontology;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace lvl.DatabaseGenerator.Tests.Fixtures

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+// ReSharper disable UnusedTypeParameter Uses types in reflection for tests.
 
 // Due to the large amount of classes, they were centralized into one file here.
 namespace lvl.TypeScriptGenerator.Tests.Fixtures
@@ -325,7 +326,6 @@ namespace lvl.TypeScriptGenerator.Tests.Fixtures
     public class GenericClassSingleConstraint<TBareClass> where TBareClass : BareClass { }
 
     public class GenericClassDoubleConstraint<T> where T : BareClass, IBareInterface { }
-
     public class GenericClassDouble<TFirst, TSecond> { }
 
     public class GenericClassImporter

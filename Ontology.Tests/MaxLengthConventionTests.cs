@@ -1,5 +1,4 @@
-﻿using lvl.Ontology.Conventions;
-using lvl.Ontology.Tests.Fixtures;
+﻿using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
 using NHibernate.Mapping;

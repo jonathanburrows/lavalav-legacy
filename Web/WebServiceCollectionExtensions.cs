@@ -47,6 +47,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var corsSettings = webOptions?.Cors ?? new CorsOptions();
             serviceCollection.AddSingleton(corsSettings);
 
+            // ReSharper disable once ConvertToLocalFunction No.
             Action<JsonSerializerSettings> configureJson = options =>
             {
                 options.MissingMemberHandling = MissingMemberHandling.Error;

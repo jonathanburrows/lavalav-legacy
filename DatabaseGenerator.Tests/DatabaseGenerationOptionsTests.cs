@@ -35,6 +35,7 @@ namespace lvl.DatabaseGenerator.Tests
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
 
+            // ReSharper disable once UnusedVariable for unit test.
             var options = new DatabaseGenerationOptions(configuration);
         }
 

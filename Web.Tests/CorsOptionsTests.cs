@@ -37,6 +37,8 @@ namespace lvl.Web.Tests
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
 
             var options = new CorsOptions(configuration);
+
+            Assert.NotNull(options);
         }
 
         [Fact]

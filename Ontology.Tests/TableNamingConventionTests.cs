@@ -2,7 +2,6 @@
 using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Xunit;
 
@@ -44,7 +43,7 @@ namespace lvl.Ontology.Tests
         {
             var mapping = Configuration.GetClassMapping(typeof(TableNameNoSchema));
 
-            Assert.Equal(mapping.Table.Name, $"lvl_TableOnly");
+            Assert.Equal(mapping.Table.Name, "lvl_TableOnly");
         }
 
         [Table("TableOnly")]
@@ -55,7 +54,7 @@ namespace lvl.Ontology.Tests
         {
             var mapping = Configuration.GetClassMapping(typeof(BothTableNameAndSchema));
 
-            Assert.Equal(mapping.Table.Name, $"Schema_Table");
+            Assert.Equal(mapping.Table.Name, "Schema_Table");
         }
 
         [Table("Table", Schema = "Schema")]
@@ -66,7 +65,7 @@ namespace lvl.Ontology.Tests
         {
             var mapping = Configuration.GetClassMapping(typeof(TableOverridesSchema));
 
-            Assert.Equal(mapping.Table.Name, $"Override_MyTable");
+            Assert.Equal(mapping.Table.Name, "Override_MyTable");
         }
 
         [Table("MyTable", Schema = "Override"), Schema("Overridden")]

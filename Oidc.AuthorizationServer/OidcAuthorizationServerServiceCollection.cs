@@ -1,7 +1,6 @@
 ﻿using lvl.Oidc.AuthorizationServer.Services;
 using lvl.Oidc.AuthorizationServer.Stores;
 using System;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's extension convention.
@@ -36,8 +35,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryCaching();
-
-            var assembly = typeof(OidcAuthorizationServerServiceCollectionExtensions).GetTypeInfo().Assembly;
 
             serviceCollection
                 .AddAuthorization()

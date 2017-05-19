@@ -11,11 +11,7 @@ namespace lvl.Web.OData.Expressions
 
         protected UnaryOperatorExpression(IExpression argument)
         {
-            if (argument == null)
-            {
-                throw new ArgumentNullException(nameof(argument));
-            }
-            Argument = argument;
+            Argument = argument ?? throw new ArgumentNullException(nameof(argument));
         }
 
         public abstract string CsString();

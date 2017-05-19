@@ -5,7 +5,7 @@ using System.Linq;
 namespace lvl.TypescriptGenerator
 {
     /// <summary>
-    /// Represets a type in TypeScript.
+    ///     Represets a type in TypeScript.
     /// </summary>
     public abstract class TypeScriptType
     {
@@ -155,7 +155,7 @@ namespace lvl.TypescriptGenerator
             {
                 var statements = GenericArguments.Select(ga =>
                 {
-                    var constraints = ga.GenericConstraints.Select(c => c.Name);
+                    var constraints = ga.GenericConstraints.Select(c => c.Name).ToList();
                     var extends = constraints.Any() ? $" extends {string.Join(", ", constraints)}" : string.Empty;
                     return $"{ga.Name}{extends}";
                 });
