@@ -3,6 +3,7 @@ using lvl.Oidc.AuthorizationServer.Stores;
 using System;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using lvl.Oidc.AuthorizationServer.Seeder;
+using IdentityServer4.Stores;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's extension convention.
 namespace Microsoft.Extensions.DependencyInjection
@@ -34,7 +35,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.UserInteraction.ConsentUrl = "/oidc/consent";
                 })
                 .AddTemporarySigningCredential()
-                .AddInMemoryPersistedGrants()
                 .AddInMemoryCaching()
                 .AddCorsPolicyService<CorsPolicyService>()
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
@@ -48,6 +48,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<TestDataSeeder>()
                 .AddScoped<OidcAuthorizationServerSeeder>()
                 .AddScoped<UserStore>()
+                .AddScoped<IPersistedGrantStore, PersistedGrantStore>()
                 .AddSingleton(options ?? new OidcAuthorizationServerOptions());
 
             return serviceCollection;

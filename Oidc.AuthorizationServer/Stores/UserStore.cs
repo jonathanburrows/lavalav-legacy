@@ -205,6 +205,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
             var claims = TransformExternalClaims(externalClaims).ToList();
 
+            // Set the username to either the first name claim, or the subjectid
             var nameClaims = claims.Where(claim => claim.Type == JwtClaimTypes.Name).ToList();
             if (nameClaims.Count > 1)
             {

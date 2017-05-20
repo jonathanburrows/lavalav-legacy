@@ -3,6 +3,7 @@ using lvl.Ontology;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using lvl.Ontology.Conventions;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
@@ -18,6 +19,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The key.
         /// </value>
+        [Unique, Required]
         public string Key { get; set; }
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The type.
         /// </value>
+        [Required]
         public string Type { get; set; }
 
         /// <summary>
@@ -34,6 +37,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The subject identifier.
         /// </value>
+        [Required]
         public string SubjectId { get; set; }
 
         /// <summary>
@@ -42,6 +46,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The client identifier.
         /// </value>
+        [Required]
         public string ClientId { get; set; }
 
         /// <summary>
