@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -15,6 +16,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Name of the scope. This is the value a client will use to request the scope.
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>

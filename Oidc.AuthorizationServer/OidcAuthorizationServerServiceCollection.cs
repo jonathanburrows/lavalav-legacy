@@ -38,7 +38,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddInMemoryCaching()
                 .AddCorsPolicyService<CorsPolicyService>()
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
-                .AddClientStore<ClientStore>();
+                .AddClientStore<ClientStore>()
+                .AddResourceStore<ResourceStore>();
 
             serviceCollection
                 .AddAuthorization()

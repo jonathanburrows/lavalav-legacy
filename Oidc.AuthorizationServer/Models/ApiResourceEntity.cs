@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using lvl.Ontology.Conventions;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
@@ -12,15 +13,15 @@ namespace lvl.Oidc.AuthorizationServer.Models
     public class ApiResourceEntity : Entity, IAggregateRoot
     {
         /// <summary>
+        ///     The unique name of the resource.
+        /// </summary>
+        [Required, Unique]
+        public string Name { get; set; }
+
+        /// <summary>
         ///     Indicates if this resource is enabled. Defaults to true.
         /// </summary>
         public bool Enabled { get; set; } = true;
-
-        /// <summary>
-        ///     The unique name of the resource.
-        /// </summary>
-        [Required]
-        public string Name { get; set; }
 
         /// <summary>
         ///     Display name of the resource.
@@ -45,7 +46,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     An API must have at least one scope. Each scope can have different settings.
         /// </summary>
-        public ICollection<ScopeEntity> Scopes { get; set; }
+        public ICollection<ScopeEntity> Scopes { get; set; } = new HashSet<ScopeEntity>();
 
         public ApiResourceEntity() { }
 
