@@ -20,7 +20,12 @@ const frontEndGroup = 'Front End';
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
         ]),
-        OidcModule
+        OidcModule.useResourceOwnerFlow({
+            clientId: 'test-resource-owner-client',
+            authorizationServerUrl: 'http://localhost:5001',
+            clientSecret: 'secret',
+            scopes: ['test-resource-server']
+        })
     ],
     bootstrap: [RootE2eComponent]
 })
