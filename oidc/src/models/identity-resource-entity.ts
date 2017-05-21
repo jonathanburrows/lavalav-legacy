@@ -10,10 +10,9 @@ export class IdentityResourceEntity extends Entity implements IAggregateRoot {
     public emphasize: boolean;
     public showInDiscoveryDocument: boolean;
     public userClaims: UserClaim[];
-    public id: number;
 
     constructor(options?: IdentityResourceEntity) {
-        super();
+        super(options);
         this.enabled = options!.enabled;
         this.name = options!.name;
         this.displayName = options!.displayName;
@@ -22,6 +21,5 @@ export class IdentityResourceEntity extends Entity implements IAggregateRoot {
         this.emphasize = options!.emphasize;
         this.showInDiscoveryDocument = options!.showInDiscoveryDocument;
         this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
-        this.id = options!.id;
     }
 }

@@ -10,10 +10,9 @@ export class ScopeEntity extends Entity implements IAggregateScope<ApiResourceEn
     public emphasize: boolean;
     public showInDiscoveryDocument: boolean;
     public userClaims: UserClaim[];
-    public id: number;
 
     constructor(options?: ScopeEntity) {
-        super();
+        super(options);
         this.name = options!.name;
         this.displayName = options!.displayName;
         this.description = options!.description;
@@ -21,6 +20,5 @@ export class ScopeEntity extends Entity implements IAggregateScope<ApiResourceEn
         this.emphasize = options!.emphasize;
         this.showInDiscoveryDocument = options!.showInDiscoveryDocument;
         this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
-        this.id = options!.id;
     }
 }

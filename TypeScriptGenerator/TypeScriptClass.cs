@@ -83,14 +83,15 @@ namespace lvl.TypescriptGenerator
                     }
                 });
 
+                var baseConstructor = BaseType != null? "super(options);\r\n        " : string.Empty;
+
                 var propertyStatement = string.Join($"{Environment.NewLine}        ", propertyAssignments);
 
                 return
 $@"
 
     constructor(options?: {Name}) {{
-        super();
-        {propertyStatement}
+        {baseConstructor}{propertyStatement}
     }}";
             }
         }

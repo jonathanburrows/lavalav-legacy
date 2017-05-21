@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using lvl.TypescriptGenerator.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using static System.Reflection.BindingFlags;
 
 namespace lvl.TypescriptGenerator
 {
@@ -47,7 +48,7 @@ namespace lvl.TypescriptGenerator
             }
 
             tsType.Interfaces = converting.GetInterfaces().Select(i => ConvertImportedType(i, generationOptions)).ToList();
-            tsType.Properties = converting.GetProperties().Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
+            tsType.Properties = converting.GetProperties(Public | Instance | DeclaredOnly).Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
             tsType.GenericArguments = converting.GetGenericArguments().Select(p => ConvertGenericArgument(p, generationOptions)).ToList();
             tsType.IsVisible = converting.IsVisible;
 

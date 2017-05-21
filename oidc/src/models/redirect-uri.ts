@@ -3,11 +3,9 @@ import { Entity, IAggregateScope, Required } from '@lvl/front-end';
 
 export class RedirectUri extends Entity implements IAggregateScope<ClientEntity> {
     @Required() public name: string;
-    public id: number;
 
     constructor(options?: RedirectUri) {
-        super();
+        super(options);
         this.name = options!.name;
-        this.id = options!.id;
     }
 }

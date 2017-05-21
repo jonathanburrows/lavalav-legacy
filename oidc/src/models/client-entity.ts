@@ -46,10 +46,9 @@ export class ClientEntity extends Entity implements IAggregateRoot {
     public alwaysSendClientClaims: boolean;
     public prefixClientClaims: boolean;
     public allowedCorsOrigins: CorsOrigin[];
-    public id: number;
 
     constructor(options?: ClientEntity) {
-        super();
+        super(options);
         this.enabled = options!.enabled;
         this.clientId = options!.clientId;
         this.protocolType = options!.protocolType;
@@ -87,6 +86,5 @@ export class ClientEntity extends Entity implements IAggregateRoot {
         this.alwaysSendClientClaims = options!.alwaysSendClientClaims;
         this.prefixClientClaims = options!.prefixClientClaims;
         this.allowedCorsOrigins = options!.allowedCorsOrigins!.map(p => new CorsOrigin(p));
-        this.id = options!.id;
     }
 }
