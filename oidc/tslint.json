@@ -1,0 +1,3 @@
+{
+  "extends": "@lvl/front-end/tslint.json"
+}

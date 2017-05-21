@@ -1,0 +1,10 @@
+{
+  "extends": "./node_modules/@lvl/front-end/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@angular/*": [ "./node_modules/@angular/*" ],
+      "rxjs/*": [ "./node_modules/rxjs/*" ]
+    }
+  }
+}

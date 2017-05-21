@@ -64,6 +64,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer.Seeder", "Oidc.AuthorizationServer.Seeder\Oidc.AuthorizationServer.Seeder.csproj", "{426ECDA2-BE80-4802-8FBC-CD429C375766}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "oidc", "oidc\", "{710F0C18-8F82-4050-AB19-E5D851C89922}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59880"
+		Debug.AspNetCompiler.PhysicalPath = "oidc\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59880\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59880"
+		Release.AspNetCompiler.PhysicalPath = "oidc\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59880\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59880"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,6 +218,14 @@ Global
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|Any CPU.Build.0 = Release|Any CPU
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|x64.ActiveCfg = Release|Any CPU
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|x64.Build.0 = Release|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|x64.Build.0 = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|x64.ActiveCfg = Debug|Any CPU
+		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -219,5 +247,6 @@ Global
 		{B06243DB-43F2-41E1-8931-7987B6992F92} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{426ECDA2-BE80-4802-8FBC-CD429C375766} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
+		{710F0C18-8F82-4050-AB19-E5D851C89922} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 	EndGlobalSection
 EndGlobal
