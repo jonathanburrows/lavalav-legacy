@@ -161,7 +161,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         ///     ReUse: the refresh token handle will stay the same when refreshing tokens
         ///     OneTime: the refresh token handle will be updated when refreshing tokens
         /// </summary>
-        public TokenUsage RefreshTokenUsage { get; set; } = TokenUsage.OneTimeOnly;
+        public int RefreshTokenUsage { get; set; } = (int)TokenUsage.OneTimeOnly;
 
         /// <summary>
         ///     Gets or sets a value indicating whether the access token (and its claims) should be updated on a refresh token request.
@@ -175,12 +175,12 @@ namespace lvl.Oidc.AuthorizationServer.Models
         ///     Absolute: the refresh token will expire on a fixed point in time (specified by the AbsoluteRefreshTokenLifetime)
         ///     Sliding: when refreshing the token, the lifetime of the refresh token will be renewed (by the amount specified in SlidingRefreshTokenLifetime). The lifetime will not exceed AbsoluteRefreshTokenLifetime.
         /// </summary>        
-        public TokenExpiration RefreshTokenExpiration { get; set; } = TokenExpiration.Absolute;
+        public int RefreshTokenExpiration { get; set; } = (int)TokenExpiration.Absolute;
 
         /// <summary>
         ///     Specifies whether the access token is a reference token or a self contained JWT token (defaults to Jwt).
         /// </summary>
-        public AccessTokenType AccessTokenType { get; set; } = AccessTokenType.Jwt;
+        public int AccessTokenType { get; set; } = (int)IdentityServer4.Models.AccessTokenType.Jwt;
 
         /// <summary>
         ///     Gets or sets a value indicating whether the local login is allowed for this client. Defaults to <c>true</c>.
@@ -244,7 +244,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
             {
                 AbsoluteRefreshTokenLifetime = AbsoluteRefreshTokenLifetime,
                 AccessTokenLifetime = AccessTokenLifetime,
-                AccessTokenType = AccessTokenType,
+                AccessTokenType = (AccessTokenType)AccessTokenType,
                 AllowAccessTokensViaBrowser = AllowAccessTokensViaBrowser,
                 AllowedCorsOrigins = AllowedCorsOrigins.Select(co => co.Name).ToList(),
                 AllowedGrantTypes = AllowedGrantTypes.Select(gt => gt.Name).ToList(),
@@ -272,8 +272,8 @@ namespace lvl.Oidc.AuthorizationServer.Models
                 PrefixClientClaims = PrefixClientClaims,
                 ProtocolType = ProtocolType,
                 RedirectUris = RedirectUris.Select(ru => ru.Name).ToList(),
-                RefreshTokenExpiration = RefreshTokenExpiration,
-                RefreshTokenUsage = RefreshTokenUsage,
+                RefreshTokenExpiration = (TokenExpiration)RefreshTokenExpiration,
+                RefreshTokenUsage = (TokenUsage)RefreshTokenUsage,
                 RequireClientSecret = RequireClientSecret,
                 RequireConsent = RequireConsent,
                 RequirePkce = RequirePkce,

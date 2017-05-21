@@ -82,6 +82,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "oidc", "oidc\", "{710F0C18-
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "59880"
+		SlnRelativePath = "oidc\"
 	EndProjectSection
 EndProject
 Global
@@ -219,11 +220,9 @@ Global
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|x64.ActiveCfg = Release|Any CPU
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|x64.Build.0 = Release|Any CPU
 		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|x64.Build.0 = Debug|Any CPU
 		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|x64.ActiveCfg = Debug|Any CPU
 		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection

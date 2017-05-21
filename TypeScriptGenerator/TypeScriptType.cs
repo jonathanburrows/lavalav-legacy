@@ -118,7 +118,9 @@ namespace lvl.TypescriptGenerator
 
             var constraintTypes = GenericArguments.SelectMany(g => g.GenericConstraints);
 
-            var dependencies = propertyTypes.Union(Interfaces).Union(decoratorTypes).Union(constraintTypes);
+            var argumentTypes = Interfaces.SelectMany(i => i.GenericArguments);
+
+            var dependencies = propertyTypes.Union(Interfaces).Union(decoratorTypes).Union(constraintTypes).Union(argumentTypes);
 
             if (BaseType != null)
             {
@@ -141,11 +143,28 @@ namespace lvl.TypescriptGenerator
                 return string.Empty;
             }
 
-            var interfaces = string.Join(", ", Interfaces.Select(i => i.Alias ?? i.Name));
+            var interfaces = string.Join(", ", Interfaces.Select(i =>
+            {
+                var mangledName = i.Alias ?? i.Name;
+                return $"{mangledName}{i.GetGenericArgumentStatement()}";
+            }));
             return $"implements {interfaces} ";
         }
 
-        protected string GetGenericStatements()
+        protected string GetGenericArgumentStatement()
+        {
+            if (!GenericArguments.Any())
+            {
+                return string.Empty;
+            }
+            else
+            {
+                var names = GenericArguments.Select(ga => ga.Name);
+                return $"<{string.Join(", ", names)}>";
+            }
+        }
+
+        protected string GetGenericConstraintStatement()
         {
             if (!GenericArguments.Any())
             {

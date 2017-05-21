@@ -163,11 +163,14 @@ namespace lvl.TypescriptGenerator
             }
             else
             {
+                var genericArguments = imported.GetGenericArguments().Select(ga => ConvertGenericArgument(ga, generationOptions)).ToList();
+
                 return new TypeScriptClass
                 {
                     Name = GetTypeName(imported),
                     ModulePath = GetPathForType(imported, generationOptions),
-                    IsPrimitive = imported == typeof(string) || imported.IsValueType
+                    IsPrimitive = imported == typeof(string) || imported.IsValueType,
+                    GenericArguments = genericArguments
                 };
             }
         }
@@ -180,16 +183,14 @@ namespace lvl.TypescriptGenerator
         /// <returns>The converted type for the generic argument.</returns>
         private TypeScriptType ConvertGenericArgument(Type genericArgument, TypeScriptGenerationOptions generationOptions)
         {
-            if (!genericArgument.IsGenericParameter)
-            {
-                throw new InvalidOperationException("Type is not a generic parameter");
-            }
-            var constraints = genericArgument.GetGenericParameterConstraints().Select(constraint => ConvertImportedType(constraint, generationOptions)).ToList();
+            var csGenericConstraints = genericArgument.IsGenericParameter ? genericArgument.GetGenericParameterConstraints() : new Type[0];
+            var constraints = csGenericConstraints.Select(constraint => ConvertImportedType(constraint, generationOptions)).ToList();
 
             return new TypeScriptClass
             {
                 Name = genericArgument.Name,
-                GenericConstraints = constraints
+                GenericConstraints = constraints,
+                ModulePath = GetPathForType(genericArgument, generationOptions)
             };
         }
 

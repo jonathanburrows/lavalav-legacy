@@ -34,7 +34,7 @@ namespace lvl.TypescriptGenerator
         public override string ToTypeScript()
         {
             return
-$@"{GetImportStatements()}export interface {Name}{GetGenericStatements()} {GetImplementationStatements()}{{{GetPropertyStatements()}
+$@"{GetImportStatements()}export interface {Name}{GetGenericConstraintStatement()} {GetImplementationStatements()}{{{GetPropertyStatements()}
 }}
 ";
         }

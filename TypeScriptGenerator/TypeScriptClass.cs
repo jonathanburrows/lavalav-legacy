@@ -101,7 +101,7 @@ $@"
         public override string ToTypeScript()
         {
             return
-$@"{GetImportStatements()}export {GetAbstractStatement()}class {Name}{GetGenericStatements()} {GetExtendStatement()}{GetImplementationStatements()}{{
+$@"{GetImportStatements()}export {GetAbstractStatement()}class {Name}{GetGenericConstraintStatement()} {GetExtendStatement()}{GetImplementationStatements()}{{
     {GetPropertyStatements()}{GetConstructor()}
 }}
 ";
