@@ -7,9 +7,7 @@ export class RedirectUri extends Entity implements IAggregateScope<ClientEntity>
 
     constructor(options?: RedirectUri) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.id = options!.id;
     }
 }

@@ -7,9 +7,7 @@ export class AllowedScope extends Entity implements IAggregateScope<ClientEntity
 
     constructor(options?: AllowedScope) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.id = options!.id;
     }
 }

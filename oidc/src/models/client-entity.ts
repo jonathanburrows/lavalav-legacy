@@ -50,61 +50,43 @@ export class ClientEntity extends Entity implements IAggregateRoot {
 
     constructor(options?: ClientEntity) {
         super();
-        if (options) {
-            this.enabled = options.enabled;
-            this.clientId = options.clientId;
-            this.protocolType = options.protocolType;
-            if (options.clientSecrets) {
-                this.clientSecrets = options.clientSecrets.map(p => new SecretEntity(p));
-            }
-            this.requireClientSecret = options.requireClientSecret;
-            this.clientName = options.clientName;
-            this.clientUri = options.clientUri;
-            this.logoUri = options.logoUri;
-            this.requireConsent = options.requireConsent;
-            this.allowRememberConsent = options.allowRememberConsent;
-            if (options.allowedGrantTypes) {
-                this.allowedGrantTypes = options.allowedGrantTypes.map(p => new GrantTypeEntity(p));
-            }
-            this.requirePkce = options.requirePkce;
-            this.allowPlainTextPkce = options.allowPlainTextPkce;
-            this.allowAccessTokensViaBrowser = options.allowAccessTokensViaBrowser;
-            if (options.redirectUris) {
-                this.redirectUris = options.redirectUris.map(p => new RedirectUri(p));
-            }
-            if (options.postLogoutRedirectUris) {
-                this.postLogoutRedirectUris = options.postLogoutRedirectUris.map(p => new PostLogoutRedirectUri(p));
-            }
-            this.logoutUri = options.logoutUri;
-            this.logoutSessionRequired = options.logoutSessionRequired;
-            this.allowOfflineAccess = options.allowOfflineAccess;
-            if (options.allowedScopes) {
-                this.allowedScopes = options.allowedScopes.map(p => new AllowedScope(p));
-            }
-            this.alwaysIncludeUserClaimsInIdToken = options.alwaysIncludeUserClaimsInIdToken;
-            this.identityTokenLifetime = options.identityTokenLifetime;
-            this.accessTokenLifetime = options.accessTokenLifetime;
-            this.authorizationCodeLifetime = options.authorizationCodeLifetime;
-            this.absoluteRefreshTokenLifetime = options.absoluteRefreshTokenLifetime;
-            this.slidingRefreshTokenLifetime = options.slidingRefreshTokenLifetime;
-            this.refreshTokenUsage = options.refreshTokenUsage;
-            this.updateAccessTokenClaimsOnRefresh = options.updateAccessTokenClaimsOnRefresh;
-            this.refreshTokenExpiration = options.refreshTokenExpiration;
-            this.accessTokenType = options.accessTokenType;
-            this.enableLocalLogin = options.enableLocalLogin;
-            if (options.identityProviderRestrictions) {
-                this.identityProviderRestrictions = options.identityProviderRestrictions.map(p => new IdentityProviderRestriction(p));
-            }
-            this.includeJwtId = options.includeJwtId;
-            if (options.claims) {
-                this.claims = options.claims.map(p => new ClaimEntity(p));
-            }
-            this.alwaysSendClientClaims = options.alwaysSendClientClaims;
-            this.prefixClientClaims = options.prefixClientClaims;
-            if (options.allowedCorsOrigins) {
-                this.allowedCorsOrigins = options.allowedCorsOrigins.map(p => new CorsOrigin(p));
-            }
-            this.id = options.id;
-        }
+        this.enabled = options!.enabled;
+        this.clientId = options!.clientId;
+        this.protocolType = options!.protocolType;
+        this.clientSecrets = options!.clientSecrets!.map(p => new SecretEntity(p));
+        this.requireClientSecret = options!.requireClientSecret;
+        this.clientName = options!.clientName;
+        this.clientUri = options!.clientUri;
+        this.logoUri = options!.logoUri;
+        this.requireConsent = options!.requireConsent;
+        this.allowRememberConsent = options!.allowRememberConsent;
+        this.allowedGrantTypes = options!.allowedGrantTypes!.map(p => new GrantTypeEntity(p));
+        this.requirePkce = options!.requirePkce;
+        this.allowPlainTextPkce = options!.allowPlainTextPkce;
+        this.allowAccessTokensViaBrowser = options!.allowAccessTokensViaBrowser;
+        this.redirectUris = options!.redirectUris!.map(p => new RedirectUri(p));
+        this.postLogoutRedirectUris = options!.postLogoutRedirectUris!.map(p => new PostLogoutRedirectUri(p));
+        this.logoutUri = options!.logoutUri;
+        this.logoutSessionRequired = options!.logoutSessionRequired;
+        this.allowOfflineAccess = options!.allowOfflineAccess;
+        this.allowedScopes = options!.allowedScopes!.map(p => new AllowedScope(p));
+        this.alwaysIncludeUserClaimsInIdToken = options!.alwaysIncludeUserClaimsInIdToken;
+        this.identityTokenLifetime = options!.identityTokenLifetime;
+        this.accessTokenLifetime = options!.accessTokenLifetime;
+        this.authorizationCodeLifetime = options!.authorizationCodeLifetime;
+        this.absoluteRefreshTokenLifetime = options!.absoluteRefreshTokenLifetime;
+        this.slidingRefreshTokenLifetime = options!.slidingRefreshTokenLifetime;
+        this.refreshTokenUsage = options!.refreshTokenUsage;
+        this.updateAccessTokenClaimsOnRefresh = options!.updateAccessTokenClaimsOnRefresh;
+        this.refreshTokenExpiration = options!.refreshTokenExpiration;
+        this.accessTokenType = options!.accessTokenType;
+        this.enableLocalLogin = options!.enableLocalLogin;
+        this.identityProviderRestrictions = options!.identityProviderRestrictions!.map(p => new IdentityProviderRestriction(p));
+        this.includeJwtId = options!.includeJwtId;
+        this.claims = options!.claims!.map(p => new ClaimEntity(p));
+        this.alwaysSendClientClaims = options!.alwaysSendClientClaims;
+        this.prefixClientClaims = options!.prefixClientClaims;
+        this.allowedCorsOrigins = options!.allowedCorsOrigins!.map(p => new CorsOrigin(p));
+        this.id = options!.id;
     }
 }

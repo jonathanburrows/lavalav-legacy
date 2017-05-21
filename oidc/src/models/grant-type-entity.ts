@@ -7,9 +7,7 @@ export class GrantTypeEntity extends Entity implements IAggregateScope<ClientEnt
 
     constructor(options?: GrantTypeEntity) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.id = options!.id;
     }
 }

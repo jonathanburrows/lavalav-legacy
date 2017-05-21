@@ -9,12 +9,10 @@ export class SecretEntity extends Entity implements IAggregateRoot {
 
     constructor(options?: SecretEntity) {
         super();
-        if (options) {
-            this.description = options.description;
-            this.value = options.value;
-            this.expiration = options.expiration;
-            this.type = options.type;
-            this.id = options.id;
-        }
+        this.description = options!.description;
+        this.value = options!.value;
+        this.expiration = options!.expiration;
+        this.type = options!.type;
+        this.id = options!.id;
     }
 }

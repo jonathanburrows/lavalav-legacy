@@ -71,28 +71,26 @@ namespace lvl.TypescriptGenerator
 
                     if (property.PropertyType.IsPrimitive)
                     {
-                        return $"this.{name} = options.{name};";
+                        return $"this.{name} = options!.{name};";
                     }
                     else if (property.PropertyType.IsCollection)
                     {
-                        return $"if (options.{name}) {{\r\n                this.{name} = options.{name}.map(p => new {property.PropertyType.Name}(p));\r\n            }}";
+                        return $"this.{name} = options!.{name}!.map(p => new {property.PropertyType.Name}(p));";
                     }
                     else
                     {
-                        return $@"this.{name} = new {property.PropertyType.Name}(options.{name});";
+                        return $@"this.{name} = new {property.PropertyType.Name}(options!.{name});";
                     }
                 });
 
-                var propertyStatement = string.Join($"{Environment.NewLine}            ", propertyAssignments);
+                var propertyStatement = string.Join($"{Environment.NewLine}        ", propertyAssignments);
 
                 return
 $@"
 
     constructor(options?: {Name}) {{
         super();
-        if (options) {{
-            {propertyStatement}
-        }}
+        {propertyStatement}
     }}";
             }
         }

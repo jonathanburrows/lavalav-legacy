@@ -15,21 +15,13 @@ export class ApiResourceEntity extends Entity implements IAggregateRoot {
 
     constructor(options?: ApiResourceEntity) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.enabled = options.enabled;
-            this.displayName = options.displayName;
-            this.description = options.description;
-            if (options.userClaims) {
-                this.userClaims = options.userClaims.map(p => new UserClaim(p));
-            }
-            if (options.apiSecrets) {
-                this.apiSecrets = options.apiSecrets.map(p => new SecretEntity(p));
-            }
-            if (options.scopes) {
-                this.scopes = options.scopes.map(p => new ScopeEntity(p));
-            }
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.enabled = options!.enabled;
+        this.displayName = options!.displayName;
+        this.description = options!.description;
+        this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
+        this.apiSecrets = options!.apiSecrets!.map(p => new SecretEntity(p));
+        this.scopes = options!.scopes!.map(p => new ScopeEntity(p));
+        this.id = options!.id;
     }
 }

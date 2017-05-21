@@ -12,15 +12,13 @@ export class PersistedGrantEntity extends Entity implements IAggregateRoot {
 
     constructor(options?: PersistedGrantEntity) {
         super();
-        if (options) {
-            this.key = options.key;
-            this.type = options.type;
-            this.subjectId = options.subjectId;
-            this.clientId = options.clientId;
-            this.creationTime = options.creationTime;
-            this.expiration = options.expiration;
-            this.data = options.data;
-            this.id = options.id;
-        }
+        this.key = options!.key;
+        this.type = options!.type;
+        this.subjectId = options!.subjectId;
+        this.clientId = options!.clientId;
+        this.creationTime = options!.creationTime;
+        this.expiration = options!.expiration;
+        this.data = options!.data;
+        this.id = options!.id;
     }
 }

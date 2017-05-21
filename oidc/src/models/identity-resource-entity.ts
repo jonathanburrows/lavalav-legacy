@@ -14,18 +14,14 @@ export class IdentityResourceEntity extends Entity implements IAggregateRoot {
 
     constructor(options?: IdentityResourceEntity) {
         super();
-        if (options) {
-            this.enabled = options.enabled;
-            this.name = options.name;
-            this.displayName = options.displayName;
-            this.description = options.description;
-            this.required = options.required;
-            this.emphasize = options.emphasize;
-            this.showInDiscoveryDocument = options.showInDiscoveryDocument;
-            if (options.userClaims) {
-                this.userClaims = options.userClaims.map(p => new UserClaim(p));
-            }
-            this.id = options.id;
-        }
+        this.enabled = options!.enabled;
+        this.name = options!.name;
+        this.displayName = options!.displayName;
+        this.description = options!.description;
+        this.required = options!.required;
+        this.emphasize = options!.emphasize;
+        this.showInDiscoveryDocument = options!.showInDiscoveryDocument;
+        this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
+        this.id = options!.id;
     }
 }

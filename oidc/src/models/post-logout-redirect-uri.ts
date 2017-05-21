@@ -7,9 +7,7 @@ export class PostLogoutRedirectUri extends Entity implements IAggregateScope<Cli
 
     constructor(options?: PostLogoutRedirectUri) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.id = options!.id;
     }
 }

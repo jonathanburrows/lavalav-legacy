@@ -13,17 +13,13 @@ export class User extends Entity implements IAggregateRoot {
 
     constructor(options?: User) {
         super();
-        if (options) {
-            this.subjectId = options.subjectId;
-            this.username = options.username;
-            this.hashedPassword = options.hashedPassword;
-            this.salt = options.salt;
-            this.providerName = options.providerName;
-            this.providerSubjectId = options.providerSubjectId;
-            if (options.claims) {
-                this.claims = options.claims.map(p => new ClaimEntity(p));
-            }
-            this.id = options.id;
-        }
+        this.subjectId = options!.subjectId;
+        this.username = options!.username;
+        this.hashedPassword = options!.hashedPassword;
+        this.salt = options!.salt;
+        this.providerName = options!.providerName;
+        this.providerSubjectId = options!.providerSubjectId;
+        this.claims = options!.claims!.map(p => new ClaimEntity(p));
+        this.id = options!.id;
     }
 }

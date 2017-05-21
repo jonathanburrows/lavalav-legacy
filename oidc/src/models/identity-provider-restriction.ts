@@ -7,9 +7,7 @@ export class IdentityProviderRestriction extends Entity implements IAggregateSco
 
     constructor(options?: IdentityProviderRestriction) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.id = options!.id;
     }
 }

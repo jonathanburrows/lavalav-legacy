@@ -6,9 +6,7 @@ export class UserClaim extends Entity implements IAggregateRoot {
 
     constructor(options?: UserClaim) {
         super();
-        if (options) {
-            this.name = options.name;
-            this.id = options.id;
-        }
+        this.name = options!.name;
+        this.id = options!.id;
     }
 }
