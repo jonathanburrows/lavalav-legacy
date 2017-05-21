@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/bundles/lvl-oidc.umd.js",
   "scripts": {
-    "generate-models": "dotnet run --project ../TypeScriptGenerator/TypeScriptGenerator.csproj -- --assembly-path=../Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
+    "generate-models": "dotnet run --project ../TypeScriptGenerator/TypeScriptGenerator.csproj -- --assembly-path=../Oidc.AuthorizationServer/bin/Debug/net461/lvl.Oidc.AuthorizationServer.dll --output-bin=./src/models --decorator-path=@lvl/front-end lvl.Ontology=@lvl/front-end",
 
     "init.dev": "npm link ../front-end",
     "build.dev": "ng build --progress=false --output-path=./dist/dev",
