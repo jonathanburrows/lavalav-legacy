@@ -23,8 +23,8 @@ const oidcGroup = 'Openid';
     imports: [
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'lvl-oidc-credentials-login' },
-            { path: 'lvl-oidc-credentials-login', component: CredentialsLoginDemoComponent, data: { title: 'Login', icon: 'vpn_key', showInNavigation: true, group: oidcGroup } }
+            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-oidc-credentials-login' },
+            { path: 'component/lvl-oidc-credentials-login', component: CredentialsLoginDemoComponent, data: { title: 'Login', icon: 'vpn_key', showInNavigation: true, group: oidcGroup } }
         ]),
         BrowserModule,
         FrontEndModule.useWithOptions({

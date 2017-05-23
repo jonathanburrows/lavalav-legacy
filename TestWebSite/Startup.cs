@@ -13,9 +13,10 @@ namespace lvl.TestWebSite
         {
             var options = new WebOptions
             {
+                // Allow @lvl/front-end to make calls
                 Cors = new CorsOptions
                 {
-                    AllowOrigins = new[] { "*" },
+                    AllowOrigins = new[] { "http://localhost:5001", "http://localhost:5002", "http://localhost:5003" },
                     AllowHeaders = new[] { "*" },
                     AllowMethods = new[] { "*" }
                 }

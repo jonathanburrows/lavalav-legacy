@@ -91,6 +91,7 @@ namespace lvl.TypescriptGenerator
 $@"
 
     constructor(options?: {Name}) {{
+        options = options || <any>{{}};
         {baseConstructor}{propertyStatement}
     }}";
             }

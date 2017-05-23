@@ -8,10 +8,10 @@
 
     "init.dev": "npm link ../front-end",
     "build.dev": "ng build --progress=false --output-path=./dist/dev",
-    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open",
+    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open --port=5005",
 
     "build.prod": "ng build --progress=false --prod --aot --output-path=./dist/prod",
-    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open",
+    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open --port=5005",
 
     "serve.web": "dotnet run --project ../Oidc.AuthorizationServer/Oidc.AuthorizationServer.csproj",
 

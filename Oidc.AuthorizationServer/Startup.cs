@@ -42,7 +42,7 @@ namespace lvl.Oidc.AuthorizationServer
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls("http://0.0.0.0:5003")
+                .UseUrls("http://0.0.0.0:5004")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();

@@ -6,11 +6,11 @@
   "scripts": {
     "generate-models": "dotnet run --project ../TypeScriptGenerator/TypeScriptGenerator.csproj -- --assembly-path=../Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
 
-    "build.dev": "ng build --progress=false --output-path=./dist/dev",
-    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open",
+    "build.dev": "ng build --progress=false--output-path=./dist/dev",
+    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open --port=5001",
 
     "build.prod": "ng build --progress=false --prod --aot --output-path=./dist/prod",
-    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open",
+    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open --port=5001",
 
     "serve.web": "dotnet run --project ../TestWebSite/TestWebSite.csproj",
 

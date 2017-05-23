@@ -25,9 +25,9 @@ const frontEndGroup = 'Front End';
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'lvl-validators' },
-            { path: 'lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
-            { path: 'lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
+            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-validators' },
+            { path: 'component/lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
+            { path: 'component/lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
         ]),
         FrontEndModule.useWithOptions({
             resourceServerUrl: 'http://localhost:5000'

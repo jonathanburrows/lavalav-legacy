@@ -257,7 +257,7 @@ class LayoutPage {
     }
 
     navigateTo() {
-        return browser.get('/lvl-layout');
+        return browser.get('/component/lvl-layout');
     }
 
     getSideNavHeader() {

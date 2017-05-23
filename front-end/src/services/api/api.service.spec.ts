@@ -36,9 +36,13 @@ describe(ApiService.name, () => {
         });
 
         it('will return an observable of all the items of that type from the server', async(() => {
+            debugger;
+
             const moonCreations = [new Moon(), new Moon()].map(moon => apiService.create(Moon, moon));
 
+            debugger;
             Observable.forkJoin(...moonCreations).subscribe(() => {
+                debugger;
                 apiService.getCollection(Moon).subscribe(moons => {
                     expect(moons.length).toBeGreaterThanOrEqual(2);
                 });
