@@ -1,15 +1,28 @@
 ﻿import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { FrontEndModule } from '@lvl/front-end';
-import { OidcOptions } from './services';
+import { FrontEndModule, HeadersService } from '@lvl/front-end';
+import { CredentialsLoginComponent } from './components';
+import {
+    BearerHeadersService,
+    OidcOptions,
+    ResourceOwnerSecurityService,
+    SecurityService,
+    TokenService
+} from './services';
 
 /**
  *  Provides services and components for security.
  */
 @NgModule({
+    providers: [
+        { provide: HeadersService, useClass: BearerHeadersService },
+        TokenService
+    ],
     declarations: [
+        CredentialsLoginComponent
     ],
     exports: [
+        CredentialsLoginComponent
     ],
     imports: [
         FrontEndModule
@@ -25,9 +38,10 @@ export class OidcModule {
         // null checks and logic were not put in this method as it causes a compiler error for angular.
 
         return {
-            ngModule: FrontEndModule,
+            ngModule: OidcModule,
             providers: [
-                { provide: OidcOptions, useValue: oidcOptions }
+                { provide: OidcOptions, useValue: oidcOptions },
+                { provide: SecurityService, useClass: ResourceOwnerSecurityService }
             ]
         };
     }

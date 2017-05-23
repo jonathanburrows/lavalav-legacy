@@ -337,17 +337,17 @@
     transition: margin-left $swift-ease-in-duration $swift-ease-in-timing-function;
 
     @media #{$portrait-screen} {
-        margin-top: map-get($portrait, toolbar-height);
+        padding-top: map-get($portrait, toolbar-height);
         padding-left: map-get($portrait, screen-padding);
     }
 
     @media #{$landscape-screen} {
-        margin-top: map-get($landscape, toolbar-height);
+        padding-top: map-get($landscape, toolbar-height);
         padding-left: map-get($landscape, screen-padding);
     }
 
     @media #{$tablet-screen} {
-        margin-top: map-get($tablet, toolbar-height);
+        padding-top: map-get($tablet, toolbar-height);
         padding-left: map-get($tablet, screen-padding);
     }
 

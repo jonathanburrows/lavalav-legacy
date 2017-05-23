@@ -28,17 +28,17 @@
   ],
   "e2e": {
     "protractor": {
-      "config": "./node_modules/@lvl/front-end/protractor.config.js"
+      "config": "./protractor.conf.js"
     }
   },
   "lint": [
     {
-      "project": "./node_modules/@lvl/front-end/tslint.json"
+      "project": "./tslint.json"
     }
   ],
   "test": {
     "karma": {
-      "config": "./node_modules/@lvl/front-end/karma.conf.js"
+      "config": "./karma.conf.js"
     }
   },
   "defaults": {
