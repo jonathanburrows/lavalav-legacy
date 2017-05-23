@@ -5,7 +5,7 @@
   },
   "apps": [
     {
-      "root": "e2e",
+      "root": "demo-app",
       "outDir": "dist",
       "assets": [
         "assets"

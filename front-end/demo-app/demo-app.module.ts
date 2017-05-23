@@ -4,9 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FrontEndModule } from '../src';
 import {
-    AppE2eComponent,
-    LayoutE2eComponent,
-    ValidatorsE2eComponent
+    RootDemoComponent,
+    LayoutDemoComponent,
+    ValidatorsDemoComponent
 } from './components';
 
 const frontEndGroup = 'Front End';
@@ -17,22 +17,22 @@ const frontEndGroup = 'Front End';
 /* tslint:disable:max-line-length */
 @NgModule({
     declarations: [
-        AppE2eComponent,
-        LayoutE2eComponent,
-        ValidatorsE2eComponent
+        RootDemoComponent,
+        LayoutDemoComponent,
+        ValidatorsDemoComponent
     ],
     imports: [
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
             { path: '', pathMatch: 'full', redirectTo: 'lvl-validators' },
-            { path: 'lvl-layout', component: LayoutE2eComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
-            { path: 'lvl-validators', component: ValidatorsE2eComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
+            { path: 'lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
+            { path: 'lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
         ]),
         FrontEndModule.useWithOptions({
             resourceServerUrl: 'http://localhost:5000'
         })
     ],
-    bootstrap: [AppE2eComponent]
+    bootstrap: [RootDemoComponent]
 })
-export class FrontEndE2eModule { }
+export class DemoAppModule { }

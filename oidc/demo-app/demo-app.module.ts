@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FrontEndModule } from '@lvl/front-end';
 import {
-    CredentialsLoginE2eComponent,
-    RootE2eComponent 
+    CredentialsLoginDemoComponent,
+    RootComponent 
 } from './components';
 import { OidcModule } from '../src';
 
@@ -17,14 +17,14 @@ const oidcGroup = 'Openid';
 /* tslint:disable:max-line-length */
 @NgModule({
     declarations: [
-        CredentialsLoginE2eComponent,
-        RootE2eComponent
+        CredentialsLoginDemoComponent,
+        RootComponent
     ],
     imports: [
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
             { path: '', pathMatch: 'full', redirectTo: 'lvl-oidc-credentials-login' },
-            { path: 'lvl-oidc-credentials-login', component: CredentialsLoginE2eComponent, data: { title: 'Login', icon: 'vpn_key', showInNavigation: true, group: oidcGroup } }
+            { path: 'lvl-oidc-credentials-login', component: CredentialsLoginDemoComponent, data: { title: 'Login', icon: 'vpn_key', showInNavigation: true, group: oidcGroup } }
         ]),
         BrowserModule,
         FrontEndModule.useWithOptions({
@@ -37,6 +37,6 @@ const oidcGroup = 'Openid';
             scopes: ['test-resource-server']
         })
     ],
-    bootstrap: [RootE2eComponent]
+    bootstrap: [RootComponent]
 })
-export class OidcE2eModule { }
+export class DemoAppModule { }

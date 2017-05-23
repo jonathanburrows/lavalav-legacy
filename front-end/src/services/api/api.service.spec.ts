@@ -9,7 +9,7 @@ import { ApiService } from './api.service';
 import { FrontEndOptions } from '../front-end-options';
 import { HeadersService } from '../headers';
 
-import { Moon, Planet } from '../../../e2e/models';
+import { Moon, Planet } from '../../../demo-app/models';
 
 describe(ApiService.name, () => {
     let apiService: ApiService;

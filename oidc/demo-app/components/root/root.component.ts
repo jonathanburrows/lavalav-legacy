@@ -4,7 +4,7 @@
  *  Used to route to components so they can be tested in isolation.
  */
 @Component({
-    selector: 'lvl-oidc-e2e-root',
-    templateUrl: 'root.e2e.component.html'
+    selector: 'demo-root',
+    templateUrl: 'root.component.html'
 })
-export class RootE2eComponent { }
+export class RootComponent { }
