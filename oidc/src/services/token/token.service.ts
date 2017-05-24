@@ -25,8 +25,6 @@ export class TokenService {
         if (!this._bearerToken) {
             const serialized = this.storageService.getItem(TokenService.bearerTokenKey);
             this._bearerToken = serialized ? JSON.parse(serialized) : null;
-
-            this.resetCountdowns();
         }
         return this._bearerToken;
     }
@@ -58,7 +56,7 @@ export class TokenService {
     private tokenHalflifeTimer: any;
 
     constructor(private storageService: StorageService) {
-        this.resetCountdowns();
+        // this.resetCountdowns();
     }
 
     /**

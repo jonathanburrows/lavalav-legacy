@@ -1,2 +1,2 @@
-﻿export * from './credentials-login';
-export * from './root';
+﻿export * from './root';
+export * from './secret';

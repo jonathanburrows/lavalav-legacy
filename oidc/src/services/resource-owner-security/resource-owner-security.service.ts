@@ -28,7 +28,7 @@ export class ResourceOwnerSecurityService extends SecurityService {
      *  @param credentials User entered credentials
      *  @throws {Error} credentials is null.
      */
-    public login(credentials: Credentials) {
+    public login(credentials: Credentials): Observable<BearerToken> {
         if (!credentials) {
             throw new Error('credentials are null.');
         }
@@ -39,10 +39,12 @@ export class ResourceOwnerSecurityService extends SecurityService {
             password: credentials.password
         };
 
-        this.requestToken(loginOptions).subscribe(bearerToken => {
+        const request = this.requestToken(loginOptions);
+        request.subscribe(bearerToken => {
             this.tokenService.bearerToken = bearerToken;
             this.router.navigate([this.postLoginRedirectUrl]);
         });
+        return request;
     }
 
     /**
@@ -80,7 +82,7 @@ export class ResourceOwnerSecurityService extends SecurityService {
 
         const url = `${this.oidcOptions.authorizationServerUrl}/connect/token`;
         const headers = new Headers({ 'content-type': 'application/x-www-form-urlencoded' });
-        const urlEncodedBody = this.urlEncodeBody(tokenOptions)
+        const urlEncodedBody = this.urlEncodeBody(tokenOptions);
 
         return this.http.post(url, urlEncodedBody, { headers: headers }).map(token => token.json());
     }

@@ -75,6 +75,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                 {
                     ClientId = "test-implicit-client",
                     ClientName = "Test implicit client",
+                    ClientUri = "http://localhost:0000",
                     ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
                     AllowedGrantTypes = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }).ToList(),
 
@@ -100,17 +101,21 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     ClientId = "test-resource-owner-client",
                     ClientName = "Test Resource Owner Client",
                     ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
-                    ClientUri = "http://localhost:4200",
+                    ClientUri = "http://localhost:5005",
                     AllowedGrantTypes = new []{ GrantType.ResourceOwnerPassword, GrantType.AuthorizationCode } .Select(gt => new GrantTypeEntity { Name = gt }).ToList(),
 
                     RequireConsent = true,
                     AllowAccessTokensViaBrowser = true,
                     AllowOfflineAccess = true,
 
-                    RedirectUris = new []{ new RedirectUri { Name = "http://localhost:4200" } },
-                    PostLogoutRedirectUris = new []{ new PostLogoutRedirectUri { Name = "http://localhost:4200" } },
-                    AllowedCorsOrigins = new []{ new CorsOrigin { Name = "http://localhost:4200" } },
-                    LogoutUri = "http://localhost:4200",
+                    RedirectUris = new []{ new RedirectUri { Name = "http://localhost:5005" } },
+                    PostLogoutRedirectUris = new []{ new PostLogoutRedirectUri { Name = "http://localhost:5005" } },
+                    AllowedCorsOrigins = new []{
+                        new CorsOrigin { Name = "http://localhost:5005" },
+                        new CorsOrigin { Name = "http://localhost:5006" },
+                        new CorsOrigin { Name = "http://localhost:5007" }
+                    },
+                    LogoutUri = "http://localhost:5005",
                     AllowedScopes = new []
                     {
                         new AllowedScope { Name = "test-resource-server" },

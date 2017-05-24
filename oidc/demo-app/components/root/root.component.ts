@@ -4,7 +4,7 @@
  *  Used to route to components so they can be tested in isolation.
  */
 @Component({
-    selector: 'demo-root',
+    selector: 'lvl-oidc-demo-root',
     templateUrl: 'root.component.html'
 })
 export class RootComponent { }

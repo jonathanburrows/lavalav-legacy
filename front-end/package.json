@@ -14,7 +14,7 @@
 
     "serve.web": "dotnet run --project ../TestWebSite/TestWebSite.csproj",
 
-    "serve.test": "ng test --single-run --progress=false",
+    "serve.test": "ng test --single-run --progress=false --port=5003",
     "test": "npm-run-all -p -r serve.web serve.test",
 
     "serve.e2e": "ng e2e --progress=false --prod --aot",

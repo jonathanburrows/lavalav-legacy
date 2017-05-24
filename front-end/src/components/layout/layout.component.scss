@@ -16,7 +16,7 @@
     z-index: 16;
     width: map-get($portrait, side-nav-width);
 
-    @media screen and (max-width: $desktop-min-width) {
+    @media screen and (max-width: ($desktop-min-width - 1px)) {
         &:not(.show-side-nav) {
             visibility: hidden;
             transform: translateX(-100%);
@@ -339,21 +339,25 @@
     @media #{$portrait-screen} {
         padding-top: map-get($portrait, toolbar-height);
         padding-left: map-get($portrait, screen-padding);
+        padding-right: map-get($portrait, screen-padding);
     }
 
     @media #{$landscape-screen} {
         padding-top: map-get($landscape, toolbar-height);
         padding-left: map-get($landscape, screen-padding);
+        padding-right: map-get($landscape, screen-padding);
     }
 
     @media #{$tablet-screen} {
         padding-top: map-get($tablet, toolbar-height);
         padding-left: map-get($tablet, screen-padding);
+        padding-right: map-get($tablet, screen-padding);
     }
 
     @media screen and (min-width: $desktop-min-width) {
         margin-left: map-get($tablet, side-nav-width);
         padding-left: map-get($tablet, screen-padding);
+        padding-right: map-get($tablet, screen-padding);
         transition: margin-left $swift-ease-out-duration $swift-ease-out-timing-function;
     }
 }

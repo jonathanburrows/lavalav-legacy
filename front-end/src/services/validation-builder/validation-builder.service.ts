@@ -12,25 +12,25 @@ export class ValidationBuilder {
     constructor(private formBuilder: FormBuilder) { }
 
     /**
-     *  Creates a form group with validation for the given properties of an object, when all inputs are on the same type.
+     *  Creates a form group with validation for the given properties of a model, when all inputs are on the same type.
      *
      *  @param parent The object whos prototype contains the validation metadata, and is used for the initial values.
      *  @param properties The properties which have inputs on the form.
      *
-     *  @throws {Error} parent is null.
-     *  @throws {Error} parent is an object literal.
+     *  @throws {Error} model is null.
+     *  @throws {Error} model is an object literal.
      *  @throws {Error} properties is null.
      *  @throws {Error} the same property is specified more than once.
      *
      *  @remarks If the form binds inputs to multiple types, use controlFor instead.
      *  @remarks Make sure the object passed has the correct prototype.
      */
-    formFor(parent: Object, properties: string[]): ValidatableForm {
-        if (!parent) {
-            throw new Error('parent is null.');
+    formFor(model: Object, properties: string[]): ValidatableForm {
+        if (!model) {
+            throw new Error('model is null.');
         }
-        if (this.isObjectLiteral(parent)) {
-            throw new Error('parent is an object literal.');
+        if (this.isObjectLiteral(model)) {
+            throw new Error('model is an object literal.');
         }
 
         if (!properties) {
@@ -45,9 +45,11 @@ export class ValidationBuilder {
         }
 
         const config = properties.reduce((reduced, property) => {
-            const validators = Reflect.getMetadata(ValidationKey, parent.constructor.prototype, property) || [];
-            const value = parent[property];
+            const validators = Reflect.getMetadata(ValidationKey, model.constructor.prototype, property) || [];
+            const value = model[property];
             const control = this.formBuilder.control(value, validators);
+
+            control.valueChanges.subscribe(updatedValue => model[property] = updatedValue);
 
             reduced[property] = control;
 
@@ -55,7 +57,6 @@ export class ValidationBuilder {
         }, {});
 
         const formGroup = new ValidatableForm(config);
-
         formGroup.valueChanges.subscribe(() => formGroup.modelErrors = this.getErrors(formGroup));
         formGroup.modelErrors = this.getErrors(formGroup);
 
@@ -89,7 +90,10 @@ export class ValidationBuilder {
         const validators = Reflect.getMetadata(ValidationKey, parent.constructor.prototype, property) || [];
         const value = parent[property];
 
-        return this.formBuilder.control(value, validators, null);
+        const control = this.formBuilder.control(value, validators, null);
+        control.valueChanges.subscribe(updatedValue => parent[property] = updatedValue);
+
+        return control;
     }
 
     /**
@@ -114,7 +118,7 @@ export class ValidationBuilder {
             if (controlName) {
                 const control = formGroup.get(controlName);
 
-                if (control!.dirty && !control!.valid) {
+                if (!control!.valid) {
                     const errors = [];
 
                     // tslint:disable-next-line

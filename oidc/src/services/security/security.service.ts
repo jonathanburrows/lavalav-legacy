@@ -66,7 +66,7 @@ export abstract class SecurityService {
      *  @param credentials The user entered credentials.
      *  @remarks credentials is not required by all resource flows, but for consistency, it was added here.
      */
-    public abstract login(credentials?: Credentials);
+    public abstract login(credentials?: Credentials): Observable<BearerToken>;
 
     /**
      *  Invalides a user's tokens and redirects them to an anonymous page.

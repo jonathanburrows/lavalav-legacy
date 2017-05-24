@@ -43,6 +43,7 @@ namespace lvl.Oidc.AuthorizationServer.Services
                 return new GrantValidationResult
                 {
                     IsError = true,
+                    ErrorDescription = "invalid_user",
                     Error = "Couldn't find user"
                 };
             }
@@ -51,6 +52,7 @@ namespace lvl.Oidc.AuthorizationServer.Services
                 return new GrantValidationResult
                 {
                     IsError = true,
+                    ErrorDescription = "invalid_password",
                     Error = "Incorrect password, try again"
                 };
             }

@@ -1,0 +1,76 @@
+﻿/* Any styles common to oidc components which are loaded on cards should go here */
+@import '~@lvl/front-end/theming';
+
+@mixin card-component() {
+    /* Two selectors were used to override angular styles */
+    .card.mat-card {
+        @media screen and (max-width: $landscape-min-width) {
+            background-color: transparent;
+            box-shadow: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        @media screen and (min-width: $landscape-min-width) {
+            margin: 24px auto;
+            width: 250px;
+        }
+    }
+
+    .mat-card-header .mat-card-title {
+        margin-bottom: 0;
+
+        @media #{$portrait-screen} {
+            font-size: map-get($portrait, content-title-font-size);
+            line-height: map-get($portrait, content-title-height);
+        }
+
+        @media #{$landscape-screen} {
+            font-size: map-get($landscape, content-title-font-size);
+            /* Lines up nicely with rest of elements. */
+            line-height: 64px;
+        }
+
+        @media #{$tablet-screen} {
+            font-size: map-get($tablet, content-title-font-size);
+            /* Lines up nicely with rest of elements. */
+            line-height: 64px;
+        }
+    }
+
+    .card {
+        &__content {
+            &__input-container {
+                font-size: 16px;
+                width: 100%;
+
+                @media #{$portrait-screen} {
+                    margin-top: map-get($portrait, content-margin-top);
+                }
+
+                @media #{$landscape-screen} {
+                    margin-top: map-get($landscape, content-margin-top);
+                }
+
+                @media #{$tablet-screen} {
+                    margin-top: map-get($tablet, content-margin-top);
+                }
+            }
+
+            &__error {
+                text-align: right;
+            }
+        }
+
+        &__actions {
+            display: flex;
+            flex-direction: row-reverse;
+            margin: 0;
+            padding-bottom: 0;
+
+            &__button {
+                float: right;
+            }
+        }
+    }
+}

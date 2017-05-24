@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FrontEndModule } from '@lvl/front-end';
 import {
-    CredentialsLoginDemoComponent,
-    RootComponent 
+    RootComponent,
+    SecretComponent
 } from './components';
 import { OidcModule } from '../src';
 
@@ -17,14 +17,14 @@ const oidcGroup = 'Openid';
 /* tslint:disable:max-line-length */
 @NgModule({
     declarations: [
-        CredentialsLoginDemoComponent,
-        RootComponent
+        RootComponent,
+        SecretComponent
     ],
     imports: [
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-oidc-credentials-login' },
-            { path: 'component/lvl-oidc-credentials-login', component: CredentialsLoginDemoComponent, data: { title: 'Login', icon: 'vpn_key', showInNavigation: true, group: oidcGroup } }
+            { path: '', pathMatch: 'full', redirectTo: '/demo/secret' },
+            { path: 'demo/secret', component: SecretComponent, data: { group: oidcGroup, title: 'Secret', icon: 'add_alert', showInNavigation: true } }
         ]),
         BrowserModule,
         FrontEndModule.useWithOptions({
@@ -32,7 +32,7 @@ const oidcGroup = 'Openid';
         }),
         OidcModule.useResourceOwnerFlow({
             clientId: 'test-resource-owner-client',
-            authorizationServerUrl: 'http://localhost:5001',
+            authorizationServerUrl: 'http://localhost:5004',
             clientSecret: 'secret',
             scopes: ['test-resource-server']
         })

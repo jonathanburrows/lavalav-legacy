@@ -1,7 +1,13 @@
 ﻿import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { FrontEndModule, HeadersService } from '@lvl/front-end';
-import { CredentialsLoginComponent } from './components';
+import {
+    CredentialsSigninComponent,
+    RecoverUsernameComponent,
+    RegisterAccountComponent,
+    ResetPasswordComponent
+ } from './components';
+import { oidcRouterModule } from './oidc.router.module';
 import {
     BearerHeadersService,
     OidcOptions,
@@ -19,13 +25,20 @@ import {
         TokenService
     ],
     declarations: [
-        CredentialsLoginComponent
+        CredentialsSigninComponent,
+        RecoverUsernameComponent,
+        RegisterAccountComponent,
+        ResetPasswordComponent
     ],
     exports: [
-        CredentialsLoginComponent
+        CredentialsSigninComponent,
+        RecoverUsernameComponent,
+        RegisterAccountComponent,
+        ResetPasswordComponent
     ],
     imports: [
-        FrontEndModule
+        FrontEndModule,
+        oidcRouterModule
     ]
 })
 export class OidcModule {

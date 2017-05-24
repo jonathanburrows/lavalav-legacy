@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:61094/",
+      "applicationUrl": "http://localhost:60638/",
       "sslPort": 0
     }
   },
@@ -16,7 +16,8 @@
       }
     },
     "Oidc.AuthorizationServer": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5004"
     }
   }
 }
