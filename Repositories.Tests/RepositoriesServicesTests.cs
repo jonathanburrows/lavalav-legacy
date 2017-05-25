@@ -5,6 +5,7 @@ using lvl.TestDomain;
 using lvl.Ontology;
 using lvl.Repositories.Tests.Fixtures;
 using lvl.Repositories.Tests.Configuration;
+using lvl.Repositories.Authorization;
 
 namespace lvl.Repositories.Tests
 {
@@ -34,6 +35,14 @@ namespace lvl.Repositories.Tests
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
 
             Assert.NotNull(repositoryFactory);
+        }
+
+        [IntegrationTest]
+        public void AfterAddingRepositories_WhenResolvingAggregateRootFilter_ValueIsReturned()
+        {
+            var aggregateRootFilter = Services.GetRequiredService<AggregateRootFilter>();
+
+            Assert.NotNull(aggregateRootFilter);
         }
 
         [IntegrationTest]
@@ -105,7 +114,7 @@ namespace lvl.Repositories.Tests
         // ReSharper disable once ClassNeverInstantiated.Local Used by reflection
         private class MockRepository<TEntity> : Repository<TEntity> where TEntity : Entity, IAggregateRoot
         {
-            public MockRepository(SessionProvider sessionManager) : base(sessionManager) { }
+            public MockRepository(SessionProvider sessionManager, AggregateRootFilter aggregateRootFilter) : base(sessionManager, aggregateRootFilter) { }
         }
     }
 

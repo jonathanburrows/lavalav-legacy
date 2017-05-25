@@ -1,4 +1,5 @@
-﻿using lvl.Web.OData;
+﻿using lvl.Web.Authorization;
+using lvl.Web.OData;
 using lvl.Web.Serialization;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -106,6 +107,14 @@ namespace lvl.Web.Tests
             var conventionParser = Services.GetRequiredService<ODataConventionParser>();
 
             Assert.NotNull(conventionParser);
+        }
+
+        [Fact]
+        public void AfterAddingWeb_ResolvingImpersonator_ReturnsValue()
+        {
+            var impersonator = Services.GetRequiredService<Impersonator>();
+
+            Assert.NotNull(impersonator);
         }
     }
 }

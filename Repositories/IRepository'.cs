@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 namespace lvl.Repositories
 {
     /// <summary>
-    /// Manages persistence f0r a set of entities of a certain type.
+    ///     Manages persistence f0r a set of entities of a certain type.
     /// </summary>
     /// <typeparam name="TEntity">The type of all entities in the repository.</typeparam>
     public interface IRepository<TEntity> where TEntity : Entity, IAggregateRoot
     {
         /// <summary>
-        /// Gets all entities in the repository.
+        ///     Gets all entities in the repository.
         /// </summary>
         /// <returns>All entities in the repository.</returns>
         Task<IEnumerable<TEntity>> GetAsync();
 
         /// <summary>
-        /// Applies an odata query to the entities, and returns the result.
+        ///     Applies an odata query to the entities, and returns the result.
         /// </summary>
         /// <param name="query">The query to be applied to the entities.</param>
         /// <returns>The result of the odata query.</returns>
@@ -26,14 +26,14 @@ namespace lvl.Repositories
         Task<IQueryResult<TResult>> GetAsync<TResult>(IQuery<TEntity, TResult> query);
 
         /// <summary>
-        /// Gets an entity with a matching id from the repository.
+        ///     Gets an entity with a matching id from the repository.
         /// </summary>
         /// <param name="id">The identifier of the desired entity.</param>
         /// <returns>The matching entity if one exists, null if no matching entity.</returns>
         Task<TEntity> GetAsync(int id);
 
         /// <summary>
-        /// Creates an entity with all properties, and updates the model with any generated values.
+        ///     Creates an entity with all properties, and updates the model with any generated values.
         /// </summary>
         /// <param name="creating">The entity to be added.</param>
         /// <returns>The model with all generated values.</returns>
@@ -41,7 +41,7 @@ namespace lvl.Repositories
         Task<TEntity> CreateAsync(TEntity creating);
 
         /// <summary>
-        /// Updates an entity, whos identifier matches the given model, with all the model's fields.
+        ///     Updates an entity, whos identifier matches the given model, with all the model's fields.
         /// </summary>
         /// <param name="updating">The model whos properties will be applied to the matching entity.</param>
         /// <returns>The model with updated properties which were generated.</returns>
@@ -50,7 +50,7 @@ namespace lvl.Repositories
         Task<TEntity> UpdateAsync(TEntity updating);
 
         /// <summary>
-        /// Deletes an entity, whos identifier matches the given model.
+        ///     Deletes an entity, whos identifier matches the given model.
         /// </summary>
         /// <param name="deleting">The model which was deleted.</param>
         /// <returns>The model which was deleted.</returns>

@@ -1,4 +1,6 @@
 ﻿using lvl.Repositories;
+using lvl.Repositories.Authorization;
+using lvl.Web.Authorization;
 using lvl.Web.Logging;
 using lvl.Web.OData;
 using lvl.Web.Serialization;
@@ -56,12 +58,14 @@ namespace Microsoft.Extensions.DependencyInjection
 
             serviceCollection
                 .AddLogging()
+                .AddScoped<AggregateRootFilter, AuthorizationFilter>()
                 .AddScoped<EntityDeserializer>()
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()
                 .AddScoped<ODataConventionTokenizer>()
                 .AddScoped<ODataConventionParser>()
                 .AddScoped<ODataQueryParser>()
+                .AddScoped<Impersonator>()
                 .AddScoped<IHttpContextAccessor, HttpContextAccessor>()
                 .AddOptions()
                 .AddCors()

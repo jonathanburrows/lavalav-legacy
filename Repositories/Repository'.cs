@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Repositories.Authorization;
 using lvl.Repositories.Querying;
 using NHibernate.Linq;
 using System;
@@ -8,39 +9,63 @@ using System.Threading.Tasks;
 
 namespace lvl.Repositories
 {
-    /// <inheritdoc />
+    /// <summary>
+    ///     Manages persistence f0r a set of entities of a certain type.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of all entities in the repository.</typeparam>
     public class Repository<TEntity> : IRepository<TEntity>, IRepository where TEntity : Entity, IAggregateRoot
     {
         private SessionProvider SessionProvider { get; }
+        private AggregateRootFilter AggregateRootFilter { get; }
 
-        public Repository(SessionProvider sessionProvider)
+        public Repository(SessionProvider sessionProvider, AggregateRootFilter aggregateRootFilter)
         {
             SessionProvider = sessionProvider ?? throw new ArgumentNullException(nameof(sessionProvider));
+            AggregateRootFilter = aggregateRootFilter ?? throw new ArgumentNullException(nameof(aggregateRootFilter));
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets all entities in the repository.
+        /// </summary>
+        /// <returns>All entities in the repository.</returns>
         public virtual Task<IEnumerable<TEntity>> GetAsync()
         {
             using (var session = SessionProvider.GetSession())
             {
-                var entities = session.Query<TEntity>().ToList();
-                return Task.FromResult(entities.AsEnumerable());
+                var entities = session.Query<TEntity>();
+                var authorized = AggregateRootFilter.Filter(entities).ToList();
+                return Task.FromResult(authorized.AsEnumerable());
             }
         }
 
+        /// <summary>
+        ///     Gets all entities in the repository.
+        /// </summary>
+        /// <returns>All entities in the repository.</returns>
         async Task<IEnumerable<Entity>> IRepository.GetAsync()
         {
             return await GetAsync();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Applies an odata query to the entities, and returns the result.
+        /// </summary>
+        /// <param name="query">The query to be applied to the entities.</param>
+        /// <returns>The result of the odata query.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="query"/> is null.</exception>
         public async Task<IQueryResult<TResult>> GetAsync<TResult>(IQuery<TEntity, TResult> query)
         {
+            if(query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
             using (var session = SessionProvider.GetSession())
             {
                 var unfiltered = session.Query<TEntity>();
-                var items = query.Apply(unfiltered).ToList();
-                var count = query.Count(unfiltered);
+                var authorized = AggregateRootFilter.Filter(unfiltered);
+                var items = query.Apply(authorized).ToList();
+                var count = query.Count(authorized);
                 var queryResult = new QueryResult<TResult>
                 {
                     Count = count,
@@ -51,6 +76,12 @@ namespace lvl.Repositories
             }
         }
 
+        /// <summary>
+        ///     Applies an odata query to the entities, and returns the result.
+        /// </summary>
+        /// <param name="query">The query to be applied to the entities.</param>
+        /// <returns>The result of the odata query.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="query"/> is null.</exception>
         async Task<IQueryResult> IRepository.GetAsync(IQuery query)
         {
             if (query == null)
@@ -62,22 +93,38 @@ namespace lvl.Repositories
             return await GetAsync(boxedQuery);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets an entity with a matching id from the repository.
+        /// </summary>
+        /// <param name="id">The identifier of the desired entity.</param>
+        /// <returns>The matching entity if one exists, null if no matching entity.</returns>
         public virtual Task<TEntity> GetAsync(int id)
         {
             using (var session = SessionProvider.GetSession())
             {
-                var entity = session.Get<TEntity>(id);
-                return Task.FromResult(entity);
+                var allEntities = session.Query<TEntity>();
+                var authorized = AggregateRootFilter.Filter(allEntities);
+                var matchingEntity = authorized.SingleOrDefault(entity => entity.Id == id);
+                return Task.FromResult(matchingEntity);
             }
         }
 
+        /// <summary>
+        ///     Gets an entity with a matching id from the repository.
+        /// </summary>
+        /// <param name="id">The identifier of the desired entity.</param>
+        /// <returns>The matching entity if one exists, null if no matching entity.</returns>
         async Task<Entity> IRepository.GetAsync(int id)
         {
             return await GetAsync(id);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Creates an entity with all properties, and updates the model with any generated values.
+        /// </summary>
+        /// <param name="creating">The entity to be added.</param>
+        /// <returns>The model with all generated values.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="creating"/> cannot be null.</exception>
         public virtual Task<TEntity> CreateAsync(TEntity creating)
         {
             if (creating == null)
@@ -91,6 +138,8 @@ namespace lvl.Repositories
 
             using (var session = SessionProvider.GetSession())
             {
+                // Locked because SQLite will use the same connection, with the same transaction, and then complete the transaction,
+                // even when there are multiple threads using it but not yet complete.
                 lock (session.Connection)
                 {
                     using (var transaction = session.BeginTransaction())
@@ -104,6 +153,13 @@ namespace lvl.Repositories
             return Task.FromResult(creating);
         }
 
+        /// <summary>
+        ///     Creates an entity with all properties, and updates the model with any generated values.
+        /// </summary>
+        /// <param name="creating">The entity to be added.</param>
+        /// <returns>The model with all generated values.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="creating"/> cannot be null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="creating"/> is not the type of the repository.</exception>
         async Task<Entity> IRepository.CreateAsync(Entity creating)
         {
             var boxed = creating as TEntity;
@@ -119,7 +175,13 @@ namespace lvl.Repositories
             return await CreateAsync(boxed);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Updates an entity, whos identifier matches the given model, with all the model's fields.
+        /// </summary>
+        /// <param name="updating">The model whos properties will be applied to the matching entity.</param>
+        /// <returns>The model with updated properties which were generated.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="updating"/> cannot be null.</exception>
+        /// <exception cref="InvalidOperationException">There exists no entity with a matching id.</exception>
         public virtual Task<TEntity> UpdateAsync(TEntity updating)
         {
             if (updating == null)
@@ -129,6 +191,8 @@ namespace lvl.Repositories
 
             using (var session = SessionProvider.GetSession())
             {
+                // Locked because SQLite will use the same connection, with the same transaction, and then complete the transaction,
+                // even when there are multiple threads using it but not yet complete.
                 lock (session.Connection)
                 {
                     using (var transaction = session.BeginTransaction())
@@ -146,6 +210,14 @@ namespace lvl.Repositories
             return Task.FromResult(updating);
         }
 
+        /// <summary>
+        ///     Updates an entity, whos identifier matches the given model, with all the model's fields.
+        /// </summary>
+        /// <param name="updating">The model whos properties will be applied to the matching entity.</param>
+        /// <returns>The model with updated properties which were generated.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="updating"/> cannot be null.</exception>
+        /// <exception cref="InvalidOperationException">There exists no entity with a matching id.</exception>
+        /// <exception cref="ArgumentException"><paramref name="updating"/> is not the type of the repository.</exception>
         async Task<Entity> IRepository.UpdateAsync(Entity updating)
         {
             var boxed = updating as TEntity;
@@ -161,7 +233,13 @@ namespace lvl.Repositories
             return await UpdateAsync(boxed);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Deletes an entity, whos identifier matches the given model.
+        /// </summary>
+        /// <param name="deleting">The model which was deleted.</param>
+        /// <returns>The model which was deleted.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="deleting"/> cannot be null.</exception>
+        /// <exception cref="InvalidOperationException">There exists no entity with a matching id.</exception>
         public virtual Task<TEntity> DeleteAsync(TEntity deleting)
         {
             if (deleting == null)
@@ -171,6 +249,8 @@ namespace lvl.Repositories
 
             using (var session = SessionProvider.GetSession())
             {
+                // Locked because SQLite will use the same connection, with the same transaction, and then complete the transaction,
+                // even when there are multiple threads using it but not yet complete.
                 lock (session.Connection)
                 {
                     using (var transaction = session.BeginTransaction())
@@ -189,6 +269,14 @@ namespace lvl.Repositories
             return Task.FromResult(deleting);
         }
 
+        /// <summary>
+        ///     Deletes an entity, whos identifier matches the given model.
+        /// </summary>
+        /// <param name="deleting">The model which was deleted.</param>
+        /// <returns>The model which was deleted.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="deleting"/> cannot be null.</exception>
+        /// <exception cref="InvalidOperationException">There exists no entity with a matching id.</exception>
+        /// <exception cref="ArgumentException"><paramref name="deleting"/> is not the type of the repository.</exception>
         async Task<Entity> IRepository.DeleteAsync(Entity deleting)
         {
             var boxed = deleting as TEntity;

@@ -15,6 +15,7 @@ namespace lvl.Ontology.Conventions
     /// </remarks>
     internal class InvalidAggregateRootReferenceConvention : IReferenceConvention, IReferenceConventionAcceptance, IHasManyConvention, IHasManyConventionAcceptance
     {
+        /// <inheritdoc />
         public void Accept(IAcceptanceCriteria<IManyToOneInspector> criteria)
         {
             criteria.Expect(inspector =>
@@ -24,16 +25,19 @@ namespace lvl.Ontology.Conventions
             });
         }
 
+        /// <inheritdoc />
         public void Apply(IManyToOneInstance instance)
         {
             throw new InvalidOperationException($"The class {instance.EntityType.Name} references {instance.Class.Name}, which does not implement {nameof(IAggregateRoot)}, or is not part of an AggregateScope<{instance.EntityType.Name}>");
         }
 
+        /// <inheritdoc />
         public void Accept(IAcceptanceCriteria<IOneToManyCollectionInspector> criteria)
         {
             criteria.Expect(inspector => !ReferencedEntityIsInAggregateScope(inspector.EntityType, inspector.ChildType));
         }
 
+        /// <inheritdoc />
         public void Apply(IOneToManyCollectionInstance instance)
         {
             throw new InvalidOperationException($"The class {instance.EntityType.Name} references {instance.ChildType.Name}, which does not implement {nameof(IAggregateRoot)}, or is not part of an AggregateScope<{instance.EntityType.Name}>");
