@@ -13,7 +13,8 @@ import {
     OidcOptions,
     ResourceOwnerSecurityService,
     SecurityService,
-    TokenService
+    TokenService,
+    UserService
 } from './services';
 
 /**
@@ -22,7 +23,8 @@ import {
 @NgModule({
     providers: [
         { provide: HeadersService, useClass: BearerHeadersService },
-        TokenService
+        TokenService,
+        UserService
     ],
     declarations: [
         CredentialsSigninComponent,

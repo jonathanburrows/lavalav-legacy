@@ -4,14 +4,19 @@
 @mixin card-component() {
     /* Two selectors were used to override angular styles */
     .card.mat-card {
-        @media screen and (max-width: $landscape-min-width) {
+        @media #{$portrait-screen} {
             background-color: transparent;
             box-shadow: none;
             padding-left: 0;
             padding-right: 0;
         }
 
-        @media screen and (min-width: $landscape-min-width) {
+        @media #{$landscape-screen} {
+            margin: 16px auto;
+            width: 250px;
+        }
+
+        @media #{$tablet-screen} {
             margin: 24px auto;
             width: 250px;
         }
@@ -28,7 +33,7 @@
         @media #{$landscape-screen} {
             font-size: map-get($landscape, content-title-font-size);
             /* Lines up nicely with rest of elements. */
-            line-height: 64px;
+            line-height: 48px;
         }
 
         @media #{$tablet-screen} {
