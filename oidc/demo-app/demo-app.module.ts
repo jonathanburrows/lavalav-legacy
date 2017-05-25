@@ -7,6 +7,7 @@ import {
     RootComponent,
     SecretComponent
 } from './components';
+import { environment } from './environments';
 import { OidcModule } from '../src';
 
 const oidcGroup = 'Openid';
@@ -27,15 +28,8 @@ const oidcGroup = 'Openid';
             { path: 'demo/secret', component: SecretComponent, data: { group: oidcGroup, title: 'Secret', icon: 'add_alert', showInNavigation: true } }
         ]),
         BrowserModule,
-        FrontEndModule.useWithOptions({
-            resourceServerUrl: 'http://localhost:5000'
-        }),
-        OidcModule.useResourceOwnerFlow({
-            clientId: 'test-resource-owner-client',
-            authorizationServerUrl: 'http://localhost:5004',
-            clientSecret: 'secret',
-            scopes: ['test-resource-server']
-        })
+        FrontEndModule.useWithOptions(environment),
+        OidcModule.useResourceOwnerFlow(environment)
     ],
     bootstrap: [RootComponent]
 })

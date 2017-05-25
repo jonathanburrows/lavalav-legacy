@@ -22,8 +22,8 @@
 
   <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.2" />
     <PackageReference Include="Oracle.ManagedDataAccess" Version="12.1.24160719" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.103" />
   </ItemGroup>

@@ -7,4 +7,7 @@
 export class FrontEndOptions {
     // Url to the api.
     public resourceServerUrl: string;
+
+    // required by angular cli
+    public production: boolean;
 }

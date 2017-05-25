@@ -10,6 +10,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <RootNamespace>lvl.TestWebSite</RootNamespace>
+    <UserSecretsId>30fda8c8-3af9-4f21-9a12-416463ebbfb3</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,11 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

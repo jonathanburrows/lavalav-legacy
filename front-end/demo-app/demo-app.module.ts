@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
+import { environment } from './environments';
 import { FrontEndModule } from '../src';
 import {
     RootDemoComponent,
@@ -29,9 +30,7 @@ const frontEndGroup = 'Front End';
             { path: 'component/lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
             { path: 'component/lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
         ]),
-        FrontEndModule.useWithOptions({
-            resourceServerUrl: 'http://localhost:5000'
-        })
+        FrontEndModule.useWithOptions(environment)
     ],
     bootstrap: [RootDemoComponent]
 })

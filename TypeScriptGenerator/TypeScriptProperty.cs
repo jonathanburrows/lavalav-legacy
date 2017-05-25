@@ -21,5 +21,8 @@ namespace lvl.TypescriptGenerator
 
         /// <summary>Denotes if this should be concrete or abstract.</summary>
         public bool IsAbstract { get; set; }
+
+        /// <summary>Denotes if the property is inherited from a base class.</summary>
+        public bool IsInherited { get; set; }
     }
 }

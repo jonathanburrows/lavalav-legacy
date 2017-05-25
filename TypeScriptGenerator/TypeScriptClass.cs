@@ -36,7 +36,7 @@ namespace lvl.TypescriptGenerator
         /// <returns>The generated statement for a class' properties.</returns>
         private string GetPropertyStatements()
         {
-            var properties = Properties.Select(p =>
+            var properties = Properties.Where(p => !p.IsInherited).Select(p =>
             {
                 var decorators = p.Decorators.Select(d => d.ToTypeScript()).ToList();
                 var decoratorsJoined = string.Join(", ", decorators);
@@ -58,15 +58,16 @@ namespace lvl.TypescriptGenerator
         /// <summary>
         /// Will generate the constructor, with the options for properties.
         /// </summary>
-        /// <returns></returns>
-        private string GetConstructor() {
-            if (!Properties.Any())
+        private string GetConstructor()
+        {
+            if (!Properties.Any() && BaseType == null)
             {
                 return string.Empty;
             }
             else
             {
-                var propertyAssignments = Properties.Select(property => {
+                var propertyAssignments = Properties.Where(p => !p.IsInherited).Select(property =>
+                {
                     var name = property.Name.ToPascal();
 
                     if (property.PropertyType.IsPrimitive)
@@ -83,18 +84,38 @@ namespace lvl.TypescriptGenerator
                     }
                 });
 
-                var baseConstructor = BaseType != null? "super(options);\r\n        " : string.Empty;
+                var baseConstructor = BaseType != null ? "super(options);\r\n        " : string.Empty;
 
                 var propertyStatement = string.Join($"{Environment.NewLine}        ", propertyAssignments);
 
                 return
 $@"
 
-    constructor(options?: {Name}) {{
-        options = options || <any>{{}};
+    constructor(options?: I{Name}Options) {{
+        options = options || {{}};
         {baseConstructor}{propertyStatement}
     }}";
             }
+        }
+
+        /// <summary>
+        ///     Generates a strongly typed interface with all the properties of the class, so that it can be instantiated with fields.
+        /// </summary>
+        private string GetOptionsStatement()
+        {
+            var properties = Properties.Select(p => {
+                var name = p.Name.ToPascal();
+                var typeName = p.PropertyType.Alias ?? p.PropertyType.Name;
+                var type = p.PropertyType.IsCollection ? $"{typeName}[]" : typeName;
+                return $"{name}?: {type};";
+            });
+
+            var propertiesStatement = string.Join("\r\n    ", properties);
+
+            return
+$@"interface I{Name}Options {{
+    {propertiesStatement}
+}}";
         }
 
         /// <inheritdoc />
@@ -104,6 +125,8 @@ $@"
 $@"{GetImportStatements()}export {GetAbstractStatement()}class {Name}{GetGenericConstraintStatement()} {GetExtendStatement()}{GetImplementationStatements()}{{
     {GetPropertyStatements()}{GetConstructor()}
 }}
+
+{GetOptionsStatement()}
 ";
         }
     }

@@ -18,11 +18,10 @@
         "global.scss"
       ],
       "scripts": [],
-      "environmentSource": "../node_modules/@lvl/front-end/environments/environment.ts",
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "dev": "../node_modules/@lvl/front-end/environments/environment.ts",
-        "test": "../node_modules/@lvl/front-end/environments/environment.test.ts",
-        "prod": "../node_modules/@lvl/front-end/environments/environment.prod.ts"
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
       }
     }
   ],

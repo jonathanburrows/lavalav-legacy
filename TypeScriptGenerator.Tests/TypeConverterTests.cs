@@ -552,7 +552,7 @@ namespace lvl.TypeScriptGenerator.Tests
 
             Assert.StartsWith($"import {{ FirstClass }} from '@lvl/external-library';{NewLine}import {{ FirstClass as FirstClass_1 }} from '@lvl/second-external-library';{NewLine}{NewLine}", tsContent);
         }
-        
+
         [Fact]
         public void Class_Mangling_PropertyAndInheritance_References()
         {
@@ -947,6 +947,105 @@ namespace lvl.TypeScriptGenerator.Tests
             var tsContent = tsType.ToTypeScript();
 
             Assert.Contains($"import {{ GenericClassNoConstraint }} from './generic-class-no-constraint';{NewLine}{NewLine}", tsContent);
+        }
+
+        [Fact]
+        public void It_will_not_render_super_when_base_class()
+        {
+            var type = typeof(BaseClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.DoesNotMatch("super(.*);", tsContent);
+        }
+
+        [Fact]
+        public void It_will_render_super_for_derived_class()
+        {
+            var type = typeof(SameModuleInheritanceClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Matches("super(.*);", tsContent);
+        }
+
+        [Fact]
+        public void It_will_render_an_options_interface()
+        {
+            var type = typeof(SimplePropertyClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("interface ISimplePropertyClassOptions {", tsContent);
+        }
+
+        [Fact]
+        public void It_will_have_an_options_property_in_pascal()
+        {
+            var type = typeof(SimplePropertyClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("myProperty?:", tsContent);
+        }
+
+        [Fact]
+        public void It_will_have_a_options_property_with_a_primitive_property_type()
+        {
+            var type = typeof(SimplePropertyClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("myProperty?: number;", tsContent);
+        }
+
+        [Fact]
+        public void It_will_have_a_options_property_with_a_complex_property_type()
+        {
+            var type = typeof(SinglePropertyTypeClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("child?: ChildClass;", tsContent);
+        }
+
+        [Fact]
+        public void It_will_render_an_array_for_an_options_party()
+        {
+            var type = typeof(ArrayClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("children?: number[];", tsContent);
+        }
+
+        [Fact]
+        public void It_will_mangle_options_property_types()
+        {
+            var type = typeof(ManglingTwoPropertiesClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("secondProperty?: FirstClass_1;", tsContent);
+        }
+
+        [Fact]
+        public void It_will_render_an_options_property_for_inherited_property()
+        {
+            var type = typeof(InheritanceClass);
+
+            var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
+            var tsContent = tsType.ToTypeScript();
+
+            Assert.Contains("myProperty?: number;", tsContent);
         }
     }
 }

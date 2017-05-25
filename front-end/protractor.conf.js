@@ -6,7 +6,7 @@ exports.config = {
         './e2e/**/*.e2e-spec.ts'
     ],
     multiCapabilities: [{
-        'browserName': 'chrome'
+        'browserName': 'chrome', chromeOptions: { args: ["--headless", "--disable-gpu"] }
     }],
     directConnect: true,
     baseUrl: 'http://localhost:5003/',

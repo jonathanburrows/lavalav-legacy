@@ -31,7 +31,8 @@ namespace lvl.TestWebSite
 
         public virtual void Configure(IApplicationBuilder app)
         {
-            app.UseWeb();
+            app.UseWeb()
+                .UseMvcWithDefaultRoute();
         }
 
         public Type[] AssemblyReferences => new[] { typeof(Moon) };

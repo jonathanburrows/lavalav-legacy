@@ -10,7 +10,8 @@ export class User extends Entity implements IAggregateRoot {
     public providerSubjectId: string;
     public claims: ClaimEntity[];
 
-    constructor(options?: User) {
+    constructor(options?: IUserOptions) {
+        options = options || {};
         super(options);
         this.subjectId = options!.subjectId;
         this.username = options!.username;
@@ -20,4 +21,15 @@ export class User extends Entity implements IAggregateRoot {
         this.providerSubjectId = options!.providerSubjectId;
         this.claims = options!.claims!.map(p => new ClaimEntity(p));
     }
+}
+
+interface IUserOptions {
+    subjectId?: string;
+    username?: string;
+    hashedPassword?: string;
+    salt?: string;
+    providerName?: string;
+    providerSubjectId?: string;
+    claims?: ClaimEntity[];
+    id?: number;
 }

@@ -78,7 +78,9 @@ export class ResourceOwnerSecurityService extends SecurityService {
     private requestToken(tokenOptions: TokenRequestOptions): Observable<BearerToken> {
         tokenOptions.client_id = this.oidcOptions.clientId;
         tokenOptions.client_secret = this.oidcOptions.clientSecret;
-        tokenOptions.scope = this.oidcOptions.scopes.join(' ');
+
+        const defaultScopes = ['openid', 'profile', 'offline_access'];
+        tokenOptions.scope = defaultScopes.concat(this.oidcOptions.scopes).join(' ');
 
         const url = `${this.oidcOptions.authorizationServerUrl}/connect/token`;
         const headers = new Headers({ 'content-type': 'application/x-www-form-urlencoded' });

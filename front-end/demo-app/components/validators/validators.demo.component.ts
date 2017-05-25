@@ -8,7 +8,7 @@ import { ValidatableForm, ValidationBuilder } from '../../../src';
  *  This component will render a form with validation, for development purpose.
  */
 @Component({
-    selector: 'demo-validators',
+    selector: 'lvl-demo-validators',
     templateUrl: 'validators.demo.component.html',
     styleUrls: ['validators.demo.component.scss']
 })

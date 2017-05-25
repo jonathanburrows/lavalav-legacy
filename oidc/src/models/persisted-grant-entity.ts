@@ -9,7 +9,8 @@ export class PersistedGrantEntity extends Entity implements IAggregateRoot {
     public expiration: Date;
     public data: string;
 
-    constructor(options?: PersistedGrantEntity) {
+    constructor(options?: IPersistedGrantEntityOptions) {
+        options = options || {};
         super(options);
         this.key = options!.key;
         this.type = options!.type;
@@ -19,4 +20,15 @@ export class PersistedGrantEntity extends Entity implements IAggregateRoot {
         this.expiration = options!.expiration;
         this.data = options!.data;
     }
+}
+
+interface IPersistedGrantEntityOptions {
+    key?: string;
+    type?: string;
+    subjectId?: string;
+    clientId?: string;
+    creationTime?: Date;
+    expiration?: Date;
+    data?: string;
+    id?: number;
 }

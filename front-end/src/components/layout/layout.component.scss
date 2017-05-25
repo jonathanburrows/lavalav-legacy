@@ -20,7 +20,7 @@
         &:not(.show-side-nav) {
             visibility: hidden;
             transform: translateX(-100%);
-            transition: transform $swift-ease-in-duration $swift-ease-in-timing-function, visibility 1s linear $swift-ease-out-duration;
+            transition: transform $swift-ease-in-duration $swift-ease-in-timing-function, visibility 0.01s linear $swift-ease-out-duration;
         }
     }
 

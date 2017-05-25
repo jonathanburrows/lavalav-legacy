@@ -34,6 +34,14 @@
     </Content>
   </ItemGroup>
 
+  <PropertyGroup>
+    <UserSecretsId>lvl.Oidc.AuthorizationServer</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
+  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>

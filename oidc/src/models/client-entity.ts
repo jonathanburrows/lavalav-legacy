@@ -47,7 +47,8 @@ export class ClientEntity extends Entity implements IAggregateRoot {
     public prefixClientClaims: boolean;
     public allowedCorsOrigins: CorsOrigin[];
 
-    constructor(options?: ClientEntity) {
+    constructor(options?: IClientEntityOptions) {
+        options = options || {};
         super(options);
         this.enabled = options!.enabled;
         this.clientId = options!.clientId;
@@ -87,4 +88,45 @@ export class ClientEntity extends Entity implements IAggregateRoot {
         this.prefixClientClaims = options!.prefixClientClaims;
         this.allowedCorsOrigins = options!.allowedCorsOrigins!.map(p => new CorsOrigin(p));
     }
+}
+
+interface IClientEntityOptions {
+    enabled?: boolean;
+    clientId?: string;
+    protocolType?: string;
+    clientSecrets?: SecretEntity[];
+    requireClientSecret?: boolean;
+    clientName?: string;
+    clientUri?: string;
+    logoUri?: string;
+    requireConsent?: boolean;
+    allowRememberConsent?: boolean;
+    allowedGrantTypes?: GrantTypeEntity[];
+    requirePkce?: boolean;
+    allowPlainTextPkce?: boolean;
+    allowAccessTokensViaBrowser?: boolean;
+    redirectUris?: RedirectUri[];
+    postLogoutRedirectUris?: PostLogoutRedirectUri[];
+    logoutUri?: string;
+    logoutSessionRequired?: boolean;
+    allowOfflineAccess?: boolean;
+    allowedScopes?: AllowedScope[];
+    alwaysIncludeUserClaimsInIdToken?: boolean;
+    identityTokenLifetime?: number;
+    accessTokenLifetime?: number;
+    authorizationCodeLifetime?: number;
+    absoluteRefreshTokenLifetime?: number;
+    slidingRefreshTokenLifetime?: number;
+    refreshTokenUsage?: number;
+    updateAccessTokenClaimsOnRefresh?: boolean;
+    refreshTokenExpiration?: number;
+    accessTokenType?: number;
+    enableLocalLogin?: boolean;
+    identityProviderRestrictions?: IdentityProviderRestriction[];
+    includeJwtId?: boolean;
+    claims?: ClaimEntity[];
+    alwaysSendClientClaims?: boolean;
+    prefixClientClaims?: boolean;
+    allowedCorsOrigins?: CorsOrigin[];
+    id?: number;
 }

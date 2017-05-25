@@ -15,7 +15,7 @@
     iat: number;
 
     /** Time when the end user authentication occurred. */
-    auth_time?: string;
+    auth_time?: number;
 
     /** Associates a client session with an ID token to mitigate replay attacks. */
     nonce?: string;

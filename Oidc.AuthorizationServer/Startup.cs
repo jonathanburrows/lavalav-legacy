@@ -18,7 +18,7 @@ namespace lvl.Oidc.AuthorizationServer
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
-                .AddUserSecrets("2b0f19c1-3546-4658-9715-f6353a59dff8")
+                .AddUserSecrets("lvl.Oidc.AuthorizationServer")
                 .Build();
         }
 
@@ -34,8 +34,9 @@ namespace lvl.Oidc.AuthorizationServer
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            app.UseOidcAuthorizationServer()
-                .UseWeb();
+            app.UseWeb()
+                .UseOidcAuthorizationServer()
+                .UseMvcWithDefaultRoute();
         }
         public static void Main(string[] args)
         {

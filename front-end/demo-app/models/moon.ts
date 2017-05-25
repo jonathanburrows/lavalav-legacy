@@ -8,18 +8,25 @@ export class Moon extends Entity implements IAggregateRoot {
     public mass: number;
     public planet: Planet;
     public firstPersonToStepFootId: number;
-    public id: number;
 
-    constructor(options?: Moon) {
-        super();
-        if (options) {
-            this.name = options.name;
-            this.radius = options.radius;
-            this.orbitalDistance = options.orbitalDistance;
-            this.mass = options.mass;
-            this.planet = new Planet(options.planet);
-            this.firstPersonToStepFootId = options.firstPersonToStepFootId;
-            this.id = options.id;
-        }
+    constructor(options?: IMoonOptions) {
+        options = options || {};
+        super(options);
+        this.name = options!.name;
+        this.radius = options!.radius;
+        this.orbitalDistance = options!.orbitalDistance;
+        this.mass = options!.mass;
+        this.planet = new Planet(options!.planet);
+        this.firstPersonToStepFootId = options!.firstPersonToStepFootId;
     }
+}
+
+interface IMoonOptions {
+    name?: string;
+    radius?: number;
+    orbitalDistance?: number;
+    mass?: number;
+    planet?: Planet;
+    firstPersonToStepFootId?: number;
+    id?: number;
 }

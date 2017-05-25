@@ -1,5 +1,4 @@
 ﻿using lvl.Web.Logging;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -10,28 +9,25 @@ using Microsoft.Extensions.Logging;
 namespace Microsoft.AspNetCore.Builder
 {
     /// <summary>
-    /// Provide a way to build the middleware pipeline for web requests.
+    ///     Provide a way to build the middleware pipeline for web requests.
     /// </summary>
     public static class WebMvcBuilderExtensions
     {
         /// <summary>
-        /// Adds the middleware used in the API pipeline, and sets up routing.
+        ///     Adds the middleware used in the API pipeline, and sets up routing.
         /// </summary>
         /// <param name="applicationBuilder">The builder for the web application.</param>
-        /// <param name="configureRoutes">A function which modifies the registered routes.</param>
         /// <returns>The application builder with the middleware registered against it.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="configureRoutes"/> is null.</exception>
         /// <exception cref="InvalidOperationException">AddWeb has not been called.</exception>
-        public static IApplicationBuilder UseWeb(this IApplicationBuilder applicationBuilder, Action<IRouteBuilder> configureRoutes)
+        /// <remarks>
+        ///     UseMvc is not called from this method as other middlewares need to be applied before mvc (like security).
+        /// </remarks>
+        public static IApplicationBuilder UseWeb(this IApplicationBuilder applicationBuilder)
         {
             if (applicationBuilder == null)
             {
                 throw new ArgumentNullException(nameof(applicationBuilder));
-            }
-            if (configureRoutes == null)
-            {
-                throw new ArgumentNullException(nameof(configureRoutes));
             }
 
             var corsSettings = applicationBuilder.ApplicationServices.GetService<CorsOptions>();
@@ -56,20 +52,7 @@ namespace Microsoft.AspNetCore.Builder
                     corsBuilder.WithHeaders(corsSettings.AllowHeaders.ToArray());
                     corsBuilder.WithOrigins(corsSettings.AllowOrigins.ToArray());
                     corsBuilder.WithExposedHeaders(corsSettings.ExposedHeaders.ToArray());
-                })
-                .UseMvc(routes =>
-                {
-                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                    configureRoutes.Invoke(routes);
                 });
         }
-
-        /// <summary>
-        /// Adds the middleware used in the API pipeline, and sets up routing.
-        /// </summary>
-        /// <param name="applicationBuilder">The builder for the web application.</param>
-        /// <returns>The application builder with the middleware registered against it.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> is null.</exception>
-        public static IApplicationBuilder UseWeb(this IApplicationBuilder applicationBuilder) => UseWeb(applicationBuilder, _ => { });
     }
 }

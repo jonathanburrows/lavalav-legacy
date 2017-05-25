@@ -1,6 +1,7 @@
 ﻿// Due to a breaking change with google chrome and jasmine, tests cant be run.
 // Once a fix is published, these tests need to be verified.
 // I just feel terrible adding code without tests, but the time spent trying to fix jasmine has already been considerable.
+import { NgZone } from '@angular/core';
 
 import { BearerToken } from './bearer-token';
 import { IdToken } from './id-token';
@@ -12,7 +13,7 @@ describe(TokenService.name, () => {
         it('will load from local storage', () => {
             const storageService = new MockStorageService();
             storageService.setItem(TokenService.bearerTokenKey, 'my-bearer-token');
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             const bearerToken: any = tokenService.bearerToken;
 
@@ -21,7 +22,7 @@ describe(TokenService.name, () => {
 
         it('will be blank if no entry in local storage', () => {
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             expect(tokenService.bearerToken).toBeUndefined();
         });
@@ -37,7 +38,7 @@ describe(TokenService.name, () => {
                 exp: (new Date().getTime() / 1000) - 1,
                 iat: (new Date().getTime() / 1000) - 1
             });
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             expect(tokenService.tokenExpired.first).not.toBeNull();
         });
@@ -56,21 +57,21 @@ describe(TokenService.name, () => {
                 exp: secondsUntilNextYear,
                 iat: secondsUntilNextYear
             });
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             expect(tokenService.tokenExpired.first).toBeNull();
         });
 
         it('will not be triggered if there is no token in local storage', () => {
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             expect(tokenService.tokenExpired.first).toBeNull();
         });
 
         it('will trigger if the token is set to an expired one', () => {
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
             const expiredJwt = generateMockJwt({
                 iss: 'localhost',
                 sub: 'user',
@@ -93,7 +94,7 @@ describe(TokenService.name, () => {
 
         it('will not be triggered if the token is set to one which expires on the future', () => {
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             const nextYear = new Date();
             nextYear.setFullYear(nextYear.getFullYear() + 1);
@@ -120,7 +121,7 @@ describe(TokenService.name, () => {
 
         it('will not be triggered if not set to a bearer token', () => {
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             let triggered = false;
             tokenService.tokenExpired.subscribe(_ => triggered = true);
@@ -133,7 +134,7 @@ describe(TokenService.name, () => {
     describe('getSubjectOfJwt', () => {
         it('will return null if no subject is given', () => {
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             const subject = tokenService.getSubjectOfJwt(null);
 
@@ -149,7 +150,7 @@ describe(TokenService.name, () => {
                 iat: 1
             });
             const storageService = new MockStorageService();
-            const tokenService = new TokenService(storageService);
+            const tokenService = new TokenService(storageService, new NgZone(false));
 
             const decoded = tokenService.getSubjectOfJwt(jwt);
 

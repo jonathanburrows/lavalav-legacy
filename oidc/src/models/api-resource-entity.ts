@@ -12,7 +12,8 @@ export class ApiResourceEntity extends Entity implements IAggregateRoot {
     public apiSecrets: SecretEntity[];
     public scopes: ScopeEntity[];
 
-    constructor(options?: ApiResourceEntity) {
+    constructor(options?: IApiResourceEntityOptions) {
+        options = options || {};
         super(options);
         this.name = options!.name;
         this.enabled = options!.enabled;
@@ -22,4 +23,15 @@ export class ApiResourceEntity extends Entity implements IAggregateRoot {
         this.apiSecrets = options!.apiSecrets!.map(p => new SecretEntity(p));
         this.scopes = options!.scopes!.map(p => new ScopeEntity(p));
     }
+}
+
+interface IApiResourceEntityOptions {
+    name?: string;
+    enabled?: boolean;
+    displayName?: string;
+    description?: string;
+    userClaims?: UserClaim[];
+    apiSecrets?: SecretEntity[];
+    scopes?: ScopeEntity[];
+    id?: number;
 }

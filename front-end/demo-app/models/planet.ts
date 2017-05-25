@@ -8,20 +8,25 @@ export class Planet extends Entity implements IAggregateRoot {
     public astronomicalUnits: number;
     public discoveredOn: Date;
     public moons: Moon[];
-    public id: number;
 
-    constructor(options?: Planet) {
-        super();
-        if (options) {
-            this.name = options.name;
-            this.supportsLife = options.supportsLife;
-            this.mass = options.mass;
-            this.astronomicalUnits = options.astronomicalUnits;
-            this.discoveredOn = options.discoveredOn;
-            if (options.moons) {
-                this.moons = options.moons.map(p => new Moon(p));
-            }
-            this.id = options.id;
-        }
+    constructor(options?: IPlanetOptions) {
+        options = options || {};
+        super(options);
+        this.name = options!.name;
+        this.supportsLife = options!.supportsLife;
+        this.mass = options!.mass;
+        this.astronomicalUnits = options!.astronomicalUnits;
+        this.discoveredOn = options!.discoveredOn;
+        this.moons = options!.moons!.map(p => new Moon(p));
     }
+}
+
+interface IPlanetOptions {
+    name?: string;
+    supportsLife?: boolean;
+    mass?: number;
+    astronomicalUnits?: number;
+    discoveredOn?: Date;
+    moons?: Moon[];
+    id?: number;
 }

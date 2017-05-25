@@ -18,7 +18,7 @@
     "serve.test": "ng test --single-run --progress=false",
     "test": "npm-run-all -p -r serve.web serve.test",
 
-    "serve.e2e": "ng e2e --progress=false --prod --aot --port=5007",
+    "serve.e2e": "ng e2e --progress=false --aot --port=5007",
     "e2e": "npm-run-all -p -r serve.web serve.e2e",
 
     "lint": "ng lint"

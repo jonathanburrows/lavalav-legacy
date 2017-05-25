@@ -1,4 +1,4 @@
-﻿import { EventEmitter, Injectable } from '@angular/core';
+﻿import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { StorageService } from '@lvl/front-end';
@@ -11,6 +11,9 @@ import { IdToken } from './id-token';
  */
 @Injectable()
 export class TokenService {
+    /** Workaround to prevent tests from deadlocking. */
+    private static setTimeout = window.setTimeout;
+
     /**
      *  Key to get the bearer token from local storage.
      *  @remarks the key is public because implicit flow needs to access local storage without this service.
@@ -55,8 +58,8 @@ export class TokenService {
     public tokenHalflife = new EventEmitter<BearerToken>();
     private tokenHalflifeTimer: any;
 
-    constructor(private storageService: StorageService) {
-        // this.resetCountdowns();
+    constructor(private storageService: StorageService, private ngZone: NgZone) {
+         this.resetCountdowns();
     }
 
     /**
@@ -89,13 +92,22 @@ export class TokenService {
         }
 
         if (this.bearerToken) {
-            const currentTime = Math.floor(new Date().getTime() / 1000);
             const claims = this.getSubjectOfJwt(this.bearerToken.access_token);
 
-            const secondsToTimeout = claims.exp - currentTime;
-            this.tokenExpiryTimer = setTimeout(() => this.tokenExpired.emit(this.bearerToken), secondsToTimeout * 1000);
+            const tokenHalflineInSeconds = (claims.exp - claims.auth_time) / 2;
+            const tokenHalflifeDate = new Date((claims.auth_time + tokenHalflineInSeconds) * 1000);
+            const millisecondsUntilHalflife = tokenHalflifeDate.getTime() - new Date().getTime();
+            // run outside of angular since it will cause unit tests to deadlock.
+            this.ngZone.runOutsideAngular(() => {
+                this.tokenHalflifeTimer = window.setTimeout(() => this.tokenHalflife.emit(this.bearerToken), millisecondsUntilHalflife);
+            });
 
-            this.tokenHalflifeTimer = setTimeout(() => this.tokenHalflife.emit(this.bearerToken), secondsToTimeout / 2 * 1000);
+            const expiryDate = new Date(claims.auth_time * 1000);
+            const millisecondsUntilExpiry = expiryDate.getTime() - new Date().getTime();
+            // run outside of angular since it will cause unit tests to deadlock.
+            this.ngZone.runOutsideAngular(() => {
+                this.tokenExpiryTimer = window.setTimeout(() => this.tokenExpired.emit(this.bearerToken), millisecondsUntilExpiry);
+            });
         }
     }
 

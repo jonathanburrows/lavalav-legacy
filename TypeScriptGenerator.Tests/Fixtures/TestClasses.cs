@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 // ReSharper disable UnusedTypeParameter Uses types in reflection for tests.
 
@@ -163,6 +164,16 @@ namespace lvl.TypeScriptGenerator.Tests.Fixtures
     public class SinglePropertyTypeClass
     {
         public ChildClass Child { get; set; }
+    }
+
+    public class ArrayClass
+    {
+        public IEnumerable<int> Children { get; set; }
+    }
+
+    public class InheritanceClass : SimplePropertyClass
+    {
+        public string MyDeclaredProperty { get; set; }
     }
 
     public class SingleExternalImportClass

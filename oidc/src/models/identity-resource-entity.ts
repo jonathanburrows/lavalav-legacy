@@ -11,7 +11,8 @@ export class IdentityResourceEntity extends Entity implements IAggregateRoot {
     public showInDiscoveryDocument: boolean;
     public userClaims: UserClaim[];
 
-    constructor(options?: IdentityResourceEntity) {
+    constructor(options?: IIdentityResourceEntityOptions) {
+        options = options || {};
         super(options);
         this.enabled = options!.enabled;
         this.name = options!.name;
@@ -22,4 +23,16 @@ export class IdentityResourceEntity extends Entity implements IAggregateRoot {
         this.showInDiscoveryDocument = options!.showInDiscoveryDocument;
         this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
     }
+}
+
+interface IIdentityResourceEntityOptions {
+    enabled?: boolean;
+    name?: string;
+    displayName?: string;
+    description?: string;
+    required?: boolean;
+    emphasize?: boolean;
+    showInDiscoveryDocument?: boolean;
+    userClaims?: UserClaim[];
+    id?: number;
 }

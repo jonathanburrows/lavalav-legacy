@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using lvl.TypescriptGenerator.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using static System.Reflection.BindingFlags;
 
 namespace lvl.TypescriptGenerator
 {
@@ -48,7 +47,7 @@ namespace lvl.TypescriptGenerator
             }
 
             tsType.Interfaces = converting.GetInterfaces().Select(i => ConvertImportedType(i, generationOptions)).ToList();
-            tsType.Properties = converting.GetProperties(Public | Instance | DeclaredOnly).Select(p => ConvertPropertyInfo(p, generationOptions)).ToList();
+            tsType.Properties = converting.GetProperties().Select(p => ConvertPropertyInfo(p, converting, generationOptions)).ToList();
             tsType.GenericArguments = converting.GetGenericArguments().Select(p => ConvertGenericArgument(p, generationOptions)).ToList();
             tsType.IsVisible = converting.IsVisible;
 
@@ -61,7 +60,7 @@ namespace lvl.TypescriptGenerator
         /// <param name="propertyInfo">The property to be converted.</param>
         /// <param name="generationOptions">The mapping of namespace to package directory.</param>
         /// <returns>The converted property.</returns>
-        private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, TypeScriptGenerationOptions generationOptions)
+        private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, Type parentType, TypeScriptGenerationOptions generationOptions)
         {
             var decoratorBin = generationOptions.DecoratorPath;
 
@@ -128,7 +127,8 @@ namespace lvl.TypescriptGenerator
                 Decorators = decorators,
                 IsAbstract = propertyInfo.GetSetMethod().IsAbstract,
                 IsOptional = isOptional,
-                PropertyType = propertyType
+                PropertyType = propertyType,
+                IsInherited = propertyInfo.DeclaringType != parentType
             };
         }
 
