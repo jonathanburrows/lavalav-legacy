@@ -8,20 +8,20 @@ using System.Reflection;
 namespace lvl.Repositories
 {
     /// <summary>
-    /// Provides ways to construct repositories.
+    ///     Provides ways to construct repositories.
     /// </summary>
     public class RepositoryFactory
     {
         private Configuration Configuration { get; }
 
         /// <summary>
-        /// This was done so that generic repositories can be resolved and overridden
-        /// with the same logic as the repository factory.
+        ///     This was done so that generic repositories can be resolved and overridden
+        ///     with the same logic as the repository factory.
         /// </summary>
         private IServiceProvider Services { get; }
 
         /// <summary>
-        /// Used to make sure reflection calls dont occur each construction
+        ///     Used to make sure reflection calls dont occur each construction
         /// </summary>
         private static MethodInfo GenericConstructMethod { get; } = typeof(RepositoryFactory).GetMethod(nameof(RepositoryFactory.Construct), new Type[0]);
 
@@ -32,7 +32,7 @@ namespace lvl.Repositories
         }
 
         /// <summary>
-        /// Creates a repository of the given type.
+        ///     Creates a repository of the given type.
         /// </summary>
         /// <typeparam name="TEntity">The type of repository to be constructed.</typeparam>
         /// <returns>The constructed repository.</returns>
@@ -49,7 +49,7 @@ namespace lvl.Repositories
         }
 
         /// <summary>
-        /// Creates a repository of the given type.
+        ///     Creates a repository of the given type.
         /// </summary>
         /// <param name="type">The type of the repostory to be constructed.</param>
         /// <returns>The constructed repository.</returns>

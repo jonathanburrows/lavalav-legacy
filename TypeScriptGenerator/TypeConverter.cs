@@ -11,12 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace lvl.TypescriptGenerator
 {
     /// <summary>
-    /// Converts types from C# to TypeScript.
+    ///     Converts types from C# to TypeScript.
     /// </summary>
     public class TypeConverter
     {
         /// <summary>
-        /// Constructs a typescript object which is equivilant the given C# type.
+        ///     Constructs a typescript object which is equivilant the given C# type.
         /// </summary>
         /// <param name="converting">The type to be converted to typescript.</param>
         /// <param name="generationOptions">The options to generate the typescript files.</param>
@@ -55,7 +55,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Converts a property of a type, including any metadata.
+        ///     Converts a property of a type, including any metadata.
         /// </summary>
         /// <param name="propertyInfo">The property to be converted.</param>
         /// <param name="parentType">Type of the parent, to determine if it is inherited.</param>
@@ -134,7 +134,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Does a simple, shallow typescript conversion.
+        ///     Does a simple, shallow typescript conversion.
         /// </summary>
         /// <param name="imported">The type which will have a shallow conversion done.</param>
         /// <param name="generationOptions">The options, including mapping to different npm packages.</param>

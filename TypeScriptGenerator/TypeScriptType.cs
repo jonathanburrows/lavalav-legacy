@@ -9,42 +9,66 @@ namespace lvl.TypescriptGenerator
     /// </summary>
     public abstract class TypeScriptType
     {
-        /// <summary>The name of the type.</summary>
+        /// <summary>
+        ///     The name of the type.
+        /// </summary>
         public string Name { get; set; }
 
-        /// <summary>Name to use to prevent naming collisions.</summary>
+        /// <summary>
+        ///     Name to use to prevent naming collisions.
+        /// </summary>
         public string Alias { get; set; }
 
-        /// <summary>Represents the next class in the inheritance chain</summary>
+        /// <summary>
+        ///     Represents the next class in the inheritance chain.
+        /// </summary>
         public TypeScriptType BaseType { get; set; }
 
-        /// <summary>Represents all the interfaces the type implements.</summary>
+        /// <summary>
+        ///     Represents all the interfaces the type implements.
+        /// </summary>
         public IList<TypeScriptType> Interfaces { get; set; }
 
-        /// <summary>Represents the path to the type's module.</summary>
+        /// <summary>
+        ///     Represents the path to the type's module.
+        /// </summary>
         public string ModulePath { get; set; }
 
-        /// <summary>Denotes if the type should be exported from the module.</summary>
+        /// <summary>
+        ///     Denotes if the type should be exported from the module.
+        /// </summary>
         public bool IsVisible { get; set; }
 
-        /// <summary>Represents the accessible properties for the type.</summary>
+        /// <summary>
+        ///     Represents the accessible properties for the type.
+        /// </summary>
         public IList<TypeScriptProperty> Properties { get; set; }
 
-        /// <summary>Represents generic types.</summary>
+        /// <summary>
+        ///     Represents generic types.
+        /// </summary>
         public IList<TypeScriptType> GenericArguments { get; set; }
 
-        /// <summary>Represents constraints on the generic type.</summary>
-        /// <remarks>This means that this type is a generic argument. </remarks>
+        /// <summary>
+        ///     Represents constraints on the generic type.
+        /// </summary>
+        /// <remarks>
+        ///     This means that this type is a generic argument.
+        /// </remarks>
         public IList<TypeScriptType> GenericConstraints { get; set; }
 
-        /// <summary>Denotes if this is a global primative type.</summary>
+        /// <summary>
+        ///     Denotes if this is a global primative type.
+        /// </summary>
         public bool IsPrimitive { get; set; }
 
-        /// <summary>Denotes if this should be an array type.</summary>
+        /// <summary>
+        ///     Denotes if this should be an array type.
+        /// </summary>
         public bool IsCollection { get; set; }
 
         /// <summary>
-        /// Will construct the necissary import statements.
+        ///     Will construct the necissary import statements.
         /// </summary>
         /// <returns>The typescript for importing the dependant libraries.</returns>
         protected string GetImportStatements()
@@ -75,7 +99,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will resolve naming collisions by setting aliases.
+        ///     Will resolve naming collisions by setting aliases.
         /// </summary>
         private void MangleImports()
         {
@@ -98,7 +122,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will return all types which need to be imported.
+        ///     Will return all types which need to be imported.
         /// </summary>
         /// <returns>The types to be imported, imported by module path</returns>
         private IOrderedEnumerable<TypeScriptType> GetDependencies()
@@ -133,7 +157,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will construct the necissary statements for interface implementation.
+        ///     Will construct the necissary statements for interface implementation.
         /// </summary>
         /// <returns>The typescript for implementing interfaces.</returns>
         protected string GetImplementationStatements()
@@ -183,7 +207,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will return a string which contains the code for a typescript type.
+        ///     Will return a string which contains the code for a typescript type.
         /// </summary>
         /// <returns>The contents of the typescript type.</returns>
         public abstract string ToTypeScript();

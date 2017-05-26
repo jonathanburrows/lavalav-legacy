@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for applying a filter.
+    ///     A query for applying a filter.
     /// </summary>
     internal class WhereQuery<THead, TTail> : ChainedQuery<THead, TTail>
     {

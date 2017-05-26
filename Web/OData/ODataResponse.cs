@@ -3,7 +3,7 @@
 namespace lvl.Web.OData
 {
     /// <summary>
-    /// Used for serialization/deserialization.
+    ///     Used for serialization/deserialization.
     /// </summary>
     public class ODataResponse
     {

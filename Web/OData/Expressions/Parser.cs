@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace lvl.Web.OData.Expressions
 {
     /// <summary>
-    /// Parses a set of tokens into an abstract syntax tree.
+    ///     Parses a set of tokens into an abstract syntax tree.
     /// </summary>
     public class Parser
     {
@@ -29,7 +29,7 @@ namespace lvl.Web.OData.Expressions
         }
 
         /// <summary>
-        /// Parses a set of tokens into an abstract syntax tree.
+        ///     Parses a set of tokens into an abstract syntax tree.
         /// </summary>
         /// <param name="tokens">The tokens which will be used to construct the syntax tree.</param>
         /// <returns>The root node of the syntax tree.</returns>

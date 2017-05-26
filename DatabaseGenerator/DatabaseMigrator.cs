@@ -7,7 +7,7 @@ using System.Linq;
 namespace lvl.DatabaseGenerator
 {
     /// <summary>
-    /// Applies changes to a database to bring it up to the current model.
+    ///     Applies changes to a database to bring it up to the current model.
     /// </summary>
     public class DatabaseMigrator
     {
@@ -20,7 +20,7 @@ namespace lvl.DatabaseGenerator
         }
 
         /// <summary>
-        /// Applies changes to the registered database, bringing it up the current model.
+        ///     Applies changes to the registered database, bringing it up the current model.
         /// </summary>
         /// <exception cref="AggregateException">There are breaking changes which prevent the migration.</exception>
         public void Migrate()
@@ -40,8 +40,8 @@ namespace lvl.DatabaseGenerator
         }
 
         /// <summary>
-        /// Performs the changes without commiting them, then reports on any breaking changes 
-        /// which prevent the database to coming up to the current model.
+        ///     Performs the changes without commiting them, then reports on any breaking changes 
+        ///     which prevent the database to coming up to the current model.
         /// </summary>
         public void DryRun()
         {

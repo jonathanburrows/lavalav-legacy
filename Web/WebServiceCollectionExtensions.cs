@@ -14,12 +14,12 @@ using System.Linq;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Provides a method for registering all types required by web middleware.
+    ///     Provides a method for registering all types required by web middleware.
     /// </summary>
     public static class WebServiceCollectionExtensions
     {
         /// <summary>
-        /// Registers all types required by web middleware.
+        ///     Registers all types required by web middleware.
         /// </summary>
         /// <param name="serviceCollection">The service collection which will have types registered against it.</param>
         /// <param name="webOptions">Settings for how the web service will behave.</param>

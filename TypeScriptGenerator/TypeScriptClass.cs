@@ -5,7 +5,7 @@ using lvl.TypescriptGenerator.Extensions;
 namespace lvl.TypescriptGenerator
 {
     /// <summary>
-    /// Will construct a typescript class.
+    ///     Will construct a typescript class.
     /// </summary>
     internal class TypeScriptClass : TypeScriptType
     {
@@ -13,7 +13,7 @@ namespace lvl.TypescriptGenerator
         public bool IsAbstract { get; set; }
 
         /// <summary>
-        /// Will return the statement for making a class abstract.
+        ///     Will return the statement for making a class abstract.
         /// </summary>
         /// <returns>The generated typescript for making a class abstract.</returns>
         private string GetAbstractStatement()
@@ -22,7 +22,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will construct the necissary statement for inheritance.
+        ///     Will construct the necissary statement for inheritance.
         /// </summary>
         /// <returns>The typescript for extending a class.</returns>
         public string GetExtendStatement()
@@ -31,7 +31,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will construct the statement for a classes properties.
+        ///     Will construct the statement for a classes properties.
         /// </summary>
         /// <returns>The generated statement for a class' properties.</returns>
         private string GetPropertyStatements()
@@ -56,7 +56,7 @@ namespace lvl.TypescriptGenerator
         }
 
         /// <summary>
-        /// Will generate the constructor, with the options for properties.
+        ///     Will generate the constructor, with the options for properties.
         /// </summary>
         private string GetConstructor()
         {

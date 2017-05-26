@@ -9,13 +9,13 @@ namespace lvl.TypescriptGenerator
     public class Program
     {
         /// <summary>
-        /// An application to generate typescript models from a given assembly.
+        ///     An application to generate typescript models from a given assembly.
         /// 
-        /// Synopsis:
-        /// lvl.TypeScriptGenerator --assembly-path='assembly-path' --output-bin='output-bin' [--decorator-path='decorator-path'] ['C# namespace'='npm package'[, 'C# namespace'='npm package'...]] 
+        ///     Synopsis:
+        ///         lvl.TypeScriptGenerator --assembly-path='assembly-path' --output-bin='output-bin' [--decorator-path='decorator-path'] ['C# namespace'='npm package'[, 'C# namespace'='npm package'...]] 
         /// 
-        /// Example:
-        /// lvl.TypeScriptGenerator --assembly-path=lvl.TestDomain.dll --output-bin='src/models' lvl.Ontology='@lvl/front-end'
+        ///     Example:
+        ///         lvl.TypeScriptGenerator --assembly-path=lvl.TestDomain.dll --output-bin='src/models' lvl.Ontology='@lvl/front-end'
         /// 
         /// </summary>
         /// <param name="args">The command line arguments used to generate the models.</param>

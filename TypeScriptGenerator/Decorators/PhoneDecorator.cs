@@ -3,7 +3,7 @@
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Validates a phone address.
+    ///     Validates a phone address.
     /// </summary>
     internal class PhoneDecorator : TypeScriptType
     {

@@ -4,7 +4,7 @@ using System.Linq;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query that can be Chained.
+    ///     A query that can be Chained.
     /// </summary>
     public abstract class ChainedQuery<THead, TTail> : IQuery<THead, TTail>, IQuery
     {
@@ -18,7 +18,7 @@ namespace lvl.Repositories.Querying
         }
 
         /// <summary>
-        /// Applies a set of queries, from head to tail, and returns the result.
+        ///     Applies a set of queries, from head to tail, and returns the result.
         /// </summary>
         /// <param name="querying">The original, unaltered queryable.</param>
         /// <returns>A queryable which has all queries applied.</returns>
@@ -40,7 +40,7 @@ namespace lvl.Repositories.Querying
         }
 
         /// <summary>
-        /// Gets the total amount of items in the query before paging.
+        ///     Gets the total amount of items in the query before paging.
         /// </summary>
         /// <param name="counting"></param>
         /// <returns></returns>

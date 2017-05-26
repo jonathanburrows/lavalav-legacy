@@ -3,7 +3,7 @@
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Specifies that a data field value is a credit card number.
+    ///     Specifies that a data field value is a credit card number.
     /// </summary>
     internal class CreditCardDecorator : TypeScriptType
     {

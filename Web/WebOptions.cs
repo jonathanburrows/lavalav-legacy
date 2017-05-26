@@ -5,7 +5,7 @@ using System;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Wrapper for all settings.
+    ///     Wrapper for all settings.
     /// </summary>
     public class WebOptions
     {

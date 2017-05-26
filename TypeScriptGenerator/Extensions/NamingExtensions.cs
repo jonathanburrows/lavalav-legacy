@@ -4,12 +4,12 @@ using System.Text;
 namespace lvl.TypescriptGenerator.Extensions
 {
     /// <summary>
-    /// Will provide conversions from one naming convention to another.
+    ///     Will provide conversions from one naming convention to another.
     /// </summary>
     public static class NamingExtensions
     {
         /// <summary>
-        /// Will make the first letter lowercase.
+        ///     Will make the first letter lowercase.
         /// </summary>
         /// <param name="converting">The name to be converted to pascal.</param>
         /// <returns>The pascal version of the given name.</returns>
@@ -32,7 +32,7 @@ namespace lvl.TypescriptGenerator.Extensions
         }
 
         /// <summary>
-        /// Will seperate words by dashes.
+        ///     Will seperate words by dashes.
         /// </summary>
         /// <param name="converting">The camel case name to be converted.</param>
         /// <returns>A name with each word seperated by a dash, and lowercased.</returns>

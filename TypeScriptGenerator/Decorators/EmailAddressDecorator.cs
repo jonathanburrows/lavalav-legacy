@@ -3,7 +3,7 @@
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Validates an email address.
+    ///     Validates an email address.
     /// </summary>
     internal class EmailAddressDecorator : TypeScriptType
     {

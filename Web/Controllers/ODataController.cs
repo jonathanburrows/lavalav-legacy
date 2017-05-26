@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace lvl.Web.Controllers
 {
     /// <summary>
-    /// Provides odata endpoints for all entities.
+    ///     Provides odata endpoints for all entities.
     /// </summary>
     [Route("[controller]")]
     public class ODataController : Controller
@@ -25,7 +25,7 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// Gets all the entities, applying the odata query string.
+        ///     Gets all the entities, applying the odata query string.
         /// </summary>
         /// <param name="entityName">The name of entities which will be queried.</param>
         /// <returns>The odata query results.</returns>

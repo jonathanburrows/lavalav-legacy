@@ -8,7 +8,7 @@ using System.Linq;
 namespace lvl.Web.OData
 {
     /// <summary>
-    /// Converts a set of query parameters to a Query.
+    ///     Converts a set of query parameters to a Query.
     /// </summary>
     public class ODataQueryParser
     {
@@ -22,7 +22,7 @@ namespace lvl.Web.OData
         }
 
         /// <summary>
-        /// Converts a set of query parameters to a Query.
+        ///     Converts a set of query parameters to a Query.
         /// </summary>
         /// <typeparam name="T">The type of entites which will be queried.</typeparam>
         /// <param name="parsing">The query which will be converted into a query.</param>

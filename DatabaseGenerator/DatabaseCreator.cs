@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace lvl.DatabaseGenerator
 {
     /// <summary>
-    /// Creates databases from scratch to match the registered model.
+    ///     Creates databases from scratch to match the registered model.
     /// </summary>
     public class DatabaseCreator
     {
@@ -20,7 +20,7 @@ namespace lvl.DatabaseGenerator
         }
 
         /// <summary>
-        /// Creates a database which matches the registered model.
+        ///     Creates a database which matches the registered model.
         /// </summary>
         public void Create()
         {
@@ -32,7 +32,7 @@ namespace lvl.DatabaseGenerator
         }
 
         /// <summary>
-        /// This was done to allow for transactions to be run from the same configuration.
+        ///     This was done to allow for transactions to be run from the same configuration.
         /// </summary>
         /// <param name="session">The session which will provide the transaction.</param>
         /// <exception cref="ArgumentNullException"><paramref name="session"/> is null.</exception>
@@ -49,7 +49,7 @@ namespace lvl.DatabaseGenerator
         }
 
         /// <summary>
-        /// Reports on any potential issues which will prevent the database from being created.
+        ///     Reports on any potential issues which will prevent the database from being created.
         /// </summary>
         public void DryRun()
         {

@@ -3,7 +3,7 @@
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Checks if a value has to be assigned to a property.
+    ///     Checks if a value has to be assigned to a property.
     /// </summary>
     internal class RequiredDecorator : TypeScriptType
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace lvl.Web.Logging
 {
     /// <summary>
-    /// Catches any errors in the pipeline and logs them. Also attaches the error message to the response.
+    ///     Catches any errors in the pipeline and logs them. Also attaches the error message to the response.
     /// </summary>
     internal class ErrorLoggingMiddleware
     {
@@ -20,7 +20,7 @@ namespace lvl.Web.Logging
         }
 
         /// <summary>
-        /// Wraps all actions in the remainder of the pipeline in a try catch, and logs errors when they occur.
+        ///     Wraps all actions in the remainder of the pipeline in a try catch, and logs errors when they occur.
         /// </summary>
         /// <param name="httpContext">The request being sent down the pipeline.</param>
         /// <exception cref="ArgumentNullException"><paramref name="httpContext"/> is null.</exception>

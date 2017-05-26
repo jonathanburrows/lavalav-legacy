@@ -5,12 +5,12 @@ using lvl.TypescriptGenerator.Extensions;
 namespace lvl.TypescriptGenerator
 {
     /// <summary>
-    /// Represents a typescript interface.
+    ///     Represents a typescript interface.
     /// </summary>
     internal class TypeScriptInterface : TypeScriptType
     {
         /// <summary>
-        /// Will construct the statement for an interfaces properties.
+        ///     Will construct the statement for an interfaces properties.
         /// </summary>
         /// <returns>The generated statement for an interface's properties.</returns>
         private string GetPropertyStatements()

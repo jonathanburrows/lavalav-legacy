@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Specifies that a data field value in ASP.NET Dynamic Data must match the specified regular expression.
+    ///     Specifies that a data field value in ASP.NET Dynamic Data must match the specified regular expression.
     /// </summary>
     public class RegularExpressionDecorator : TypeScriptType
     {

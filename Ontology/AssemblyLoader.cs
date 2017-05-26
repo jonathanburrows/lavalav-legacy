@@ -5,12 +5,12 @@ using System.Reflection;
 namespace lvl.Ontology
 {
     /// <summary>
-    /// Used to load assemblies from a differnt directory into the app domain.
+    ///     Used to load assemblies from a differnt directory into the app domain.
     /// </summary>
     public class AssemblyLoader
     {
         /// <summary>
-        /// Loads an assembly from the given path, and loads any missing references from the assemblies directory.
+        ///     Loads an assembly from the given path, and loads any missing references from the assemblies directory.
         /// </summary>
         /// <param name="assemblyPath">The full path to the assembly to be loaded.</param>
         /// <returns>The loaded assembly.</returns>

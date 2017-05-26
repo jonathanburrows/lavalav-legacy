@@ -4,7 +4,9 @@ using System.Linq;
 
 namespace lvl.Web.OData.Tokens
 {
-    /// <summary>Converts a string input into a set of tokens.</summary>
+    /// <summary>
+    ///     Converts a string input into a set of tokens.
+    /// </summary>
     public class Tokenizer
     {
         private List<TokenResolver> TokenResolvers { get; } = new List<TokenResolver>();
@@ -20,7 +22,7 @@ namespace lvl.Web.OData.Tokens
         }
 
         /// <summary>
-        /// Converts an input string into a set of tokens.
+        ///     Converts an input string into a set of tokens.
         /// </summary>
         /// <param name="tokenizing">The input to be tokenized.</param>
         /// <returns>The set of tokens produced.</returns>

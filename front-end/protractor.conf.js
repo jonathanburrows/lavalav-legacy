@@ -3,7 +3,7 @@
 exports.config = {
     allScriptsTimeout: 11000,
     specs: [
-        './e2e/**/*.e2e-spec.ts'
+        './src/**/*.e2e-spec.ts'
     ],
     multiCapabilities: [{
         'browserName': 'chrome', chromeOptions: { args: ["--headless", "--disable-gpu"] }
@@ -18,7 +18,7 @@ exports.config = {
     },
     beforeLaunch: function () {
         require('ts-node').register({
-            project: 'e2e/tsconfig.e2e.json'
+            project: 'tsconfig.e2e.json'
         });
     },
     onPrepare() {

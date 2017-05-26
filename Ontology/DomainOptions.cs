@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public class DomainOptions
     {
         /// <summary>
-        /// Connection String to be used by all the application.
+        ///     Connection String to be used by all the application.
         /// </summary>
         public string ConnectionString { get; set; }
 

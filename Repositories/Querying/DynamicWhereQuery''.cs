@@ -4,7 +4,7 @@ using System.Linq.Dynamic;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for filtering based on a string query.
+    ///     A query for filtering based on a string query.
     /// </summary>
     internal class DynamicWhereQuery<THead, TTail> : ChainedQuery<THead, TTail>
     {

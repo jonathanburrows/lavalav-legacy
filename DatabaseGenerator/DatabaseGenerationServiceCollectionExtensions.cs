@@ -6,12 +6,12 @@ using System.Linq;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Registers all services specific to generate databases.
+    ///     Registers all services specific to generate databases.
     /// </summary>
     public static class DatabaseGenerationServiceCollectionExtensions
     {
         /// <summary>
-        /// Registers all services specific to generate databases.
+        ///     Registers all services specific to generate databases.
         /// </summary>
         /// <param name="serviceCollection">The provider which will have the services registered.</param>
         /// <param name="options">Options used when generating a database.</param>

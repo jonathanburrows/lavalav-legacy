@@ -1,7 +1,7 @@
 ﻿namespace lvl.TypescriptGenerator
 {
     /// <summary>
-    /// Represents metadata that can be applied to a property.
+    ///     Represents metadata that can be applied to a property.
     /// </summary>
     public class TypeScriptDecorator
     {

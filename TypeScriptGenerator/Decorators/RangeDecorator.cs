@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Specifies the numeric range constraints for the value of a data field.
+    ///     Specifies the numeric range constraints for the value of a data field.
     /// </summary>
     internal class RangeDecorator : TypeScriptType
     {

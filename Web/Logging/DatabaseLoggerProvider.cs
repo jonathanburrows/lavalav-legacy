@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace lvl.Web.Logging
 {
     /// <summary>
-    /// Constructs database loggers with types resolved from the service provider.
+    ///     Constructs database loggers with types resolved from the service provider.
     /// </summary>
     internal class DatabaseLoggerProvider : ILoggerProvider
     {

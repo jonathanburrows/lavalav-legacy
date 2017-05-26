@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace lvl.Web.Logging
 {
     /// <summary>
-    /// Provides a way to log information into a database using nhibernate.
+    ///     Provides a way to log information into a database using nhibernate.
     /// </summary>
     internal class DatabaseLogger : ILogger
     {

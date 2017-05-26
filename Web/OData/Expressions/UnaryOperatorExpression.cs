@@ -3,7 +3,7 @@
 namespace lvl.Web.OData.Expressions
 {
     /// <summary>
-    /// Represents an operator to be applied to a single operand.
+    ///     Represents an operator to be applied to a single operand.
     /// </summary>
     internal abstract class UnaryOperatorExpression : IExpression
     {

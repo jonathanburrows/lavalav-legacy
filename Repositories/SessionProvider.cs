@@ -4,8 +4,8 @@ using System;
 namespace lvl.Repositories
 {
     /// <summary>
-    /// This was implemented as SQLite needs to have the same session used for all requests,
-    /// or the database will disappear. 
+    ///     This was implemented as SQLite needs to have the same session used for all requests,
+    ///     or the database will disappear. 
     /// </summary>
     public class SessionProvider
     {
@@ -19,7 +19,7 @@ namespace lvl.Repositories
         }
 
         /// <summary>
-        /// Constructs and returns a session.
+        ///     Constructs and returns a session.
         /// </summary>
         /// <returns>The constructed session</returns>
         public virtual ISession GetSession() => SessionFactory.OpenSession(Interceptor);

@@ -4,7 +4,7 @@ using System.Threading;
 namespace lvl.Web.Logging
 {
     /// <summary>
-    /// Allows for log messages to be nested.
+    ///     Allows for log messages to be nested.
     /// </summary>
     internal class LogScope
     {

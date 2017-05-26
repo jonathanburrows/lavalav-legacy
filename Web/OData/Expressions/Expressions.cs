@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace lvl.Web.OData.Expressions
 {
     /// <summary>
-    /// Multiple classes were put into one file as they are all very thin.
+    ///     Multiple classes were put into one file as they are all very thin.
     /// </summary>
     internal class AndExpression : LogicalExpression
     {

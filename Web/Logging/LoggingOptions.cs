@@ -6,7 +6,7 @@ using System;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Configurations for logging.
+    ///     Configurations for logging.
     /// </summary>
     public class LoggingOptions
     {

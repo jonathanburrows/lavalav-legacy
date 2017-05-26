@@ -7,7 +7,7 @@ using System.Data;
 namespace lvl.Repositories
 {
     /// <summary>
-    /// Provides a way for the sql lite database to not regenerate every request.
+    ///     Provides a way for the sql lite database to not regenerate every request.
     /// </summary>
     // ReSharper disable once InconsistentNaming Is the literal name of the vendor.
     internal sealed class SQLitePersistentSessionProvider : SessionProvider

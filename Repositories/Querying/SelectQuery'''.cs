@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query which manipulates the result of the query.
+    ///     A query which manipulates the result of the query.
     /// </summary>
     /// <typeparam name="THead">The type of query which the first expression will be applied to</typeparam>
     /// <typeparam name="TTail">The result of the last query in the expression chain</typeparam>

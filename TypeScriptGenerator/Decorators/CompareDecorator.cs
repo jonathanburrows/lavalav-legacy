@@ -5,7 +5,7 @@ using lvl.TypescriptGenerator.Extensions;
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Provides an attribute that compares two properties.
+    ///     Provides an attribute that compares two properties.
     /// </summary>
     internal class CompareDecorator : TypeScriptType
     {

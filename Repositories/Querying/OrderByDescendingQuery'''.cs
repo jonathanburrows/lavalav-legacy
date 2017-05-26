@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for ordering by a given key in descending order.
+    ///     A query for ordering by a given key in descending order.
     /// </summary>
     /// <typeparam name="THead"></typeparam>
     /// <typeparam name="TTail"></typeparam>

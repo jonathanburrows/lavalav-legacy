@@ -4,7 +4,7 @@ using System.Linq.Dynamic;
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for ordering by strings.
+    ///     A query for ordering by strings.
     /// </summary>
     internal class DynamicOrderByQuery<THead, TTail> : ChainedQuery<THead, TTail>
     {

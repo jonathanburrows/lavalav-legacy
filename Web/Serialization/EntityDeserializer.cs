@@ -6,6 +6,9 @@ using System.IO;
 
 namespace lvl.Web.Serialization
 {
+    /// <summary>
+    ///     Utility to convert a stream into an entity.
+    /// </summary>
     public class EntityDeserializer
     {
         private JsonSerializerSettings JsonSerializerSettings { get; }
@@ -16,7 +19,7 @@ namespace lvl.Web.Serialization
         }
 
         /// <summary>
-        /// Provides a way to convert a stream to an entity.
+        ///     Provides a way to convert a stream to an entity.
         /// </summary>
         /// <param name="entityType">The type of entity which will be constructed.</param>
         /// <param name="deserializing">The stream whos data will poulate the entity.</param>

@@ -1,7 +1,7 @@
 ﻿namespace lvl.Web.OData.Expressions
 {
     /// <summary>
-    /// Represents a value to be taken directly from a token.
+    ///     Represents a value to be taken directly from a token.
     /// </summary>
     internal abstract class ValueExpression : IExpression
     {

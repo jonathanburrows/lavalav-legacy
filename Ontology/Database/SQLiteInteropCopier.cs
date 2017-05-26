@@ -4,8 +4,8 @@ using System.Reflection;
 namespace lvl.Ontology.Database
 {
     /// <summary>
-    /// This is a workaround fix for SQLite's requirement of SQLite.Interop.dll needing to be
-    /// copied into the executing program's directory.
+    ///     This is a workaround fix for SQLite's requirement of SQLite.Interop.dll needing to be
+    ///     copied into the executing program's directory.
     /// </summary>
     // ReSharper disable once InconsistentNaming Verbatim name of vendor
     internal class SQLiteInteropCopier

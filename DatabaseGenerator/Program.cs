@@ -6,13 +6,13 @@ namespace lvl.DatabaseGenerator
     public class Program
     {
         /// <summary>
-        /// An application to generate databases from a given application assembly.
+        ///     An application to generate databases from a given application assembly.
         /// 
-        /// Synopsis:
-        /// lvl.DatabaseGenerator (--connection-string 'connection-string'){1} (--assembly-path 'assembly-path'){1} (--post-generation-script-bin 'path'){0,1}  (--pre-generation-script-bin 'path'){0,1} (--migrate){0,1} (--dry-run){0,1}
+        ///     Synopsis:
+        ///     lvl.DatabaseGenerator (--connection-string 'connection-string'){1} (--assembly-path 'assembly-path'){1} (--post-generation-script-bin 'path'){0,1}  (--pre-generation-script-bin 'path'){0,1} (--migrate){0,1} (--dry-run){0,1}
         /// 
-        /// Example:
-        /// lvl.DatabaseGenerator --connection-string "helloworld" --migrate --assembly-path "here" --pre-generation-script-bin 'there'
+        ///     Example:
+        ///     lvl.DatabaseGenerator --connection-string "helloworld" --migrate --assembly-path "here" --pre-generation-script-bin 'there'
         /// 
         /// </summary>
         /// <param name="args"></param>

@@ -8,7 +8,7 @@ using System.Linq;
 namespace lvl.DatabaseGenerator
 {
     /// <summary>
-    /// Runs scripts from a folder against the registered database.
+    ///     Runs scripts from a folder against the registered database.
     /// </summary>
     public class ScriptRunner : IDisposable
     {
@@ -20,7 +20,7 @@ namespace lvl.DatabaseGenerator
         }
 
         /// <summary>
-        /// Runs scripts from a given folder against the registered database.
+        ///     Runs scripts from a given folder against the registered database.
         /// </summary>
         /// <param name="scriptBin">The directory which will contain the .sql files to be run.</param>
         /// <remarks>Run in order by file name.</remarks>

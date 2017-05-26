@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace lvl.Web.OData.Tokens
 {
     /// <summary>
-    /// Stores construction information about a token, and the pattern it matches too.
+    ///     Stores construction information about a token, and the pattern it matches too.
     /// </summary>
     internal class TokenResolver
     {
@@ -33,7 +33,7 @@ namespace lvl.Web.OData.Tokens
         }
 
         /// <summary>
-        /// Creates a new token, and assigns the given value to it.
+        ///     Creates a new token, and assigns the given value to it.
         /// </summary>
         /// <param name="sequence">The value to assign to the token.</param>
         /// <returns>The constructed token.</returns>

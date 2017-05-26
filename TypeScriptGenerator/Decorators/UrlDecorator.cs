@@ -3,7 +3,7 @@
 namespace lvl.TypescriptGenerator.Decorators
 {
     /// <summary>
-    /// Provides URL validation. 
+    ///     Provides URL validation. 
     /// </summary>
     internal class UrlDecorator : TypeScriptType
     {

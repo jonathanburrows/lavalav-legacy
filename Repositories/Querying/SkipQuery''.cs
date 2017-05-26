@@ -3,7 +3,7 @@
 namespace lvl.Repositories.Querying
 {
     /// <summary>
-    /// A query for skipping records.
+    ///     A query for skipping records.
     /// </summary>
     internal class SkipQuery<THead, TTail> : ChainedQuery<THead, TTail>
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace lvl.Web.Controllers
 {
     /// <summary>
-    /// Provides restful endpoints for all entities.
+    ///     Provides restful endpoints for all entities.
     /// </summary>
     [Route("[controller]")]
     public class ApiController : Controller
@@ -26,7 +26,7 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// Retreives all entities of a given type.
+        ///     Retreives all entities of a given type.
         /// </summary>
         /// <param name="entityName">The type of entities to be retreived.</param>
         /// <returns>All entities of the given type.</returns>
@@ -47,7 +47,7 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// Returns an entity of the given type with a matching id.
+        ///     Returns an entity of the given type with a matching id.
         /// </summary>
         /// <param name="entityName">The type of the desired entity.</param>
         /// <param name="id">The identifier of the desired entity.</param>
@@ -76,7 +76,7 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// Adds a given entity to the persistent collection.
+        ///     Adds a given entity to the persistent collection.
         /// </summary>
         /// <param name="entityName">The type of the entity to be added.</param>
         /// <returns>The entity with a populated id.</returns>
@@ -103,7 +103,7 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// Updates an existing entity to have matching fields.
+        ///     Updates an existing entity to have matching fields.
         /// </summary>
         /// <param name="entityName">The type of the entity to be updated.</param>
         /// <returns>A copy of the updated entity, with any generated fields updated.</returns>
@@ -130,7 +130,7 @@ namespace lvl.Web.Controllers
         }
 
         /// <summary>
-        /// Removes an entity from the persistent collection.
+        ///     Removes an entity from the persistent collection.
         /// </summary>
         /// <param name="entityName">The type of the entity to be deleted.</param>
         /// <returns>A copy of the entity which was removed.</returns>

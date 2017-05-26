@@ -14,13 +14,13 @@ using NHibernate.Tool.hbm2ddl;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Provides functions for registering repositories in a service provider
+    ///     Provides functions for registering repositories in a service provider
     /// </summary>
     public static class DomainServiceCollectionExtensions
     {
         /// <summary>
-        /// Registers a database configuration based on the connection string, 
-        /// and maps all models inheriting from IEntity
+        ///     Registers a database configuration based on the connection string, 
+        ///     and maps all models inheriting from IEntity
         /// </summary>
         /// <param name="serviceCollection">The services the configuration will be registered to.</param>
         /// <param name="domainOptions">The options, including the connection string to the database.</param>
@@ -108,7 +108,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// Determines if an assembly contains an IEntity.
+        ///     Determines if an assembly contains an IEntity.
         /// </summary>
         /// <param name="assembly">The assembly to be checked.</param>
         /// <returns>true if the assembly contains an ientity, false otherwise.</returns>
