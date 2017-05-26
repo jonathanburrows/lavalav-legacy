@@ -5,7 +5,7 @@ using Xunit;
 
 namespace lvl.DatabaseGenerator.Tests
 {
-    [Collection(DatabaseGeneratorCollection.Name)]
+    [Collection(nameof(DatabaseGeneratorCollection))]
     public class DatabaseGeneratorServiceCollectionExtensionsTests
     {
         private IServiceProvider Services { get; }

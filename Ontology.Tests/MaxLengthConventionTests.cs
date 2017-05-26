@@ -8,7 +8,7 @@ using Xunit;
 
 namespace lvl.Ontology.Tests
 {
-    [Collection(OntologyCollection.Name)]
+    [Collection(nameof(OntologyCollection))]
     public class MaxLengthConventionTests
     {
         private PersistentClass ClassMapping { get; }

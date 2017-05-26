@@ -13,7 +13,7 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-    [Collection(WebCollection.Name)]
+    [Collection(nameof(WebCollection))]
     public class LogLevelTests
     {
         private HttpClient Client { get; }

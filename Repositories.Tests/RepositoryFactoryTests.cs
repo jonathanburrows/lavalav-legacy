@@ -68,7 +68,7 @@ namespace lvl.Repositories.Tests
         private class NonEntity { }
     }
 
-    [Collection(RepositoriesCollection.Name)]
+    [Collection(nameof(RepositoriesCollection))]
     // ReSharper disable once InconsistentNaming Matches the vendor name literally.
     public class SQLiteRepositoryFactoryTests : RepositoryFactoryTests<SQLiteRepositoryFixture>
     {

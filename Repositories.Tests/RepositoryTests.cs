@@ -828,7 +828,7 @@ namespace lvl.Repositories.Tests
         }
     }
 
-    [Collection(RepositoriesCollection.Name)]
+    [Collection(nameof(RepositoriesCollection))]
     // ReSharper disable once InconsistentNaming Is the literal name of the vendor.
     public class SQLiteRepositoryTests : RepositoryTests<SQLiteRepositoryFixture>
     {

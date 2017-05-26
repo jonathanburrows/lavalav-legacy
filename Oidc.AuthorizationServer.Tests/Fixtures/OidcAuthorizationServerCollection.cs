@@ -3,11 +3,10 @@ using Xunit;
 
 namespace lvl.Oidc.AuthorizationServer.Tests.Fixtures
 {
-    [CollectionDefinition(Name)]
+    [CollectionDefinition(nameof(OidcAuthorizationServerCollection))]
     public class OidcAuthorizationServerCollection : 
         ICollectionFixture<ServiceProviderFixture>,
         ICollectionFixture<WebHostFixture<Startup>>
     {
-        public const string Name = nameof(OidcAuthorizationServerCollection);
     }
 }

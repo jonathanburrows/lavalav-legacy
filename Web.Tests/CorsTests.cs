@@ -13,7 +13,7 @@ using lvl.Web.Tests.Fixtures;
 
 namespace lvl.Web.Tests
 {
-    [Collection(WebCollection.Name)]
+    [Collection(nameof(WebCollection))]
     public class CorsTests
     {
         private static Microsoft.Extensions.DependencyInjection.CorsOptions Settings { get; } = new Microsoft.Extensions.DependencyInjection.CorsOptions

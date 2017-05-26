@@ -4,7 +4,7 @@ using Xunit;
 
 namespace lvl.DatabaseGenerator.Tests
 {
-    [Collection(DatabaseGeneratorCollection.Name)]
+    [Collection(nameof(DatabaseGeneratorCollection))]
     public class ArgumentParserTests
     {
         private ArgumentParser ArgumentParser { get; }

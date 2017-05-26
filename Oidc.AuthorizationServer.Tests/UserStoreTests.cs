@@ -13,7 +13,7 @@ using Xunit;
 
 namespace lvl.Oidc.AuthorizationServer.Tests
 {
-    [Collection(OidcAuthorizationServerCollection.Name)]
+    [Collection(nameof(OidcAuthorizationServerCollection))]
     public class UserStoreTests
     {
         private UserStore UserStore { get; }

@@ -15,8 +15,7 @@ using Xunit;
 
 namespace lvl.Web.Tests
 {
-
-    [Collection(WebCollection.Name)]
+    [Collection(nameof(WebCollection))]
     public class ODataControllerTests
     {
         private HttpClient Client { get; }

@@ -2,9 +2,8 @@
 
 namespace lvl.Repositories.Tests.Fixtures
 {
-    [CollectionDefinition(Name)]
+    [CollectionDefinition(nameof(RepositoriesCollection))]
     public class RepositoriesCollection : ICollectionFixture<SQLiteRepositoryFixture>
     {
-        public const string Name = nameof(RepositoriesCollection);
     }
 }

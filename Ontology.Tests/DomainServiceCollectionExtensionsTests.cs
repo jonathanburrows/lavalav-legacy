@@ -9,7 +9,7 @@ using Xunit;
 
 namespace lvl.Ontology.Tests
 {
-    [Collection(OntologyCollection.Name)]
+    [Collection(nameof(OntologyCollection))]
     public class DomainServiceCollectionExtensionsTests
     {
         private IServiceProvider Services { get; }
