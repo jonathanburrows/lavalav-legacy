@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Security.Claims;
 using Xunit;
+// ReSharper disable PossibleNullReferenceException calling impersonator ensures it is not null.
 
 namespace lvl.Web.Tests
 {

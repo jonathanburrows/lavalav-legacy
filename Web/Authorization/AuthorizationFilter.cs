@@ -28,7 +28,7 @@ namespace lvl.Web.Authorization
         /// <exception cref="ArgumentNullException"><paramref name="filtering"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The property id does not exist on the type.</exception>
         /// <returns>
-        ///     If there is no [OwnedBy] on the entity, then all the records.
+        ///     If there is no [OwnedByUser] on the entity, then all the records.
         ///     
         ///     If the user is not logged in, then no records.
         ///     

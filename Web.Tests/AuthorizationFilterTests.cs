@@ -118,7 +118,7 @@ namespace lvl.Web.Tests
         public async Task Get_all_will_return_entities_only_belonging_to_user()
         {
             Impersonator.AsAdministrator();
-            var ownedExam = await ExamRepository.CreateAsync(new AstronautExamScore
+            await ExamRepository.CreateAsync(new AstronautExamScore
             {
                 ExamineeUserId = "Jean Luc Picard",
                 Passed = true,
@@ -227,7 +227,7 @@ namespace lvl.Web.Tests
         public async Task Filtering_will_return_entities_only_belonging_to_user()
         {
             Impersonator.AsAdministrator();
-            var ownedExam = await ExamRepository.CreateAsync(new AstronautExamScore
+            await ExamRepository.CreateAsync(new AstronautExamScore
             {
                 ExamineeUserId = "Jean Luc Picard",
                 Passed = true,
@@ -309,9 +309,10 @@ namespace lvl.Web.Tests
                 new Claim("name", "Jean Luc Picard"),
                 new Claim("sub", "Jean Luc Picard")
             });
+            HttpContextAccessor.HttpContext.User = new ClaimsPrincipal(fakeClaims);
             var matchingExam = await ExamRepository.GetAsync(exam.Id);
 
-            Assert.NotNull(matchingExam);
+            Assert.Null(matchingExam);
         }
 
         [Fact]

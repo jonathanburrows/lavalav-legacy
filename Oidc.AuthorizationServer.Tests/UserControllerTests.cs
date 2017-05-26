@@ -30,7 +30,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         [Fact]
         public async Task It_will_return_model_error_when_no_username_provided()
         {
-            var postUrl = $"/oidc/user";
+            var postUrl = "/oidc/user";
             var postingContent = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["password"] = "password"
@@ -48,7 +48,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             await UserStore.AddLocalUserAsync("create-user-username-taken", "password");
 
-            var postUrl = $"/oidc/user";
+            var postUrl = "/oidc/user";
             var postingContent = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["username"] = "create-user-username-taken",
@@ -65,7 +65,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         [Fact]
         public async Task It_will_return_model_error_when_password_not_given()
         {
-            var postUrl = $"/oidc/user";
+            var postUrl = "/oidc/user";
             var postingContent = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["username"] = "username"
@@ -81,7 +81,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         [Fact]
         public async Task It_will_return_added_user()
         {
-            var postUrl = $"/oidc/user";
+            var postUrl = "/oidc/user";
             var postingContent = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["username"] = "create-user-valid",
@@ -98,7 +98,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         [Fact]
         public async Task It_will_persist_added_user()
         {
-            var postUrl = $"/oidc/user";
+            var postUrl = "/oidc/user";
             var postingContent = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["username"] = "create-user-persisted",

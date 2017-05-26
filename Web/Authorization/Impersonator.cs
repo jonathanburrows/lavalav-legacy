@@ -68,6 +68,7 @@ namespace lvl.Web.Authorization
                 SignInAs(username);
             }
 
+            // ReSharper disable PossibleNullReferenceException calling SignInAs ensures user/identity is not null.
             var claims = (ClaimsIdentity)HttpContextAccessor.HttpContext.User.Identity;
             claims.AddClaim(new Claim("role", role));
 

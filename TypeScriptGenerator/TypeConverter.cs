@@ -58,6 +58,7 @@ namespace lvl.TypescriptGenerator
         /// Converts a property of a type, including any metadata.
         /// </summary>
         /// <param name="propertyInfo">The property to be converted.</param>
+        /// <param name="parentType">Type of the parent, to determine if it is inherited.</param>
         /// <param name="generationOptions">The mapping of namespace to package directory.</param>
         /// <returns>The converted property.</returns>
         private TypeScriptProperty ConvertPropertyInfo(PropertyInfo propertyInfo, Type parentType, TypeScriptGenerationOptions generationOptions)

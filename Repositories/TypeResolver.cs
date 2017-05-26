@@ -41,11 +41,10 @@ namespace lvl.Repositories
                 throw new ArgumentNullException(nameof(entityType));
             }
 
-            var types = Configuration.ClassMappings.Select(c => c.MappedClass);
+            var types = Configuration.ClassMappings.Select(c => c.MappedClass).ToArray();
 
-            // ReSharper disable PossibleMultipleEnumeration resharper getting confused, is as intended.
-            var matchingFullyQualified = types.Where(t => t.FullName.Equals(entityType, StringComparison.InvariantCultureIgnoreCase));
-            if (matchingFullyQualified.Count() > 1)
+            var matchingFullyQualified = types.Where(t => t.FullName.Equals(entityType, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (matchingFullyQualified.Count > 1)
             {
                 throw new InvalidOperationException($"More than one entity with the full qualified name {entityType} was mapped");
             }
@@ -54,8 +53,8 @@ namespace lvl.Repositories
                 return matchingFullyQualified.Single();
             }
 
-            var matchingClasses = types.Where(t => t.Name.Equals(entityType, StringComparison.InvariantCultureIgnoreCase));
-            if (matchingClasses.Count() > 1)
+            var matchingClasses = types.Where(t => t.Name.Equals(entityType, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (matchingClasses.Count > 1)
             {
                 throw new InvalidOperationException($"More than one entity with the name {entityType} was mapped");
             }

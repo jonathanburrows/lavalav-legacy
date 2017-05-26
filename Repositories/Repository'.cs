@@ -201,6 +201,7 @@ namespace lvl.Repositories
                         {
                             throw new InvalidOperationException($"There exists no {typeof(TEntity).FullName} with the id of {updating.Id} to update");
                         }
+
                         session.Update(updating);
                         transaction.Commit();
                     }

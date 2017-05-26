@@ -59,6 +59,7 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection
                 .AddLogging()
                 .AddScoped<AggregateRootFilter, AuthorizationFilter>()
+                .AddScoped<NHibernate.IInterceptor, AuthorizationInterceptor>()
                 .AddScoped<EntityDeserializer>()
                 .AddScoped<ILoggerProvider, DatabaseLoggerProvider>()
                 .AddScoped<ILoggerFactory, DatabaseLoggerFactory>()

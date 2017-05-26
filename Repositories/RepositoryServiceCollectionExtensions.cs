@@ -2,6 +2,7 @@
 using System;
 using lvl.Ontology.Database;
 using lvl.Repositories.Authorization;
+using NHibernate;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's extension convention.
 namespace Microsoft.Extensions.DependencyInjection
@@ -39,6 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection
                 .AddScoped<TypeResolver>()
                 .AddScoped<RepositoryFactory>()
+                .AddScoped<IInterceptor, EmptyInterceptor>()
                 .AddScoped<AggregateRootFilter>()
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped(typeof(SessionProvider), sessionManager)
