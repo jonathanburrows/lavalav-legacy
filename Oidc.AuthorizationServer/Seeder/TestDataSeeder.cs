@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using lvl.Oidc.AuthorizationServer.Models;
 using lvl.Oidc.AuthorizationServer.Stores;
@@ -43,7 +44,8 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     HashedPassword = "password",
                     Claims = new []
                     {
-                        new ClaimEntity{ Type = "name", Value = "jonathan burrows" }
+                        new ClaimEntity{ Type = JwtClaimTypes.Name, Value = "jonathan burrows" },
+                        new ClaimEntity{ Type = JwtClaimTypes.Email, Value = "testuser@lavalav.com" }
                     }
                 }
             };

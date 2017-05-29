@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
@@ -13,6 +14,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Gets the claim type of the claim.
         /// </summary>
+        [Required]
         public string Type { get; set; }
 
         /// <summary>
@@ -28,6 +30,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Gets the value of the claim.
         /// </summary>
+        [Required]
         public string Value { get; set; }
 
         public Claim ToSecurityClaim()

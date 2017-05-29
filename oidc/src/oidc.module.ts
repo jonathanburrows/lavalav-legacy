@@ -12,6 +12,7 @@ import { oidcRouterModule } from './oidc.router.module';
 import {
     BearerHeadersService,
     OidcOptions,
+    RecoverUsernameService,
     ResourceOwnerSecurityService,
     SecurityService,
     TokenService,
@@ -24,6 +25,7 @@ import {
 @NgModule({
     providers: [
         { provide: HeadersService, useClass: BearerHeadersService },
+        RecoverUsernameService,
         TokenService,
         UserService
     ],
