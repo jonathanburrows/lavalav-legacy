@@ -59,7 +59,7 @@ export class TokenService {
     private tokenHalflifeTimer: any;
 
     constructor(private storageService: StorageService, private ngZone: NgZone) {
-         this.resetCountdowns();
+        this.resetCountdowns();
     }
 
     /**
@@ -102,12 +102,30 @@ export class TokenService {
                 this.tokenHalflifeTimer = window.setTimeout(() => this.tokenHalflife.emit(this.bearerToken), millisecondsUntilHalflife);
             });
 
-            const expiryDate = new Date(claims.auth_time * 1000);
+            const expiryDate = new Date(claims.exp * 1000);
             const millisecondsUntilExpiry = expiryDate.getTime() - new Date().getTime();
             // run outside of angular since it will cause unit tests to deadlock.
             this.ngZone.runOutsideAngular(() => {
                 this.tokenExpiryTimer = window.setTimeout(() => this.tokenExpired.emit(this.bearerToken), millisecondsUntilExpiry);
             });
+        }
+    }
+
+    /**
+     *  Determines if the stored bearer token is expired.
+     *  @returns False if the expiry date has not yet passed, true otherwise.
+     *  @throws Bearer token is null.
+     *  @throws The access token on the bearer is null.
+     */
+    public tokenIsExpired() {
+        if (!this.bearerToken) {
+            throw new Error('No bearer token is stored.');
+        } else if (!this.bearerToken!.access_token) {
+            throw new Error('No access token is defined on the bearer token.');
+        } else {
+            const claims = this.getSubjectOfJwt(this.bearerToken.access_token);
+            const expiryDate = new Date(claims.exp * 1000);
+            return expiryDate < new Date();
         }
     }
 

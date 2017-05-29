@@ -9,6 +9,7 @@
 
 @import 'front-end.variables';
 @import '../components/layout/layout.component.theme';
+@import '../components/search-action/search-action.component.theme';
 @import 'vendor';
 
 @mixin front-end-theme($theme) {
@@ -16,6 +17,7 @@
     @include normalize();
     @include angular-material-theme($theme);
     @include layout-component-theme($theme);
+    @include search-action-component-theme($theme);
 
     $accent: map-get($theme, accent);
     $accent-text: mat-color($accent, 500);

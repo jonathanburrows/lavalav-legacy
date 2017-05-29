@@ -3,7 +3,6 @@
 describe('e2e LayoutComponent', () => {
     let layoutPage: LayoutPage;
 
-
     describe('when in portrait mode', () => {
         beforeEach(() => {
             layoutPage = new LayoutPage();
@@ -202,41 +201,6 @@ describe('e2e LayoutComponent', () => {
             expect(selectedNavigation.getText()).toBe(toolbarTitle.getText());
         });
     });
-
-    describe('search bar', () => {
-        beforeEach(() => {
-            layoutPage = new LayoutPage();
-            layoutPage.setToDesktop();
-            layoutPage.navigateTo();
-            layoutPage.disableAnimations();
-        });
-
-        it('will be hidden when loading page', () => {
-            const searchExpander = layoutPage.getSearchExpander();
-
-            expect(searchExpander.getCssValue('width')).toBe('0px');
-        });
-
-        it('will be shown when the search icon is clicked', () => {
-            const searchIcon = layoutPage.getSearchIcon();
-
-            searchIcon.click();
-
-            const searchExpander = layoutPage.getSearchExpander();
-            expect(searchExpander.getCssValue('width')).not.toBe('0px');
-        });
-
-        it('will hidden when the close search icon is clicked', () => {
-            const searchIcon = layoutPage.getSearchIcon();
-            searchIcon.click();
-            const closeIcon = layoutPage.getCloseSearchIcon();
-            browser.wait(protractor.ExpectedConditions.elementToBeClickable(closeIcon), 401);
-            closeIcon.click();
-
-            const searchExpander = layoutPage.getSearchExpander();
-            expect(searchExpander.getCssValue('width')).toBe('0px');
-        });
-    });
 });
 
 class LayoutPage {
@@ -253,7 +217,7 @@ class LayoutPage {
     }
 
     setToDesktop() {
-        browser.driver.manage().window().setSize(1968, 1024);
+        browser.driver.manage().window().maximize();
     }
 
     navigateTo() {

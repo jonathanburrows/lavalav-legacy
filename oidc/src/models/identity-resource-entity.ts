@@ -21,7 +21,7 @@ export class IdentityResourceEntity extends Entity implements IAggregateRoot {
         this.required = options!.required;
         this.emphasize = options!.emphasize;
         this.showInDiscoveryDocument = options!.showInDiscoveryDocument;
-        this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
+        this.userClaims = options.userClaims ? options.userClaims.map(p => new UserClaim(p)) : []; // tslint:disable-line
     }
 }
 

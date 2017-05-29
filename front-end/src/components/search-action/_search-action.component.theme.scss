@@ -1,0 +1,22 @@
+﻿@import '~@angular/material/theming';
+
+@mixin search-action-component-theme($theme) {
+    .search {
+        $primary: map-get($theme, primary);
+        $contrast-color: mat-color($primary, default-contrast);
+
+        &__placeholder {
+            $color: rgba($contrast-color, 0.38);
+            color: $color;
+        }
+        /* two selectors were used because the ripple is from the framework, and cant have a custom class assigned. */
+        .mat-input-ripple {
+            background-color: $contrast-color;
+        }
+        /* two selectors were used because the underline is from the framework, and cant have a custom class assigned. */
+        .mat-input-underline {
+            $color: rgba($contrast-color, 0.87);
+            border-color: $color;
+        }
+    }
+}

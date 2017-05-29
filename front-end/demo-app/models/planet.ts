@@ -17,7 +17,7 @@ export class Planet extends Entity implements IAggregateRoot {
         this.mass = options!.mass;
         this.astronomicalUnits = options!.astronomicalUnits;
         this.discoveredOn = options!.discoveredOn;
-        this.moons = options!.moons!.map(p => new Moon(p));
+        this.moons = options.moons ? options.moons.map(p => new Moon(p)) : [];
     }
 }
 

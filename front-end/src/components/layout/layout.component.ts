@@ -41,20 +41,6 @@ export class LayoutComponent implements OnInit {
         this.showSideNav = false;
     }
 
-    /**
-     *  Will show the search input in the application bar.
-     */
-    openSearch() {
-        this.showSearch = true;
-    }
-
-    /**
-     *  Will hide the search input in the application bar.
-     */
-    closeSearch() {
-        this.showSearch = false;
-    }
-
     private updateSelectedRoute(route: any) {
         const fullRoute: string = route.urlAfterRedirect || route.url;
         const cleanRoute = fullRoute.startsWith('/') ? fullRoute.substr(1) : fullRoute;

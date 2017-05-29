@@ -44,7 +44,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<AggregateRootFilter>()
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped(typeof(SessionProvider), sessionManager)
-                .AddScoped(_ => configuration.BuildSessionFactory());
+                .AddSingleton(configuration.BuildSessionFactory());
 
             return serviceCollection;
         }

@@ -1,0 +1,29 @@
+﻿@import '~@lvl/front-end/theming';
+
+.menu__icon {
+    width: 24px;
+}
+
+.anonymous-menu {
+    /* Register/sign in buttons are too big to show on smaller screens, so they are hidden in place of a smaller icon. */
+    &--non-mobile {
+        @media #{$portrait-screen} {
+            display: none;
+        }
+
+        @media #{$landscape-screen} {
+            display: none;
+        }
+    }
+
+    &--mobile {
+        @media #{$tablet-screen} {
+            display: none;
+        }
+    }
+
+    &__sign-in-icon {
+        margin-left: 8px;
+        width: 24px;
+    }
+}

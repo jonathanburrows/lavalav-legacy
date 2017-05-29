@@ -1,0 +1,42 @@
+﻿<div *ngIf="securityService.isAuthorized" class="menu">
+    <button md-icon-button [mdMenuTriggerFor]="menu" class="menu__icon">
+        <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu #menu="mdMenu">
+        <button md-menu-item>
+            <md-icon>person_outline</md-icon>
+            <span>Personal Details</span>
+        </button>
+        <button md-menu-item>
+            <md-icon>lock_outline</md-icon>
+            <span>Change Password</span>
+        </button>
+        <button md-menu-item (click)="securityService.logout()" class="menu__sign-out">
+            <md-icon>exit_to_app</md-icon>
+            <span>Sign out</span>
+        </button>
+    </md-menu>
+</div>
+
+<div *ngIf="!securityService.isAuthorized" class="anonymous-menu">
+    <div class="anonymous-menu--non-mobile">
+        <!-- Display the full buttons for signing up/registering when the screen is big enough. -->
+        <button md-button 
+                class="anonymous-menu__sign-in-button"
+                routerLink="oidc/credentials-signin">Sign-in</button>
+
+        <button md-raised-button 
+                color="accent" 
+                class="anonymous-menu__register-button mat-elevation-z0"
+                routerLink="oidc/register-account">Register</button>
+    </div>
+
+    <div class="anonymous-menu--mobile">
+        <!-- Display only an icon for signing in when the screen is too small. -->
+        <a md-icon-button 
+           class="anonymous-menu__sign-in-icon"
+           routerLink="oidc/credentials-signin">
+            <md-icon>exit_to_app</md-icon>
+        </a>
+    </div>
+</div>

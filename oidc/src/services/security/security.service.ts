@@ -17,7 +17,7 @@ import { BearerToken, TokenService } from '../token';
 @Injectable()
 export abstract class SecurityService {
     public get isAuthorized() {
-        return this.tokenService.bearerToken;
+        return this.tokenService.bearerToken && !this.tokenService.tokenIsExpired();
     }
 
     private postLoginRedirectUrlKey = 'oidc:postLoginRedirectUrl';

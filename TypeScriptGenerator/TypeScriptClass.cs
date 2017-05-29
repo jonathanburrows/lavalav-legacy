@@ -76,7 +76,7 @@ namespace lvl.TypescriptGenerator
                     }
                     else if (property.PropertyType.IsCollection)
                     {
-                        return $"this.{name} = options!.{name}!.map(p => new {property.PropertyType.Name}(p));";
+                        return $"this.{name} = options.{name} ? options.{name}.map(p => new {property.PropertyType.Name}(p)) : []; // tslint:disable-line";
                     }
                     else
                     {

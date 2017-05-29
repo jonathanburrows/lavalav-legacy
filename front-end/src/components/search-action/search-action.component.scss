@@ -1,0 +1,74 @@
+﻿@import '../../styles/front-end.variables';
+@import '~@angular/material/theming';
+
+:host {
+    background-color: inherit;
+    height: 100%;
+    line-height: 100%;
+    position: relative;
+    width: 32px;
+}
+
+.search {
+    $close-icon-width: 24px;
+    $search-input-width: 224px;
+
+    background-color: inherit;
+    font-size: 16px;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: transform $swift-ease-in-duration $mat-fast-out-slow-in-timing-function;
+    z-index: 9;
+
+    @media #{$portrait-screen} {
+        line-height: map-get($portrait, toolbar-height);
+        margin-right: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        line-height: map-get($landscape, toolbar-height);
+        margin-right: map-get($landscape, screen-padding);
+    }
+
+    @media #{$tablet-screen} {
+        line-height: map-get($tablet, toolbar-height);
+        margin-right: map-get($tablet, screen-padding);
+    }
+
+    &--expanded {
+        transform: translateX(-$search-input-width);
+    }
+
+    &__icon {
+        cursor: pointer;
+        vertical-align: middle;
+
+        &--close {
+            margin-left: -$close-icon-width;
+            position: relative;
+        }
+    }
+
+    &__expander {
+        display: inline-block;
+        transition: width $swift-ease-in-duration $mat-fast-out-slow-in-timing-function;
+        overflow: hidden;
+        vertical-align: middle;
+        width: 0;
+        /* Maxheight was imposed since it was throwing the vertical align off for heights less than 54px */
+        @media #{$landscape-screen} {
+            max-height: map-get($landscape, toolbar-height);
+        }
+
+        &--expanded {
+            width: $search-input-width;
+        }
+    }
+
+    &__input {
+        padding-right: $close-icon-width;
+        width: $search-input-width;
+    }
+}

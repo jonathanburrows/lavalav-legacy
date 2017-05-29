@@ -19,7 +19,7 @@ export class User extends Entity implements IAggregateRoot {
         this.salt = options!.salt;
         this.providerName = options!.providerName;
         this.providerSubjectId = options!.providerSubjectId;
-        this.claims = options!.claims!.map(p => new ClaimEntity(p));
+        this.claims = options.claims ? options.claims.map(p => new ClaimEntity(p)) : []; // tslint:disable-line
     }
 }
 

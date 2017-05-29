@@ -1,0 +1,13 @@
+﻿<label class="search" [class.search--expanded]="showSearch">
+    <md-icon class="search__icon search__icon--search" (click)="openSearch()">search</md-icon>
+    
+    <!-- A wrapper was added so the slide out can be performed. -->
+    <span class="search__expander" [class.search__expander--expanded]="showSearch">
+        <md-input-container floatPlaceholder="never">
+            <!-- md-placeholder was used so that a custom color can be applied (needs to be constrasted against the toolbar color) -->
+            <md-placeholder class="search__placeholder">Search</md-placeholder>
+            <input mdInput type="search" class="search__input" />
+        </md-input-container>
+        <md-icon class="search__icon search__icon--close" (click)="closeSearch()">close</md-icon>
+    </span>
+</label>

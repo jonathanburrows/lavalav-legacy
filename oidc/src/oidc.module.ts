@@ -2,6 +2,7 @@
 
 import { FrontEndModule, HeadersService } from '@lvl/front-end';
 import {
+    AccountMenuComponent,
     CredentialsSigninComponent,
     RecoverUsernameComponent,
     RegisterAccountComponent,
@@ -27,12 +28,14 @@ import {
         UserService
     ],
     declarations: [
+        AccountMenuComponent,
         CredentialsSigninComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         ResetPasswordComponent
     ],
     exports: [
+        AccountMenuComponent,
         CredentialsSigninComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,

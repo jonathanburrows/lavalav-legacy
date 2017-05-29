@@ -6,7 +6,10 @@ import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { LayoutComponent } from './components';
+import {
+    LayoutComponent,
+    SearchActionComponent
+} from './components';
 
 import {
     ApiService,
@@ -19,11 +22,16 @@ import {
 
 @NgModule({
     declarations: [
-        LayoutComponent
+        LayoutComponent,
+        SearchActionComponent
     ],
     exports: [
-        ReactiveFormsModule,
         LayoutComponent,
+        SearchActionComponent,
+
+        // vendor modules
+        CommonModule,
+        ReactiveFormsModule,
         MaterialModule
     ],
     providers: [

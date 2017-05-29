@@ -5,8 +5,8 @@ Create a page structure which is compliant with material design, so applications
 
 
 
-### Examples
-```<layout siteTitle="my-site"></layout>```
+### Simple Example
+```<lvl-layout siteTitle="my-site"></lvl-layout>```
 
 
 
@@ -17,6 +17,17 @@ Create a page structure which is compliant with material design, so applications
 | Name | Type | Description |
 | :--- | :--- | :--- |
 | siteTitle (optional) | string | The name which will appear on the toolbar |
+
+
+
+### Toolbar Actions
+To have buttons show up on the right side of the application toolbar, they must have a [lvl-toolbar-action] attribute:
+```html
+	<lvl-layout siteTitle="my-site">
+		<lvl-search-action lvl-toolbar-action></lvl-search-action>
+		<div lvl-toolbar-action>my special action</div>
+	</lvl-layout>
+```
 
 
 

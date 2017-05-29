@@ -17,24 +17,4 @@
             }
         }
     }
-
-    .toolbar__search {
-        $contrast-color: mat-color($primary, default-contrast);
-
-        background-color: mat-color($primary, 500);
-
-        &__placeholder {
-            $color: rgba($contrast-color, 0.38);
-            color: $color;
-        }
-        /* two selectors were used because the ripple is from the framework, and cant have a custom class assigned. */
-        .mat-input-ripple {
-            background-color: $contrast-color;
-        }
-        /* two selectors were used because the underline is from the framework, and cant have a custom class assigned. */
-        .mat-input-underline {
-            $color: rgba($contrast-color, 0.87);
-            border-color: $color;
-        }
-    }
 }

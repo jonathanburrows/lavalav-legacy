@@ -20,7 +20,7 @@ export class ResourceOwnerSecurityService extends SecurityService {
      */
     public redirectToLogin() {
         this.postLoginRedirectUrl = this.router.routerState.snapshot.url;
-        this.router.navigate(['/account/login']);
+        this.router.navigate(['/oidc/credentials-signin']);
     }
 
     /**
@@ -52,7 +52,7 @@ export class ResourceOwnerSecurityService extends SecurityService {
      */
     public logout() {
         this.tokenService.bearerToken = null;
-        this.router.navigate(['/']);
+        this.router.navigate(['/oidc/credentials-signin']);
     }
 
     /**

@@ -53,23 +53,23 @@ export class ClientEntity extends Entity implements IAggregateRoot {
         this.enabled = options!.enabled;
         this.clientId = options!.clientId;
         this.protocolType = options!.protocolType;
-        this.clientSecrets = options!.clientSecrets!.map(p => new SecretEntity(p));
+        this.clientSecrets = options.clientSecrets ? options.clientSecrets.map(p => new SecretEntity(p)) : []; // tslint:disable-line
         this.requireClientSecret = options!.requireClientSecret;
         this.clientName = options!.clientName;
         this.clientUri = options!.clientUri;
         this.logoUri = options!.logoUri;
         this.requireConsent = options!.requireConsent;
         this.allowRememberConsent = options!.allowRememberConsent;
-        this.allowedGrantTypes = options!.allowedGrantTypes!.map(p => new GrantTypeEntity(p));
+        this.allowedGrantTypes = options.allowedGrantTypes ? options.allowedGrantTypes.map(p => new GrantTypeEntity(p)) : []; // tslint:disable-line
         this.requirePkce = options!.requirePkce;
         this.allowPlainTextPkce = options!.allowPlainTextPkce;
         this.allowAccessTokensViaBrowser = options!.allowAccessTokensViaBrowser;
-        this.redirectUris = options!.redirectUris!.map(p => new RedirectUri(p));
-        this.postLogoutRedirectUris = options!.postLogoutRedirectUris!.map(p => new PostLogoutRedirectUri(p));
+        this.redirectUris = options.redirectUris ? options.redirectUris.map(p => new RedirectUri(p)) : []; // tslint:disable-line
+        this.postLogoutRedirectUris = options.postLogoutRedirectUris ? options.postLogoutRedirectUris.map(p => new PostLogoutRedirectUri(p)) : []; // tslint:disable-line
         this.logoutUri = options!.logoutUri;
         this.logoutSessionRequired = options!.logoutSessionRequired;
         this.allowOfflineAccess = options!.allowOfflineAccess;
-        this.allowedScopes = options!.allowedScopes!.map(p => new AllowedScope(p));
+        this.allowedScopes = options.allowedScopes ? options.allowedScopes.map(p => new AllowedScope(p)) : []; // tslint:disable-line
         this.alwaysIncludeUserClaimsInIdToken = options!.alwaysIncludeUserClaimsInIdToken;
         this.identityTokenLifetime = options!.identityTokenLifetime;
         this.accessTokenLifetime = options!.accessTokenLifetime;
@@ -81,12 +81,12 @@ export class ClientEntity extends Entity implements IAggregateRoot {
         this.refreshTokenExpiration = options!.refreshTokenExpiration;
         this.accessTokenType = options!.accessTokenType;
         this.enableLocalLogin = options!.enableLocalLogin;
-        this.identityProviderRestrictions = options!.identityProviderRestrictions!.map(p => new IdentityProviderRestriction(p));
+        this.identityProviderRestrictions = options.identityProviderRestrictions ? options.identityProviderRestrictions.map(p => new IdentityProviderRestriction(p)) : []; // tslint:disable-line
         this.includeJwtId = options!.includeJwtId;
-        this.claims = options!.claims!.map(p => new ClaimEntity(p));
+        this.claims = options.claims ? options.claims.map(p => new ClaimEntity(p)) : []; // tslint:disable-line
         this.alwaysSendClientClaims = options!.alwaysSendClientClaims;
         this.prefixClientClaims = options!.prefixClientClaims;
-        this.allowedCorsOrigins = options!.allowedCorsOrigins!.map(p => new CorsOrigin(p));
+        this.allowedCorsOrigins = options.allowedCorsOrigins ? options.allowedCorsOrigins.map(p => new CorsOrigin(p)) : []; // tslint:disable-line
     }
 }
 

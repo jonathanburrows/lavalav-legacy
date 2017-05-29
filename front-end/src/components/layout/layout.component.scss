@@ -186,6 +186,11 @@
     display: none !important;
 }
 
+/* Cascade color to angular material framework. */
+/deep/ .mat-toolbar-layout{
+    background-color: inherit;
+}
+
 .toolbar {
     cursor: default;
     position: fixed;
@@ -225,6 +230,7 @@
     }
 
     &__row {
+        background-color: inherit;
         font-weight: normal;
 
         @media #{$portrait-screen} {
@@ -273,64 +279,6 @@
         flex: 1 1 auto;
     }
 
-    &__search {
-        $close-icon-width: 24px;
-        $search-input-width: 240px;
-
-        height: 100%;
-        position: absolute;
-        right: -4px;
-        top: 0;
-        z-index: 9;
-
-        @media #{$portrait-screen} {
-            line-height: map-get($portrait, toolbar-height);
-            margin-right: map-get($portrait, screen-padding);
-        }
-
-        @media #{$landscape-screen} {
-            line-height: map-get($landscape, toolbar-height);
-            margin-right: map-get($landscape, screen-padding);
-        }
-
-        @media #{$tablet-screen} {
-            line-height: map-get($tablet, toolbar-height);
-            margin-right: map-get($tablet, screen-padding);
-        }
-
-        font-size: 16px;
-
-        &__icon {
-            cursor: pointer;
-            vertical-align: middle;
-
-            &--close {
-                margin-left: -$close-icon-width;
-                position: relative;
-            }
-        }
-
-        &__expander {
-            display: inline-block;
-            transition: width $swift-ease-in-duration $mat-fast-out-slow-in-timing-function;
-            overflow: hidden;
-            vertical-align: middle;
-            width: 0;
-            /* Maxheight was imposed since it was throwing the vertical align off for heights less than 54px */
-            @media #{$landscape-screen} {
-                max-height: map-get($landscape, toolbar-height);
-            }
-
-            &--expanded {
-                width: $search-input-width;
-            }
-        }
-
-        &__input {
-            padding-right: $close-icon-width;
-            width: $search-input-width;
-        }
-    }
 }
 
 .screen {

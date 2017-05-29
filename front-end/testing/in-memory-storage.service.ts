@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 
-import { StorageService } from '../src';
+import { StorageService } from '../src/services/storage/storage.service';
 
 /**
  *  Provides a way for testing to clear itself between iterations.

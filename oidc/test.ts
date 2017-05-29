@@ -13,7 +13,7 @@ import {
     platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
-import { TestFixtures } from '@lvl/front-end';
+import { TestFixtures } from '@lvl/front-end/testing';
 import { DemoAppModule } from './demo-app/demo-app.module';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.

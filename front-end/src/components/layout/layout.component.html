@@ -34,18 +34,7 @@
 
         <span class="toolbar__filler"></span>
 
-        <label class="toolbar__search">
-            <md-icon class="toolbar__search__icon" (click)="openSearch()">search</md-icon>
-
-            <span class="toolbar__search__expander" [class.toolbar__search__expander--expanded]="showSearch">
-                <md-input-container floatPlaceholder="never">
-                    <!-- md-placeholder was used so that a custom color can be applied (needs to be constrasted against the toolbar color) -->
-                    <md-placeholder class="toolbar__search__placeholder">Search</md-placeholder>
-                    <input mdInput type="search" class="toolbar__search__input" />
-                </md-input-container>
-                <md-icon class="toolbar__search__icon toolbar__search__icon--close" (click)="closeSearch()">close</md-icon>
-            </span>
-        </label>
+        <ng-content select="[lvl-toolbar-action]"></ng-content>
     </md-toolbar-row>
 </md-toolbar>
 

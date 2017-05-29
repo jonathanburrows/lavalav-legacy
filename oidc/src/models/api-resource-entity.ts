@@ -19,9 +19,9 @@ export class ApiResourceEntity extends Entity implements IAggregateRoot {
         this.enabled = options!.enabled;
         this.displayName = options!.displayName;
         this.description = options!.description;
-        this.userClaims = options!.userClaims!.map(p => new UserClaim(p));
-        this.apiSecrets = options!.apiSecrets!.map(p => new SecretEntity(p));
-        this.scopes = options!.scopes!.map(p => new ScopeEntity(p));
+        this.userClaims = options.userClaims ? options.userClaims.map(p => new UserClaim(p)) : []; // tslint:disable-line
+        this.apiSecrets = options.apiSecrets ? options.apiSecrets.map(p => new SecretEntity(p)) : []; // tslint:disable-line
+        this.scopes = options.scopes ? options.scopes.map(p => new ScopeEntity(p)) : []; // tslint:disable-line
     }
 }
 
