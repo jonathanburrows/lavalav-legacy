@@ -1,4 +1,4 @@
-﻿# Credentials Sign In Component
+﻿# Resource Owner Sign In Component
 
 ## Goals
 Provide a way for users to sign in using the resource owner flow, so they can have increased UX when dealing with trusted apps.
@@ -7,13 +7,13 @@ Provide a way for users to sign in using the resource owner flow, so they can ha
 
 ## Syntax
 ```html
-<lvl-oidc-credentials-login></lvl-oidc-credentials-login>
+<lvl-oidc-resource-owner-sign-in></lvl-oidc-resource-owner-sign-in>
 ```
 
 
 
 ## Requirements
-The is expected that the credentials sign in component:
+The is expected that the resource owner sign in component:
 
 Has a username input, that:
 1. Is required
@@ -50,4 +50,4 @@ It will display validation messages when the sign-in button is pressed with bad 
 
 
 ## Remarks
-By default, the route /oidc/credentials-login maps to this component.
+By default, the route /oidc/sign-in maps to this component.

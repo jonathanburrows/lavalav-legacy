@@ -75,7 +75,7 @@ describe('e2e AccountMenuComponent', () => {
 
             signOutButton.click();
 
-            expect(browser.getCurrentUrl()).toContain('oidc/credentials-signin');
+            expect(browser.getCurrentUrl()).toContain('oidc/sign-in');
         });
 
         it('will redirect the user to the signin page once the signout button is pressed', () => {
@@ -107,7 +107,7 @@ class SplashPage {
     }
 
     signIn() {
-        browser.get('/oidc/credentials-signin');
+        browser.get('/oidc/sign-in');
         const username = this.getInput('username');
         username.sendKeys('testuser');
         const password = this.getInput('password');

@@ -23,7 +23,7 @@
         <!-- Display the full buttons for signing up/registering when the screen is big enough. -->
         <button md-button 
                 class="anonymous-menu__sign-in-button"
-                routerLink="oidc/credentials-signin">Sign-in</button>
+                (click)="securityService.redirectToLogin()">Sign-in</button>
 
         <button md-raised-button 
                 color="accent" 
@@ -35,7 +35,7 @@
         <!-- Display only an icon for signing in when the screen is too small. -->
         <a md-icon-button 
            class="anonymous-menu__sign-in-icon"
-           routerLink="oidc/credentials-signin">
+           (click)="securityService.redirectToLogin()">
             <md-icon>exit_to_app</md-icon>
         </a>
     </div>

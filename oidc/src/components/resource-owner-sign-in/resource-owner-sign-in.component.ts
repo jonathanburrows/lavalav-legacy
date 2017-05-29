@@ -5,11 +5,11 @@ import { SecurityService } from '../../services';
 import { Credentials } from '../../services';
 
 @Component({
-    selector: 'lvl-oidc-credentials-signin',
-    templateUrl: 'credentials-signin.component.html',
-    styleUrls: ['credentials-signin.component.scss']
+    selector: 'lvl-oidc-resource-owner-sign-in',
+    templateUrl: 'resource-owner-sign-in.component.html',
+    styleUrls: ['resource-owner-sign-in.component.scss']
 })
-export class CredentialsSigninComponent implements OnInit {
+export class ResourceOwnerSigninComponent implements OnInit {
     form: ValidatableForm;
     model: Credentials;
 

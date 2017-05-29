@@ -3,10 +3,10 @@
 import { FrontEndModule, HeadersService } from '@lvl/front-end';
 import {
     AccountMenuComponent,
-    CredentialsSigninComponent,
     RecoverUsernameComponent,
     RegisterAccountComponent,
-    ResetPasswordComponent
+    RequestResetPasswordComponent,
+    ResourceOwnerSigninComponent
  } from './components';
 import { oidcRouterModule } from './oidc.router.module';
 import {
@@ -31,17 +31,17 @@ import {
     ],
     declarations: [
         AccountMenuComponent,
-        CredentialsSigninComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,
-        ResetPasswordComponent
+        RequestResetPasswordComponent,
+        ResourceOwnerSigninComponent
     ],
     exports: [
         AccountMenuComponent,
-        CredentialsSigninComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,
-        ResetPasswordComponent
+        RequestResetPasswordComponent,
+        ResourceOwnerSigninComponent
     ],
     imports: [
         FrontEndModule,

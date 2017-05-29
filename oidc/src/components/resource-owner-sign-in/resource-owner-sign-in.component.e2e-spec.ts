@@ -1,6 +1,6 @@
 ﻿import { browser, by, element, protractor } from 'protractor';
 
-describe('e2e CredentialsSignInComponent', () => {
+describe('e2e ResourceOwnerSignIn', () => {
     let signinPage: CredentialsSigninPage;
 
     const portaitSize = { width: 320, height: 568 };
@@ -16,14 +16,6 @@ describe('e2e CredentialsSignInComponent', () => {
         });
 
         multiDeviceBehaviour();
-
-        it('will not sit upon a card', () => {
-            // it is on a card, but it shouldnt have a shadow.
-            const form = signinPage.getElement('lvl-oidc-credentials-signin .card');
-
-            const shadow = form.getCssValue('box-shadow');
-            expect(shadow).toBe('none');
-        });
     });
 
     describe('on landscape devices', () => {
@@ -35,13 +27,6 @@ describe('e2e CredentialsSignInComponent', () => {
         });
 
         multiDeviceBehaviour();
-
-        it('will sit upon a card', () => {
-            const form = signinPage.getElement('lvl-oidc-credentials-signin .card');
-
-            const shadow = form.getCssValue('box-shadow');
-            expect(shadow).not.toBe('none');
-        });
     });
 
     describe('on tablet+ devices', () => {
@@ -53,13 +38,6 @@ describe('e2e CredentialsSignInComponent', () => {
         });
 
         multiDeviceBehaviour();
-
-        it('will sit upon a card', () => {
-            const form = signinPage.getElement('lvl-oidc-credentials-signin .card');
-
-            const shadow = form.getCssValue('box-shadow');
-            expect(shadow).not.toBe('none');
-        });
     });
 
     function multiDeviceBehaviour() {
@@ -160,7 +138,7 @@ describe('e2e CredentialsSignInComponent', () => {
 
             signIn.click();
 
-            expect(browser.getCurrentUrl()).not.toContain('oidc/credentials-signin');
+            expect(browser.getCurrentUrl()).not.toContain('oidc/sign-in');
         });
 
         it('will redirect the user to the recover username page if they hit the forgot username link', () => {
@@ -176,7 +154,7 @@ describe('e2e CredentialsSignInComponent', () => {
 
             recoverUsername.click();
 
-            expect(browser.getCurrentUrl()).toContain('oidc/reset-password');
+            expect(browser.getCurrentUrl()).toContain('oidc/request-reset-password');
         });
 
         it('will redirect the user to the register account page if they hit the register button', () => {
@@ -191,7 +169,7 @@ describe('e2e CredentialsSignInComponent', () => {
 
 class CredentialsSigninPage {
     navigateTo() {
-        return browser.get('/oidc/credentials-signin');
+        return browser.get('/oidc/sign-in');
     }
 
     setSize(size: { width: number, height: number }) {

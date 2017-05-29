@@ -1,5 +1,5 @@
 ﻿export * from './account-menu';
-export * from './credentials-signin';
 export * from './recover-username';
 export * from './register-account';
-export * from './reset-password';
+export * from './request-reset-password';
+export * from './resource-owner-sign-in';
