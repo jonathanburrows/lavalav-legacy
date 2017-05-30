@@ -6,7 +6,8 @@ import {
     RecoverUsernameComponent,
     RegisterAccountComponent,
     RequestResetPasswordComponent,
-    ResourceOwnerSigninComponent
+    ResourceOwnerSigninComponent,
+    SingleSignoutComponent
  } from './components';
 import { oidcRouterModule } from './oidc.router.module';
 import {
@@ -36,14 +37,16 @@ import {
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,
-        ResourceOwnerSigninComponent
+        ResourceOwnerSigninComponent,
+        SingleSignoutComponent
     ],
     exports: [
         AccountMenuComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,
-        ResourceOwnerSigninComponent
+        ResourceOwnerSigninComponent,
+        SingleSignoutComponent
     ],
     imports: [
         FrontEndModule,

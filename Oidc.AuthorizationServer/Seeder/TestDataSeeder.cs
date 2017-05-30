@@ -127,7 +127,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                         new CorsOrigin { Name = "http://localhost:5006" },
                         new CorsOrigin { Name = "http://localhost:5007" }
                     },
-                    LogoutUri = "http://localhost:5005",
+                    LogoutUri = "http://localhost:5005/oidc/single-signout",
                     AllowedScopes = new []
                     {
                         new AllowedScope { Name = "test-resource-server" },
