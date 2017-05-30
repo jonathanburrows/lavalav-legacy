@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +12,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     Models access to an API resource
     /// </summary>
     [Table(nameof(Scope), Schema = "oidc")]
+    [HiddenFromApi]
     public class ScopeEntity : Entity, IAggregateScope<ApiResourceEntity>
     {
         /// <summary>

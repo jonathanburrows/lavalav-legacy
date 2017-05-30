@@ -6,23 +6,23 @@ import { HeadersService } from '@lvl/front-end';
 import { OidcOptions } from '../oidc-options';
 
 /**
- *  Contacts the server's Recover Username service.
+ *  Contacts the server's ResetPassword service.
  */
 @Injectable()
-export class RecoverUsernameService {
+export class ResetPasswordService {
     constructor(private oidcOptions: OidcOptions, private http: Http, private headersService: HeadersService) { }
 
     /**
-     *  Sends an email with the associated username.
-     *  @param email The email of the user who will be contacted.
-     *  @throws {Error} email is null.
+     *  Sends an email to the user with a link to reset the password.
+     *  @param username the name of the user having the email sent.
+     *  @throws {Error} username is null.
      */
-    recoverUsername(email: string): Observable<Response> {
-        if (!email) {
-            throw new Error('email is null');
+    requestReset(username: string): Observable<Response> {
+        if (!username) {
+            throw new Error('username is null.');
         }
 
-        const url = `${this.oidcOptions.authorizationServerUrl}/oidc/recover-username/${email}`;
+        const url = `${this.oidcOptions.authorizationServerUrl}/oidc/reset-password/request/${username}`;
         const headers = this.headersService.getHeaders();
 
         return this.http.get(url, { headers: headers });

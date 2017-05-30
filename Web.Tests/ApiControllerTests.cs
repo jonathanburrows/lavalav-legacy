@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using lvl.TestWebSite.Fixtures;
 using Xunit;
+using lvl.Web.Authorization;
 
 namespace lvl.Web.Tests
 {
@@ -332,6 +333,76 @@ namespace lvl.Web.Tests
             };
 
             var deleteResult = await Client.SendAsync(deletingMessage);
+            Assert.False(deleteResult.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task It_will_throw_an_error_when_getting_single_entity_with_hide_from_api_attribute()
+        {
+            var repository = Services.GetRequiredService<IRepository<NasaApplication>>();
+            var hiddenEntity = await repository.CreateAsync(new NasaApplication());
+            var url = $"{Client.BaseAddress}api/{nameof(NasaApplication)}/{hiddenEntity.Id}";
+
+            var getResult = await Client.GetAsync(url);
+
+            Assert.False(getResult.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task It_will_throw_an_error_when_getting_multiple_entities_with_hide_from_api_attribute()
+        {
+            var url = $"{Client.BaseAddress}api/{nameof(NasaApplication)}";
+
+            var getResult = await Client.GetAsync(url);
+
+            Assert.False(getResult.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task It_will_throw_an_error_when_creating_entity_with_hide_from_api_attribute()
+        {
+            var postUrl = $"/api/{nameof(NasaApplication)}";
+            var posting = new NasaApplication();
+            var postingSerialized = JsonConvert.SerializeObject(posting);
+            var postingContent = new StringContent(postingSerialized);
+
+            var postResult = await Client.PostAsync(postUrl, postingContent);
+
+            Assert.False(postResult.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task It_will_throw_an_error_when_updating_entity_with_hide_from_api_attribute()
+        {
+            var repository = Services.GetRequiredService<IRepository<NasaApplication>>();
+            var putting = await repository.CreateAsync(new NasaApplication());
+            var putUrl = $"/api/{nameof(NasaApplication)}";
+            var puttingSerialized = JsonConvert.SerializeObject(putting);
+            var postingContent = new StringContent(puttingSerialized);
+
+            var postResult = await Client.PutAsync(putUrl, postingContent);
+
+            Assert.False(postResult.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task It_will_throw_an_error_when_deleting_entity_with_hide_from_api_attribute()
+        {
+            var repository = Services.GetRequiredService<IRepository<NasaApplication>>();
+            var deleting = await repository.CreateAsync(new NasaApplication());
+            var deleteUri = new Uri($"{Client.BaseAddress}api/{nameof(NasaApplication)}");
+            var deletingSerialized = JsonConvert.SerializeObject(deleting);
+            var deletingContent = new StringContent(deletingSerialized);
+            var deletingMessage = new HttpRequestMessage
+            {
+                RequestUri = deleteUri,
+                Method = HttpMethod.Delete,
+                Content = deletingContent
+            };
+
+            var deleteResult = await Client.SendAsync(deletingMessage);
+            var deleteSerialized = await deleteResult.Content.ReadAsStringAsync();
+
             Assert.False(deleteResult.IsSuccessStatusCode);
         }
 

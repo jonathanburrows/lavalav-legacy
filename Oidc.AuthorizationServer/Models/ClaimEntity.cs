@@ -1,4 +1,5 @@
 ﻿using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     Allows a claim to be stored in the database.
     /// </summary>
     [Table(nameof(Claim), Schema = "oidc")]
+    [HiddenFromApi]
     public class ClaimEntity : Entity, IAggregateRoot
     {
         /// <summary>

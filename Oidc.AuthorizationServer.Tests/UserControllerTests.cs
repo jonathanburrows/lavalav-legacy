@@ -3,6 +3,7 @@ using lvl.Oidc.AuthorizationServer.Stores;
 using lvl.Oidc.AuthorizationServer.Tests.Fixtures;
 using lvl.Repositories;
 using lvl.TestWebSite.Fixtures;
+using lvl.Web.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -22,8 +23,10 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         public UserControllerTests(WebHostFixture<Startup> webHostFixture)
         {
             var serviceProvider = webHostFixture.Services;
+
             UserRepository = serviceProvider.GetRequiredService<IRepository<User>>();
             UserStore = serviceProvider.GetRequiredService<UserStore>();
+
             Client = webHostFixture.Client;
         }
 

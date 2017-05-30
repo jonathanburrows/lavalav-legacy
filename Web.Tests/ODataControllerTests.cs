@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using lvl.TestWebSite.Fixtures;
 using Xunit;
+using lvl.Web.Authorization;
 
 namespace lvl.Web.Tests
 {
@@ -250,6 +251,16 @@ namespace lvl.Web.Tests
             var getUrl = $"/odata/{nameof(Moon)}?$skip=this&$orderby=invalid&$top=that&$select=hello";
 
             var getResult = await Client.GetAsync(getUrl);
+
+            Assert.False(getResult.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task It_will_throw_an_error_when_getting_entities_with_hide_from_api_attribute()
+        {
+            var url = $"/odata/{nameof(NasaApplication)}";
+
+            var getResult = await Client.GetAsync(url);
 
             Assert.False(getResult.IsSuccessStatusCode);
         }

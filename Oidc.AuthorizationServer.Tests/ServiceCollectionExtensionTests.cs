@@ -92,5 +92,13 @@ namespace lvl.Oidc.AuthorizationServer.Tests
 
             Assert.NotNull(options);
         }
+
+        [Fact]
+        public void It_will_allow_password_resetter_to_be_resolved()
+        {
+            var passwordResetter = ServiceProvider.GetRequiredService<PasswordResetter>();
+
+            Assert.NotNull(passwordResetter);
+        }
     }
 }

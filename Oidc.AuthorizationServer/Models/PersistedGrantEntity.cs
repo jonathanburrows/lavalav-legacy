@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using lvl.Ontology.Conventions;
+using lvl.Ontology.Authorization;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
@@ -11,6 +12,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     A model for a persisted grant
     /// </summary>
     [Table(nameof(PersistedGrant), Schema = "oidc")]
+    [HiddenFromApi]
     public class PersistedGrantEntity : Entity, IAggregateRoot
     {
         /// <summary>

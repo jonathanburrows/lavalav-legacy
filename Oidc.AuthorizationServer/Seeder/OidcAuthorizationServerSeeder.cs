@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using lvl.Web.Authorization;
 
 namespace lvl.Oidc.AuthorizationServer.Seeder
 {
@@ -15,12 +16,14 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
         private ManditoryDataSeeder ManditoryDataSeeder { get; }
         private TestDataSeeder TestDataSeeder { get; }
         private OidcAuthorizationServerOptions Options { get; }
+        private Impersonator Impersonator { get; }
 
-        public OidcAuthorizationServerSeeder(ManditoryDataSeeder manditoryDataSeeder, TestDataSeeder testDataSeeder, OidcAuthorizationServerOptions options)
+        public OidcAuthorizationServerSeeder(ManditoryDataSeeder manditoryDataSeeder, TestDataSeeder testDataSeeder, OidcAuthorizationServerOptions options, Impersonator impersonator)
         {
             ManditoryDataSeeder = manditoryDataSeeder ?? throw new ArgumentNullException(nameof(manditoryDataSeeder));
             TestDataSeeder = testDataSeeder ?? throw new ArgumentNullException(nameof(testDataSeeder));
             Options = options ?? throw new ArgumentNullException(nameof(options));
+            Impersonator = impersonator ?? throw new ArgumentNullException(nameof(impersonator));
         }
 
         /// <summary>
@@ -30,6 +33,8 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
         /// <remarks>Will populate only test data only if the configuration SeedTestData is set.</remarks>
         public async Task SeedAsync()
         {
+            Impersonator.AsAdministrator();
+
             if (Options.SeedManditoryData)
             {
                 await ManditoryDataSeeder.SeedAsync();

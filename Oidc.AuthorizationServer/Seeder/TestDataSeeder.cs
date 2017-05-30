@@ -47,6 +47,16 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                         new ClaimEntity{ Type = JwtClaimTypes.Name, Value = "jonathan burrows" },
                         new ClaimEntity{ Type = JwtClaimTypes.Email, Value = "testuser@lavalav.com" }
                     }
+                },
+                new User
+                {
+                    SubjectId = "emailless-user",
+                    Username = "emailless-user",
+                    HashedPassword = "password",
+                    Claims = new []
+                    {
+                        new ClaimEntity{ Type = JwtClaimTypes.Name, Value = "jonathan burrows" }
+                    }
                 }
             };
 

@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     Models a user identity resource.
     /// </summary>
     [Table(nameof(IdentityResource), Schema = "oidc")]
+    [HiddenFromApi]
     public class IdentityResourceEntity : Entity, IAggregateRoot
     {
         /// <summary>

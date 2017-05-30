@@ -42,37 +42,8 @@ export class RegisterAccountComponent implements OnInit {
 
             const createRequest = this.userService.create(username, password).subscribe(
                 () => this.securityService.login({ username: username, password: password }),
-                this.setValidationErrors.bind(this)
+                this.form.setModelErrors.bind(this.form)
             );
         }
-    }
-
-    private setValidationErrors(errorResponse: any) {
-        if (errorResponse.status !== 400) {
-            return;
-        }
-
-        if (!errorResponse._body) {
-            return;
-        }
-
-        const errorDetails: { [inputName: string]: string[] } = JSON.parse(errorResponse._body);
-        Object.keys(errorDetails).forEach(inputName => {
-            const errors = errorDetails[inputName];
-
-            if (errors.length) {
-                const errorMessage = errors.join(', ');
-                this.setInputError(inputName, errorMessage);
-            }
-        });
-    }
-
-    private setInputError(inputName: string, errorMessage: string) {
-        this.form.modelErrors[inputName] = errorMessage;
-
-        const input = this.form.get(inputName);
-        input.setErrors({ 'server-validation': errorMessage });
-        input.markAsDirty();
-        input.markAsTouched();
     }
 }

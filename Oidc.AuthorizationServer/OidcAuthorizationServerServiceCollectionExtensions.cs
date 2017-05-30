@@ -50,6 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<OidcAuthorizationServerSeeder>()
                 .AddScoped<UserStore>()
                 .AddScoped<UsernameRecoverer>()
+                .AddScoped<PasswordResetter>()
                 .AddScoped<IPersistedGrantStore, PersistedGrantStore>()
                 .AddSingleton(options ?? new OidcAuthorizationServerOptions());
 

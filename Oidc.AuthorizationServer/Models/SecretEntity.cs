@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using static IdentityServer4.IdentityServerConstants;
@@ -10,6 +11,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     Models a client secret with identifier and expiration
     /// </summary>
     [Table(nameof(Secret), Schema = "oidc")]
+    [HiddenFromApi]
     public class SecretEntity : Entity, IAggregateRoot
     {
         /// <summary>

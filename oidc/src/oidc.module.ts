@@ -13,6 +13,7 @@ import {
     BearerHeadersService,
     OidcOptions,
     RecoverUsernameService,
+    ResetPasswordService,
     ResourceOwnerSecurityService,
     SecurityService,
     TokenService,
@@ -26,6 +27,7 @@ import {
     providers: [
         { provide: HeadersService, useClass: BearerHeadersService },
         RecoverUsernameService,
+        ResetPasswordService,
         TokenService,
         UserService
     ],

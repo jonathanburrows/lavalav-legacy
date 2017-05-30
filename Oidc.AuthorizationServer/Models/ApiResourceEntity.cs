@@ -6,10 +6,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using lvl.Ontology.Conventions;
+using lvl.Ontology.Authorization;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
     [Table(nameof(ApiResource), Schema = "oidc")]
+    [HiddenFromApi]
     public class ApiResourceEntity : Entity, IAggregateRoot
     {
         /// <summary>

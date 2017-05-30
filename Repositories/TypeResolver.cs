@@ -1,7 +1,9 @@
 ﻿using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using NHibernate.Cfg;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace lvl.Repositories
 {
@@ -30,6 +32,7 @@ namespace lvl.Repositories
         /// <exception cref="InvalidOperationException">No class with that name was mapped</exception>
         /// <exception cref="InvalidOperationException">More than one class with that name was mapped</exception>
         /// <exception cref="InvalidOperationException">Entity type does not implement IAggregateRoot</exception>
+        /// <exception cref="InvalidOperationException">Entity type is decorated with HiddenFromApiAttribute.</exception>
         /// <remarks>
         ///     Name comparisons are case insensitive.
         ///     Fully qualified names take presidence over class names
@@ -65,6 +68,10 @@ namespace lvl.Repositories
             else if (!typeof(IAggregateRoot).IsAssignableFrom(matchingClasses.Single()))
             {
                 throw new InvalidOperationException($"{entityType} does not implement {nameof(IAggregateRoot)}");
+            }
+            else if (matchingClasses.Single().GetCustomAttribute<HiddenFromApiAttribute>() != null)
+            {
+                throw new InvalidOperationException($"{entityType} cannot be accessed through the api.");
             }
             else
             {

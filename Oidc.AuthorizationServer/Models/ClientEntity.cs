@@ -1,6 +1,7 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
 using lvl.Ontology;
+using lvl.Ontology.Authorization;
 using lvl.Ontology.Conventions;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
     ///     Models an OpenID Connect or OAuth2 client
     /// </summary>
     [Table(nameof(Client), Schema = "oidc")]
+    [HiddenFromApi]
     public class ClientEntity : Entity, IAggregateRoot
     {
         /// <summary>
