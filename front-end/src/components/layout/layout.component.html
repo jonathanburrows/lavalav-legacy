@@ -30,9 +30,9 @@
     <md-toolbar-row class="toolbar__row">
         <md-icon class="toolbar__menu-icon" (click)="openSideNav()">menu</md-icon>
 
-        <span class="toolbar__title">{{selectedRoute?.data?.title}}</span>
+        <header class="toolbar__title">{{selectedRoute?.data?.title}}</header>
 
-        <span class="toolbar__filler"></span>
+        <div class="toolbar__filler"></div>
 
         <ng-content select="[lvl-toolbar-action]"></ng-content>
     </md-toolbar-row>

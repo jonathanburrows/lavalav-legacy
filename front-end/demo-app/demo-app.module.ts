@@ -5,8 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { environment } from './environments';
 import { FrontEndModule } from '../src';
 import {
-    RootDemoComponent,
+    ContentDemoComponent,
     LayoutDemoComponent,
+    RootDemoComponent,
     ValidatorsDemoComponent
 } from './components';
 
@@ -18,6 +19,7 @@ const frontEndGroup = 'Front End';
 /* tslint:disable:max-line-length */
 @NgModule({
     declarations: [
+        ContentDemoComponent,
         RootDemoComponent,
         LayoutDemoComponent,
         ValidatorsDemoComponent
@@ -26,9 +28,10 @@ const frontEndGroup = 'Front End';
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-validators' },
+            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-content' },
             { path: 'component/lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
-            { path: 'component/lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } }
+            { path: 'component/lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } },
+            { path: 'component/lvl-content', component: ContentDemoComponent, data: { title: 'Content', icon: 'content_copy', showInNavigation: true, group: frontEndGroup } }
         ]),
         FrontEndModule.useWithOptions(environment)
     ],

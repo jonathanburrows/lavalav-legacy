@@ -1,0 +1,128 @@
+﻿@import '../../styles/front-end.variables';
+
+.lvl-content {
+    color: rgba(0, 0, 0, 0.87);
+    display: block;
+
+    @media #{$portrait-screen} {
+        margin-bottom: map-get($portrait, content-margin-bottom);
+        margin-top: map-get($portrait, content-margin-top);
+    }
+
+    @media #{$landscape-screen} {
+        margin-bottom: map-get($landscape, content-margin-bottom);
+        margin-top: map-get($landscape, content-margin-top);
+    }
+
+    @media #{$tablet-screen} {
+        margin-bottom: map-get($tablet, content-margin-bottom);
+        margin-top: map-get($tablet, content-margin-top);
+    }
+}
+
+.lvl-content-title {
+    display: block;
+    font-weight: 400;
+
+    @media #{$portrait-screen} {
+        font-size: map-get($portrait, content-title-font-size);
+        line-height: map-get($portrait, content-title-height);
+    }
+
+    @media #{$landscape-screen} {
+        font-size: map-get($landscape, content-title-font-size);
+        line-height: map-get($landscape, content-title-height);
+    }
+
+    @media #{$tablet-screen} {
+        font-size: map-get($tablet, content-title-font-size);
+        line-height: map-get($tablet, content-title-height);
+    }
+}
+
+.lvl-content-subtitle {
+    display: block;
+    font-weight: 500;
+
+    @media #{$portrait-screen} {
+        font-size: map-get($portrait, content-subtitle-font-size);
+        line-height: map-get($portrait, content-subtitle-height);
+    }
+
+    @media #{$landscape-screen} {
+        font-size: map-get($landscape, content-subtitle-font-size);
+        line-height: map-get($landscape, content-subtitle-height);
+    }
+
+    @media #{$tablet-screen} {
+        font-size: map-get($tablet, content-subtitle-font-size);
+        line-height: map-get($tablet, content-subtitle-height);
+    }
+}
+
+.lvl-content-body {
+    display: flex;
+    justify-content: space-between;
+    align-content:center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    line-height: 1.7;
+
+    @media #{$portrait-screen} {
+        font-size: map-get($portrait, body-font-size);
+    }
+
+    @media #{$landscape-screen} {
+        font-size: map-get($landscape, body-font-size);
+    }
+
+    @media #{$tablet-screen} {
+        font-size: map-get($tablet, body-font-size);
+        max-width: 90ch;
+    }
+}
+
+.mat-input-container {
+    font-size: 16px;
+    vertical-align: middle;
+
+    @media #{$portrait-screen} {
+        flex-basis: 100%;
+    }
+
+    @media #{$landscape-screen} {
+        flex-basis: 100%;
+    }
+
+    @media #{$tablet-screen} {
+        $avatar-width: map-get($tablet, avatar-column-width);
+        $avatar-padding: map-get($tablet, screen-padding);
+        $flex-margin: ($avatar-width + $avatar-padding) / 4;
+
+        flex-basis: calc(50% - #{$flex-margin});
+    }
+}
+
+.lvl-content-avatar {
+    color: rgba(0, 0, 0, 0.54);
+    display: inline-block;
+    vertical-align: middle;
+
+    @media #{$portrait-screen} {
+        margin-right: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        margin-right: map-get($landscape, screen-padding);
+    }
+
+    @media #{$tablet-screen} {
+        margin-right: map-get($tablet, screen-padding);
+    }
+    /* If the md-prefix is applied, then special styles need to be apploed. */
+    &.mat-icon {
+        font-size: 24px;
+        /* Makes sure the underline isnt pushed down. */
+        margin-top: -5px;
+    }
+}

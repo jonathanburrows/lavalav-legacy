@@ -7,6 +7,11 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
+    ContentComponent,
+    ContentAvatarDirective,
+    ContentBodyDirective,
+    ContentSubtitleDirective,
+    ContentTitleDirective,
     LayoutComponent,
     SearchActionComponent
 } from './components';
@@ -22,10 +27,20 @@ import {
 
 @NgModule({
     declarations: [
+        ContentComponent,
+        ContentAvatarDirective,
+        ContentBodyDirective,
+        ContentSubtitleDirective,
+        ContentTitleDirective,
         LayoutComponent,
         SearchActionComponent
     ],
     exports: [
+        ContentComponent,
+        ContentAvatarDirective,
+        ContentBodyDirective,
+        ContentSubtitleDirective,
+        ContentTitleDirective,
         LayoutComponent,
         SearchActionComponent,
 

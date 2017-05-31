@@ -5,6 +5,6 @@
  */
 @Component({
     selector: 'lvl-demo-layout',
-    template: '123'
+    template: ''
 })
 export class LayoutDemoComponent { }

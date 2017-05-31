@@ -303,9 +303,16 @@
     }
 
     @media screen and (min-width: $desktop-min-width) {
+        /* Since the menu icon is hidden, align everything with the title. */
+        $avatar-width: map-get($tablet, avatar-column-width);
+        $screen-padding: map-get($tablet, screen-padding);
+        $padding-to-align-title: $avatar-width + (2 * $screen-padding);
         margin-left: map-get($tablet, side-nav-width);
-        padding-left: map-get($tablet, screen-padding);
-        padding-right: map-get($tablet, screen-padding);
+        margin-top: $screen-padding;
+
+        padding-left: $padding-to-align-title;
+        padding-right: $padding-to-align-title;
+
         transition: margin-left $swift-ease-out-duration $swift-ease-out-timing-function;
     }
 }

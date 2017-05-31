@@ -1,43 +1,47 @@
 ﻿<form class="content" [formGroup]="form">
-    <header class="content__title">Black Hole Validation</header>
+    <lvl-content>
+        <lvl-content-title>Validation Tests</lvl-content-title>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Credit Card" formControlName="creditCard" type="number" />
-        <md-error>{{form.modelErrors.creditCard}}</md-error>
-    </md-input-container>
+        <lvl-content-body>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Credit Card" formControlName="creditCard" type="number" />
+                <md-error>{{form.modelErrors.creditCard}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Email Address" formControlName="emailAddress" type="email" />
-        <md-error>{{form.modelErrors.emailAddress}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Email Address" formControlName="emailAddress" type="email" />
+                <md-error>{{form.modelErrors.emailAddress}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Max Length (10)" formControlName="maxLength" />
-        <md-error>{{form.modelErrors.maxLength}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Max Length (10)" formControlName="maxLength" />
+                <md-error>{{form.modelErrors.maxLength}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Min Length (3)" formControlName="minLength" />
-        <md-error>{{form.modelErrors.minLength}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Min Length (3)" formControlName="minLength" />
+                <md-error>{{form.modelErrors.minLength}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Phone" formControlName="phone" type="number" />
-        <md-error>{{form.modelErrors.phone}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Phone" formControlName="phone" type="number" />
+                <md-error>{{form.modelErrors.phone}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Range (between 1-10)" formControlName="range" type="number" />
-        <md-error>{{form.modelErrors.range}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Range (between 1-10)" formControlName="range" type="number" />
+                <md-error>{{form.modelErrors.range}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Regex (hello, world!)" formControlName="regularExpression" />
-        <md-error>{{form.modelErrors.regularExpression}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Regex (hello, world!)" formControlName="regularExpression" />
+                <md-error>{{form.modelErrors.regularExpression}}</md-error>
+            </md-input-container>
 
-    <md-input-container color="accent">
-        <input mdInput placeholder="Required" formControlName="required" />
-        <md-error>{{form.modelErrors.required}}</md-error>
-    </md-input-container>
+            <md-input-container color="accent">
+                <input mdInput placeholder="Required" formControlName="required" />
+                <md-error>{{form.modelErrors.required}}</md-error>
+            </md-input-container>
+        </lvl-content-body>
+    </lvl-content>
 </form>

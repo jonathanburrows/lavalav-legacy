@@ -1,0 +1,12 @@
+﻿@import '~@angular/material/theming';
+
+@mixin content-component-theme($theme) {
+    $primary: map-get($theme, primary);
+
+
+    .lvl-content-title {
+        $primary-text: mat-color($primary, 700);
+
+        color: $primary-text;
+    }
+}

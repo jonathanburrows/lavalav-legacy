@@ -3,6 +3,7 @@
 
 :host {
     background-color: inherit;
+    display: inline-block;
     height: 100%;
     line-height: 100%;
     position: relative;
@@ -68,6 +69,7 @@
     }
 
     &__input {
+        box-sizing: border-box;
         padding-right: $close-icon-width;
         width: $search-input-width;
     }

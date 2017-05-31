@@ -8,6 +8,7 @@
 @import '~normalize-scss/sass/normalize';
 
 @import 'front-end.variables';
+@import '../components/content/content.component.theme';
 @import '../components/layout/layout.component.theme';
 @import '../components/search-action/search-action.component.theme';
 @import 'vendor';
@@ -16,6 +17,8 @@
     @include mat-core();
     @include normalize();
     @include angular-material-theme($theme);
+
+    @include content-component-theme($theme);
     @include layout-component-theme($theme);
     @include search-action-component-theme($theme);
 
