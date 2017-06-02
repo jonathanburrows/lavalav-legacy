@@ -10,7 +10,7 @@ import { Credentials } from '../../services';
     styleUrls: ['resource-owner-sign-in.component.scss']
 })
 export class ResourceOwnerSigninComponent implements OnInit {
-    form: ValidatableForm;
+    form: ValidatableForm<Credentials>;
     model: Credentials;
 
     constructor(private securityService: SecurityService, private validationBuilder: ValidationBuilder) { }

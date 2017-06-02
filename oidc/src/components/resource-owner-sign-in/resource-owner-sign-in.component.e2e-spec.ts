@@ -3,168 +3,135 @@
 describe('e2e ResourceOwnerSignIn', () => {
     let signinPage: CredentialsSigninPage;
 
-    const portaitSize = { width: 320, height: 568 };
-    const landscapeSize = { width: 568, height: 320 };
-    const tabletSize = { width: 768, height: 1024 };
-
-    describe('on portrait devices', () => {
-        beforeEach(() => {
-            signinPage = new CredentialsSigninPage();
-            signinPage.setSize(portaitSize);
-            signinPage.navigateTo();
-            signinPage.disableAnimations();
-        });
-
-        multiDeviceBehaviour();
+    beforeEach(() => {
+        signinPage = new CredentialsSigninPage();
+        signinPage.navigateTo();
+        signinPage.disableAnimations();
     });
 
-    describe('on landscape devices', () => {
-        beforeEach(() => {
-            signinPage = new CredentialsSigninPage();
-            signinPage.setSize(landscapeSize);
-            signinPage.navigateTo();
-            signinPage.disableAnimations();
-        });
+    it('will have a username field', () => {
+        const username = signinPage.getInput('username');
 
-        multiDeviceBehaviour();
+        expect(username.isDisplayed).toBeTruthy();
     });
 
-    describe('on tablet+ devices', () => {
-        beforeEach(() => {
-            signinPage = new CredentialsSigninPage();
-            signinPage.setSize(tabletSize);
-            signinPage.navigateTo();
-            signinPage.disableAnimations();
-        });
+    it('will have a password field', () => {
+        const password = signinPage.getInput('password');
 
-        multiDeviceBehaviour();
+        expect(password.isDisplayed).toBeTruthy();
     });
 
-    function multiDeviceBehaviour() {
-        it('will have a username field', () => {
-            const username = signinPage.getInput('username');
+    it('will have a signin button', () => {
+        const signIn = signinPage.getElement('button.card__actions--sign-in');
 
-            expect(username.isDisplayed).toBeTruthy();
-        });
+        expect(signIn.isDisplayed).toBeTruthy();
+    });
 
-        it('will have a password field', () => {
-            const password = signinPage.getInput('password');
+    it('will show a validation message if the username is unfocused without a value', () => {
+        const username = signinPage.getInput('username');
+        const card = signinPage.getElement('.card');
 
-            expect(password.isDisplayed).toBeTruthy();
-        });
+        username.click();
+        card.click();
 
-        it('will have a signin button', () => {
-            const signIn = signinPage.getElement('button.card__actions--sign-in');
+        const errorMessage = signinPage.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            expect(signIn.isDisplayed).toBeTruthy();
-        });
+    it('will show a validation message if the password is unfocused without a value', () => {
+        const username = signinPage.getInput('password');
+        const card = signinPage.getElement('.card');
 
-        it('will show a validation message if the username is unfocused without a value', () => {
-            const username = signinPage.getInput('username');
-            const card = signinPage.getElement('.card');
+        username.click();
+        card.click();
 
-            username.click();
-            card.click();
+        const errorMessage = signinPage.getErrorMessagesForInput('password');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            const errorMessage = signinPage.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message if submitted without a username', () => {
+        const signIn = signinPage.getElement('button.card__actions--sign-in');
+        const password = signinPage.getInput('password');
+        password.sendKeys('my password');
 
-        it('will show a validation message if the password is unfocused without a value', () => {
-            const username = signinPage.getInput('password');
-            const card = signinPage.getElement('.card');
+        signIn.click();
 
-            username.click();
-            card.click();
+        const errorMessage = signinPage.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            const errorMessage = signinPage.getErrorMessagesForInput('password');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message if submitted without a password', () => {
+        const signIn = signinPage.getElement('button.card__actions--sign-in');
+        const username = signinPage.getInput('username');
+        username.sendKeys('my username');
 
-        it('will show a validation message if submitted without a username', () => {
-            const signIn = signinPage.getElement('button.card__actions--sign-in');
-            const password = signinPage.getInput('password');
-            password.sendKeys('my password');
+        signIn.click();
 
-            signIn.click();
+        const errorMessage = signinPage.getErrorMessagesForInput('password');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            const errorMessage = signinPage.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message when submitted if the user does not exist', () => {
+        const username = signinPage.getInput('username');
+        username.sendKeys('non-existant');
+        const password = signinPage.getInput('password');
+        password.sendKeys('password');
+        const signIn = signinPage.getElement('button.card__actions--sign-in');
 
-        it('will show a validation message if submitted without a password', () => {
-            const signIn = signinPage.getElement('button.card__actions--sign-in');
-            const username = signinPage.getInput('username');
-            username.sendKeys('my username');
+        signIn.click();
 
-            signIn.click();
+        const errorMessage = signinPage.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe(`Can't find user`);
+    });
 
-            const errorMessage = signinPage.getErrorMessagesForInput('password');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message when submitted if the password is incorrect', () => {
+        const username = signinPage.getInput('username');
+        username.sendKeys('testuser');
+        const password = signinPage.getInput('password');
+        password.sendKeys('fake password');
+        const signIn = signinPage.getElement('button.card__actions--sign-in');
 
-        it('will show a validation message when submitted if the user does not exist', () => {
-            const username = signinPage.getInput('username');
-            username.sendKeys('non-existant');
-            const password = signinPage.getInput('password');
-            password.sendKeys('password');
-            const signIn = signinPage.getElement('button.card__actions--sign-in');
+        signIn.click();
 
-            signIn.click();
+        const errorMessage = signinPage.getErrorMessagesForInput('password');
+        expect(errorMessage.getText()).toBe('Incorrect password, try again');
+    });
 
-            const errorMessage = signinPage.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe(`Can't find user`);
-        });
+    it('will redirect the user after a successful login', () => {
+        const username = signinPage.getInput('username');
+        username.sendKeys('testuser');
+        const password = signinPage.getInput('password');
+        password.sendKeys('password');
+        const signIn = signinPage.getElement('button.card__actions--sign-in');
 
-        it('will show a validation message when submitted if the password is incorrect', () => {
-            const username = signinPage.getInput('username');
-            username.sendKeys('testuser');
-            const password = signinPage.getInput('password');
-            password.sendKeys('fake password');
-            const signIn = signinPage.getElement('button.card__actions--sign-in');
+        signIn.click();
 
-            signIn.click();
+        expect(browser.getCurrentUrl()).not.toContain('oidc/sign-in');
+    });
 
-            const errorMessage = signinPage.getErrorMessagesForInput('password');
-            expect(errorMessage.getText()).toBe('Incorrect password, try again');
-        });
+    it('will redirect the user to the recover username page if they hit the forgot username link', () => {
+        const recoverUsername = signinPage.getElement('.card__content__forgot-link--recover-username');
 
-        it('will redirect the user after a successful login', () => {
-            const username = signinPage.getInput('username');
-            username.sendKeys('testuser');
-            const password = signinPage.getInput('password');
-            password.sendKeys('password');
-            const signIn = signinPage.getElement('button.card__actions--sign-in');
+        recoverUsername.click();
 
-            signIn.click();
+        expect(browser.getCurrentUrl()).toContain('oidc/recover-username');
+    });
 
-            expect(browser.getCurrentUrl()).not.toContain('oidc/sign-in');
-        });
+    it('will redirect the user to the reset password page if they hit the forgot password link', () => {
+        const recoverUsername = signinPage.getElement('.card__content__forgot-link--reset-password');
 
-        it('will redirect the user to the recover username page if they hit the forgot username link', () => {
-            const recoverUsername = signinPage.getElement('.card__content__forgot-link--recover-username');
+        recoverUsername.click();
 
-            recoverUsername.click();
+        expect(browser.getCurrentUrl()).toContain('oidc/request-reset-password');
+    });
 
-            expect(browser.getCurrentUrl()).toContain('oidc/recover-username');
-        });
+    it('will redirect the user to the register account page if they hit the register button', () => {
+        const recoverUsername = signinPage.getElement('.card__actions__button--register');
 
-        it('will redirect the user to the reset password page if they hit the forgot password link', () => {
-            const recoverUsername = signinPage.getElement('.card__content__forgot-link--reset-password');
+        recoverUsername.click();
 
-            recoverUsername.click();
-
-            expect(browser.getCurrentUrl()).toContain('oidc/request-reset-password');
-        });
-
-        it('will redirect the user to the register account page if they hit the register button', () => {
-            const recoverUsername = signinPage.getElement('.card__actions__button--register');
-
-            recoverUsername.click();
-
-            expect(browser.getCurrentUrl()).toContain('oidc/register-account');
-        });
-    }
+        expect(browser.getCurrentUrl()).toContain('oidc/register-account');
+    });
 });
 
 class CredentialsSigninPage {

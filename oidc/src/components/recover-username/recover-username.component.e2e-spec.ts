@@ -3,98 +3,65 @@
 describe('e2e RecoverUsernameComponent', () => {
     let recoverUsernamePage: RecoverUsernamePage;
 
-    const portaitSize = { width: 320, height: 568 };
-    const landscapeSize = { width: 568, height: 320 };
-    const tabletSize = { width: 768, height: 1024 };
-
-    describe('on portrait devices', () => {
-        beforeEach(() => {
-            recoverUsernamePage = new RecoverUsernamePage();
-            recoverUsernamePage.setSize(portaitSize);
-            recoverUsernamePage.navigateTo();
-            recoverUsernamePage.disableAnimations();
-        });
-
-        multiDeviceBehaviour();
+    beforeEach(() => {
+        recoverUsernamePage = new RecoverUsernamePage();
+        recoverUsernamePage.navigateTo();
+        recoverUsernamePage.disableAnimations();
     });
 
-    describe('on landscape devices', () => {
-        beforeEach(() => {
-            recoverUsernamePage = new RecoverUsernamePage();
-            recoverUsernamePage.setSize(landscapeSize);
-            recoverUsernamePage.navigateTo();
-            recoverUsernamePage.disableAnimations();
-        });
+    it('will have an email field', () => {
+        const email = recoverUsernamePage.getInput('email');
 
-        multiDeviceBehaviour();
+        expect(email.isDisplayed).toBeTruthy();
     });
 
-    describe('on tablet+ devices', () => {
-        beforeEach(() => {
-            recoverUsernamePage = new RecoverUsernamePage();
-            recoverUsernamePage.setSize(tabletSize);
-            recoverUsernamePage.navigateTo();
-            recoverUsernamePage.disableAnimations();
-        });
+    it('will have a recover button', () => {
+        const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
 
-        multiDeviceBehaviour();
+        expect(recoverButton.isDisplayed).toBeTruthy();
     });
 
-    function multiDeviceBehaviour() {
-        it('will have an email field', () => {
-            const email = recoverUsernamePage.getInput('email');
+    it('will show a validation message if submitted without an email', () => {
+        const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
 
-            expect(email.isDisplayed).toBeTruthy();
-        });
+        recoverButton.click();
 
-        it('will have a recover button', () => {
-            const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
+        const errorMessages = recoverUsernamePage.getErrorMessagesForInput('email');
+        expect(errorMessages.getText()).toBe('Required');
+    });
 
-            expect(recoverButton.isDisplayed).toBeTruthy();
-        });
+    it('will show a validation message if submitted with an invalid email', () => {
+        const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
+        const email = recoverUsernamePage.getInput('email');
+        email.sendKeys('not-an-email-address');
 
-        it('will show a validation message if submitted without an email', () => {
-            const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
+        recoverButton.click();
 
-            recoverButton.click();
+        const errorMessages = recoverUsernamePage.getErrorMessagesForInput('email');
+        expect(errorMessages.getText()).toBe('Invalid email');
+    });
 
-            const errorMessages = recoverUsernamePage.getErrorMessagesForInput('email');
-            expect(errorMessages.getText()).toBe('Required');
-        });
+    it('will show a validation message if no user has that email', () => {
+        const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
+        const email = recoverUsernamePage.getInput('email');
+        email.sendKeys('non-existant@user.com');
 
-        it('will show a validation message if submitted with an invalid email', () => {
-            const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
-            const email = recoverUsernamePage.getInput('email');
-            email.sendKeys('not-an-email-address');
+        recoverButton.click();
 
-            recoverButton.click();
+        const errorMessage = recoverUsernamePage.getErrorMessagesForInput('email');
+        expect(errorMessage.getText()).toBe('No user has this email');
+    });
 
-            const errorMessages = recoverUsernamePage.getErrorMessagesForInput('email');
-            expect(errorMessages.getText()).toBe('Invalid email');
-        });
+    it('will display success message if a user has the given email', () => {
+        const email = recoverUsernamePage.getInput('email');
+        email.sendKeys('forgotten-username@lavalav.com');
+        const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
 
-        it('will show a validation message if no user has that email', () => {
-            const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
-            const email = recoverUsernamePage.getInput('email');
-            email.sendKeys('non-existant@user.com');
+        recoverButton.click();
 
-            recoverButton.click();
-
-            const errorMessage = recoverUsernamePage.getErrorMessagesForInput('email');
-            expect(errorMessage.getText()).toBe('No user has this email');
-        });
-
-        it('will display success message if a user has the given email', () => {
-            const email = recoverUsernamePage.getInput('email');
-            email.sendKeys('testuser@lavalav.com');
-            const recoverButton = recoverUsernamePage.getElement('.card__actions--recover-username');
-
-            recoverButton.click();
-
-            const confirmation = recoverUsernamePage.getElement('.card__actions__confirmation');
-            expect(confirmation.isDisplayed()).toBeTruthy();
-        });
-    }
+        const confirmation = recoverUsernamePage.getElement('.card__actions__confirmation');
+        expect(confirmation.isDisplayed()).toBeTruthy();
+    });
 });
 
 class RecoverUsernamePage {

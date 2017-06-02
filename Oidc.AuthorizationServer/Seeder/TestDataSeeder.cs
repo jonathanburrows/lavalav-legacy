@@ -44,7 +44,8 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     HashedPassword = "password",
                     Claims = new []
                     {
-                        new ClaimEntity{ Type = JwtClaimTypes.Name, Value = "jonathan burrows" },
+                        new ClaimEntity{ Type = JwtClaimTypes.FamilyName, Value = "burrows" },
+                        new ClaimEntity{ Type = JwtClaimTypes.GivenName, Value = "jonathan" },
                         new ClaimEntity{ Type = JwtClaimTypes.Email, Value = "testuser@lavalav.com" }
                     }
                 },
@@ -52,11 +53,20 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                 {
                     SubjectId = "emailless-user",
                     Username = "emailless-user",
+                    HashedPassword = "password"
+                },
+                new User
+                {
+                    SubjectId = "person-details-testuser@lavalav.com",
+                    Username = "person-details-testuser",
+                    HashedPassword = "password"
+                },
+                new User
+                {
+                    SubjectId = "forgotten-username@lavalav.com",
+                    Username = "forgotten-username",
                     HashedPassword = "password",
-                    Claims = new []
-                    {
-                        new ClaimEntity{ Type = JwtClaimTypes.Name, Value = "jonathan burrows" }
-                    }
+                    Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "forgotten-username@lavalav.com" } }
                 }
             };
 
@@ -70,6 +80,9 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
             var apiResources = new[]
             {
                 new ApiResourceEntity("test-resource-server", "Test Resource Server")
+                {
+                    Scopes = { new ScopeEntity { Name = "name" } }
+                }
             };
 
             var existingResources = await ApiResourceRepository.GetAsync();
@@ -95,6 +108,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     AllowAccessTokensViaBrowser = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AlwaysSendClientClaims = true,
+                    AllowOfflineAccess = true,
                     UpdateAccessTokenClaimsOnRefresh = true,
 
                     RedirectUris = new []{ new RedirectUri { Name = "http://localhost:0000" } },
@@ -133,7 +147,10 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                         new AllowedScope { Name = "test-resource-server" },
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.OpenId },
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.OfflineAccess},
-                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.Profile }
+                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.Profile },
+                        new AllowedScope { Name = "email" },
+                        new AllowedScope { Name = "name" },
+                        new AllowedScope { Name = "roles" }
                     }
                 }
             };

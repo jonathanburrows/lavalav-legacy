@@ -13,6 +13,7 @@ import {
     ContentSubtitleDirective,
     ContentTitleDirective,
     LayoutComponent,
+    SaveButtonComponent,
     SearchActionComponent
 } from './components';
 
@@ -33,6 +34,7 @@ import {
         ContentSubtitleDirective,
         ContentTitleDirective,
         LayoutComponent,
+        SaveButtonComponent,
         SearchActionComponent
     ],
     exports: [
@@ -42,6 +44,7 @@ import {
         ContentSubtitleDirective,
         ContentTitleDirective,
         LayoutComponent,
+        SaveButtonComponent,
         SearchActionComponent,
 
         // vendor modules

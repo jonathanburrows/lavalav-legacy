@@ -3,6 +3,7 @@
 import { FrontEndModule, HeadersService } from '@lvl/front-end';
 import {
     AccountMenuComponent,
+    PersonalDetailComponents,
     RecoverUsernameComponent,
     RegisterAccountComponent,
     RequestResetPasswordComponent,
@@ -13,6 +14,7 @@ import { oidcRouterModule } from './oidc.router.module';
 import {
     BearerHeadersService,
     OidcOptions,
+    PersonalDetailsService,
     RecoverUsernameService,
     ResetPasswordService,
     ResourceOwnerSecurityService,
@@ -27,6 +29,7 @@ import {
 @NgModule({
     providers: [
         { provide: HeadersService, useClass: BearerHeadersService },
+        PersonalDetailsService,
         RecoverUsernameService,
         ResetPasswordService,
         TokenService,
@@ -34,6 +37,7 @@ import {
     ],
     declarations: [
         AccountMenuComponent,
+        PersonalDetailComponents,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,
@@ -42,6 +46,7 @@ import {
     ],
     exports: [
         AccountMenuComponent,
+        PersonalDetailComponents,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,

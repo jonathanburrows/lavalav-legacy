@@ -3,132 +3,99 @@
 describe('e2e RegisterAccountComponent', () => {
     let registerAccountPage: RegisterAccountPage;
 
-    const portaitSize = { width: 320, height: 568 };
-    const landscapeSize = { width: 568, height: 320 };
-    const tabletSize = { width: 768, height: 1024 };
-
-    describe('on portrait devices', () => {
-        beforeEach(() => {
-            registerAccountPage = new RegisterAccountPage();
-            registerAccountPage.setSize(portaitSize);
-            registerAccountPage.navigateTo();
-            registerAccountPage.disableAnimations();
-        });
-
-        multiDeviceBehaviour();
+    beforeEach(() => {
+        registerAccountPage = new RegisterAccountPage();
+        registerAccountPage.navigateTo();
+        registerAccountPage.disableAnimations();
     });
 
-    describe('on landscape devices', () => {
-        beforeEach(() => {
-            registerAccountPage = new RegisterAccountPage();
-            registerAccountPage.setSize(landscapeSize);
-            registerAccountPage.navigateTo();
-            registerAccountPage.disableAnimations();
-        });
+    it('will have a username field', () => {
+        const username = registerAccountPage.getInput('username');
 
-        multiDeviceBehaviour();
+        expect(username.isDisplayed).toBeTruthy();
     });
 
-    describe('on tablet+ devices', () => {
-        beforeEach(() => {
-            registerAccountPage = new RegisterAccountPage();
-            registerAccountPage.setSize(tabletSize);
-            registerAccountPage.navigateTo();
-            registerAccountPage.disableAnimations();
-        });
+    it('will have a password field', () => {
+        const password = registerAccountPage.getInput('password');
 
-        multiDeviceBehaviour();
+        expect(password.isDisplayed).toBeTruthy();
     });
 
-    function multiDeviceBehaviour() {
-        it('will have a username field', () => {
-            const username = registerAccountPage.getInput('username');
+    it('will have a register button', () => {
+        const register = registerAccountPage.getElement('.card__actions--register');
 
-            expect(username.isDisplayed).toBeTruthy();
-        });
+        expect(register.isDisplayed).toBeTruthy();
+    });
 
-        it('will have a password field', () => {
-            const password = registerAccountPage.getInput('password');
+    it('will show a validation message if the username is unfocused without a value', () => {
+        const username = registerAccountPage.getInput('username');
+        const card = registerAccountPage.getElement('.card');
 
-            expect(password.isDisplayed).toBeTruthy();
-        });
+        username.click();
+        card.click();
 
-        it('will have a register button', () => {
-            const register = registerAccountPage.getElement('.card__actions--register');
+        const errorMessage = registerAccountPage.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            expect(register.isDisplayed).toBeTruthy();
-        });
+    it('will show a validation message if the password is unfocused without a value', () => {
+        const username = registerAccountPage.getInput('password');
+        const card = registerAccountPage.getElement('.card');
 
-        it('will show a validation message if the username is unfocused without a value', () => {
-            const username = registerAccountPage.getInput('username');
-            const card = registerAccountPage.getElement('.card');
+        username.click();
+        card.click();
 
-            username.click();
-            card.click();
+        const errorMessage = registerAccountPage.getErrorMessagesForInput('password');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            const errorMessage = registerAccountPage.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message if submitted without a username', () => {
+        const register = registerAccountPage.getElement('.card__actions--register');
+        const password = registerAccountPage.getInput('password');
+        password.sendKeys('my password');
 
-        it('will show a validation message if the password is unfocused without a value', () => {
-            const username = registerAccountPage.getInput('password');
-            const card = registerAccountPage.getElement('.card');
+        register.click();
 
-            username.click();
-            card.click();
+        const errorMessage = registerAccountPage.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            const errorMessage = registerAccountPage.getErrorMessagesForInput('password');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message if submitted without a password', () => {
+        const register = registerAccountPage.getElement('.card__actions--register');
+        const username = registerAccountPage.getInput('username');
+        username.sendKeys('my username');
 
-        it('will show a validation message if submitted without a username', () => {
-            const register = registerAccountPage.getElement('.card__actions--register');
-            const password = registerAccountPage.getInput('password');
-            password.sendKeys('my password');
+        register.click();
 
-            register.click();
+        const errorMessage = registerAccountPage.getErrorMessagesForInput('password');
+        expect(errorMessage.getText()).toBe('Required');
+    });
 
-            const errorMessage = registerAccountPage.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will show a validation message if the user already exists', () => {
+        const register = registerAccountPage.getElement('.card__actions--register');
+        const username = registerAccountPage.getInput('username');
+        username.sendKeys('testuser');
+        const password = registerAccountPage.getInput('password');
+        password.sendKeys('password');
 
-        it('will show a validation message if submitted without a password', () => {
-            const register = registerAccountPage.getElement('.card__actions--register');
-            const username = registerAccountPage.getInput('username');
-            username.sendKeys('my username');
+        register.click();
 
-            register.click();
+        const errorMessage = registerAccountPage.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe('Already taken, try another');
+    });
 
-            const errorMessage = registerAccountPage.getErrorMessagesForInput('password');
-            expect(errorMessage.getText()).toBe('Required');
-        });
+    it('will redirect the user to the home page after successfully registering', () => {
+        const username = registerAccountPage.getInput('username');
+        const uniqueName = `redirect-from-home-user${Math.random()}`;
+        username.sendKeys(uniqueName);
+        const password = registerAccountPage.getInput('password');
+        password.sendKeys('password');
+        const register = registerAccountPage.getElement('.card__actions--register');
 
-        it('will show a validation message if the user already exists', () => {
-            const register = registerAccountPage.getElement('.card__actions--register');
-            const username = registerAccountPage.getInput('username');
-            username.sendKeys('testuser');
-            const password = registerAccountPage.getInput('password');
-            password.sendKeys('password');
+        register.click();
 
-            register.click();
-
-            const errorMessage = registerAccountPage.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe('Already taken, try another');
-        });
-
-        it('will redirect the user to the home page after successfully registering', () => {
-            const username = registerAccountPage.getInput('username');
-            const uniqueName = `redirect-from-home-user${Math.random()}`;
-            username.sendKeys(uniqueName);
-            const password = registerAccountPage.getInput('password');
-            password.sendKeys('password');
-            const register = registerAccountPage.getElement('.card__actions--register');
-
-            register.click();
-
-            expect(browser.getCurrentUrl()).not.toContain('oidc/register-account');
-        });
-    }
+        expect(browser.getCurrentUrl()).not.toContain('oidc/register-account');
+    });
 });
 
 class RegisterAccountPage {

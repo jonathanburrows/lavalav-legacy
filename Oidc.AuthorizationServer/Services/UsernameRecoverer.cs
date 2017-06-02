@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace lvl.Oidc.AuthorizationServer.Services
 {
+    /// <summary>
+    ///     Sends emails to uses reminding them what their username is, so they can still access their accounts if they forget.
+    /// </summary>
     public class UsernameRecoverer
     {
         private IRepository<User> UserRepository { get; }
@@ -39,14 +42,14 @@ namespace lvl.Oidc.AuthorizationServer.Services
         /// <summary>
         ///     Sends an email with the corresponding username.
         /// </summary>
-        /// <param name="recovering"></param>
+        /// <param name="email"></param>
         public async Task RecoverUsernameAsync(string email)
         {
             if (email == null)
             {
                 throw new ArgumentNullException(nameof(email));
             }
-
+            
             var emailQuery = new Query<User>().Where(user => user.Claims.Any(c => c.Type == JwtClaimTypes.Email && c.Value.ToLower() == email.ToLower()));
             var usersWithEmail = await UserRepository.GetAsync(emailQuery);
 

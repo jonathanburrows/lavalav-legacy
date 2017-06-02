@@ -14,7 +14,7 @@ import { RecoverUsernameService } from '../../services';
 })
 export class RecoverUsernameComponent implements OnInit {
     model: RecoverUsernameViewModel;
-    form: ValidatableForm;
+    form: ValidatableForm<RecoverUsernameViewModel>;
     emailSent: boolean;
 
     constructor(private validationBuilder: ValidationBuilder, private recoverUsernameService: RecoverUsernameService) { }

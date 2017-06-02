@@ -25,7 +25,7 @@ export class ValidationBuilder {
      *  @remarks If the form binds inputs to multiple types, use controlFor instead.
      *  @remarks Make sure the object passed has the correct prototype.
      */
-    formFor(model: Object, properties: string[]): ValidatableForm {
+    formFor<T>(model: T, properties: string[]): ValidatableForm<T> {
         if (!model) {
             throw new Error('model is null.');
         }
@@ -56,7 +56,7 @@ export class ValidationBuilder {
             return reduced;
         }, {});
 
-        const formGroup = new ValidatableForm(config);
+        const formGroup = new ValidatableForm<T>(config);
         formGroup.valueChanges.subscribe(() => formGroup.modelErrors = this.getErrors(formGroup));
         formGroup.modelErrors = this.getErrors(formGroup);
 

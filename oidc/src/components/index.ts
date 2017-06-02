@@ -1,4 +1,5 @@
 ﻿export * from './account-menu';
+export * from './personal-details';
 export * from './recover-username';
 export * from './register-account';
 export * from './request-reset-password';

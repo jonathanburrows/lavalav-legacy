@@ -11,7 +11,7 @@ import { ResetPasswordService } from '../../services';
 })
 export class RequestResetPasswordComponent implements OnInit {
     model: RequestResetPasswordViewModel;
-    form: ValidatableForm;
+    form: ValidatableForm<RequestResetPasswordViewModel>;
     emailSent: boolean;
 
     constructor(private resetPasswordService: ResetPasswordService, private validationBuilder: ValidationBuilder) { }

@@ -1,0 +1,88 @@
+﻿@import '~@angular/material/theming';
+
+@keyframes display-briefly {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.lvl-save-button {
+    cursor: default;
+    opacity: 0;
+    position: absolute;
+    transition: all $swift-ease-in-out-duration $mat-fast-out-slow-in-timing-function;
+    vertical-align: middle;
+    pointer-events: none;
+    z-index: 12;
+
+    &--invalid {
+        background-color: white;
+    }
+
+    &--pending {
+        background-color: white;
+
+        &__spinner {
+            box-sizing: border-box;
+            height: 100%;
+            padding: 8px;
+            width: 100%;
+        }
+    }
+
+    &--done {
+        background-color: white;
+        /* Must sit behind the pending button. */
+        z-index: 11;
+    }
+
+    &__icon {
+        font-size: 30px;
+        width: 100%;
+    }
+}
+
+:host{
+    width: 56px;
+}
+
+:host(.ng-dirty:not(.lvl-invalid-caused-by-user):not(.lvl-save-occurring)) .lvl-save-button {
+    &--dirty {
+        opacity: 1;
+        cursor: pointer;
+        pointer-events: auto;
+        transition: all $swift-ease-in-out-duration $mat-fast-out-slow-in-timing-function;
+    }
+}
+
+:host(.lvl-invalid-caused-by-user) .lvl-save-button {
+    &--invalid {
+        opacity: 1;
+        transition: all $swift-ease-in-out-duration $mat-fast-out-slow-in-timing-function;
+    }
+}
+
+:host(.lvl-save-occurring) .lvl-save-button {
+    &--pending {
+        opacity: 1;
+        transition: all $swift-ease-in-out-duration $mat-fast-out-slow-in-timing-function;
+    }
+}
+
+:host(.lvl-save-completed) .lvl-save-button {
+    &--done {
+        animation: display-briefly 3s $mat-fast-out-slow-in-timing-function;
+    }
+}

@@ -14,7 +14,7 @@ import {
     styleUrls: ['register-account.component.scss']
 })
 export class RegisterAccountComponent implements OnInit {
-    form: ValidatableForm;
+    form: ValidatableForm<Credentials>;
     model: Credentials;
 
     constructor(

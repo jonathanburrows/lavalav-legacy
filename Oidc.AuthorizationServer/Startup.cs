@@ -36,6 +36,12 @@ namespace lvl.Oidc.AuthorizationServer
         {
             app.UseWeb()
                 .UseOidcAuthorizationServer()
+                .UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+                {
+                    Authority = "http://localhost:5004",
+                    RequireHttpsMetadata = false,
+                    ApiName = "test-resource-server"
+                })
                 .UseMvcWithDefaultRoute();
         }
         public static void Main(string[] args)

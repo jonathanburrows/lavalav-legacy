@@ -8,6 +8,7 @@ import {
     ContentDemoComponent,
     LayoutDemoComponent,
     RootDemoComponent,
+    SaveButtonDemoComponent,
     ValidatorsDemoComponent
 } from './components';
 
@@ -20,18 +21,20 @@ const frontEndGroup = 'Front End';
 @NgModule({
     declarations: [
         ContentDemoComponent,
-        RootDemoComponent,
         LayoutDemoComponent,
+        RootDemoComponent,
+        SaveButtonDemoComponent,
         ValidatorsDemoComponent
     ],
     imports: [
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-content' },
+            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-save-button' },
             { path: 'component/lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
             { path: 'component/lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } },
-            { path: 'component/lvl-content', component: ContentDemoComponent, data: { title: 'Content', icon: 'content_copy', showInNavigation: true, group: frontEndGroup } }
+            { path: 'component/lvl-content', component: ContentDemoComponent, data: { title: 'Content', icon: 'content_copy', showInNavigation: true, group: frontEndGroup } },
+            { path: 'component/lvl-save-button', component: SaveButtonDemoComponent, data: { title: 'Save Button', icon: 'content_copy', showInNavigation: true, group: frontEndGroup } }
         ]),
         FrontEndModule.useWithOptions(environment)
     ],

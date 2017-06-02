@@ -23,6 +23,12 @@ export abstract class SecurityService {
     private postLoginRedirectUrlKey = 'oidc:postLoginRedirectUrl';
 
     /**
+     *  The claims of the user.
+     *  @remarks claims are placed here instead of the token service because they are accessed in different ways based on the flow.
+     */
+    public abstract userInfo: { [key: string]: any };
+
+    /**
      *  Location on where to return to after authentication is complete.
      *  @remarks - it is stored in local storage because a redirect off site may take place.
      */

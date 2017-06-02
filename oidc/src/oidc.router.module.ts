@@ -1,6 +1,7 @@
 ﻿import { RouterModule } from '@angular/router';
 
 import {
+    PersonalDetailComponents,
     RecoverUsernameComponent,
     RegisterAccountComponent,
     RequestResetPasswordComponent,
@@ -13,5 +14,6 @@ export const oidcRouterModule = RouterModule.forChild([
     { path: 'oidc/recover-username', component: RecoverUsernameComponent },
     { path: 'oidc/register-account', component: RegisterAccountComponent },
     { path: 'oidc/request-reset-password', component: RequestResetPasswordComponent },
-    { path: 'oidc/single-signout', component: SingleSignoutComponent }
+    { path: 'oidc/single-signout', component: SingleSignoutComponent },
+    { path: 'oidc/personal-details', component: PersonalDetailComponents }
 ]);

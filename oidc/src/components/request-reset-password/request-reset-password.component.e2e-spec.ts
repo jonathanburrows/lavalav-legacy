@@ -3,98 +3,65 @@
 describe('e2e RecoverUsernameComponent', () => {
     let page: RequestPasswordResetPage;
 
-    const portaitSize = { width: 320, height: 568 };
-    const landscapeSize = { width: 568, height: 320 };
-    const tabletSize = { width: 768, height: 1024 };
-
-    describe('on portrait devices', () => {
-        beforeEach(() => {
-            page = new RequestPasswordResetPage();
-            page.setSize(portaitSize);
-            page.navigateTo();
-            page.disableAnimations();
-        });
-
-        multiDeviceBehaviour();
+    beforeEach(() => {
+        page = new RequestPasswordResetPage();
+        page.navigateTo();
+        page.disableAnimations();
     });
 
-    describe('on landscape devices', () => {
-        beforeEach(() => {
-            page = new RequestPasswordResetPage();
-            page.setSize(landscapeSize);
-            page.navigateTo();
-            page.disableAnimations();
-        });
+    it('will have an username field', () => {
+        const username = page.getInput('username');
 
-        multiDeviceBehaviour();
+        expect(username.isDisplayed).toBeTruthy();
     });
 
-    describe('on tablet+ devices', () => {
-        beforeEach(() => {
-            page = new RequestPasswordResetPage();
-            page.setSize(tabletSize);
-            page.navigateTo();
-            page.disableAnimations();
-        });
+    it('will have a request reset button', () => {
+        const resetButton = page.getElement('.card__actions--request-reset');
 
-        multiDeviceBehaviour();
+        expect(resetButton.isDisplayed).toBeTruthy();
     });
 
-    function multiDeviceBehaviour() {
-        it('will have an username field', () => {
-            const username = page.getInput('username');
+    it('will show a validation message if submitted without a username', () => {
+        const resetButton = page.getElement('.card__actions--request-reset');
 
-            expect(username.isDisplayed).toBeTruthy();
-        });
+        resetButton.click();
 
-        it('will have a request reset button', () => {
-            const resetButton = page.getElement('.card__actions--request-reset');
+        const errorMessages = page.getErrorMessagesForInput('username');
+        expect(errorMessages.getText()).toBe('Required');
+    });
 
-            expect(resetButton.isDisplayed).toBeTruthy();
-        });
+    it('will show a validation message if submitted with a user that does not exist', () => {
+        const resetButton = page.getElement('.card__actions--request-reset');
+        const username = page.getInput('username');
+        username.sendKeys('not-a-user');
 
-        it('will show a validation message if submitted without a username', () => {
-            const resetButton = page.getElement('.card__actions--request-reset');
+        resetButton.click();
 
-            resetButton.click();
+        const errorMessages = page.getErrorMessagesForInput('username');
+        expect(errorMessages.getText()).toBe('User not found');
+    });
 
-            const errorMessages = page.getErrorMessagesForInput('username');
-            expect(errorMessages.getText()).toBe('Required');
-        });
+    it('will show a validation message if user does not have an email', () => {
+        const resetButton = page.getElement('.card__actions--request-reset');
+        const username = page.getInput('username');
+        username.sendKeys('emailless-user');
 
-        it('will show a validation message if submitted with a user that does not exist', () => {
-            const resetButton = page.getElement('.card__actions--request-reset');
-            const username = page.getInput('username');
-            username.sendKeys('not-a-user');
+        resetButton.click();
 
-            resetButton.click();
+        const errorMessage = page.getErrorMessagesForInput('username');
+        expect(errorMessage.getText()).toBe('No email for this user');
+    });
 
-            const errorMessages = page.getErrorMessagesForInput('username');
-            expect(errorMessages.getText()).toBe('User not found');
-        });
+    it('will display success message after the user is sent a reset link', () => {
+        const username = page.getInput('username');
+        username.sendKeys('testuser');
+        const resetButton = page.getElement('.card__actions--request-reset');
 
-        it('will show a validation message if user does not have an email', () => {
-            const resetButton = page.getElement('.card__actions--request-reset');
-            const username = page.getInput('username');
-            username.sendKeys('emailless-user');
+        resetButton.click();
 
-            resetButton.click();
-
-            const errorMessage = page.getErrorMessagesForInput('username');
-            expect(errorMessage.getText()).toBe('No email for this user');
-        });
-
-        it('will display success message after the user is sent a reset link', () => {
-            const username = page.getInput('username');
-            username.sendKeys('testuser');
-            const resetButton = page.getElement('.card__actions--request-reset');
-
-            resetButton.click();
-
-            const confirmation = page.getElement('.card__actions__confirmation');
-            expect(confirmation.isDisplayed()).toBeTruthy();
-        });
-    }
+        const confirmation = page.getElement('.card__actions__confirmation');
+        expect(confirmation.isDisplayed()).toBeTruthy();
+    });
 });
 
 class RequestPasswordResetPage {

@@ -14,7 +14,7 @@ import { ValidatableForm, ValidationBuilder } from '../../../src';
 })
 export class ValidatorsDemoComponent implements OnInit {
     model: ValidationModel;
-    form: ValidatableForm;
+    form: ValidatableForm<ValidationModel>;
 
     constructor(private validationBuilder: ValidationBuilder) { }
 

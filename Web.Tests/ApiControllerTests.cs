@@ -11,7 +11,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using lvl.TestWebSite.Fixtures;
 using Xunit;
-using lvl.Web.Authorization;
 
 namespace lvl.Web.Tests
 {
@@ -401,7 +400,6 @@ namespace lvl.Web.Tests
             };
 
             var deleteResult = await Client.SendAsync(deletingMessage);
-            var deleteSerialized = await deleteResult.Content.ReadAsStringAsync();
 
             Assert.False(deleteResult.IsSuccessStatusCode);
         }

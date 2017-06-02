@@ -13,7 +13,8 @@ export class HeadersService {
     public getHeaders() {
         return new Headers({
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'Data-Type': 'json'
         });
     }
 }

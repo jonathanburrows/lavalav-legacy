@@ -40,5 +40,5 @@
 
 <section class="screen">
     <!-- Important: due to a bug in angular, make sure a selector is applied, otherwise it will render the root app twice. -->
-    <ng-content select="router-outlet"></ng-content>
+    <ng-content select=":not(lvl-layout)"></ng-content>
 </section>

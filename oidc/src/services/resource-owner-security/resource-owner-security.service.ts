@@ -16,10 +16,49 @@ import { TokenRequestOptions } from './token-request-options';
 @Injectable()
 export class ResourceOwnerSecurityService extends SecurityService {
     /**
+     *  Location on where to return to after authentication is complete.
+     *  @remarks - In order to populate, a call must be made to /connect/userinfo
+     */
+    private userInfoKey = 'oidc:userInfo';
+    private _userInfo: { [key: string]: any };
+    public get userInfo(): { [key: string]: any } {
+        if (!this._userInfo) {
+            const storedUserInfo = this.storageService.getItem(this.userInfoKey);
+            this._userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+        }
+
+        return this._userInfo;
+    }
+    public set userInfo(value: { [key: string]: any }) {
+        this._userInfo = value;
+
+        if (value) {
+            this.storageService.setItem(this.userInfoKey, JSON.stringify(value));
+        } else {
+            this.storageService.removeItem(this.userInfoKey);
+        }
+    }
+
+    private updateUserInfo() {
+        const userInfoUrl = `${this.oidcOptions.authorizationServerUrl}/connect/userinfo`;
+        // HeadersService was explicitly not used to cause to cause less of a mangled dependencies.
+        const userInfoHeaders = new Headers({
+            'Authorization': `Bearer ${this.tokenService.bearerToken.access_token}`
+        });
+
+        const request = this.http.get(userInfoUrl, { headers: userInfoHeaders }).map(response => response.json());
+        request.subscribe(userInfo => this.userInfo = userInfo);
+        return request;
+    }
+
+    /**
      *  Saves the current url for the return trip, then navigates to the logic screen.
      */
     public redirectToLogin() {
-        this.postLoginRedirectUrl = this.router.routerState.snapshot.url;
+        const loginUrl = '/oidc/sign-in';
+        const currentUrl = this.router.routerState.snapshot.url;
+        this.postLoginRedirectUrl = loginUrl === currentUrl ? '/' : loginUrl;
+
         this.router.navigate(['/oidc/sign-in']);
     }
 
@@ -42,7 +81,12 @@ export class ResourceOwnerSecurityService extends SecurityService {
         const request = this.requestToken(loginOptions);
         request.subscribe(bearerToken => {
             this.tokenService.bearerToken = bearerToken;
-            this.router.navigate([this.postLoginRedirectUrl]);
+
+            this.updateUserInfo().subscribe(_ => {
+                const redirectUri = this.postLoginRedirectUrl === '/oidc/sign-in' ? '/' : this.postLoginRedirectUrl;
+
+                this.router.navigate([redirectUri]);
+            });
         });
         return request;
     }

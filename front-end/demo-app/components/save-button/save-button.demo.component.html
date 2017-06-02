@@ -1,0 +1,21 @@
+﻿<lvl-content>
+    <lvl-content-title>Tests for the Save Button</lvl-content-title>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <lvl-content-body>
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>send</md-icon>
+                <input mdInput placeholder="Name" formControlName="name" />
+                <md-error>{{form.modelErrors.name}}</md-error>
+            </md-input-container>
+
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>child_friendly</md-icon>
+                <input mdInput placeholder="Type" formControlName="type" />
+                <md-error>{{form.modelErrors.type}}</md-error>
+            </md-input-container>
+
+            <lvl-save-button [formGroup]="form"></lvl-save-button>
+        </lvl-content-body>
+    </form>
+</lvl-content>

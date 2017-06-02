@@ -57,7 +57,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
             Name = name ?? throw new ArgumentNullException(nameof(name));
             DisplayName = displayName ?? throw new ArgumentNullException(nameof(displayName));
 
-            Scopes = new[]
+            Scopes = new HashSet<ScopeEntity>
             {
                 new ScopeEntity{ Name = Name, DisplayName = DisplayName }
             };

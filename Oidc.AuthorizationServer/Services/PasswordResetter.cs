@@ -41,7 +41,7 @@ namespace lvl.Oidc.AuthorizationServer.Services
             {
                 throw new InvalidOperationException($"No user found with username '{username}'");
             }
-            if (!user.Claims.Any(c => c.Type == JwtClaimTypes.Email))
+            if (user.Claims.All(c => c.Type != JwtClaimTypes.Email))
             {
                 throw new InvalidOperationException($"'{username}' does not have a registered email.");
             }

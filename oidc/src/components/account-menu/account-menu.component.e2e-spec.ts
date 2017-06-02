@@ -63,6 +63,22 @@ describe('e2e AccountMenuComponent', () => {
             expect(menu.isDisplayed()).toBeTruthy();
         });
 
+        it('will redirect the user to the personal details page once the personal details button is pressed', () => {
+            const splashPage = new SplashPage();
+            splashPage.navigateTo();
+            splashPage.signIn();
+            const menuButton = splashPage.getElement('.menu__icon');
+            menuButton.click();
+
+            const personalDetailsButton = splashPage.getElement('.menu__personal-details');
+            // timeout so the menu can open, the wait isnt working for it.
+            browser.wait(protractor.ExpectedConditions.elementToBeClickable(personalDetailsButton), 2000);
+
+            personalDetailsButton.click();
+
+            expect(browser.getCurrentUrl()).toContain('oidc/personal-details');
+        });
+
         it('will have a signout action', () => {
             const splashPage = new SplashPage();
             splashPage.navigateTo();

@@ -1,5 +1,6 @@
 ﻿export * from './bearer-headers';
 export * from './oidc-options';
+export * from './personal-details';
 export * from './recover-username';
 export * from './reset-password';
 export * from './resource-owner-security';

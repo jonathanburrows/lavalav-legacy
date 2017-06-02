@@ -3,7 +3,6 @@ using lvl.Oidc.AuthorizationServer.Stores;
 using lvl.Oidc.AuthorizationServer.Tests.Fixtures;
 using lvl.Repositories;
 using lvl.TestWebSite.Fixtures;
-using lvl.Web.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Collections.Generic;

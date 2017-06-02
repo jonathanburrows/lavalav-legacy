@@ -1,10 +1,8 @@
 ﻿using lvl.Repositories;
-using lvl.Web.Authorization;
 using lvl.Web.OData;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace lvl.Web.Controllers

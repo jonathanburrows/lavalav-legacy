@@ -32,6 +32,18 @@
     .accent-font {
         color: $accent-text;
     }
+
+    .primary-font {
+        $primary: map-get($theme, primary);
+        $primary-text: mat-color($primary, 500);
+        color: $primary-text;
+    }
+
+    .warning-font {
+        $warn: map-get($theme, warn);
+        $warn-text: mat-color($warn);
+        color: $warn-text;
+    }
 }
 
 body {
@@ -39,6 +51,13 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     @media screen and (max-width: $landscape-min-width) {
         background-color: white;

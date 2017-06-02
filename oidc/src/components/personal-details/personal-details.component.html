@@ -1,0 +1,45 @@
+﻿<lvl-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <lvl-content-title>Edit Your Profile</lvl-content-title>
+
+        <lvl-content-body class="inputs">
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>email</md-icon>
+                <input mdInput placeholder="Email" formControlName="email" type="email" />
+                <md-error>{{form.modelErrors.email}}</md-error>
+            </md-input-container>
+
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>child_friendly</md-icon>
+                <input mdInput placeholder="First Name" formControlName="firstName" />
+                <md-error>{{form.modelErrors.firstName}}</md-error>
+            </md-input-container>
+
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>wc</md-icon>
+                <input mdInput placeholder="Last Name" formControlName="lastName" />
+                <md-error>{{form.modelErrors.lastName}}</md-error>
+            </md-input-container>
+
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>phone</md-icon>
+                <input mdInput placeholder="Phone" formControlName="phoneNumber" type="number" />
+                <md-error>{{form.modelErrors.phoneNumber}}</md-error>
+            </md-input-container>
+
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>work</md-icon>
+                <input mdInput placeholder="What do you do" formControlName="job" />
+                <md-error>{{form.modelErrors.job}}</md-error>
+            </md-input-container>
+
+            <md-input-container>
+                <md-icon md-prefix lvl-content-avatar>my_location</md-icon>
+                <input mdInput placeholder="Location" formControlName="location" />
+                <md-error>{{form.modelErrors.location}}</md-error>
+            </md-input-container>
+
+            <lvl-save-button [formGroup]="form" class="save-button"></lvl-save-button>
+        </lvl-content-body>
+    </form>
+</lvl-content>
