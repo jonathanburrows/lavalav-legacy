@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { ValidatableForm, ValidationBuilder } from '@lvl/front-end';
+import { Navigatable, ValidatableForm, ValidationBuilder } from '@lvl/front-end';
 import { RecoverUsernameViewModel } from './recover-username-view-model';
 import { RecoverUsernameService } from '../../services';
 
@@ -11,6 +11,10 @@ import { RecoverUsernameService } from '../../services';
     selector: 'lvl-oidc-recover-username',
     templateUrl: 'recover-username.component.html',
     styleUrls: ['recover-username.component.scss']
+})
+@Navigatable({
+    hideInMenu: true,
+    title: 'Recover Username'
 })
 export class RecoverUsernameComponent implements OnInit {
     model: RecoverUsernameViewModel;

@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityModel;
+using IdentityServer4.Models;
 using lvl.Oidc.AuthorizationServer.Models;
 using lvl.Repositories;
 using System;
@@ -10,11 +11,11 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
     /// <summary>
     ///     Utility to add all data required for the authorization server to run.
     /// </summary>
-    public class ManditoryDataSeeder
+    public class OidcManditoryDataSeeder
     {
         private IRepository<IdentityResourceEntity> IdentityResourceRepository { get; }
 
-        public ManditoryDataSeeder(IRepository<IdentityResourceEntity> identityResourceRepository)
+        public OidcManditoryDataSeeder(IRepository<IdentityResourceEntity> identityResourceRepository)
         {
             IdentityResourceRepository = identityResourceRepository ?? throw new ArgumentNullException(nameof(identityResourceRepository));
         }
@@ -27,7 +28,14 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
             var identityResources = new[]
             {
                 IdentityResourceEntity.FromIdentityServer(new IdentityResources.OpenId()),
-                IdentityResourceEntity.FromIdentityServer(new IdentityResources.Profile())
+                IdentityResourceEntity.FromIdentityServer(new IdentityResources.Profile()),
+                IdentityResourceEntity.FromIdentityServer(new IdentityResources.Email()),
+                new IdentityResourceEntity
+                {
+                    Name = JwtClaimTypes.Role,
+                    DisplayName = "Roles",
+                    UserClaims = { new UserClaim { Name = JwtClaimTypes.Role} }
+                }
             };
 
             var existingIdentityResources = await IdentityResourceRepository.GetAsync();

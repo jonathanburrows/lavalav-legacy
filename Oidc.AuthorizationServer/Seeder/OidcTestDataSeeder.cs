@@ -13,13 +13,13 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
     /// <summary>
     ///     A utility to add data which is used for testing and development.
     /// </summary>
-    public class TestDataSeeder
+    public class OidcTestDataSeeder
     {
         private UserStore UserStore { get; }
         private IRepository<ApiResourceEntity> ApiResourceRepository { get; }
         private IRepository<ClientEntity> ClientRepository { get; }
 
-        public TestDataSeeder(UserStore userStore, IRepository<ApiResourceEntity> apiResourceRepository, IRepository<ClientEntity> clientRepository)
+        public OidcTestDataSeeder(UserStore userStore, IRepository<ApiResourceEntity> apiResourceRepository, IRepository<ClientEntity> clientRepository)
         {
             UserStore = userStore ?? throw new ArgumentNullException(nameof(userStore));
             ApiResourceRepository = apiResourceRepository ?? throw new ArgumentNullException(nameof(apiResourceRepository));
@@ -47,6 +47,19 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                         new ClaimEntity{ Type = JwtClaimTypes.FamilyName, Value = "burrows" },
                         new ClaimEntity{ Type = JwtClaimTypes.GivenName, Value = "jonathan" },
                         new ClaimEntity{ Type = JwtClaimTypes.Email, Value = "testuser@lavalav.com" }
+                    }
+                },
+                new User
+                {
+                    SubjectId = "testadmin@lavalav.com",
+                    Username = "testadmin",
+                    HashedPassword = "password",
+                    Claims = new []
+                    {
+                        new ClaimEntity{ Type = JwtClaimTypes.FamilyName, Value = "burrows" },
+                        new ClaimEntity{ Type = JwtClaimTypes.GivenName, Value = "jonathan" },
+                        new ClaimEntity{ Type = JwtClaimTypes.Email, Value = "testadmin@lavalav.com" },
+                        new ClaimEntity{ Type = JwtClaimTypes.Role, Value = "administrator" }
                     }
                 },
                 new User
@@ -98,32 +111,6 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
             {
                 new ClientEntity
                 {
-                    ClientId = "test-implicit-client",
-                    ClientName = "Test implicit client",
-                    ClientUri = "http://localhost:0000",
-                    ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
-                    AllowedGrantTypes = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }).ToList(),
-
-                    RequireConsent = true,
-                    AllowAccessTokensViaBrowser = true,
-                    AlwaysIncludeUserClaimsInIdToken = true,
-                    AlwaysSendClientClaims = true,
-                    AllowOfflineAccess = true,
-                    UpdateAccessTokenClaimsOnRefresh = true,
-
-                    RedirectUris = new []{ new RedirectUri { Name = "http://localhost:0000" } },
-                    PostLogoutRedirectUris = new []{ new PostLogoutRedirectUri { Name = "http://localhost:0000" } },
-                    AllowedCorsOrigins = new []{ new CorsOrigin { Name = "http://localhost:0000" } },
-                    LogoutUri = "http://localhost:0000",
-                    AllowedScopes = new []
-                    {
-                        new AllowedScope { Name = "test-resource-server" },
-                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.OpenId },
-                        new AllowedScope { Name = IdentityServerConstants.StandardScopes.Profile }
-                    }
-                },
-                new ClientEntity
-                {
                     ClientId = "test-resource-owner-client",
                     ClientName = "Test Resource Owner Client",
                     ClientSecrets = new [] { new SecretEntity { Value = "secret".Sha256() } },
@@ -148,10 +135,12 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.OpenId },
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.OfflineAccess},
                         new AllowedScope { Name = IdentityServerConstants.StandardScopes.Profile },
-                        new AllowedScope { Name = "email" },
-                        new AllowedScope { Name = "name" },
-                        new AllowedScope { Name = "roles" }
-                    }
+                        new AllowedScope { Name = JwtClaimTypes.Email },
+                        new AllowedScope { Name = JwtClaimTypes.Name },
+                        new AllowedScope { Name = JwtClaimTypes.Role }
+                    },
+                    AlwaysSendClientClaims = true,
+                    UpdateAccessTokenClaimsOnRefresh = true
                 }
             };
 

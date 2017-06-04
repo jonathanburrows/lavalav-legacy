@@ -1,6 +1,10 @@
 ﻿import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { FrontEndModule, HeadersService } from '@lvl/front-end';
+import {
+    FrontEndModule,
+    HeadersService,
+    Navigation
+} from '@lvl/front-end';
 import {
     AccountMenuComponent,
     PersonalDetailComponents,
@@ -13,6 +17,7 @@ import {
 import { oidcRouterModule } from './oidc.router.module';
 import {
     BearerHeadersService,
+    OidcNavigationService,
     OidcOptions,
     PersonalDetailsService,
     RecoverUsernameService,
@@ -29,6 +34,7 @@ import {
 @NgModule({
     providers: [
         { provide: HeadersService, useClass: BearerHeadersService },
+        { provide: Navigation, useClass: OidcNavigationService },
         PersonalDetailsService,
         RecoverUsernameService,
         ResetPasswordService,

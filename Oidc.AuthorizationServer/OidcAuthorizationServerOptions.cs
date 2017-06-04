@@ -1,6 +1,7 @@
 ﻿using lvl.Oidc.AuthorizationServer.ViewModels;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Linq;
 
 // ReSharper disable once CheckNamespace In compliance with Microsoft's conventions.
 namespace Microsoft.Extensions.DependencyInjection
@@ -36,11 +37,17 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </remarks>
         public ExternalApplicationInformation Facebook { get; set; }
 
+        /// <summary>
+        ///     Will assign each new user the given roles.
+        /// </summary>
+        public IEnumerable<string> NewUserRoles { get; set; } = Enumerable.Empty<string>();
+
         public OidcAuthorizationServerOptions() { }
 
         public OidcAuthorizationServerOptions(IConfiguration configuration)
         {
             configuration.GetSection("oidc:authorization-server").Bind(this);
+            NewUserRoles = configuration.GetSection($"oidc:authorization-server:{nameof(NewUserRoles)}").GetChildren().Select(c => c.Value);
         }
     }
 }

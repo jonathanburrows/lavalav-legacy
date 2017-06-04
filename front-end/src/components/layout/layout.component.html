@@ -6,18 +6,23 @@
         <span class="side-nav__header__title">{{siteTitle}}</span>
     </header>
 
-    <nav class="side-nav__group" *ngFor="let group of routeGroups">
-        <header class="side-nav__group__title">{{group.group}}</header>
+    <nav class="side-nav__group" *ngFor="let groupName of menu | keys">
+        <header class="side-nav__group__title">{{groupName}}</header>
 
-        <section *ngFor="let route of group.routes" class="side-nav__group__item" routerLinkActive="active" routerLink="/{{route.path}}">
-            <md-icon *ngIf="route.data.icon"
+        <section *ngFor="let navigationItem of menu[groupName]" 
+                 class="side-nav__group__item" 
+                 routerLinkActive="active" 
+                 routerLink="/{{navigationItem.route.path}}">
+
+            <md-icon *ngIf="navigationItem.info.icon"
                      class="side-nav__group__item__icon"
-                     [class.side-nav__group__item__icon--selected]="selectedRoute === route">
-                {{route.data.icon}}
+                     [class.side-nav__group__item__icon--selected]="router.isActive(navigationItem.route.path, false)">
+                {{navigationItem.info.icon}}
             </md-icon>
+
             <span class="side-nav__group__item__text"
-                  [class.side-nav__group__item__title--selected]="selectedRoute === route">
-                {{route.data.title}}
+                  [class.side-nav__group__item__title--selected]="router.isActive(navigationItem.route.path, false)">
+                {{navigationItem.info.title}}
             </span>
         </section>
     </nav>
@@ -30,7 +35,7 @@
     <md-toolbar-row class="toolbar__row">
         <md-icon class="toolbar__menu-icon" (click)="openSideNav()">menu</md-icon>
 
-        <header class="toolbar__title">{{selectedRoute?.data?.title}}</header>
+        <header class="toolbar__title">{{navigationService.getActiveNavigationItem()?.info?.title}}</header>
 
         <div class="toolbar__filler"></div>
 

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
 import { environment } from './environments';
-import { FrontEndModule } from '../src';
+import { FrontEndModule, Navigation } from '../src';
 import {
     ContentDemoComponent,
     LayoutDemoComponent,
@@ -30,11 +30,11 @@ const frontEndGroup = 'Front End';
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-save-button' },
-            { path: 'component/lvl-layout', component: LayoutDemoComponent, data: { title: 'Layout', icon: 'subject', showInNavigation: true, group: frontEndGroup } },
-            { path: 'component/lvl-validators', component: ValidatorsDemoComponent, data: { title: 'Validators', icon: 'spellcheck', showInNavigation: true, group: frontEndGroup } },
-            { path: 'component/lvl-content', component: ContentDemoComponent, data: { title: 'Content', icon: 'content_copy', showInNavigation: true, group: frontEndGroup } },
-            { path: 'component/lvl-save-button', component: SaveButtonDemoComponent, data: { title: 'Save Button', icon: 'content_copy', showInNavigation: true, group: frontEndGroup } }
+            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-save-button', canActivate: [Navigation] },
+            { path: 'component/lvl-layout', component: LayoutDemoComponent, canActivate: [Navigation] },
+            { path: 'component/lvl-validators', component: ValidatorsDemoComponent, canActivate: [Navigation] },
+            { path: 'component/lvl-content', component: ContentDemoComponent, canActivate: [Navigation] },
+            { path: 'component/lvl-save-button', component: SaveButtonDemoComponent, canActivate: [Navigation] }
         ]),
         FrontEndModule.useWithOptions(environment)
     ],

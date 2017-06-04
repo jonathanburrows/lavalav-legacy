@@ -5,6 +5,15 @@
 }
 
 .mat-input-container {
+
+    @media #{$portrait-screen} {
+        width: 100%;
+    }
+
+    @media #{$landscape-screen} {
+        width: 100%;
+    }
+
     @media #{$tablet-screen} {
         width: 50%;
     }

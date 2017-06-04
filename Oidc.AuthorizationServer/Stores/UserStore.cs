@@ -3,6 +3,7 @@ using lvl.Oidc.AuthorizationServer.Models;
 using lvl.Oidc.AuthorizationServer.Services;
 using lvl.Repositories;
 using lvl.Repositories.Querying;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,11 +20,13 @@ namespace lvl.Oidc.AuthorizationServer.Stores
     {
         private IRepository<User> UserRepository { get; }
         private PasswordHasher PasswordHasher { get; }
+        private OidcAuthorizationServerOptions Options { get; }
 
-        public UserStore(IRepository<User> userRepository, PasswordHasher passwordHasher)
+        public UserStore(IRepository<User> userRepository, PasswordHasher passwordHasher, OidcAuthorizationServerOptions options)
         {
             UserRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             PasswordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
+            Options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         /// <summary>
@@ -80,6 +83,8 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
         /// <summary>
         ///     Hases a user's password, then stores it in the repository.
+        ///     
+        ///     Will add claims for the username, and any roles specified in the OidcAuthorizationServerOptions.NewUserRoles
         /// </summary>
         /// <param name="adding">The user to be stored.</param>
         /// <exception cref="ArgumentNullException"><paramref name="adding"/> is null.</exception>
@@ -87,10 +92,16 @@ namespace lvl.Oidc.AuthorizationServer.Stores
         /// <returns>The given user with generated id.</returns>
         public async Task<User> AddUserAsync(User adding)
         {
-            if(adding == null)
+            if (adding == null)
             {
                 throw new ArgumentNullException(nameof(adding));
             }
+
+            var existingClaims = adding.Claims ?? new ClaimEntity[0];
+            var usernameClaim = new ClaimEntity { Type = JwtClaimTypes.Name, Value = adding.Username };
+            var defaultClaims = Options.NewUserRoles.Select(role => new ClaimEntity { Type = JwtClaimTypes.Role, Value = role });
+
+            adding.Claims = existingClaims.Union(new[] { usernameClaim }).Union(defaultClaims).ToList();
 
             adding.Salt = PasswordHasher.GetSalt();
             adding.HashedPassword = PasswordHasher.Hash(adding.HashedPassword, adding.Salt);
@@ -132,6 +143,8 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
         /// <summary>
         ///     Adds a user which will be authenticated by the oidc server.
+        ///     
+        ///     Will add claims for the username, and any roles specified in the OidcAuthorizationServerOptions.NewUserRoles
         /// </summary>
         /// <param name="username">The username which will be given to the added user.</param>
         /// <param name="password">The password which will be hashed and stored.</param>
@@ -157,7 +170,9 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 throw new InvalidOperationException("Username already taken");
             }
 
-            var claims = new[] { new ClaimEntity { Type = JwtClaimTypes.Name, Value = username } };
+            var defaultClaims = Options.NewUserRoles.Select(role => new ClaimEntity { Type = JwtClaimTypes.Role, Value = role });
+            var usernameClaim = new ClaimEntity { Type = JwtClaimTypes.Name, Value = username };
+            var claims = defaultClaims.Union(new[] { usernameClaim }).ToList();
 
             var salt = PasswordHasher.GetSalt();
             var hashedPassword = PasswordHasher.Hash(password, salt);
@@ -170,6 +185,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 Username = username,
                 Claims = claims
             };
+
             await UserRepository.CreateAsync(user);
 
             return user;
@@ -177,6 +193,8 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
         /// <summary>
         ///     Will create a user for an account authenticated by a external provider (like facebook).
+        ///     
+        ///     Will add claims for the username, and any roles specified in the OidcAuthorizationServerOptions.NewUserRoles
         /// </summary>
         /// <param name="provider">The provider which authenticate the user.</param>
         /// <param name="userId">The unique (for the provider) identifier of the user</param>
@@ -219,7 +237,9 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 Type = c.Type,
                 Value = c.Value,
                 ValueType = c.ValueType
-            }).ToList();
+            });
+            var defaultClaims = Options.NewUserRoles.Select(role => new ClaimEntity { Type = JwtClaimTypes.Role, Value = role });
+            var allClaims = claimEntities.Union(defaultClaims).ToList();
 
             var externalUser = new User
             {
@@ -227,7 +247,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 Username = username,
                 ProviderName = provider,
                 ProviderSubjectId = userId,
-                Claims = claimEntities
+                Claims = allClaims
             };
 
             await UserRepository.CreateAsync(externalUser);

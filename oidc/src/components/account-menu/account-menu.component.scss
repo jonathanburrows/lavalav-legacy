@@ -27,3 +27,7 @@
         width: 24px;
     }
 }
+
+.mat-menu-item[disabled]{
+    color: rgba(0, 0, 0, 0.54);
+}

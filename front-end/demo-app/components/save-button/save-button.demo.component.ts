@@ -1,11 +1,21 @@
 ﻿import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { Required, ValidationBuilder, ValidatableForm } from '../../../src';
+import {
+    Navigatable,
+    Required,
+    ValidationBuilder,
+    ValidatableForm
+} from '../../../src';
 
 @Component({
     selector: 'lvl-demo-save-button',
     templateUrl: 'save-button.demo.component.html'
+})
+@Navigatable({
+    group: 'Front End',
+    title: 'Save Button',
+    icon: 'content_copy'
 })
 export class SaveButtonDemoComponent implements OnInit {
     model: SaveButtonModel;

@@ -1,5 +1,23 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+﻿import {
+    Component,
+    Input,
+    OnInit
+} from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import {
+    ActivatedRoute,
+    NavigationEnd,
+    NavigationError,
+    Route,
+    Router
+} from '@angular/router';
+
+import { NavigatableMetadata } from '../../decorators';
+import {
+    NavigationItem,
+    Navigation,
+    Menu
+} from '../../services';
 
 /**
  *  Provides a common layout for navigation and the toolbar, so that the same structure can be re-used across projects.
@@ -20,12 +38,13 @@ export class LayoutComponent implements OnInit {
     showSearch = false;
 
     /* Determines what will show up in the side navigation panel. */
-    routeGroups: { group: string, routes: Route[] }[];
+    menu: Menu;
 
-    /* Used to control the highlighting and title. */
-    selectedRoute: Route;
-
-    constructor(private router: Router) {}
+    constructor(
+        private router: Router,
+        public activatedRoute: ActivatedRoute,
+        public navigationService: Navigation,
+        private title: Title) { }
 
     /**
      *  Will show navigation on smaller devices.
@@ -41,39 +60,20 @@ export class LayoutComponent implements OnInit {
         this.showSideNav = false;
     }
 
-    private updateSelectedRoute(route: any) {
-        const fullRoute: string = route.urlAfterRedirect || route.url;
-        const cleanRoute = fullRoute.startsWith('/') ? fullRoute.substr(1) : fullRoute;
-        this.selectedRoute = this.router.config.filter(r => r.path === cleanRoute)[0];
-        this.closeSideNav();
-    }
-
     ngOnInit() {
-        this.router.events.subscribe(this.updateSelectedRoute.bind(this));
-        this.updateRouteGroups();
-    }
-
-    /**
-     *  This was placed into a seperate method because having it called directly from a getter was causing an infinite loop.
-     *  @remarks - please fix the infinite loop issue, then remove this method.
-     */
-    private updateRouteGroups() {
-        const navigatableRoutes = this.router.config.filter(r => r.data && r.data['showInNavigation']);
-
-        const uniqueGroupNames = navigatableRoutes.map(r => <string>r.data['group']).filter((value, i, self) => self.indexOf(value) === i);
-
-        this.routeGroups = uniqueGroupNames.map(groupName => {
-            const routes = navigatableRoutes.filter(r => r.data['group'] === groupName);
-
-            if (!groupName) {
-                const routeDescriptions = routes.map(r => r.path).join(', ');
-                throw new Error(`The following urls were marked as navigatable, but have no group: ${routeDescriptions}`);
+        this.menu = this.navigationService.getMenu();
+        this.router.events.subscribe(args => {
+            if (args instanceof NavigationError) {
+                this.router.navigate(['/not-found']);
             }
+            if (args instanceof NavigationEnd) {
+                const navItem = this.navigationService.getActiveNavigationItem();
+                this.title.setTitle(`${navItem.info.title} - ${this.siteTitle}`);
+                this.closeSideNav();
 
-            return {
-                group: groupName,
-                routes: routes
-            };
+                // Sometimes changing the route will update the menu. Make sure it refreshes.
+                this.menu = this.navigationService.getMenu();
+            }
         });
     }
 }

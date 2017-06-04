@@ -3,6 +3,9 @@
         <md-icon>more_vert</md-icon>
     </button>
     <md-menu #menu="mdMenu">
+        <div md-menu-item disabled>
+            {{username}}
+        </div>
         <button md-menu-item routerLink="oidc/personal-details" class="menu__personal-details">
             <md-icon>person_outline</md-icon>
             <span>Personal Details</span>

@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { ValidatableForm, ValidationBuilder } from '@lvl/front-end';
+import { Navigatable, ValidatableForm, ValidationBuilder } from '@lvl/front-end';
 import { SecurityService } from '../../services';
 import { Credentials } from '../../services';
 
@@ -8,6 +8,10 @@ import { Credentials } from '../../services';
     selector: 'lvl-oidc-resource-owner-sign-in',
     templateUrl: 'resource-owner-sign-in.component.html',
     styleUrls: ['resource-owner-sign-in.component.scss']
+})
+@Navigatable({
+    hideInMenu: true,
+    title: 'Sign-in'
 })
 export class ResourceOwnerSigninComponent implements OnInit {
     form: ValidatableForm<Credentials>;

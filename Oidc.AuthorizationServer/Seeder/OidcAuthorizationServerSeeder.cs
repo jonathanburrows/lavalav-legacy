@@ -13,12 +13,12 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
     /// </remarks>
     public class OidcAuthorizationServerSeeder
     {
-        private ManditoryDataSeeder ManditoryDataSeeder { get; }
-        private TestDataSeeder TestDataSeeder { get; }
+        private OidcManditoryDataSeeder ManditoryDataSeeder { get; }
+        private OidcTestDataSeeder TestDataSeeder { get; }
         private OidcAuthorizationServerOptions Options { get; }
         private Impersonator Impersonator { get; }
 
-        public OidcAuthorizationServerSeeder(ManditoryDataSeeder manditoryDataSeeder, TestDataSeeder testDataSeeder, OidcAuthorizationServerOptions options, Impersonator impersonator)
+        public OidcAuthorizationServerSeeder(OidcManditoryDataSeeder manditoryDataSeeder, OidcTestDataSeeder testDataSeeder, OidcAuthorizationServerOptions options, Impersonator impersonator)
         {
             ManditoryDataSeeder = manditoryDataSeeder ?? throw new ArgumentNullException(nameof(manditoryDataSeeder));
             TestDataSeeder = testDataSeeder ?? throw new ArgumentNullException(nameof(testDataSeeder));

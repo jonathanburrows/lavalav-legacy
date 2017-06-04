@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { ValidatableForm, ValidationBuilder } from '@lvl/front-end';
+import { Navigatable, ValidatableForm, ValidationBuilder } from '@lvl/front-end';
 import { RequestResetPasswordViewModel } from './request-reset-password-view-model';
 import { ResetPasswordService } from '../../services';
 
@@ -8,6 +8,10 @@ import { ResetPasswordService } from '../../services';
     selector: 'lvl-oidc-request-reset-password',
     templateUrl: 'request-reset-password.component.html',
     styleUrls: ['request-reset-password.component.scss']
+})
+@Navigatable({
+    hideInMenu: true,
+    title: 'Reset Password'
 })
 export class RequestResetPasswordComponent implements OnInit {
     model: RequestResetPasswordViewModel;

@@ -12,32 +12,46 @@ import {
     ContentBodyDirective,
     ContentSubtitleDirective,
     ContentTitleDirective,
+    ForbiddenComponent,
     LayoutComponent,
+    NotFoundComponent,
     SaveButtonComponent,
     SearchActionComponent
 } from './components';
+
+import { frontEndRouterModule } from './front-end.router.module';
+
+import { KeysPipe } from './pipes';
 
 import {
     ApiService,
     FrontEndOptions,
     HeadersService,
     LocalStorageService,
+    Navigation,
     StorageService,
     ValidationBuilder
 } from './services';
 
 @NgModule({
     declarations: [
+        // components
         ContentComponent,
         ContentAvatarDirective,
         ContentBodyDirective,
         ContentSubtitleDirective,
         ContentTitleDirective,
+        ForbiddenComponent,
         LayoutComponent,
+        NotFoundComponent,
         SaveButtonComponent,
-        SearchActionComponent
+        SearchActionComponent,
+
+        // pipes
+        KeysPipe
     ],
     exports: [
+        // components
         ContentComponent,
         ContentAvatarDirective,
         ContentBodyDirective,
@@ -56,12 +70,14 @@ import {
         ApiService,
         HeadersService,
         { provide: StorageService, useClass: LocalStorageService },
+        Navigation,
         ValidationBuilder
     ],
     imports: [
         BrowserAnimationsModule,
         CommonModule,
         FormsModule,
+        frontEndRouterModule,
         HttpModule,
         MaterialModule,
         ReactiveFormsModule,

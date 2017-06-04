@@ -1,5 +1,6 @@
 ﻿import { RouterModule } from '@angular/router';
 
+import { Navigation } from '@lvl/front-end';
 import {
     PersonalDetailComponents,
     RecoverUsernameComponent,
@@ -10,10 +11,10 @@ import {
 } from './components';
 
 export const oidcRouterModule = RouterModule.forChild([
-    { path: 'oidc/sign-in', component: ResourceOwnerSigninComponent },
-    { path: 'oidc/recover-username', component: RecoverUsernameComponent },
-    { path: 'oidc/register-account', component: RegisterAccountComponent },
-    { path: 'oidc/request-reset-password', component: RequestResetPasswordComponent },
-    { path: 'oidc/single-signout', component: SingleSignoutComponent },
-    { path: 'oidc/personal-details', component: PersonalDetailComponents }
+    { path: 'oidc/sign-in', component: ResourceOwnerSigninComponent, canActivate: [Navigation] },
+    { path: 'oidc/recover-username', component: RecoverUsernameComponent, canActivate: [Navigation] },
+    { path: 'oidc/register-account', component: RegisterAccountComponent, canActivate: [Navigation] },
+    { path: 'oidc/request-reset-password', component: RequestResetPasswordComponent, canActivate: [Navigation] },
+    { path: 'oidc/single-signout', component: SingleSignoutComponent, canActivate: [Navigation] },
+    { path: 'oidc/personal-details', component: PersonalDetailComponents, canActivate: [Navigation] }
 ]);

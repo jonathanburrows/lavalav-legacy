@@ -7,11 +7,11 @@ Provide a menu for navigating to account forms which works on all devices, so th
 
 ## Syntax
 Intended to be used in a lvl-layout, and decorated with lvl-toolbar-action.
-```
+```html
 <lvl-layout>
 	<lvl-oidc-account-menu lvl-toolbar-action></lvl-oidc-account-menu>
 </lvl-layout>
-
+```
 
 
 ## Requirements

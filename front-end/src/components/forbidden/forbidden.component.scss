@@ -1,0 +1,40 @@
+﻿@import '../../styles/front-end.variables';
+
+.forbidden {
+    &__title {
+    }
+
+    &__body {
+        @media #{$portrait-screen} {
+            font-size: map-get($portrait, content-title-font-size);
+        }
+
+        @media #{$landscape-screen} {
+            font-size: map-get($landscape, content-title-font-size);
+        }
+
+        @media #{$tablet-screen} {
+            font-size: map-get($tablet, content-title-font-size);
+        }
+    }
+
+    &__icon {
+        @media #{$portrait-screen} {
+            display: block;
+            font-size: 62vw;
+            margin-top: 5vw;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media #{$landscape-screen} {
+            display: none;
+        }
+
+        @media #{$tablet-screen} {
+            display: block;
+            margin: 32px 0 0 72px;
+            font-size: 10em;
+        }
+    }
+}

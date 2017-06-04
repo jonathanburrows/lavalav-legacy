@@ -54,10 +54,8 @@ export class ResourceOwnerSecurityService extends SecurityService {
     /**
      *  Saves the current url for the return trip, then navigates to the logic screen.
      */
-    public redirectToLogin() {
-        const loginUrl = '/oidc/sign-in';
-        const currentUrl = this.router.routerState.snapshot.url;
-        this.postLoginRedirectUrl = loginUrl === currentUrl ? '/' : loginUrl;
+    public redirectToLogin(returnUrl: string) {
+        this.postLoginRedirectUrl = returnUrl || '/';
 
         this.router.navigate(['/oidc/sign-in']);
     }
@@ -123,7 +121,7 @@ export class ResourceOwnerSecurityService extends SecurityService {
         tokenOptions.client_id = this.oidcOptions.clientId;
         tokenOptions.client_secret = this.oidcOptions.clientSecret;
 
-        const defaultScopes = ['openid', 'profile', 'offline_access'];
+        const defaultScopes = ['openid', 'profile', 'offline_access', 'email', 'role'];
         tokenOptions.scope = defaultScopes.concat(this.oidcOptions.scopes).join(' ');
 
         const url = `${this.oidcOptions.authorizationServerUrl}/connect/token`;

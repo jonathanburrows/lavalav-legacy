@@ -65,7 +65,7 @@ export abstract class SecurityService {
     /**
      *  Redirects the user to a login page where they can enter their credentials.
      */
-    public abstract redirectToLogin();
+    public abstract redirectToLogin(returnUrl: string);
 
     /**
      *  Exchanges credentials or a access code for a token.

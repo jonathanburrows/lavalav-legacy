@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ValidatableForm, ValidationBuilder } from '@lvl/front-end';
+import { Navigatable, ValidatableForm, ValidationBuilder } from '@lvl/front-end';
 import {
     Credentials,
     SecurityService,
@@ -12,6 +12,10 @@ import {
     selector: 'lvl-oidc-register',
     templateUrl: 'register-account.component.html',
     styleUrls: ['register-account.component.scss']
+})
+@Navigatable({
+    hideInMenu: true,
+    title: 'Register Account'
 })
 export class RegisterAccountComponent implements OnInit {
     form: ValidatableForm<Credentials>;

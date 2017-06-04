@@ -2,8 +2,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FrontEndModule } from '@lvl/front-end';
 import {
+    FrontEndModule,
+    Navigation
+} from '@lvl/front-end';
+import {
+    AdminProtectedComponent,
     RootComponent,
     SecretComponent
 } from './components';
@@ -18,14 +22,16 @@ const oidcGroup = 'Openid';
 /* tslint:disable:max-line-length */
 @NgModule({
     declarations: [
+        AdminProtectedComponent,
         RootComponent,
         SecretComponent
     ],
     imports: [
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: '/demo/secret' },
-            { path: 'demo/secret', component: SecretComponent, data: { group: oidcGroup, title: 'Secret', icon: 'add_alert', showInNavigation: true } }
+            { path: '', pathMatch: 'full', redirectTo: '/demo/secret', canActivate: [Navigation] },
+            { path: 'demo/secret', component: SecretComponent, canActivate: [Navigation] },
+            { path: 'demo/admin-protected', component: AdminProtectedComponent, canActivate: [Navigation] }
         ]),
         BrowserModule,
         FrontEndModule.useWithOptions(environment),

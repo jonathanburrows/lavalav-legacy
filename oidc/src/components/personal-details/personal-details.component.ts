@@ -1,7 +1,16 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
-import { ValidationBuilder, ValidatableForm } from '@lvl/front-end';
-import { PersonalDetailsService, PersonalDetailsViewModel, TokenService } from '../../services';
+import {
+    Navigatable,
+    ValidationBuilder,
+    ValidatableForm
+} from '@lvl/front-end';
+import {
+    PersonalDetailsService,
+    PersonalDetailsViewModel,
+    TokenService
+} from '../../services';
 
 /**
  *  Allows users to modify their claims, so they can change what their identity is.
@@ -10,6 +19,10 @@ import { PersonalDetailsService, PersonalDetailsViewModel, TokenService } from '
     selector: 'lvl-oidc-personal-details',
     templateUrl: 'personal-details.component.html',
     styleUrls: ['personal-details.component.scss']
+})
+@Navigatable({
+    hideInMenu: true,
+    title: 'Personal Details'
 })
 export class PersonalDetailComponents {
     form: ValidatableForm<PersonalDetailsViewModel>;

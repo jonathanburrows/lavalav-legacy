@@ -1,4 +1,5 @@
 ﻿export * from './bearer-headers';
+export * from './oidc-navigation';
 export * from './oidc-options';
 export * from './personal-details';
 export * from './recover-username';

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
 import { SecurityService } from '../../services';
 
@@ -7,9 +7,14 @@ import { SecurityService } from '../../services';
     templateUrl: 'account-menu.component.html',
     styleUrls: ['account-menu.component.scss']
 })
-export class AccountMenuComponent implements OnInit {
-    constructor(public securityService: SecurityService) { }
+export class AccountMenuComponent {
+    get username() {
+        if (!this.securityService.isAuthorized) {
+            return null;
+        }
 
-    ngOnInit() {
+        return this.securityService.userInfo['name'];
     }
+
+    constructor(public securityService: SecurityService) { }
 }

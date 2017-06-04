@@ -34,19 +34,20 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.UserInteraction.LogoutUrl = "/oidc/logout";
                     o.UserInteraction.ConsentUrl = "/oidc/consent";
                 })
-                .AddTemporarySigningCredential()
+                .AddDeveloperSigningCredential()
                 .AddInMemoryCaching()
                 .AddCorsPolicyService<CorsPolicyService>()
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddClientStore<ClientStore>()
+                .AddProfileService<ClaimsProfileService>()
                 .AddResourceStore<ResourceStore>();
 
             serviceCollection
                 .AddAuthorization()
                 .AddScoped<PasswordHasher>()
                 .AddScoped<IActionContextAccessor, ActionContextAccessor>()
-                .AddScoped<ManditoryDataSeeder>()
-                .AddScoped<TestDataSeeder>()
+                .AddScoped<OidcManditoryDataSeeder>()
+                .AddScoped<OidcTestDataSeeder>()
                 .AddScoped<OidcAuthorizationServerSeeder>()
                 .AddScoped<UserStore>()
                 .AddScoped<UsernameRecoverer>()
