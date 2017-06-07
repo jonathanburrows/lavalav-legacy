@@ -79,6 +79,22 @@ describe('e2e AccountMenuComponent', () => {
             expect(browser.getCurrentUrl()).toContain('oidc/personal-details');
         });
 
+        it('will redirect the user to the change password page once the change password button is pressed', () => {
+            const splashPage = new SplashPage();
+            splashPage.navigateTo();
+            splashPage.signIn();
+            const menuButton = splashPage.getElement('.menu__icon');
+            menuButton.click();
+
+            const changePasswordButton = splashPage.getElement('.menu__change-password');
+            // timeout so the menu can open, the wait isnt working for it.
+            browser.wait(protractor.ExpectedConditions.elementToBeClickable(changePasswordButton), 2000);
+
+            changePasswordButton.click();
+
+            expect(browser.getCurrentUrl()).toContain('oidc/change-password');
+        });
+
         it('will have a signout action', () => {
             const splashPage = new SplashPage();
             splashPage.navigateTo();

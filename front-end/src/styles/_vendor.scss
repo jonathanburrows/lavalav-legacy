@@ -28,3 +28,7 @@ md-card-header .mat-card-header-text {
 .mat-input-error {
     text-align: right;
 }
+
+.mat-list .mat-list-item .mat-list-item-content {
+    padding: 0 !important;
+}

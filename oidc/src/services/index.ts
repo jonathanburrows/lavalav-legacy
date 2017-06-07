@@ -8,3 +8,4 @@ export * from './resource-owner-security';
 export * from './security';
 export * from './token';
 export * from './user';
+export * from './user-administration';

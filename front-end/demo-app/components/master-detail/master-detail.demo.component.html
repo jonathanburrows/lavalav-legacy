@@ -1,0 +1,22 @@
+﻿<lvl-master-detail>
+    <md-list lvl-master class="mat-elevation-z4">
+        <lvl-master-search [model]="{}"></lvl-master-search>
+
+        <md-list-item lvl-master-item [selected]="true">
+
+            <md-icon md-list-icon lvl-master-item-avatar>account_circle</md-icon>
+
+            <h2 md-line lvl-master-item-title>Name</h2>
+
+            <span md-line lvl-master-item-subtitle>Rawr</span>
+        </md-list-item>
+    </md-list>
+
+    <lvl-content lvl-detail>
+        <lvl-content-title>Random Form</lvl-content-title>
+
+        <lvl-content-body>
+            hello, world!
+        </lvl-content-body>
+    </lvl-content>
+</lvl-master-detail>

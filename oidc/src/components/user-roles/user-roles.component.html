@@ -1,0 +1,18 @@
+﻿<lvl-content lvl-detail>
+    <lvl-content-title>Edit User {{model.username}}</lvl-content-title>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <lvl-content-body>
+            <md-select placeholder="Roles"
+                       [multiple]="true"
+                       formControlName="selectedRoles"
+                       class="roles">
+
+                <md-option *ngFor="let availableRole of options.roles" [value]="availableRole">{{availableRole}}</md-option>
+
+            </md-select>
+
+            <lvl-save-button [formGroup]="form" class="save-button"></lvl-save-button>
+        </lvl-content-body>
+    </form>
+</lvl-content>

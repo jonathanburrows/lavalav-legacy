@@ -1,0 +1,133 @@
+﻿@import "../../styles/front-end.theme";
+
+$display-both-min-width: $desktop-min-width - map-get($tablet, side-nav-width);
+
+.lvl-master-detail {
+    align-content: stretch;
+    display: flex;
+}
+
+.lvl-master-detail .lvl-master {
+    @media #{$portrait-screen} {
+        padding-left: map-get($portrait, screen-padding);
+        padding-right: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        padding-left: map-get($landscape, screen-padding);
+        padding-right: map-get($landscape, screen-padding);
+    }
+
+    @media #{$tablet-screen} {
+        padding-left: map-get($tablet, screen-padding);
+        padding-right: map-get($tablet, screen-padding);
+    }
+
+    @media screen and (min-width: $display-both-min-width) {
+        /* Since the menu icon is hidden, align everything with the title. */
+        $avatar-width: map-get($tablet, avatar-column-width);
+        $screen-padding: map-get($tablet, screen-padding);
+        $content-padding: map-get($tablet, content-margin-top);
+        $padding-to-align-title: $avatar-width + (2 * $screen-padding);
+        padding-top: $screen-padding + $content-padding;
+        padding-left: $padding-to-align-title - 4px;
+        padding-right: $screen-padding;
+    }
+}
+
+.lvl-master {
+    background-color: white;
+    display: inline-block;
+
+    @media #{$portrait-screen} {
+        width: 100%;
+    }
+
+    @media #{$landscape-screen} {
+        width: 100%;
+    }
+
+    @media #{$tablet-screen} {
+        width: 100%;
+    }
+
+    @media screen and (min-width: $display-both-min-width) {
+        $toolbar-height: map-get($tablet, toolbar-height);
+        $padding-top: map-get($tablet, screen-padding) + map-get($tablet, content-margin-top);
+        height: calc(100vh - #{$toolbar-height + $padding-top});
+        padding-right: map-get($tablet, screen-padding);
+        overflow-y: auto;
+        width: map-get($tablet, master-width);
+        z-index: 4;
+    }
+
+    &-search {
+        &__wrapper {
+            width: 100%;
+        }
+
+        &__icon {
+            margin-left: 12px;
+            margin-right: 24px;
+            margin-top: -3px;
+        }
+    }
+
+    &-item {
+        cursor: pointer;
+
+        &-avatar {
+            color: rgba(0, 0, 0, 0.54);
+
+            $icon-size: 36px;
+            height: $icon-size !important;
+            width: $icon-size !important;
+            font-size: $icon-size !important;
+        }
+
+        &-subtitle {
+            color: rgba(0, 0, 0, 0.54);
+        }
+    }
+}
+
+.lvl-master:not(.lvl-master--empty) .lvl-master-empty {
+    display: none;
+}
+
+
+.lvl-detail {
+    display: inline-block;
+    padding-top: 8px;
+    flex: 1 1 auto;
+    vertical-align: top;
+
+    &.lvl-content {
+        @media screen and (min-width: $display-both-min-width) {
+            $title-height: map-get($tablet, content-title-height);
+            $title-font: map-get($tablet, content-title-font-size);
+            $screen-padding: map-get($tablet, screen-padding);
+            $differential: (($title-height - $title-font) / 2) + $screen-padding;
+
+            padding-right: $differential;
+            padding-left: $differential;
+            padding-top: map-get($tablet, screen-padding);
+        }
+    }
+}
+
+
+@media screen and (max-width: #{$display-both-min-width - 1px}) {
+    .lvl-master {
+        background-color: transparent;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    /* If an item is selected, the navigation list needs to be hidden on smaller screens. */
+    .lvl-master-detail--items-are-selected {
+        .lvl-master {
+            display: none;
+        }
+    }
+}

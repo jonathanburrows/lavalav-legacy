@@ -8,7 +8,8 @@ import { Navigatable } from '@lvl/front-end';
 })
 @Navigatable({
     group: 'Admin',
-    title: 'Admin Protected Page',
+    title: 'Admin Protected',
+    icon: 'gesture',
     roles: ['administrator']
 })
 export class AdminProtectedComponent { }

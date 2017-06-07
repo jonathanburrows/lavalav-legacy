@@ -22,7 +22,8 @@ import {
 })
 @Navigatable({
     hideInMenu: true,
-    title: 'Personal Details'
+    title: 'Personal Details',
+    roles: ['oidc']
 })
 export class PersonalDetailComponents {
     form: ValidatableForm<PersonalDetailsViewModel>;

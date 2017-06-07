@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { Navigatable, NavigatableMetadata } from '../../decorators';
+import 'reflect-metadata';
 
 /**
  *  Provides route guards, and generates menus.
@@ -29,9 +30,25 @@ export class Navigation implements CanActivate {
         return true;
     }
 
+    /**
+     *  Returns all menu items that arent flagged as hidden, and the user has permissions to.
+     */
     getMenu(): Menu {
         const navigatableRoutes = this.router.config.filter(route => {
-            return this.hasPermissions(route) && !this.componentAnnotation(route.component).hideInMenu;
+            if (!this.hasPermissions(route)) {
+                return false;
+            }
+
+            if (this.componentAnnotation(route.component).hideInMenu) {
+                return false;
+            }
+
+            // if the route requires parameters, it should not show on the menu.
+            if (route.path && route.path.indexOf(':') > -1) {
+                return false;
+            }
+
+            return true;
         });
 
         const navigationItems = navigatableRoutes.map(route => {
@@ -48,7 +65,9 @@ export class Navigation implements CanActivate {
     }
 
     getActiveNavigationItem(): NavigationItem {
-        const activeRoute = this.router.config.find(route => this.router.isActive(route.path, true));
+        const routes = this.router.config;
+        const activeRoute = routes.find(r => this.router.isActive(r.path, true)) || routes.find(r => this.router.isActive(r.path, false));
+
         if (!activeRoute) {
             return null;
         }

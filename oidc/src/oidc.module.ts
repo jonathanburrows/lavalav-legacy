@@ -7,13 +7,16 @@ import {
 } from '@lvl/front-end';
 import {
     AccountMenuComponent,
+    ChangePasswordComponent,
     PersonalDetailComponents,
     RecoverUsernameComponent,
     RegisterAccountComponent,
     RequestResetPasswordComponent,
     ResourceOwnerSigninComponent,
-    SingleSignoutComponent
- } from './components';
+    SingleSignoutComponent,
+    UserAdministrationComponent,
+    UserRolesComponent
+} from './components';
 import { oidcRouterModule } from './oidc.router.module';
 import {
     BearerHeadersService,
@@ -25,7 +28,8 @@ import {
     ResourceOwnerSecurityService,
     SecurityService,
     TokenService,
-    UserService
+    UserService,
+    UserAdministrationService
 } from './services';
 
 /**
@@ -39,25 +43,32 @@ import {
         RecoverUsernameService,
         ResetPasswordService,
         TokenService,
-        UserService
+        UserService,
+        UserAdministrationService
     ],
     declarations: [
         AccountMenuComponent,
+        ChangePasswordComponent,
         PersonalDetailComponents,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,
         ResourceOwnerSigninComponent,
-        SingleSignoutComponent
+        SingleSignoutComponent,
+        UserAdministrationComponent,
+        UserRolesComponent
     ],
     exports: [
         AccountMenuComponent,
+        ChangePasswordComponent,
         PersonalDetailComponents,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,
         ResourceOwnerSigninComponent,
-        SingleSignoutComponent
+        SingleSignoutComponent,
+        UserAdministrationComponent,
+        UserRolesComponent
     ],
     imports: [
         FrontEndModule,

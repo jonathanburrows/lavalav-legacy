@@ -278,7 +278,6 @@
     &__filler {
         flex: 1 1 auto;
     }
-
 }
 
 .screen {
@@ -286,33 +285,18 @@
 
     @media #{$portrait-screen} {
         padding-top: map-get($portrait, toolbar-height);
-        padding-left: map-get($portrait, screen-padding);
-        padding-right: map-get($portrait, screen-padding);
     }
 
     @media #{$landscape-screen} {
         padding-top: map-get($landscape, toolbar-height);
-        padding-left: map-get($landscape, screen-padding);
-        padding-right: map-get($landscape, screen-padding);
     }
 
     @media #{$tablet-screen} {
         padding-top: map-get($tablet, toolbar-height);
-        padding-left: map-get($tablet, screen-padding);
-        padding-right: map-get($tablet, screen-padding);
     }
 
     @media screen and (min-width: $desktop-min-width) {
-        /* Since the menu icon is hidden, align everything with the title. */
-        $avatar-width: map-get($tablet, avatar-column-width);
-        $screen-padding: map-get($tablet, screen-padding);
-        $padding-to-align-title: $avatar-width + (2 * $screen-padding);
         margin-left: map-get($tablet, side-nav-width);
-        margin-top: $screen-padding;
-
-        padding-left: $padding-to-align-title;
-        padding-right: $padding-to-align-title;
-
         transition: margin-left $swift-ease-out-duration $swift-ease-out-timing-function;
     }
 }

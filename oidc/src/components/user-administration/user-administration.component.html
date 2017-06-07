@@ -1,0 +1,24 @@
+﻿<lvl-master-detail>
+    <md-list lvl-master>
+
+        <lvl-master-search (submit)="applyFilter()" (change)="applyFilter()" [model]="searchModel"></lvl-master-search>
+
+        <!-- Show a line item for each user.-->
+        <md-list-item *ngFor="let user of users"
+                      (click)="selectUser(user.id)"
+                      lvl-master-item
+                      [selected]="user.id === selectedUserId">
+
+            <md-icon md-list-icon lvl-master-item-avatar>account_circle</md-icon>
+
+            <h2 md-line lvl-master-item-title>{{user.username}}</h2>
+
+            <span md-line lvl-master-item-subtitle>{{getNameOfUser(user)}}</span>
+
+        </md-list-item>
+
+        <lvl-master-empty [message]="'Couldn\'t find anyone'"></lvl-master-empty>
+    </md-list>
+
+        <lvl-oidc-user-roles *ngIf="selectedUser" lvl-detail [model]="selectedUser"></lvl-oidc-user-roles>
+</lvl-master-detail>

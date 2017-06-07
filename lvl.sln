@@ -59,11 +59,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{1A372414-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oidc", "oidc", "{E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer", "Oidc.AuthorizationServer\Oidc.AuthorizationServer.csproj", "{B06243DB-43F2-41E1-8931-7987B6992F92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AuthorizationServer", "Oidc.AuthorizationServer\Oidc.AuthorizationServer.csproj", "{B06243DB-43F2-41E1-8931-7987B6992F92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer.Tests", "Oidc.AuthorizationServer.Tests\Oidc.AuthorizationServer.Tests.csproj", "{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AuthorizationServer.Tests", "Oidc.AuthorizationServer.Tests\Oidc.AuthorizationServer.Tests.csproj", "{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AuthorizationServer.Seeder", "Oidc.AuthorizationServer.Seeder\Oidc.AuthorizationServer.Seeder.csproj", "{426ECDA2-BE80-4802-8FBC-CD429C375766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AuthorizationServer.Seeder", "Oidc.AuthorizationServer.Seeder\Oidc.AuthorizationServer.Seeder.csproj", "{426ECDA2-BE80-4802-8FBC-CD429C375766}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "oidc", "oidc\", "{710F0C18-8F82-4050-AB19-E5D851C89922}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -86,9 +86,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "oidc", "oidc\", "{710F0C18-
 		SlnRelativePath = "oidc\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AccessTokens", "Oidc.AccessTokens\Oidc.AccessTokens.csproj", "{DD298782-156D-4241-BFEB-E4598E9034DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AccessTokens", "Oidc.AccessTokens\Oidc.AccessTokens.csproj", "{DD298782-156D-4241-BFEB-E4598E9034DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oidc.AccessTokens.Tests", "Oidc.AccessTokens.Tests\Oidc.AccessTokens.Tests.csproj", "{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AccessTokens.Tests", "Oidc.AccessTokens.Tests\Oidc.AccessTokens.Tests.csproj", "{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

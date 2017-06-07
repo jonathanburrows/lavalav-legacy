@@ -19,4 +19,9 @@ export class OidcOptions {
      *  @remarks - openid and token are added by default in the security services.
      */
     public scopes: string[];
+
+    /**
+     *  Roles which may be assigned by the administrator to users.
+     */
+    public roles: string[];
 }

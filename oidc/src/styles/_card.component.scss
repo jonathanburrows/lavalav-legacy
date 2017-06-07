@@ -7,8 +7,10 @@
         @media #{$portrait-screen} {
             background-color: transparent;
             box-shadow: none;
-            padding-left: 0;
-            padding-right: 0;
+
+            $screen-padding: map-get($portrait, screen-padding);
+            padding-left: $screen-padding;
+            padding-right: $screen-padding;
         }
 
         @media #{$landscape-screen} {

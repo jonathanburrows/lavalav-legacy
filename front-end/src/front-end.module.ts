@@ -5,15 +5,26 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import 'hammerjs';
+import 'reflect-metadata';
 
 import {
-    ContentComponent,
-    ContentAvatarDirective,
     ContentBodyDirective,
+    ContentAvatarDirective,
+    ContentComponent,
     ContentSubtitleDirective,
     ContentTitleDirective,
+    DetailDirective,
     ForbiddenComponent,
     LayoutComponent,
+    MasterDetailComponent,
+    MasterDirective,
+    MasterEmptyComponent,
+    MasterItemDirective,
+    MasterItemAvatarDirective,
+    MasterItemTitleDirective,
+    MasterItemSubtitleDirective,
+    MasterSearchComponent,
     NotFoundComponent,
     SaveButtonComponent,
     SearchActionComponent
@@ -41,8 +52,17 @@ import {
         ContentBodyDirective,
         ContentSubtitleDirective,
         ContentTitleDirective,
+        DetailDirective,
         ForbiddenComponent,
         LayoutComponent,
+        MasterDetailComponent,
+        MasterDirective,
+        MasterEmptyComponent,
+        MasterItemDirective,
+        MasterItemAvatarDirective,
+        MasterItemTitleDirective,
+        MasterItemSubtitleDirective,
+        MasterSearchComponent,
         NotFoundComponent,
         SaveButtonComponent,
         SearchActionComponent,
@@ -52,17 +72,27 @@ import {
     ],
     exports: [
         // components
-        ContentComponent,
         ContentAvatarDirective,
+        ContentComponent,
         ContentBodyDirective,
         ContentSubtitleDirective,
         ContentTitleDirective,
+        DetailDirective,
         LayoutComponent,
+        MasterDetailComponent,
+        MasterDirective,
+        MasterEmptyComponent,
+        MasterItemDirective,
+        MasterItemAvatarDirective,
+        MasterItemTitleDirective,
+        MasterItemSubtitleDirective,
+        MasterSearchComponent,
         SaveButtonComponent,
         SearchActionComponent,
 
         // vendor modules
         CommonModule,
+        FormsModule,
         ReactiveFormsModule,
         MaterialModule
     ],

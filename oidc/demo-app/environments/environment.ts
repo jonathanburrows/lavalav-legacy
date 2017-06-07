@@ -11,5 +11,6 @@ export const environment: FrontEndOptions & OidcOptions = {
     clientId: 'test-resource-owner-client',
     authorizationServerUrl: 'http://localhost:5004',
     clientSecret: 'secret',
-    scopes: ['test-resource-server']
+    scopes: ['test-resource-server'],
+    roles: ['oidc', 'administrator', 'tester']
 };

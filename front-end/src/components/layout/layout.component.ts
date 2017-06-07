@@ -63,7 +63,7 @@ export class LayoutComponent implements OnInit {
     ngOnInit() {
         this.menu = this.navigationService.getMenu();
         this.router.events.subscribe(args => {
-            if (args instanceof NavigationError) {
+            if (args instanceof NavigationError && args.url !== '/not-found') {
                 this.router.navigate(['/not-found']);
             }
             if (args instanceof NavigationEnd) {

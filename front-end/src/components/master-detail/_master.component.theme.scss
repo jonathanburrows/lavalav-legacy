@@ -1,0 +1,27 @@
+﻿@mixin master-component-theme($theme) {
+    $accent: map-get($theme, accent);
+    $accent-text: mat-color($accent, 700);
+
+    /* Two selectors were used to override the attribute selectivity weight */
+    .lvl-master-item--selected {
+        .lvl-master-item {
+            &-avatar {
+                color: $accent-text !important;
+            }
+
+            &-title {
+                color: $accent-text;
+            }
+
+            &-subtitle {
+                color: desaturate($accent-text, 34) !important;
+            }
+        }
+    }
+
+    .mat-focused {
+        .lvl-master-search__icon {
+            color: mat-color($accent, 500);
+        }
+    }
+}

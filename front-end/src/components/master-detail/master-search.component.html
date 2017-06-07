@@ -1,0 +1,19 @@
+﻿<form (ngSubmit)="submit.emit($event)" name="searchForm">
+
+    <md-input-container floatPlaceholder="never" 
+                        color="accent" 
+                        class="lvl-master-search__wrapper">
+
+        <md-icon (click)="submit.emit($event)"
+                 md-prefix
+                 lvl-content-avatar class="lvl-master-search__icon">
+            search
+        </md-icon>
+
+        <input mdInput placeholder="Search"
+               [(ngModel)]="model.filter"
+               (ngModelChange)="change.emit($event)"
+               name="filter" />
+
+    </md-input-container>
+</form>

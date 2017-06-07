@@ -1,4 +1,6 @@
 ﻿@import '~@angular/material/theming';
+@import '../../styles/front-end.variables.scss';
+
 
 @keyframes display-briefly {
     0% {
@@ -23,6 +25,7 @@
     opacity: 0;
     position: absolute;
     transition: all $swift-ease-in-out-duration $mat-fast-out-slow-in-timing-function;
+    text-align: center;
     vertical-align: middle;
     pointer-events: none;
     z-index: 12;
@@ -50,12 +53,44 @@
 
     &__icon {
         font-size: 30px;
+        padding: 14px 0;
         width: 100%;
     }
 }
 
-:host{
+@function line-up-with-content-title($device-keylines){
+    $toolbar-height: map-get($device-keylines, toolbar-height);
+    $space-between-toolbar-and-content: map-get($device-keylines, content-margin-top);
+    $middle-of-title: (map-get($device-keylines, content-title-height) / 2);
+    $middle-of-button: (56px / 2);
+
+    @return $toolbar-height + $space-between-toolbar-and-content + $middle-of-title - $middle-of-button;
+}
+
+:host {
+    position: fixed;
     width: 56px;
+
+    @media #{$portrait-screen} {
+        top: line-up-with-content-title($portrait);
+        right: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        top: line-up-with-content-title($landscape);
+        right: (64px / 2) - map-get($landscape, screen-padding);
+    }
+
+    @media #{$tablet-screen} {
+        top: line-up-with-content-title($tablet);
+        left: calc(90ch / 2);
+    }
+
+    @media screen and (min-width: $desktop-min-width) {
+        /* Extra padding is added to compensate for being a big screen. */
+        top: line-up-with-content-title($tablet) + map-get($tablet, screen-padding);
+        left: calc(#{map-get($tablet, side-nav-width)} + (90ch / 2) + 64px);
+    }
 }
 
 :host(.ng-dirty:not(.lvl-invalid-caused-by-user):not(.lvl-save-occurring)) .lvl-save-button {

@@ -44,5 +44,15 @@ Will persist each input's changes when the save button is pressed.
 
 
 
+## Roles
+Only users with the 'oidc' role can access this component.
+
+
+
+## Menu
+This will not appear on the menu.
+
+
+
 ## Remarks
 By default, the route /oidc/personal-details maps to this component.

@@ -7,6 +7,7 @@ import { FrontEndModule, Navigation } from '../src';
 import {
     ContentDemoComponent,
     LayoutDemoComponent,
+    MasterDetailDemoComponent,
     RootDemoComponent,
     SaveButtonDemoComponent,
     ValidatorsDemoComponent
@@ -22,6 +23,7 @@ const frontEndGroup = 'Front End';
     declarations: [
         ContentDemoComponent,
         LayoutDemoComponent,
+        MasterDetailDemoComponent,
         RootDemoComponent,
         SaveButtonDemoComponent,
         ValidatorsDemoComponent
@@ -30,11 +32,12 @@ const frontEndGroup = 'Front End';
         BrowserModule,
         RouterModule.forRoot([
             // when developing, set the redirect to what you are working on.
-            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-save-button', canActivate: [Navigation] },
+            { path: '', pathMatch: 'full', redirectTo: 'component/lvl-master' },
             { path: 'component/lvl-layout', component: LayoutDemoComponent, canActivate: [Navigation] },
             { path: 'component/lvl-validators', component: ValidatorsDemoComponent, canActivate: [Navigation] },
             { path: 'component/lvl-content', component: ContentDemoComponent, canActivate: [Navigation] },
-            { path: 'component/lvl-save-button', component: SaveButtonDemoComponent, canActivate: [Navigation] }
+            { path: 'component/lvl-save-button', component: SaveButtonDemoComponent, canActivate: [Navigation] },
+            { path: 'component/lvl-master', component: MasterDetailDemoComponent, canActivate: [Navigation] }
         ]),
         FrontEndModule.useWithOptions(environment)
     ],

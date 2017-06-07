@@ -82,6 +82,32 @@ namespace lvl.Oidc.AuthorizationServer.Stores
         }
 
         /// <summary>
+        ///     Returns a user with a matching subject.
+        /// </summary>
+        /// <param name="subject">The subject which will be searched for.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">More than one user was found with that subject.</exception>
+        /// <returns>
+        ///     A user with a matching subject. If no user found, null is returned.
+        /// </returns>
+        public async Task<User> FindBySubjectAsync(string subject)
+        {
+            if (subject == null)
+            {
+                throw new ArgumentNullException(nameof(subject));
+            }
+
+            var userQuery = new Query<User>().Where(u => u.SubjectId == subject);
+            var users = await UserRepository.GetAsync(userQuery);
+            if (users.Count > 1)
+            {
+                throw new InvalidOperationException($"{users.Count} users were found with the subject '{subject}'.");
+            }
+
+            return users.Items.SingleOrDefault();
+        }
+
+        /// <summary>
         ///     Hases a user's password, then stores it in the repository.
         ///     
         ///     Will add claims for the username, and any roles specified in the OidcAuthorizationServerOptions.NewUserRoles

@@ -2,12 +2,14 @@
 
 import { Navigation } from '@lvl/front-end';
 import {
+    ChangePasswordComponent,
     PersonalDetailComponents,
     RecoverUsernameComponent,
     RegisterAccountComponent,
     RequestResetPasswordComponent,
     ResourceOwnerSigninComponent,
-    SingleSignoutComponent
+    SingleSignoutComponent,
+    UserAdministrationComponent
 } from './components';
 
 export const oidcRouterModule = RouterModule.forChild([
@@ -16,5 +18,8 @@ export const oidcRouterModule = RouterModule.forChild([
     { path: 'oidc/register-account', component: RegisterAccountComponent, canActivate: [Navigation] },
     { path: 'oidc/request-reset-password', component: RequestResetPasswordComponent, canActivate: [Navigation] },
     { path: 'oidc/single-signout', component: SingleSignoutComponent, canActivate: [Navigation] },
-    { path: 'oidc/personal-details', component: PersonalDetailComponents, canActivate: [Navigation] }
+    { path: 'oidc/personal-details', component: PersonalDetailComponents, canActivate: [Navigation] },
+    { path: 'oidc/change-password', component: ChangePasswordComponent, canActivate: [Navigation] },
+    { path: 'oidc/user-administration/:id', component: UserAdministrationComponent, canActivate: [Navigation] },
+    { path: 'oidc/user-administration', component: UserAdministrationComponent, canActivate: [Navigation] }
 ]);

@@ -6,7 +6,7 @@ import { Navigatable } from '../../decorators';
  *  Provides a page to tell users they are accessing a resource they dont have permissions to.
  */
 @Component({
-    selector: 'lvl-oidc-forbidden',
+    selector: 'lvl-forbidden',
     templateUrl: 'forbidden.component.html',
     styleUrls: ['forbidden.component.scss']
 })

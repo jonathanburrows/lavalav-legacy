@@ -1,10 +1,9 @@
 ﻿@import '~@lvl/front-end/theming';
 
-.lvl-content-body {
-    flex-direction: column;
-}
-
 .mat-input-container {
+    display: block;
+    /* prevent collapsing margins. */
+    padding: 0.1px;
 
     @media #{$portrait-screen} {
         width: 100%;
@@ -16,37 +15,5 @@
 
     @media #{$tablet-screen} {
         width: 50%;
-    }
-}
-
-.save-button {
-    position: fixed;
-    top: 0;
-    transition: opacity $swift-ease-in-duration $mat-fast-out-slow-in-timing-function;
-    z-index: 24;
-
-    @media #{$portrait-screen} {
-        top: map-get($portrait, toolbar-height) + map-get($portrait, content-margin-top);
-        right: map-get($portrait, screen-padding);
-    }
-
-    @media #{$landscape-screen} {
-        top: map-get($landscape, toolbar-height) + map-get($landscape, content-margin-top);
-        right: (64px / 2) - map-get($landscape, screen-padding);
-    }
-
-    @media #{$tablet-screen} {
-        top: map-get($tablet, toolbar-height) + map-get($tablet, content-margin-top);
-        left: calc(90ch / 2);
-    }
-
-    @media screen and (min-width: $desktop-min-width) {
-        left: calc(#{map-get($tablet, side-nav-width)} + (90ch / 2) + 64px);
-    }
-
-    &--hidden {
-        opacity: 0;
-        transition: opacity $swift-ease-in-duration $mat-fast-out-slow-in-timing-function;
-        pointer-events: none;
     }
 }

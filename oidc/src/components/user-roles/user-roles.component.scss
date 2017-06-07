@@ -1,0 +1,48 @@
+﻿@import '~@lvl/front-end/theming';
+
+$display-both-min-width: $desktop-min-width - map-get($tablet, side-nav-width);
+
+.save-button {
+    @media #{$portrait-screen} {
+        left: unset;
+        right: map-get($portrait, screen-padding);
+    }
+
+    @media #{$landscape-screen} {
+        left: unset;
+        right: map-get($landscape, screen-padding);
+    }
+
+    $tablet-screen-padding: map-get($tablet, screen-padding);
+    $tablet-title-height: map-get($tablet, content-title-height);
+    $tablet-title-font: map-get($tablet, content-title-font-size);
+    $tablet-side-nav: map-get($tablet, side-nav-width);
+    $desktop-screen-padding: ($tablet-title-height - $tablet-title-font) / 2 + $tablet-screen-padding;
+    $master-width: map-get($tablet, master-width);
+
+
+    @media #{$tablet-screen} {
+        left: calc(90ch + #{$tablet-screen-padding} - 56px);
+    }
+
+    @media screen and (max-width: 90ch) {
+        left: unset;
+        right: $tablet-screen-padding;
+    }
+
+    @media screen and (min-width: $display-both-min-width) and (max-width: ($desktop-min-width + $desktop-screen-padding - 1px)) {
+        left: unset;
+        right: $desktop-screen-padding;
+    }
+
+    @media screen and (min-width: ($desktop-min-width + $desktop-screen-padding)) {
+        left: calc(90ch + #{$tablet-side-nav + ($desktop-screen-padding * 2) + $master-width});
+    }
+}
+
+.roles {
+    /* Fix the collapsing margins caused by angular. */
+    display: unset;
+    padding: 0.1px;
+    width: 100%;
+}

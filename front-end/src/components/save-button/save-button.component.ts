@@ -16,6 +16,7 @@ import { ValidatableForm } from '../../services';
     templateUrl: 'save-button.component.html',
     styleUrls: ['save-button.component.scss'],
     host: {
+        '[class.lvl-save-button]': 'true',
         '[class.lvl-invalid-caused-by-user]': 'isInvalidCausedByUser',
         '[class.lvl-save-occurring]': 'saveOccurring',
         '[class.lvl-save-completed]': 'saveCompleted'

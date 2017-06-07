@@ -1,22 +1,42 @@
 ﻿@import '../../styles/front-end.variables';
+@import '../../styles/front-end.theme';
 
 .lvl-content {
     color: rgba(0, 0, 0, 0.87);
     display: block;
 
     @media #{$portrait-screen} {
-        margin-bottom: map-get($portrait, content-margin-bottom);
-        margin-top: map-get($portrait, content-margin-top);
+        box-sizing: border-box;
+        padding-bottom: map-get($portrait, content-margin-bottom);
+        padding-left: map-get($portrait, screen-padding);
+        padding-right: map-get($portrait, screen-padding);
+        padding-top: map-get($portrait, content-margin-top);
+        max-width: 100vw;
     }
 
     @media #{$landscape-screen} {
-        margin-bottom: map-get($landscape, content-margin-bottom);
-        margin-top: map-get($landscape, content-margin-top);
+        padding-left: map-get($landscape, screen-padding);
+        padding-right: map-get($landscape, screen-padding);
+        padding-bottom: map-get($landscape, content-margin-bottom);
+        padding-top: map-get($landscape, content-margin-top);
     }
 
     @media #{$tablet-screen} {
-        margin-bottom: map-get($tablet, content-margin-bottom);
-        margin-top: map-get($tablet, content-margin-top);
+        padding-left: map-get($tablet, screen-padding);
+        padding-right: map-get($tablet, screen-padding);
+        padding-bottom: map-get($tablet, content-margin-bottom);
+        padding-top: map-get($tablet, content-margin-top);
+    }
+
+    @media screen and (min-width: $desktop-min-width) {
+        /* Since the menu icon is hidden, align everything with the title. */
+        $avatar-width: map-get($tablet, avatar-column-width);
+        $screen-padding: map-get($tablet, screen-padding);
+        $content-padding: map-get($tablet, content-margin-top);
+        $padding-to-align-title: $avatar-width + (2 * $screen-padding);
+        padding-top: $screen-padding + $content-padding;
+        padding-left: $padding-to-align-title;
+        padding-right: $padding-to-align-title;
     }
 }
 
@@ -27,6 +47,10 @@
     @media #{$portrait-screen} {
         font-size: map-get($portrait, content-title-font-size);
         line-height: map-get($portrait, content-title-height);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
     }
 
     @media #{$landscape-screen} {
@@ -74,6 +98,9 @@
 
     @media #{$tablet-screen} {
         font-size: map-get($tablet, body-font-size);
+    }
+
+    @media screen and (min-width: 90ch){
         max-width: 90ch;
     }
 }
