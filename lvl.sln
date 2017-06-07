@@ -32,27 +32,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScriptGenerator.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Tests", "Web.Tests\Web.Tests.csproj", "{54DB915F-1742-4B6D-B15F-6F451FC6E223}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "front-end", "front-end\", "{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_50391"
-		Debug.AspNetCompiler.PhysicalPath = "front-end\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50391\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_50391"
-		Release.AspNetCompiler.PhysicalPath = "front-end\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50391\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "50391"
-		SlnRelativePath = "front-end\"
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScriptGenerator", "TypeScriptGenerator\TypeScriptGenerator.csproj", "{742346D4-3DAE-46FA-B0D2-6D186F51E456}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{1A372414-D015-48FD-86FF-99857346A49A}"
@@ -65,30 +44,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AuthorizationServer.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AuthorizationServer.Seeder", "Oidc.AuthorizationServer.Seeder\Oidc.AuthorizationServer.Seeder.csproj", "{426ECDA2-BE80-4802-8FBC-CD429C375766}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "oidc", "oidc\", "{710F0C18-8F82-4050-AB19-E5D851C89922}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_59880"
-		Debug.AspNetCompiler.PhysicalPath = "oidc\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59880\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_59880"
-		Release.AspNetCompiler.PhysicalPath = "oidc\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59880\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "59880"
-		SlnRelativePath = "oidc\"
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AccessTokens", "Oidc.AccessTokens\Oidc.AccessTokens.csproj", "{DD298782-156D-4241-BFEB-E4598E9034DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oidc.AccessTokens.Tests", "Oidc.AccessTokens.Tests\Oidc.AccessTokens.Tests.csproj", "{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "front-end", "front-end\front-end.njsproj", "{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "oidc", "oidc\oidc.njsproj", "{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,12 +148,6 @@ Global
 		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|x64.ActiveCfg = Release|Any CPU
 		{54DB915F-1742-4B6D-B15F-6F451FC6E223}.Release|x64.Build.0 = Release|Any CPU
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}.Debug|x64.Build.0 = Debug|Any CPU
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}.Release|x64.ActiveCfg = Debug|Any CPU
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF}.Release|x64.Build.0 = Debug|Any CPU
 		{742346D4-3DAE-46FA-B0D2-6D186F51E456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{742346D4-3DAE-46FA-B0D2-6D186F51E456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{742346D4-3DAE-46FA-B0D2-6D186F51E456}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -224,12 +180,6 @@ Global
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|Any CPU.Build.0 = Release|Any CPU
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|x64.ActiveCfg = Release|Any CPU
 		{426ECDA2-BE80-4802-8FBC-CD429C375766}.Release|x64.Build.0 = Release|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Debug|x64.Build.0 = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|x64.ActiveCfg = Debug|Any CPU
-		{710F0C18-8F82-4050-AB19-E5D851C89922}.Release|x64.Build.0 = Debug|Any CPU
 		{DD298782-156D-4241-BFEB-E4598E9034DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD298782-156D-4241-BFEB-E4598E9034DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD298782-156D-4241-BFEB-E4598E9034DE}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -246,6 +196,22 @@ Global
 		{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9}.Release|x64.ActiveCfg = Release|Any CPU
 		{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9}.Release|x64.Build.0 = Release|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Debug|x64.Build.0 = Debug|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Release|x64.ActiveCfg = Release|Any CPU
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}.Release|x64.Build.0 = Release|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Debug|x64.Build.0 = Debug|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|x64.ActiveCfg = Release|Any CPU
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,13 +228,13 @@ Global
 		{6C74B9A1-159E-4957-96E6-70441F9558FE} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{AB5420AE-A380-4F4F-A7C5-2F3DF8B7A8EB} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{54DB915F-1742-4B6D-B15F-6F451FC6E223} = {1A372414-D015-48FD-86FF-99857346A49A}
-		{0B31444B-A62E-44EC-82A3-8DFC66F00DFF} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{742346D4-3DAE-46FA-B0D2-6D186F51E456} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{B06243DB-43F2-41E1-8931-7987B6992F92} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{28CB35FB-80EB-4D7D-A098-6EF6D07EE6EF} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{426ECDA2-BE80-4802-8FBC-CD429C375766} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
-		{710F0C18-8F82-4050-AB19-E5D851C89922} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{DD298782-156D-4241-BFEB-E4598E9034DE} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
+		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22} = {1A372414-D015-48FD-86FF-99857346A49A}
+		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 	EndGlobalSection
 EndGlobal
