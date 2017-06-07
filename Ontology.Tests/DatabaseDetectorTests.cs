@@ -18,7 +18,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void WhenDetecting_WhenConnectionStringIsNull_SQLiteIsReturned()
+        public void It_will_return_sql_lite_when_connection_string_is_null()
         {
             var databaseVendor = DatabaseDetector.GetConnectionStringsVendor(null);
             Assert.Equal(databaseVendor, DatabaseVendor.SQLite);
@@ -28,7 +28,7 @@ namespace lvl.Ontology.Tests
         [InlineData(@"Server=.;Database=lvl;User Id=admin;Password=password;")]
         [InlineData(@"Server=.;Database=lvl;Trusted_Connection=True;")]
         [InlineData(@"Data Source=.;Initial Catalog=lvl;Integrated Security=SSPI;User ID=.\admin;Password=password;")]
-        public void WhenDetecting_WhenConnectionStringIsMsSql_MsSqlIsReturned(string msSqlConnectionString)
+        public void It_will_detect_ms_sql_connection_strings(string msSqlConnectionString)
         {
             var databaseVendor = DatabaseDetector.GetConnectionStringsVendor(msSqlConnectionString);
             Assert.Equal(databaseVendor, DatabaseVendor.MsSql);
@@ -37,14 +37,14 @@ namespace lvl.Ontology.Tests
         [Theory]
         [InlineData(@"Data Source=lvl;Integrated Security=yes;")]
         [InlineData(@"Data Source=lvl;User Id=admin;Password=password;Integrated Security=no;")]
-        public void WhenDetecting_WhenConnectionStringIsOracle_OracleIsReturned(string oracleConnectionString)
+        public void It_will_detect_oracle_connection_strings(string oracleConnectionString)
         {
             var databaseVendor = DatabaseDetector.GetConnectionStringsVendor(oracleConnectionString);
             Assert.Equal(databaseVendor, DatabaseVendor.Oracle);
         }
 
         [Fact]
-        public void WhenDetecting_IfNoMatchingVendor_ReturnsUnsupported()
+        public void It_will_return_unsupported_when_connection_string_is_invalid()
         {
             var invalidConnectionString = "Hello, world!";
             var databaseVendor = DatabaseDetector.GetConnectionStringsVendor(invalidConnectionString);
@@ -53,7 +53,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void WhenDetecting_WhenSQLiteIsConfigured_SQLiteIsReturned()
+        public void It_will_set_the_configuration_connection_type()
         {
             var services = new ServiceCollection().AddDomains().BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();

@@ -31,7 +31,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDoingGetRequest_AndLogLevelIsDebug_LogEntryIsAdded()
+        public async Task It_will_add_log_entry_when_performing_request_and_log_level_is_debug()
         {
             var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Debug;
@@ -46,7 +46,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanDebug_LogEntryIsNotAdded()
+        public async Task It_will_not_add_log_entry_when_performing_request_and_log_level_is_higher_than_debug()
         {
             var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Information;
@@ -61,7 +61,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDoingGetRequest_AndLogLevelIsInformation_LogEntryIsAdded()
+        public async Task It_will_add_log_entry_when_performing_get_and_log_level_is_information()
         {
             var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Information;
@@ -76,7 +76,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanInformation_LogEntryIsNotAdded()
+        public async Task It_will_not_add_log_entry_when_performing_get_and_log_level_is_warning()
         {
             var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Warning;
@@ -91,7 +91,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDoingGetRequest_AndLogLevelIsHigherThanTrace_LogEntryIsNotAdded()
+        public async Task It_will_not_add_log_level_when_perorming_get_and_log_level_is_debug()
         {
             var loggingSettings = Services.GetRequiredService<LoggingOptions>();
             loggingSettings.LogLevel = LogLevel.Debug;

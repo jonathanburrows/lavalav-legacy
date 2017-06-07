@@ -14,7 +14,7 @@ namespace lvl.Web.Tests
     public class DatabaseLoggerTests
     {
         [Fact]
-        public async Task AfterLogging_LogEntryIsInserted()
+        public async Task It_will_insert_log_entry_after_logging()
         {
             var services = GetLoggerServicesWithLogLevel(LogLevel.Debug);
             var databaseLogger = services.GetRequiredService<ILogger<DatabaseLoggerTests>>();
@@ -28,7 +28,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenLogging_AndLogLevelIsntEnabled_LogEntryIsNotInserted()
+        public async Task It_will_not_insert_log_entry_if_log_level_isnt_enabled()
         {
             var services = GetLoggerServicesWithLogLevel(LogLevel.Error);
             var databaseLogger = services.GetRequiredService<ILogger<DatabaseLoggerTests>>();
@@ -47,7 +47,7 @@ namespace lvl.Web.Tests
         [InlineData(LogLevel.Information)]
         [InlineData(LogLevel.Warning)]
         [InlineData(LogLevel.Error)]
-        public void IsEnabled_WhenLowerThanEnabled_ReturnsFalse(LogLevel logLevel)
+        public void It_isnt_enabled_when_log_level_is_lower_than_configured(LogLevel logLevel)
         {
             var services = GetLoggerServicesWithLogLevel(logLevel + 1);
             var databaseLogger = services.GetRequiredService<ILogger<DatabaseLoggerTests>>();
@@ -64,7 +64,7 @@ namespace lvl.Web.Tests
         [InlineData(LogLevel.Warning)]
         [InlineData(LogLevel.Error)]
         [InlineData(LogLevel.Critical)]
-        public void IsEnabled_WhenEqualToEnabled_ReturnsTrue(LogLevel logLevel)
+        public void It_is_enabled_when_log_level_is_equal_to_what_is_configured(LogLevel logLevel)
         {
             var services = GetLoggerServicesWithLogLevel(logLevel);
             var databaseLogger = services.GetRequiredService<ILogger<DatabaseLoggerTests>>();
@@ -80,7 +80,7 @@ namespace lvl.Web.Tests
         [InlineData(LogLevel.Warning)]
         [InlineData(LogLevel.Error)]
         [InlineData(LogLevel.Critical)]
-        public void IsEnabled_WhenHigherThanEnabled_ReturnsTrue(LogLevel logLevel)
+        public void It_is_enabled_when_log_level_is_higher_than_what_is_configured(LogLevel logLevel)
         {
             var services = GetLoggerServicesWithLogLevel(logLevel - 1);
             var databaseLogger = services.GetRequiredService<ILogger<DatabaseLoggerTests>>();

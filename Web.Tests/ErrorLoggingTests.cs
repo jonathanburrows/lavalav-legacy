@@ -31,7 +31,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPerformingGetRequest_AndErrorOccurs_LogEntryIsAdded()
+        public async Task It_will_add_log_entry_when_get_request_fails()
         {
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var errorQuery = new Query<LogEntry>().Where(logEntry => logEntry.LogLevel == LogLevel.Error.ToString());
@@ -45,7 +45,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPerformingGetRequest_AndFinishesSuccessfully_NoErrorLogEntryIsAdded()
+        public async Task It_will_not_add_error_log_when_get_request_is_successful()
         {
             var repository = Services.GetRequiredService<IRepository<LogEntry>>();
             var errorQuery = new Query<LogEntry>().Where(logEntry => logEntry.LogLevel == LogLevel.Error.ToString());
@@ -59,7 +59,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPerformingGetRequest_AndErrorOccurs_ErrorMessageIsInContent()
+        public async Task Request_will_return_log_mesage_when_it_fails()
         {
             var getUrl = $"/api/{nameof(Moon)}/{int.MaxValue}";
 

@@ -15,13 +15,13 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfArgsNull_ArgumentNullExceptionIsThrown()
+        public void It_will_throw_argument_null_exception_when_args_is_null()
         {
             Assert.Throws<ArgumentNullException>(() => ArgumentParser.Parse(null));
         }
 
         [Fact]
-        public void IfNoAssemblyPath_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_exception_when_theres_no_assembly_path()
         {
             var args = new[] { "--output-bin=./" };
 
@@ -29,7 +29,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfMultipleAssemblyPaths_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_exception_when_theres_multiple_assembly_paths()
         {
             var args = new[] { "--assembly-path=First.dll", "--assembly-path=Second.dll", "--output-path=./" };
 
@@ -37,7 +37,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfCantFindAssemblyPath_FileNotFoundExceptionIsThrown()
+        public void It_will_throw_file_not_found_exception_when_the_assembly_path_cant_be_found()
         {
             var args = new[] { "--assembly-path=FakePath.dll", "--output-bin=hello" };
 
@@ -45,7 +45,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfNoOutputBin_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_exception_when_theres_no_output_bin()
         {
             var args = new[] { "--assembly-path=lvl.Ontology.dll" };
 
@@ -53,7 +53,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfMultipleOutputBins_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_null_exception_when_theres_multiple_output_bins()
         {
             var args = new[]
             {
@@ -66,7 +66,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfMultipleDecoratorPaths_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_exception_when_theres_multiple_decorator_paths()
         {
             var args = new[]
             {
@@ -80,7 +80,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void IfMultipleNamespacesWithSameName_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_exception_when_theres_multiple_namespaces_with_same_name()
         {
             var args = new[]
             {
@@ -94,7 +94,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void AssemblyPath_WhenFirstInArguments_ReturnsValue()
+        public void It_will_populate_assembly_path_when_first_in_arguments()
         {
             var assemblyPath = "lvl.Ontology.dll";
             var args = new[]
@@ -111,7 +111,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void AssemblyPath_WhenSecondInArguments_ReturnsValue()
+        public void It_will_populate_assembly_path_when_second_in_arguments()
         {
             var assemblyPath = "lvl.Ontology.dll";
             var args = new[]
@@ -128,7 +128,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void AssemblyPath_WhenLastInArguments_ReturnsValue()
+        public void It_will_populate_assembly_path_when_last_in_arguments()
         {
             var assemblyPath = "lvl.Ontology.dll";
             var args = new[]
@@ -145,7 +145,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void OutputBin_WhenFirstInArguments_ReturnsValue()
+        public void It_will_populate_output_bin_when_first_in_arguments()
         {
             var outputBin = "./";
             var args = new[]
@@ -162,7 +162,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void OutputBin_WhenSecondInArguments_ReturnsValue()
+        public void It_will_populate_output_bin_when_second_in_arguments()
         {
             var outputBin = "./";
             var args = new[]
@@ -179,7 +179,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void OutputBin_WhenLastInArguments_ReturnsValue()
+        public void It_will_populate_output_bin_when_last_in_arguments()
         {
             var outputBin = "./";
             var args = new[]
@@ -196,7 +196,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void DecoratorPath_WhenFirstInArguments_ReturnsValue()
+        public void It_will_poplate_decorator_path_when_first_in_arguments()
         {
             var decoratorPath = "./";
             var args = new[]
@@ -213,7 +213,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void DecoratorPath_WhenSecondInArguments_ReturnsValue()
+        public void It_will_poplate_decorator_path_when_second_in_arguments()
         {
             var decoratorPath = "./";
             var args = new[]
@@ -230,7 +230,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void DecoratorPath_WhenLastInArguments_ReturnsValue()
+        public void It_will_poplate_decorator_path_when_last_in_arguments()
         {
             var decoratorPath = "./";
             var args = new[]
@@ -247,7 +247,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Namespace_WhenFirstInArguments_ReturnsValue()
+        public void It_will_poplate_namespace_when_first_in_arguments()
         {
             var namespaceKey = "lvl.Ontology";
             var namespacePackage = "@lvl/front-end";
@@ -266,7 +266,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Namespace_WhenSecondInArguments_ReturnsValue()
+        public void It_will_poplate_namespace_when_second_in_arguments()
         {
             var namespaceKey = "lvl.Ontology";
             var namespacePackage = "@lvl/front-end";
@@ -285,7 +285,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Namespace_WhenLastInArguments_ReturnsValue()
+        public void It_will_poplate_namespace_when_last_in_arguments()
         {
             var namespaceKey = "lvl.Ontology";
             var namespacePackage = "@lvl/front-end";
@@ -304,7 +304,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Namespace_WhenTwo_TwoAreMapped()
+        public void It_will_populate_two_namespaces_when_two_are_present()
         {
             var args = new[]
             {

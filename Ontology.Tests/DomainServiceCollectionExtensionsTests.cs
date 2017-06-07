@@ -20,7 +20,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void AfterAddingDomains_WhenResolvingNHibernateConfig_ValueIsReturned()
+        public void It_will_allow_configuration_to_be_resolved()
         {
             var configuration = Services.GetRequiredService<Configuration>();
 
@@ -28,7 +28,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void AfterAddingDomains_WhenResolvingDomainOptions_ValueIsReturned()
+        public void It_will_allow_domain_options_to_be_resolved()
         {
             var domainOptions = Services.GetRequiredService<DomainOptions>();
 
@@ -36,7 +36,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void ModelsInReferencedAssemblies_WhenAddingDomains_AreAddedToNHibernateConfig()
+        public void It_will_add_models_from_referenced_assemblies_to_nhibernate_config()
         {
             var configuration = Services.GetRequiredService<Configuration>();
             var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
@@ -46,7 +46,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void ModelsInExecutingAssembly_WhenAddingDomains_AreAddedToNHibernateConfig()
+        public void It_will_add_models_from_executing_assembly_to_nhibernate_config()
         {
             var configuration = Services.GetRequiredService<Configuration>();
             var mappedTypes = configuration.ClassMappings.Select(c => c.MappedClass);
@@ -56,7 +56,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void ModelsAlreadyAdded_WhenAddingDomains_AreNotAddedAgain()
+        public void It_will_not_add_model_from_referenced_assembly_twice()
         {
             var services = new ServiceCollection()
                 .AddDomains()
@@ -71,7 +71,7 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void IfNoConnectionString_WhenAddingDomain_SqlLiteIsConfigured()
+        public void It_will_set_driver_to_sqlite_when_no_connection_string_given()
         {
             var services = new ServiceCollection().AddDomains().BuildServiceProvider();
             var configuration = services.GetRequiredService<Configuration>();
@@ -85,7 +85,7 @@ namespace lvl.Ontology.Tests
 
         [Theory]
         [InlineData("not a connection string")]
-        public void IfInvalidConnectionString_WhenAddingDomain_ArgumentExceptionIsThrown(string invalidConnectionString)
+        public void It_will_throw_argument_exception_when_connection_string_is_invalid(string invalidConnectionString)
         {
             var domainOptions = new DomainOptions { ConnectionString = invalidConnectionString };
             var serviceCollection = new ServiceCollection();

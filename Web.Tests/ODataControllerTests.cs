@@ -33,7 +33,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndTopIsGiven_OnlyThatNumberOfRecordsAreReturned()
+        public async Task It_will_return_only_number_of_entities_that_are_requested_with_top_parameter()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -51,7 +51,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndInvalidTopIsGiven_InvalidOperationExceptionIsThrown()
+        public async Task It_will_throw_invalid_operation_exception_when_invalid_top_is_given()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$top=hello";
 
@@ -61,7 +61,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndSkipIsGiven_OnlyThoseNumberRecordsAreSkipped()
+        public async Task It_will_skip_then_number_of_entities_that_are_requested_with_skip_parameter()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -80,7 +80,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndInvalidSkipIsGiven_InvalidOperationExceptionIsThrown()
+        public async Task It_will_throw_invalid_operation_exception_when_invalid_skip_is_given()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$skip=hello";
 
@@ -90,7 +90,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndOrderByIsGiven_ResultsAreOrdered()
+        public async Task It_will_order_entities_when_an_orderby_param_is_given()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await EmptyRepositoryAsync(repository);
@@ -116,7 +116,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndSingleInvalidOrderIsGiven_InvalidOperationExceptionIsThrown()
+        public async Task It_will_throw_invalid_operation_exception_when_orderby_is_invalid()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$orderby=hello";
 
@@ -126,7 +126,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndTwoInvalidOrdersAreGiven_AggregateExceptionIsThrown()
+        public async Task It_will_throw_aggregate_exception_when_two_invalid_orderbys_are_given()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$orderby=hello,world";
 
@@ -136,7 +136,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndMultipleOrderBysAreGiven_ResultsAreOrdered()
+        public async Task It_will_order_by_multiple_times_when_multiple_orderby_parameters_are_given()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await EmptyRepositoryAsync(repository);
@@ -166,7 +166,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndSelectGiven_ResultContainsOnlyThatField()
+        public async Task It_will_return_only_propertries_when_property_parameters_are_given()
         {
             var jsonOptions = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error };
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -184,7 +184,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndMultipleSelectsAreGiven_ResultContainsThoseFields()
+        public async Task It_will_return_multiple_properties_when_multiple_property_parameters_are_given()
         {
             var jsonOptions = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error };
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -203,7 +203,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndSelectingChildEntity_ResultContainsChild()
+        public async Task It_will_return_child_entity_when_property_parameter_is_child_entity()
         {
             var jsonOptions = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error };
             var repository = Services.GetRequiredService<IRepository<Moon>>();
@@ -225,7 +225,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndSingleInvalidSelect_InvalidOperationExceptionIsThrown()
+        public async Task It_will_throw_invalid_operation_exception_property_parameter_is_invalid()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$select=hello";
 
@@ -235,7 +235,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndMultipleInvalidSelects_AggregateExceptionIsThrown()
+        public async Task It_will_throw_aggregate_exception_when_multiple_property_parameters_are_invalid()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$select=hello,world";
 
@@ -245,7 +245,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequesting_AndInvalidSkipTopOrderByAndSelectsAreGiven_AggreggateExceptionIsThrown()
+        public async Task It_will_throw_aggregate_exception_when_different_parameters_are_invalid()
         {
             var getUrl = $"/odata/{nameof(Moon)}?$skip=this&$orderby=invalid&$top=that&$select=hello";
 

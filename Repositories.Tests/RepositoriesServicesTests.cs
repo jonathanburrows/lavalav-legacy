@@ -10,7 +10,7 @@ using lvl.Repositories.Authorization;
 namespace lvl.Repositories.Tests
 {
     /// <remarks>
-    /// Shortened class name as it was becoming too unweildy
+    ///     Shortened class name as it was becoming too unweildy
     /// </remarks>
     public abstract class RepositoriesServicesTests<TRepositoryFixture> where TRepositoryFixture : RepositoryFixture 
     {
@@ -22,7 +22,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterAddingRepositories_WhenResolvingTypeResolver_ValueIsReturned()
+        public void It_will_allow_type_resolved_to_be_resolved()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
 
@@ -30,7 +30,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterAddingRepositories_WhenResolvingRepositoryFactory_ValueIsReturned()
+        public void It_will_allow_repository_factory_to_be_resolved()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
 
@@ -38,7 +38,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterAddingRepositories_WhenResolvingAggregateRootFilter_ValueIsReturned()
+        public void It_will_allow_aggregate_root_filter_to_be_resolved()
         {
             var aggregateRootFilter = Services.GetRequiredService<AggregateRootFilter>();
 
@@ -46,7 +46,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterAddingRepositories_WhenResolvingRepositoryForMappedType_ValueIsReturned()
+        public void It_will_allow_generic_repository_to_be_resolved_with_a_concrete_type()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
 
@@ -54,7 +54,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfteringAddingRepository_WhenResolvingRepositoryForUnmappedType_InvalidOperationIsThrown()
+        public void It_will_throw_invalid_operation_exception_when_resolving_repository_for_unmapped_type()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
 
@@ -62,7 +62,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterAddingRepository_WhenResolvingSessionProvider_ValueIsReturned()
+        public void It_will_allow_session_provider_to_be_resolved()
         {
             var sessionFactory = Services.GetRequiredService<SessionProvider>();
 
@@ -70,7 +70,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterOverridingRepository_WhenResolvingThroughServiceProvider_OverriddenTypeIsReturned()
+        public void It_will_allow_generic_repository_to_be_overridden()
         {
             var mockedServices = new ServiceCollection()
                 .AddDomains()
@@ -85,7 +85,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void AfterOverridingRepository_WhenResolvingThroughFactory_OverridenTypeIsReturned()
+        public void It_will_return_overriden_repository_when_resolving_with_repository_factory()
         {
             var mockedServices = new ServiceCollection()
                 .AddDomains()
@@ -101,7 +101,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenAddingRepositories_WithoutCallingAddDomains_ThrowsInvalidOperationException()
+        public void It_will_throw_invalid_operation_exception_when_adding_repositories_without_calling_add_domains()
         {
             var services = new ServiceCollection();
 

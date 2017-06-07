@@ -20,7 +20,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenResolvingName_AndGivenFullyQualifiedEntity_TypeIsResolved()
+        public void It_will_return_type_when_using_fully_qualified_name()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             var moonType = typeof(Moon);
@@ -30,7 +30,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenResolvingName_AndGivenFullyQualifiedEntityWithWrongCase_TypeIsResolved()
+        public void It_will_return_type_when_given_full_equalified_name_with_wrong_case()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             var moonType = typeof(Moon);
@@ -49,7 +49,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenResolvingName_AndGivenClassNameOfEntity_TypeIsResolved()
+        public void It_will_return_type_when_given_name_of_entity()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             var moonType = typeof(Moon);
@@ -59,7 +59,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenResolvingName_AndGivenClassNameOfEntityWithWrongCase_TypeIsResolved()
+        public void It_will_return_type_when_given_name_of_entity_with_wrong_case()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             var moonType = typeof(Moon);
@@ -78,21 +78,21 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenResolvingName_AndNameIsNull_ArgumentNullExceptionIsThrown()
+        public void It_will_throw_argument_null_exception_when_name_is_null()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             Assert.Throws<ArgumentNullException>(() => typeResolver.Resolve(null));
         }
 
         [IntegrationTest]
-        public void WhenResolvingName_AndTwoExist_InvalidOperationIsThrown()
+        public void It_will_invalid_operation_exception_when_two_entities_with_same_name_exist()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             Assert.Throws<InvalidOperationException>(() => typeResolver.Resolve(nameof(Planet)));
         }
 
         [IntegrationTest]
-        public void ResolveMethodIsOverridable()
+        public void It_can_be_overriden()
         {
             var typeResolver = Services.GetRequiredService<TypeResolver>();
             var resolveMethod = typeResolver.GetType().GetMethod(nameof(TypeResolver.Resolve));

@@ -32,7 +32,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntities_AllReturnedEntitiesAreOfGivenType()
+        public async Task Get_will_only_entities_of_a_given_type()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -48,7 +48,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntities_IfTypeIsntMapped_ThrowsInvalidOperationException()
+        public async Task Get_will_throw_invalid_operation_exception_when_type_isnt_mapped()
         {
             const string getUrl = "/api/madeUpEntity";
 
@@ -58,7 +58,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntity_WithMatchingId_Returns200()
+        public async Task Get_will_be_successful_when_theres_an_entity_with_matching_id()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var entity = await repository.CreateAsync(new Moon());
@@ -70,7 +70,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntity_WithNoMatchingId_Returns500()
+        public async Task Get_will_fail_when_theres_no_entity_with_matching_id()
         {
             var getUrl = $"{Client.BaseAddress}api/{nameof(Moon)}/{int.MaxValue}";
 
@@ -83,7 +83,7 @@ namespace lvl.Web.Tests
         [InlineData("POST")]
         [InlineData("PUT")]
         [InlineData("DELETE")]
-        public async Task WhenRequestingEntity_WithoutGet_Returns404(string httpMethod)
+        public async Task It_will_return_404_when_attempting_get_with_non_get_method(string httpMethod)
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var fetching = await repository.CreateAsync(new Moon());
@@ -96,7 +96,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntity_AndMatchingEntity_SerializedObjectIsReturned()
+        public async Task Get_will_return_serialized_object_when_there_is_matching_entity()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var fetching = await repository.CreateAsync(new Moon());
@@ -110,7 +110,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingEntity_AndTypeIsntMapped_Returns500()
+        public async Task Get_single_will_return_500_when_type_isnt_mapped()
         {
             var getUrl = "/api/madeUpEntity/1";
 
@@ -120,7 +120,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPosting_EntityIsStoredPersistently()
+        public async Task Posting_will_persist_the_entity()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var postUrl = $"/api/{nameof(Moon)}";
@@ -137,7 +137,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPosting_AndEntityIsNull_ArgumentNullExceptionIsThrown()
+        public async Task Post_will_throw_argument_null_exception_when_empty_payload_is_sent()
         {
             var postUrl = $"/api/{nameof(Moon)}";
             var nullContent = new StringContent("");
@@ -148,7 +148,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPosting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
+        public async Task Post_will_throw_invalid_operation_exception_when_type_isnt_mapped()
         {
             var postUrl = $"/api/{nameof(UnmappedEntity)}";
             var posting = new Moon();
@@ -161,7 +161,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPosting_AndEntityCantBeDeserializedToType_JsonSerializationExceptionIsThrown()
+        public async Task Post_will_throw_json_serialization_exception_when_entity_additional_inforamtion_is_provided()
         {
             var postUrl = $"/api/{nameof(Moon)}";
             var postingContent = new StringContent(@"{invalid: ""true""}");
@@ -172,7 +172,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPosting_AndEntityAlreadyHasId_InvalidOperationExceptionIsThrown()
+        public async Task Post_will_throw_invalid_operation_exception_when_entity_already_has_id()
         {
             var postUrl = $"/api/{nameof(Moon)}";
             var posting = new Moon { Id = 1 };
@@ -185,7 +185,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPutting_EntityPropertiesAreStoredPersistently()
+        public async Task Put_will_persist_changed_properties()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var putting = await repository.CreateAsync(new Moon { Name = "Old Moon" });
@@ -204,7 +204,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPutting_AndEntityIsNull_ArgumentNullExceptionIsThrown()
+        public async Task Put_will_throw_argument_null_exception_when_payload_is_empty()
         {
             var putUrl = $"/api/{nameof(Moon)}";
             var nullContent = new StringContent("");
@@ -215,7 +215,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPutting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
+        public async Task Put_will_throw_invalid_operation_exception_when_entity_type_isnt_mapped()
         {
             var putUrl = $"/api/{nameof(UnmappedEntity)}";
             var putting = new Moon();
@@ -228,7 +228,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPutting_AndEntityCantBeDeserializedToType_JsonSerializationExceptionIsThrown()
+        public async Task Put_will_throw_json_serialization_exception_when_extra_properties_are_sent()
         {
             var putUrl = $"/api/{nameof(Moon)}";
             var puttingContent = new StringContent(@"{invalid: ""true""}");
@@ -239,7 +239,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPutting_AndEntityDoesNotExist_InvalidOperationExceptionIsThrown()
+        public async Task Put_will_throw_invalid_operation_exception_when_no_matching_entity_exists()
         {
             var putUrl = $"/api/{nameof(Moon)}";
             var putting = new Moon { Id = int.MaxValue };
@@ -252,7 +252,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDeleted_EntityRemoval_IsPersistent()
+        public async Task Delete_will_persist_the_removal_of_the_entity()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             var deleting = await repository.CreateAsync(new Moon());
@@ -274,7 +274,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDeleting_AndEntityIsNull_ArgumentNullExceptionIsThrown()
+        public async Task Delete_will_throw_argument_null_exception_when_payload_is_null()
         {
             var deletingMessage = new HttpRequestMessage
             {
@@ -288,14 +288,14 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDeleting_AndEntityTypeIsntMapped_InvalidOperationExceptionIsThrown()
+        public async Task Delete_will_throw_invalid_operation_exception_when_type_isnt_mapped()
         {
             var deleting = new Moon();
             var deletingSerialized = JsonConvert.SerializeObject(deleting);
             var deletingContent = new StringContent(deletingSerialized);
             var deletingMessage = new HttpRequestMessage
             {
-                RequestUri = new Uri($"{Client.BaseAddress}api/{nameof(Moon)}"),
+                RequestUri = new Uri($"{Client.BaseAddress}api/NonExistant"),
                 Method = HttpMethod.Delete,
                 Content = deletingContent
             };
@@ -305,7 +305,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDelete_AndEntityCantBeDeserializedToType_JsonSerializationExceptionIsThrown()
+        public async Task Delete_will_throw_json_serialization_exception_when_extra_properties_are_provided()
         {
             var deletingMessage = new HttpRequestMessage
             {
@@ -319,7 +319,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenDeleting_AndEntityDoesNotExist_InvalidOperationExceptionIsThrown()
+        public async Task Delete_will_throw_invalid_operation_exception_when_no_matching_entity_is_found()
         {
             var deleting = new Moon { Id = int.MaxValue };
             var deletingSerialized = JsonConvert.SerializeObject(deleting);

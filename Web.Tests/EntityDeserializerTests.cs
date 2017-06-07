@@ -21,7 +21,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenDeserializing_EntityIsPopulated()
+        public void It_will_populate_fields()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
             var moon = new Moon { Id = 1 };
@@ -36,7 +36,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenDeserializing_AndEntityTypeIsNull_ArgumentNullExceptionIsThrown()
+        public void It_will_throw_argument_null_exception_when_entity_type_is_null()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
             var moon = new Moon { Id = 1 };
@@ -49,7 +49,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenDeserializing_AndTypeIsntEntity_ArgumentExceptionIsThrown()
+        public void It_will_throw_argument_exception_when_type_isnt_entity()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
             var item = new NonEntity();
@@ -62,7 +62,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenDeserializing_AndStreamIsNull_ArgumentNullExceptionIsThrown()
+        public void It_will_throw_argument_null_exception_when_stream_is_null()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
 
@@ -70,7 +70,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenDeserializing_AndStreamCannotBeDeserialized_InvalidOperationExceptionIsThrown()
+        public void It_will_throw_invalid_operation_exception_when_stream_cannot_be_deserialized()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
             var invalidSerialized = JsonConvert.SerializeObject(@"{invalid: ""true""}");

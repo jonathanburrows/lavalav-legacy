@@ -19,7 +19,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenConstructingGenerically_CreatesRepositoryForEntityType()
+        public void Generic_construct_will_create_repository_for_entity_type()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             var repository = repositoryFactory.Construct<Moon>();
@@ -27,7 +27,7 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenConstructing_CreatesRepositoryForEntityType()
+        public void Construct_will_create_repository_for_entity_typw()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             var repository = repositoryFactory.Construct(typeof(Moon));
@@ -35,28 +35,28 @@ namespace lvl.Repositories.Tests
         }
 
         [IntegrationTest]
-        public void WhenConstructing_AndNullTypeGiven_ArgumentNullIsThrown()
+        public void Construct_will_throw_argument_null_exception_when_type_is_null()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             Assert.Throws<ArgumentNullException>(() => repositoryFactory.Construct(null));
         }
 
         [IntegrationTest]
-        public void WhenConstructing_AndTypeIsntEntity_ArgumentExceptionIsThrown()
+        public void Construct_will_throw_argument_exception_when_type_isntly_exception()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             Assert.Throws<ArgumentException>(() => repositoryFactory.Construct(typeof(NonEntity)));
         }
 
         [IntegrationTest]
-        public void WhenConstructingGenerically_AndEntityTypeIsntMapped_ArgumentExceptionIsThrow()
+        public void Construct_generically_will_throw_argument_exception_when_entity_type_isnt_mapped()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
             Assert.Throws<InvalidOperationException>(() => repositoryFactory.Construct<UnmappedEntity>());
         }
 
         [IntegrationTest]
-        public void WhenConstructing_AndEntityTypeIsNotMapped_TargetInvocationExceptionIsThrown()
+        public void Construct_will_throw_target_invocation_exception_when_entity_type_isnt_mapped()
         {
             var repositoryFactory = Services.GetRequiredService<RepositoryFactory>();
 

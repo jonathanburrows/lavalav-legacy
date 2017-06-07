@@ -29,13 +29,13 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void ConvertingNullType_ThrowsArgumentNullException()
+        public void Converting_cs_type_will_throw_argument_null_exception_when_type_is_null()
         {
             Assert.Throws<ArgumentNullException>(() => TypeConverter.CsToTypeScript(null, GenerationOptions));
         }
 
         [Fact]
-        public void ConvertingNullPackagesForNamespace_ThrowsArgumentNullException()
+        public void Converting_cs_type_will_throw_argument_null_exception_when_options_are_null()
         {
             var type = GetType();
 
@@ -43,7 +43,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_NameExported()
+        public void It_will_export_class_name()
         {
             var type = typeof(BareClass);
 
@@ -54,7 +54,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_SingleInheritance()
+        public void It_will_have_extend_when_class_has_single_inheritance()
         {
             var type = typeof(SingleInheritanceClass);
 
@@ -65,7 +65,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_SingleInterfaceImplementation()
+        public void It_will_have_implements_when_class_has_single_interface()
         {
             var type = typeof(SingleInterfaceImplementationClass);
             var interfaceType = type.GetInterfaces().Single();
@@ -77,7 +77,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_DoubleInterfaceImplementation()
+        public void It_will_have_implements_with_comma_delimited_list_when_class_has_two_interfaces()
         {
             var type = typeof(DoubleInterfaceImplementationClass);
             var interfaces = type.GetInterfaces().ToList();
@@ -91,7 +91,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_AbstractIdentifier()
+        public void It_will_have_abstract_keyword_when_class_is_abstract()
         {
             var type = typeof(AbstractClass);
 
@@ -102,7 +102,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_IsPublic()
+        public void It_will_prefix_properties_with_public_for_each_property()
         {
             var type = typeof(SimplePropertyClass);
 
@@ -113,7 +113,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_PropertyName_IsPascal()
+        public void It_will_write_properties_with_pascal_names()
         {
             var type = typeof(SimplePropertyClass);
             var propertyName = "myProperty";
@@ -125,7 +125,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_CompareDecorator()
+        public void It_will_prefix_properties_with_compare_when_property_has_compare_decorator()
         {
             var type = typeof(ComparePropertyClass);
 
@@ -136,7 +136,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_CreditCardDecorator()
+        public void It_will_prefix_properties_with_credit_card_when_property_has_credit_card_decorator()
         {
             var type = typeof(CreditCardClass);
 
@@ -147,7 +147,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_EmailDecorator()
+        public void It_will_prefix_properties_with_email_when_property_has_email_decorator()
         {
             var type = typeof(EmailAddressClass);
 
@@ -158,7 +158,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_MaxLengthDecorator()
+        public void It_will_prefix_properties_when_max_length_when_property_has_max_length_decorator()
         {
             var type = typeof(MaxLengthClass);
 
@@ -169,7 +169,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_MinLengthDecorator()
+        public void It_will_prefix_properties_with_min_length_when_property_has_min_length_decorator()
         {
             var type = typeof(MinLengthClass);
 
@@ -180,7 +180,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_PhoneDecorator()
+        public void It_will_prefix_properties_with_phone_when_property_has_phone_decorator()
         {
             var type = typeof(PhoneClass);
 
@@ -191,7 +191,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_UrlDecorator()
+        public void It_will_prefix_properties_with_url_when_property_has_url_decorator()
         {
             var type = typeof(UrlClass);
 
@@ -202,7 +202,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_RangeDecorator()
+        public void It_will_prefix_properties_with_range_when_property_has_url()
         {
             var type = typeof(RangeClass);
 
@@ -213,7 +213,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_RegularExpressionDecorator()
+        public void It_will_prefix_properties_with_regular_expression_when_property_has_regular_expression_decorator()
         {
             var type = typeof(RegularExpressionClass);
 
@@ -224,7 +224,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_RequiredDecorator()
+        public void It_will_prefix_properties_with_required_when_property_has_required_decorator()
         {
             var type = typeof(RequiredClass);
 
@@ -235,7 +235,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_MultipleDecorators()
+        public void It_will_property_with_comma_seperated_annotations_when_property_has_multiple_validation_decorators()
         {
             var type = typeof(MultiAttributeClass);
 
@@ -246,7 +246,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_Integer()
+        public void It_will_suffix_property_with_number_when_property_is_integer()
         {
             var type = typeof(IntegerClass);
 
@@ -257,7 +257,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_NullableInteger()
+        public void It_will_suffix_property_with_number_when_property_is_nullable_integer()
         {
             var type = typeof(NullableIntegerClass);
 
@@ -268,7 +268,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_Decimal()
+        public void It_will_suffix_property_with_number_when_property_is_decimal()
         {
             var type = typeof(DecimalClass);
 
@@ -279,7 +279,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_NullableDecimal()
+        public void It_will_suffix_property_with_number_when_property_is_nullable_decimal()
         {
             var type = typeof(NullableDecimalClass);
 
@@ -290,7 +290,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_Double()
+        public void It_will_suffix_property_with_number_when_property_is_double()
         {
             var type = typeof(DoubleClass);
 
@@ -301,7 +301,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_NullableDouble()
+        public void It_will_suffix_property_with_number_when_property_is_nullable_double()
         {
             var type = typeof(NullableDoubleClass);
 
@@ -312,7 +312,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_Long()
+        public void It_will_suffix_property_with_number_when_property_is_long()
         {
             var type = typeof(LongClass);
 
@@ -323,7 +323,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_NullableLong()
+        public void It_will_suffix_property_with_number_when_property_is_nullable_long()
         {
             var type = typeof(NullableLongClass);
 
@@ -334,7 +334,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_String()
+        public void It_will_suffix_property_with_string_when_property_is_string()
         {
             var type = typeof(StringClass);
 
@@ -345,7 +345,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_DateTime()
+        public void It_will_suffix_property_with_date_when_property_is_date_time()
         {
             var type = typeof(DateTimeClass);
 
@@ -356,7 +356,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_NullableDateTime()
+        public void It_will_suffix_property_with_date_when_property_is_nullable_date_time()
         {
             var type = typeof(NullableDateTimeClass);
 
@@ -367,7 +367,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_Bool()
+        public void It_will_suffix_property_with_boolean_when_property_is_bool()
         {
             var type = typeof(BoolClass);
 
@@ -378,7 +378,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_NullableBool()
+        public void It_will_suffix_property_with_boolean_when_property_is_nullable_bool()
         {
             var type = typeof(NullableBoolClass);
 
@@ -389,7 +389,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Property_ComplexProperty()
+        public void It_will_suffix_property_with_type_name_when_property_is_entity_type()
         {
             var type = typeof(SinglePropertyTypeClass);
 
@@ -400,18 +400,18 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_Single()
+        public void It_will_generate_import_statement_for_property_when_from_same_assembly()
         {
             var type = typeof(SinglePropertyTypeClass);
 
             var tsType = TypeConverter.CsToTypeScript(type, GenerationOptions);
             var tsContent = tsType.ToTypeScript();
 
-            Assert.Contains("public child: ChildClass", tsContent);
+            Assert.Contains("import { ChildClass } from './child-class';", tsContent);
         }
 
         [Fact]
-        public void Class_Import_SingleExternal()
+        public void It_will_generate_external_import_statement_for_property_from_differnt_assembly()
         {
             var type = typeof(SingleExternalImportClass);
 
@@ -422,7 +422,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_TwoExternalSameNamespace()
+        public void It_will_declare_two_types_in_import_statement_for_properties_of_type_from_same_external_namespace()
         {
             var type = typeof(DoubleExternalImportClass);
 
@@ -433,7 +433,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_TwoExternalDifferentNamespaces()
+        public void It_will_declare_two_import_statements_for_properties_of_type_from_different_external_namespace()
         {
             var type = typeof(DoubleExternalImportDifferentNamespaceClass);
 
@@ -444,7 +444,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_SameNamespace()
+        public void It_will_generate_import_for_same_namespace()
         {
             var type = typeof(SinglePropertyTypeClass);
 
@@ -455,7 +455,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_InheritanceFromSameNamespace()
+        public void It_will_generate_import_statement_when_class_inherits_from_class_in_same_namespace()
         {
             var type = typeof(SameModuleInheritanceClass);
 
@@ -466,7 +466,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_InheritanceFromDifferentNamespace()
+        public void It_will_generate_import_statement_when_class_inherits_from_class_in_differnt_assembly()
         {
             var type = typeof(ExternalModuleInheritanceClass);
 
@@ -477,7 +477,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_SingleInterfaceSameNamespace()
+        public void It_will_generate_import_statement_when_class_implements_interface_from_same_namespace()
         {
             var type = typeof(SingleInterfaceSameNamespaceClass);
 
@@ -488,7 +488,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_SingleInterfaceDifferentNamespace()
+        public void It_will_generate_import_statement_when_class_implements_interface_from_different_assembly()
         {
             var type = typeof(SingleInterfaceDifferentNamespaceClass);
 
@@ -499,7 +499,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_DoubleInterfaceDifferentNamespace()
+        public void It_will_generate_two_import_statements_when_class_implements_two_interfaces_from_different_assembly_with_different_namespaces()
         {
             var type = typeof(DoubleInterfaceDifferentNamespaceClass);
 
@@ -510,7 +510,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Import_DoubleInterfaceFromSameButExternalNamespace()
+        public void It_will_generate_single_import_with_two_declarations_when_class_implements_two_interfaces_from_single_external_assembly_namespace()
         {
             var type = typeof(DoubleInterfaceFromSameExternalNamespaceClass);
 
@@ -521,7 +521,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Mangling_TwoProperties_Imports()
+        public void It_will_mangle_type_import_name_when_class_has_property_types_with_same()
         {
             var type = typeof(ManglingTwoPropertiesClass);
 
@@ -532,7 +532,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Mangling_TwoProperties_References()
+        public void It_will_mangle_property_type_name_when_class_has_property_types_with_same()
         {
             var type = typeof(ManglingTwoPropertiesClass);
 
@@ -543,7 +543,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Mangling_PropertyAndInheritance_Imports()
+        public void It_will_mangle_type_import_name_when_class_has_property_and_interface_with_same_type_name()
         {
             var type = typeof(ManglingPropertyAndBaseClass);
 
@@ -554,7 +554,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Mangling_PropertyAndInheritance_References()
+        public void It_will_mangle_interface_name_when_class_has_property_and_interface_with_same_type_name()
         {
             var type = typeof(ManglingPropertyAndBaseClass);
 
@@ -565,7 +565,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Mangling_TwoInterfaces_Imports()
+        public void It_will_mangle_type_import_when_class_implements_two_interfaces_wth_same_name()
         {
             var type = typeof(ManglingTwoInterfacesClass);
 
@@ -576,7 +576,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Class_Mangling_TwoInterfaces_References()
+        public void It_will_interface_names_when_class_implements_two_interfaces_wth_same_name()
         {
             var type = typeof(ManglingTwoInterfacesClass);
 
@@ -587,7 +587,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Name()
+        public void It_will_export_interface_name()
         {
             var type = typeof(IBareInterface);
 
@@ -598,7 +598,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_SingleImplementation()
+        public void It_will_generate_implement_statement_when_interface_implements_another_interface()
         {
             var type = typeof(ISingleImplementationInterface);
 
@@ -609,7 +609,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_DoubleImplementation()
+        public void It_will_generate_implement_with_comma_seperate_interface_names_when_interface_implements_two_interfaces()
         {
             var type = typeof(IDoubleImplementationInterface);
 
@@ -620,7 +620,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_Integer()
+        public void It_will_suffix_interface_property_with_number_when_property_type_is_int()
         {
             var type = typeof(IIntegerInterface);
 
@@ -631,7 +631,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_NullableInteger()
+        public void It_will_suffix_interface_property_with_optional_number_when_property_type_is_nullable_int()
         {
             var type = typeof(INullableIntegerInterface);
 
@@ -642,7 +642,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_Decimal()
+        public void It_will_suffix_interface_property_with_number_when_property_type_is_decimal()
         {
             var type = typeof(IDecimalInterface);
 
@@ -653,7 +653,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_NullableDecimal()
+        public void It_will_suffix_interface_property_with_optional_number_when_property_type_is_nullable_decimal()
         {
             var type = typeof(INullableDecimalInterface);
 
@@ -664,7 +664,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_Double()
+        public void It_will_suffix_interface_property_with_number_when_property_type_is_double()
         {
             var type = typeof(IDoubleInterface);
 
@@ -675,7 +675,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_NullableDouble()
+        public void It_will_suffix_interface_property_with_optional_when_property_type_is_nullable_double()
         {
             var type = typeof(INullableDoubleInterface);
 
@@ -686,7 +686,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_Long()
+        public void It_will_suffix_interface_property_with_number_when_property_type_is_long()
         {
             var type = typeof(ILongInterface);
 
@@ -697,7 +697,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_NullableLong()
+        public void It_will_suffix_interface_property_with_optional_number_when_property_type_is_nullable_long()
         {
             var type = typeof(INullableLongInterface);
 
@@ -708,7 +708,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_String()
+        public void It_will_suffix_interface_property_with_string_when_property_type_is_string()
         {
             var type = typeof(IStringInterface);
 
@@ -719,7 +719,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_DateTime()
+        public void It_will_suffix_interface_property_with_date_when_property_type_is_date_time()
         {
             var type = typeof(IDateTimeInterface);
 
@@ -730,7 +730,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_NullableDateTime()
+        public void It_will_suffix_interface_property_with_optional_date_when_property_type_is_nullable_date_time()
         {
             var type = typeof(INullableDateTimeInterface);
 
@@ -741,7 +741,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_Bool()
+        public void It_will_suffix_interface_property_with_boolean_when_property_type_is_bool()
         {
             var type = typeof(IBoolInterface);
 
@@ -752,7 +752,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_NullableBool()
+        public void It_will_suffix_interface_property_with_optional_boolean_when_property_type_is_nullable_bool()
         {
             var type = typeof(INullableBoolInterface);
 
@@ -763,7 +763,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Property_Complex()
+        public void It_will_suffix_interface_property_with_type_name_when_property_type_is_reference_to_entity()
         {
             var type = typeof(IComplexPropertyInterface);
 
@@ -774,7 +774,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Imports_SinglePropertySameNamespace()
+        public void It_will_generate_import_statement_for_interface_property_type_when_type_is_from_same_assembly()
         {
             var type = typeof(ISinglePropertySameNamespace);
 
@@ -785,7 +785,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Imports_SinglePropertyDifferentNamespace()
+        public void It_will_generate_import_statement_for_interface_type_when_type_is_from_referenced_assembly()
         {
             var type = typeof(ISinglePropertyDifferentNamespace);
 
@@ -796,7 +796,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Imports_DoublePropertySameInterface()
+        public void It_will_generate_two_declaration_statements_for_interface_property_types_when_properties_are_from_same_referenced_namespaces()
         {
             var type = typeof(IDoublePropertySameNamespaceInterface);
 
@@ -807,7 +807,7 @@ namespace lvl.TypeScriptGenerator.Tests
         }
 
         [Fact]
-        public void Interface_Imports_DoublePropertyDifferentInterfaces()
+        public void It_will_generate_two_import_statements_for_interface_property_types_when_properties_are_from_different_referenced_namespaces()
         {
             var type = typeof(IDoublePropertyDifferentNamespacesInterface);
 

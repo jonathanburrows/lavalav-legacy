@@ -3,7 +3,6 @@ using lvl.Web.OData;
 using lvl.Web.Serialization;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,7 +21,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingEntityDeserializer_ReturnsValue()
+        public void It_will_allow_entity_deserializer_to_resolve_entity_deserializer()
         {
             var entityDeserializer = Services.GetRequiredService<EntityDeserializer>();
 
@@ -30,7 +29,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingILoggerProvider_ReturnsValue()
+        public void It_will_allow_logger_provider_to_be_resolved()
         {
             var loggerProvider = Services.GetRequiredService<ILoggerProvider>();
 
@@ -38,7 +37,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingILoggerFactory_ReturnsValue()
+        public void It_will_allow_logger_factory_to_be_resolved()
         {
             var loggerFactory = Services.GetRequiredService<ILoggerFactory>();
 
@@ -46,7 +45,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenAddingWeb_AddCorsIsCalled()
+        public void It_will_allow_cors_service_to_be_resolved()
         {
             var corsService = Services.GetRequiredService<ICorsService>();
 
@@ -54,15 +53,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenAddingWeb_CallsAddMvc()
-        {
-            var controllerFactory = Services.GetRequiredService<IControllerFactory>();
-
-            Assert.NotNull(controllerFactory);
-        }
-
-        [Fact]
-        public void AfterAddingWeb_ResolvingLoggingSettings_ReturnsValue()
+        public void It_will_allow_logging_options_to_be_resolved()
         {
             var loggingSettings = Services.GetRequiredService<LoggingOptions>();
 
@@ -70,7 +61,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenAddingWeb_WithoutDomains_InvalidOperationExceptionIsThrown()
+        public void It_will_throw_invalid_operation_exception_when_adding_without_calling_domains()
         {
             var serviceCollection = new ServiceCollection();
 
@@ -78,7 +69,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void WhenAddingWebWithoutRepositories_InvalidOperationExceptionIsThrown()
+        public void It_will_throw_invalid_operation_exception_when_adding_without_calling_repositories()
         {
             var serviceCollection = new ServiceCollection().AddDomains();
 
@@ -86,7 +77,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingODataQueryParser_ReturnsValue()
+        public void It_will_allow_odata_query_parser_to_be_resolved()
         {
             var odataParser = Services.GetRequiredService<ODataQueryParser>();
 
@@ -94,7 +85,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingODataConventionTokenizer_ReturnsValue()
+        public void It_will_allow_odata_convention_tokenized_to_be_resolved()
         {
             var conventionTokenizer = Services.GetRequiredService<ODataConventionTokenizer>();
 
@@ -102,7 +93,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingODataConventionParser_ReturnsValue()
+        public void It_will_allow_odata_convention_parser_to_be_resolved()
         {
             var conventionParser = Services.GetRequiredService<ODataConventionParser>();
 
@@ -110,7 +101,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public void AfterAddingWeb_ResolvingImpersonator_ReturnsValue()
+        public void It_will_allow_impersonator_to_be_resolved()
         {
             var impersonator = Services.GetRequiredService<Impersonator>();
 

@@ -16,35 +16,35 @@ namespace lvl.DatabaseGenerator.Tests
         }
 
         [Fact]
-        public void AfterAddingDatabaseGeneration_ResolvingDatabaseCreator_ReturnsValue()
+        public void It_will_allow_database_creator_to_be_resolved()
         {
             var databaseCreator = Services.GetRequiredService<DatabaseCreator>();
             Assert.NotNull(databaseCreator);
         }
 
         [Fact]
-        public void AfterAddingDatabaseGeneration_ResolvingDatabaseMigrator_ReturnsValue()
+        public void It_will_allow_database_migrator_to_be_resolved()
         {
             var databaseMigrator = Services.GetRequiredService<DatabaseMigrator>();
             Assert.NotNull(databaseMigrator);
         }
 
         [Fact]
-        public void AfterAddingDatabaseGeneration_ResolvingScriptRunner_ReturnsValue()
+        public void It_will_allow_script_runner_to_be_resolved()
         {
             var scriptRunner = Services.GetRequiredService<ScriptRunner>();
             Assert.NotNull(scriptRunner);
         }
 
         [Fact]
-        public void AfterAddingDatabaseGeneration_ResolvingDatabaseGenerationOptions_ReturnsValue()
+        public void It_will_allow_database_generation_options_to_be_resolved()
         {
             var scriptRunner = Services.GetRequiredService<DatabaseGenerationOptions>();
             Assert.NotNull(scriptRunner);
         }
 
         [Fact]
-        public void AfterAddingDatabaseGeneration_ResolvingDatabaseGenerationRunner_ReturnsValue()
+        public void It_will_allow_database_generation_runner_to_be_resolved()
         {
             var scriptRunner = Services.GetRequiredService<DatabaseGenerationRunner>();
             Assert.NotNull(scriptRunner);

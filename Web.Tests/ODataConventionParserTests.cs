@@ -28,7 +28,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task OneEqualsOne_ReturnsEntireSet()
+        public async Task It_will_return_all_entities_when_predicate_is_always_true()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -43,7 +43,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task OneEqualsTwo_ReturnsEmptySet()
+        public async Task It_will_return_no_entities_when_predicate_is_always_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -55,7 +55,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task FilteringOnProperty_ReturnsMatchingProperties()
+        public async Task It_will_return_matching_entities_that_have_matching_properties_when_filtering_using_eq_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -69,7 +69,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task FilteringNotEqualsOnProperty_ReturnsUnmatchedProperties()
+        public async Task It_will_return_unmatched_entities_that_have_unmatched_properties_when_filtering_using_ne_property()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -83,7 +83,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task FilteringNotEqualsOnProperty_AndSetContainsNull_NullIsReturned()
+        public async Task It_will_not_match_entity_with_null_property_when_filtering_against_property_with_value()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -96,7 +96,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task GreaterThanOnPropety_WhenGreaterThan_ReturnsRecord()
+        public async Task It_will_return_entities_with_larger_property_when_filtering_with_gt_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -109,7 +109,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task GreaterThanProperty_WhenEqual_DoesNotReturnRecord()
+        public async Task It_will_not_return_entities_when_equal_properties_when_filtering_with_gt_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -122,7 +122,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task GreaterThanProperty_WhenLessThan_DoesNotReturnRecord()
+        public async Task It_will_not_return_entities_with_smaller_properties_when_filtering_with_gt_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -135,7 +135,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task GreaterThanEqual_WhenPropertyGreaterThan_ReturnIsRecord()
+        public async Task It_will_return_entities_with_larger_properties_when_filtering_with_ge_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -148,7 +148,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task GreaterThanEqual_WhenPropertyEqual_RecordIsReturned()
+        public async Task It_will_return_entities_with_equal_properties_when_filtering_with_ge_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -161,7 +161,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task GreaterThanEqual_WhenPropertyLessThan_RecordIsNotReturned()
+        public async Task It_will_not_return_entities_with_smaller_properties_when_filtering_with_ge_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -174,7 +174,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task LessThan_WhenPropertyLessThan_RecordIsReturned()
+        public async Task It_will_return_entities_with_smaller_properties_when_filtering_with_lt_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -187,7 +187,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task LessThan_WhenPropertyEquals_NoRecordsAreReturned()
+        public async Task It_will_not_return_entities_with_equal_properties_when_filtering_with_lt_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -200,7 +200,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task LessThan_WhenPropertyGreaterThan_NoRecordsAreReturned()
+        public async Task It_will_not_return_entities_with_larger_properties_when_filtering_with_lt_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -213,7 +213,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task LessThanEquals_WhenPropertyLessThan_RecordsAreReturned()
+        public async Task It_will_return_entities_with_smaller_properties_when_filtering_with_le_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -226,7 +226,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task LessThanEquals_WhenPropertyEquals_RecordsAreReturned()
+        public async Task It_will_return_entities_with_equal_properties_when_filtering_with_le_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -239,7 +239,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task LessThanEquals_WhenPropertyGreaterThan_NoRecordsAreReturned()
+        public async Task It_will_not_return_entities_with_larger_properties_when_filtering_with_le_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -252,7 +252,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task And_WhenLeftIsFalse_NoRecordsAreReturned()
+        public async Task It_will_not_return_entities_when_left_is_false_and_right_is_true()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -264,7 +264,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task And_WhenBothTrue_RecordsAreReturned()
+        public async Task It_will_return_entities_when_both_left_and_right_are_true()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -276,7 +276,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task And_WhenBothFalse_NoRecordsAreReturned()
+        public async Task It_will_return_entities_when_both_left_and_right_are_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -288,7 +288,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Or_WhenBothTrue_RecordsAreReturned()
+        public async Task It_will_return_entities_when_true_or_true()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -300,7 +300,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Or_WhenLeftTrueRightFalse_RecordsAreReturned()
+        public async Task It_will_return_entities_when_true_or_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -312,7 +312,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Or_WhenLeftFalseRightTrue_RecordsAreReturned()
+        public async Task It_will_return_entities_when_false_or_true()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -324,7 +324,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Or_WhenBothFalse_NoRecordsAreReturned()
+        public async Task It_will_not_return_entities_when_false_or_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -336,7 +336,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Or_WithFalseBrackets_NoRecordsAreReturned()
+        public async Task It_will_return_entities_when_false_and_true_second_expression_in_brackets_is_false_or_true()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -348,7 +348,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Or_WithFalseAndTrueBracket_RecordsAreReturned()
+        public async Task It_will_return_entities_when_false_and_true_second_expression_in_brackets_is_true_or_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -360,7 +360,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task And_WithTrueBrackets_RecordsAreReturned()
+        public async Task It_will_return_entities_when_left_is_true_and_right_expression_in_brackets_is_true_or_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -372,7 +372,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task And_WithTrueAndFalseBracket_NoRecordsAreReturned()
+        public async Task It_will_return_entities_when_left_is_false_and_right_expression_in_brackets_is_true_or_false()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await repository.CreateAsync(new Moon());
@@ -384,7 +384,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Adding_ToPropertyToEqualValue_ReturnsValues()
+        public async Task It_will_return_matching_entities_when_add_operation_used_matches_difference()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -397,7 +397,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Subtracting_FromPropertyToEqualValue_ReturnsValues()
+        public async Task It_will_return_matching_entities_when_sub_operation_used_matches_difference()
         {
             var repository = Services.GetRequiredService<IRepository<Moon>>();
             await ClearRepositoryAsync(repository);
@@ -410,7 +410,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Multiplying_PropertyToEqualValue_ReturnsValues()
+        public async Task It_will_apply_multiplication_when_mul_operator_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -423,7 +423,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Multiplying_ValuesWithinBrackets_AppliesOrderOfOperationsCorrectly()
+        public async Task It_will_add_operation_before_multipling_when_brackets_are_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -436,7 +436,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Dividing_PropertyToEqualValue_ReturnsValues()
+        public async Task It_will_divide_properties_before_comparing_when_the_div_operator_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -449,7 +449,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Dividing_ValuesWithinBrackets_AppliesOrderOfOperationsCorrectly()
+        public async Task It_will_divide_by_the_product_when_brackets_are_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -462,7 +462,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Moding_ByDivisibleNumber_ReturnsValues()
+        public async Task It_will_return_zero_when_moding_by_divisible_number()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -475,7 +475,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Moding_ByNonDivisibleNumberMatchingRemainder_ReturnsValues()
+        public async Task It_will_return_remainder_when_modding_by_non_divisible_number()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -488,7 +488,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Not_True_ReturnsNoValues()
+        public async Task It_will_not_return_entities_that_match_when_using_the_not_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await repository.CreateAsync(new Planet());
@@ -500,7 +500,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Not_DoubleNegative_ReturnsValues()
+        public async Task It_will_return_matching_entities_when_using_a_double_not_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await repository.CreateAsync(new Planet());
@@ -512,7 +512,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Not_WhenComparingEquvilantProperties_ReturnsNoValues()
+        public async Task It_will_not_return_entities_whos_boolean_properties_are_true_when_using_the_not_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -525,7 +525,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Not_WhenComparingCompliment_ReturnsValues()
+        public async Task It_will_return_entities_whos_boolean_properties_are_false_when_using_the_not_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -538,7 +538,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task NegativeSign_WhenComparingEquivilantNegativeValue_ReturnsValues()
+        public async Task It_will_return_entities_whos_value_is_negative_when_compared_against_a_negative_value()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -551,7 +551,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task NegativeSign_WhenComparingEquivilantNegativeProperty_ReturnsValues()
+        public async Task It_will_flip_the_sign_of_the_property_when_applying_the_negative_operator()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -564,7 +564,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task NegativeSign_WhenAddingToProperty_MatchesThatValue()
+        public async Task It_will_flip_the_sign_of_a_property_before_arithmetic_operations_begin()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -577,7 +577,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task PositiveSign_WhenAddingToProperty_MatchesThatValue()
+        public async Task It_will_allow_a_value_to_have_the_positive_sign_be_applied()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -590,7 +590,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task SubstringOf_WhenStringMatches_ReturnsTrue()
+        public async Task It_will_return_entities_with_matching_values_when_filtering_with_the_substring_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -603,7 +603,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task SubstringOf_WhenStringIsContained_ReturnsTrue()
+        public async Task It_will_return_entities_if_they_are_substrins_when_filtering_with_the_substring_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -616,7 +616,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task SubstringOf_WhenStringIsNotContained_ReturnsFalse()
+        public async Task It_will_not_return_entities_if_their_value_isnt_a_substring_when_filtering_with_the_substring_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -629,7 +629,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task EndsWith_WhenEndsWith_ReturnsTrue()
+        public async Task It_will_return_entities_who_end_with_a_value_when_filtering_using_the_endswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -642,7 +642,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task EndsWith_WhenMatches_ReturnsTrue()
+        public async Task It_will_return_entities_whos_value_match_when_filtering_with_the_endswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -655,7 +655,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task EndsWith_WhenStartsWith_ReturnsFalse()
+        public async Task It_will_not_return_entities_whos_value_doesnt_end_when_filtering_when_endswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -668,7 +668,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task EndsWith_WhenNoMatch_ReturnsTrue()
+        public async Task It_will_not_return_entities_whos_value_is_different_when_filtering_with_endswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -681,7 +681,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task StartsWith_WhenContained_ReturnsTrue()
+        public async Task It_will_return_entities_with_values_starting_with_argument_when_filtering_with_startswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -694,7 +694,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task StartsWith_WhenEquals_ReturnsTrue()
+        public async Task It_will_return_entities_with_values_equal_the_argument_when_filtering_with_startswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -707,7 +707,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task StartsWith_WhenNotContains_ReturnsFalse()
+        public async Task It_will_not_return_entities_whos_values_are_supersets_of_the_argument_when_filtering_with_startswith_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -720,7 +720,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Length_WhenMatching_ReturnsTrue()
+        public async Task It_will_return_entities_whos_properties_are_of_equal_length_when_filtering_using_length_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -733,7 +733,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Length_WhenNotMatching_ReturnsFalse()
+        public async Task It_will_not_return_entities_whos_properties_are_of_different_length_when_filtering_using_length_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -746,7 +746,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Replace_ReplacesInstance()
+        public async Task It_will_replace_values_before_comparing_when_filtering_with_replace_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -759,7 +759,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Substring_SkipsThoseCharacters()
+        public async Task It_will_skip_characters_equal_to_argument_when_using_the_substring_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -772,7 +772,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Substring_WithLength_ReturnsThoseCharacters()
+        public async Task It_will_return_a_string_of_length_equal_to_third_argument_when_using_the_substring_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -785,7 +785,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task ToLower_ReturnsLoweredCharacters()
+        public async Task It_will_convert_a_property_value_to_lowercase_when_filtering_using_the_tolower_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -798,7 +798,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task ToUpper_ReturnsCapitilizedCharacters()
+        public async Task It_will_convet_a_property_to_uppercase_when_filtering_using_the_toupper_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -811,7 +811,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Trimming_RemovesWhitespace()
+        public async Task It_will_remove_whitespace_from_the_ends_of_a_property_when_filtering_using_the_trim_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -824,7 +824,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Concat_CombinesTwoStrings()
+        public async Task It_will_allow_two_string_values_to_be_combined_when_using_the_concat_method()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -837,7 +837,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task NestedFunctionCalls_AreParsedInCorrectOrder()
+        public async Task It_will_call_functions_in_the_correct_order_when_they_are_nested()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -850,7 +850,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Day_ReturnsDay()
+        public async Task It_will_return_a_dates_day_value_when_the_day_method_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -865,7 +865,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Hour_ReturnsHour()
+        public async Task It_will_return_a_dates_hour_value_when_the_hour_method_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -879,7 +879,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Minute_ReturnsMinute()
+        public async Task It_will_return_a_dates_minute_value_when_the_minute_method_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -893,7 +893,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Second_ReturnsSecond()
+        public async Task It_will_return_a_dates_second_value_when_the_second_method_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);
@@ -907,7 +907,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task Year_ReturnsYear()
+        public async Task It_will_return_a_dates_year_value_when_the_year_method_is_used()
         {
             var repository = Services.GetRequiredService<IRepository<Planet>>();
             await ClearRepositoryAsync(repository);

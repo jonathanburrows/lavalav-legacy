@@ -36,7 +36,7 @@ namespace lvl.Web.Tests
         [InlineData("POST")]
         [InlineData("PUT")]
         [InlineData("DELETE")]
-        public void WhenRequestingOptions_ForAllMethods_CorsResponseIsGiven(string method)
+        public void It_will_return_cors_response_for_all_http_methods(string method)
         {
             var request = new HttpRequestMessage
             {
@@ -56,7 +56,7 @@ namespace lvl.Web.Tests
         [InlineData("PUT")]
         [InlineData("DELETE")]
         [InlineData("NON-STANDARD")]
-        public void WhenRequestingOptions_NonStandardAllowedMethodsAreReturned(string nonStandardMethod)
+        public void It_will_respond_when_non_standard_methdods_are_used(string nonStandardMethod)
         {
             var request = new HttpRequestMessage
             {
@@ -74,7 +74,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_ForUnsupportedMethod_NoAllowedMethodsAreReturned()
+        public async Task It_will_not_return_allowed_methods_when_unsupported_methods_are_used()
         {
             var request = new HttpRequestMessage
             {
@@ -91,7 +91,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task RequestingOptions_WithNoMethod_Returns404()
+        public async Task Requesting_options_will_return_404_when_no_method_is_provided()
         {
             var request = new HttpRequestMessage
             {
@@ -106,7 +106,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_ForNonAllowedOrigin_NoOriginsAreReturned()
+        public async Task Requesting_options_will_no_give_origins_when_origin_is_not_allowed()
         {
             var request = new HttpRequestMessage
             {
@@ -123,7 +123,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_ForAllowedOrigin_OriginIsReturned()
+        public async Task Requesting_options_will_populate_origins_when_requests_origin_is_allowed()
         {
             var origin = Client.BaseAddress.ToString();
             var request = new HttpRequestMessage
@@ -141,7 +141,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_WithNoOrigin_Returns404()
+        public async Task Requesting_options_will_return_404_when_no_origin_is_provide()
         {
             var request = new HttpRequestMessage
             {
@@ -156,7 +156,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_WithNonAllowedOriginButAllowedMethods_NoHeadersAreReturned()
+        public async Task Requesting_options_will_not_privde_headers_when_origin_isnt_allowed_but_method_is()
         {
             var request = new HttpRequestMessage
             {
@@ -173,7 +173,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_ForNonAllowedHeaders_NoHeadersAreReturned()
+        public async Task Requesting_options_will_not_return_headers_when_headers_arent_allowed()
         {
             var request = new HttpRequestMessage
             {
@@ -190,7 +190,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenRequestingOptions_ForAllowedHeaders_HeadersAreReturned()
+        public async Task Requesting_options_will_return_headers_when_request_headers_are_allowed()
         {
             var header = "ALLOWED-HEADER";
             var request = new HttpRequestMessage
@@ -209,7 +209,7 @@ namespace lvl.Web.Tests
         }
 
         [Fact]
-        public async Task WhenPerformingStandardRequest_ForAllowedExposedHeaders_ExposedHeadersAreReturned()
+        public async Task Standard_request_will_return_exposed_headers_when_using_allowed_exposed_headers()
         {
             var request = new HttpRequestMessage
             {
