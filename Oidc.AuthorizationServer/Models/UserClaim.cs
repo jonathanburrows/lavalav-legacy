@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Ontology.Authorization;
 using lvl.Ontology.Conventions;
 using System.ComponentModel.DataAnnotations;

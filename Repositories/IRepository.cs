@@ -1,4 +1,4 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
 using lvl.Repositories.Querying;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,7 +29,7 @@ namespace lvl.Repositories
         /// </summary>
         /// <param name="id">The identifier of the desired entity.</param>
         /// <returns>The matching entity if one exists, null if no matching entity.</returns>
-        Task<Entity> GetAsync(int id);
+        Task<Entity> GetAsync(long id);
 
         /// <summary>
         ///     Creates an entity with all properties, and updates the model with any generated values.

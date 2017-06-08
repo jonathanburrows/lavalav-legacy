@@ -1,4 +1,5 @@
-﻿using lvl.Ontology.Tests.Fixtures;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology.Tests.Fixtures;
 using System.Linq;
 using System.Reflection;
 using Xunit;
@@ -88,15 +89,6 @@ namespace lvl.Ontology.Tests
         }
 
         [Fact]
-        public void Its_equal_will_be_false_when_both_ids_are_zero()
-        {
-            var a = new ComparisonEntity { Id = 0 };
-            var b = new ComparisonEntity { Id = 0 };
-
-            Assert.False(a.Equals(b));
-        }
-
-        [Fact]
         public void Its_equal_will_be_true_when_both_ids_are_matching()
         {
             var a = new ComparisonEntity { Id = 1 };
@@ -172,15 +164,6 @@ namespace lvl.Ontology.Tests
         public void Its_equal_operator_will_be_false_when_b_id_is_zero()
         {
             var a = new ComparisonEntity { Id = 1 };
-            var b = new ComparisonEntity { Id = 0 };
-
-            Assert.False(a == b);
-        }
-
-        [Fact]
-        public void Its_equal_operator_will_be_false_when_both_ids_are_zero()
-        {
-            var a = new ComparisonEntity { Id = 0 };
             var b = new ComparisonEntity { Id = 0 };
 
             Assert.False(a == b);

@@ -1,4 +1,4 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
 using lvl.Repositories.Tests.Configuration;
 using lvl.Repositories.Tests.Fixtures;
 using lvl.TestDomain;

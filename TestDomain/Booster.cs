@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 
 namespace lvl.TestDomain
 {

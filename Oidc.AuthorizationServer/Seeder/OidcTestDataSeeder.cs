@@ -79,7 +79,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                     SubjectId = "forgotten-username@lavalav.com",
                     Username = "forgotten-username",
                     HashedPassword = "password",
-                    Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "forgotten-username@lavalav.com" } }
+                    Claims = new []{ new ClaimEntity { Type = JwtClaimTypes.Email, Value = "forgotten-username@lavalav.com" } }
                 }
             };
 
@@ -94,7 +94,11 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
             {
                 new ApiResourceEntity("test-resource-server", "Test Resource Server")
                 {
-                    Scopes = { new ScopeEntity { Name = "name" } }
+                    Scopes = new []
+                    {
+                        new ScopeEntity { Name = "name" },
+                        new ScopeEntity { Name = "test-resource-server" }
+                    }
                 }
             };
 

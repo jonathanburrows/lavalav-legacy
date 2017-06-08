@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Repositories.Authorization;
 using lvl.Repositories.Querying;
 using NHibernate.Linq;
@@ -98,7 +99,7 @@ namespace lvl.Repositories
         /// </summary>
         /// <param name="id">The identifier of the desired entity.</param>
         /// <returns>The matching entity if one exists, null if no matching entity.</returns>
-        public virtual Task<TEntity> GetAsync(int id)
+        public virtual Task<TEntity> GetAsync(long id)
         {
             using (var session = SessionProvider.GetSession())
             {
@@ -114,7 +115,7 @@ namespace lvl.Repositories
         /// </summary>
         /// <param name="id">The identifier of the desired entity.</param>
         /// <returns>The matching entity if one exists, null if no matching entity.</returns>
-        async Task<Entity> IRepository.GetAsync(int id)
+        async Task<Entity> IRepository.GetAsync(long id)
         {
             return await GetAsync(id);
         }

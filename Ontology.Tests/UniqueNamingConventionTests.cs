@@ -1,4 +1,5 @@
-﻿using lvl.Ontology.Conventions;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology.Conventions;
 using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
@@ -51,7 +52,7 @@ namespace lvl.Ontology.Tests
             Assert.False(column.Unique);
         }
 
-        public class UniqueConventionPoco : Entity
+        public class UniqueConventionPoco: Entity
         {
             [Unique]
             public string Unique { get; set; }

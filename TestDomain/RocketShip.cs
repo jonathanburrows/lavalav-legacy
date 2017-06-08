@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Ontology.Authorization;
 using lvl.Ontology.Conventions;
 using System;
@@ -19,8 +20,8 @@ namespace lvl.TestDomain
         public string InventingUserId { get; set; }
         
         [ForeignKeyId(typeof(Planet))]
-        public int TargetPlanetId { get; set; }
+        public long TargetPlanetId { get; set; }
 
-        public ICollection<Booster> Boosters { get; set; } = new HashSet<Booster>();
+        public IEnumerable<Booster> Boosters { get; set; }
     }
 }

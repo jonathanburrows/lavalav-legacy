@@ -81,7 +81,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
                 Username = "ro-adding-claims",
                 SubjectId = "ro-adding-claims",
                 HashedPassword = "password",
-                Claims =
+                Claims = new[]
                 {
                     new ClaimEntity{ Type = JwtClaimTypes.Name, Value = "my-name" },
                     new ClaimEntity{ Type = JwtClaimTypes.Address, Value = "address" }

@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using lvl.TypescriptGenerator.Extensions;
 using System.IO;
+using FluentNHibernate.Data;
 
 namespace lvl.TypescriptGenerator
 {

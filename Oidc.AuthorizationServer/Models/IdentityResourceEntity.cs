@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using FluentNHibernate.Data;
+using IdentityServer4.Models;
 using lvl.Ontology;
 using lvl.Ontology.Authorization;
 using System;
@@ -56,7 +57,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         /// List of accociated user claims that should be included when this resource is requested.
         /// </summary>
-        public ICollection<UserClaim> UserClaims { get; set; } = new HashSet<UserClaim>();
+        public IEnumerable<UserClaim> UserClaims { get; set; }
 
         /// <summary>
         ///     Converts POCO to something that can be used by Identity Server.

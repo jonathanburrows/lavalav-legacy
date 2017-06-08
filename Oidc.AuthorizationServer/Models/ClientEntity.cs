@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using FluentNHibernate.Data;
+using IdentityServer4;
 using IdentityServer4.Models;
 using lvl.Ontology;
 using lvl.Ontology.Authorization;
@@ -41,7 +42,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Client secrets - only relevant for flows that require a secret
         /// </summary>
-        public ICollection<SecretEntity> ClientSecrets { get; set; } = new HashSet<SecretEntity>();
+        public IEnumerable<SecretEntity> ClientSecrets { get; set; }
 
         /// <summary>
         ///     If set to false, no client secret is needed to request tokens at the token endpoint (defaults to true)
@@ -78,7 +79,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Specifies the allowed grant types (legal combinations of AuthorizationCode, Implicit, Hybrid, ResourceOwner, ClientCredentials). Defaults to Implicit.
         /// </summary>
-        public ICollection<GrantTypeEntity> AllowedGrantTypes { get; set; } = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt }).ToList();
+        public IEnumerable<GrantTypeEntity> AllowedGrantTypes { get; set; } = GrantTypes.Implicit.Select(gt => new GrantTypeEntity { Name = gt });
 
         /// <summary>
         ///     Specifies whether a proof key is required for authorization code based token requests
@@ -102,12 +103,12 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Specifies allowed URIs to return tokens or authorization codes to
         /// </summary>
-        public ICollection<RedirectUri> RedirectUris { get; set; } = new HashSet<RedirectUri>();
+        public IEnumerable<RedirectUri> RedirectUris { get; set; }
 
         /// <summary>
         ///     Specifies allowed URIs to redirect to after logout
         /// </summary>
-        public ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; } = new HashSet<PostLogoutRedirectUri>();
+        public IEnumerable<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
 
         /// <summary>
         ///     Specifies logout URI at client for HTTP based logout.
@@ -127,7 +128,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Specifies the api scopes that the client is allowed to request. If empty, the client can't access any scope
         /// </summary>
-        public ICollection<AllowedScope> AllowedScopes { get; set; } = new HashSet<AllowedScope>();
+        public IEnumerable<AllowedScope> AllowedScopes { get; set; }
 
         /// <summary>
         ///     When requesting both an id token and access token, should the user claims always be added to the id token instead of requring the client to use the userinfo endpoint.
@@ -195,7 +196,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.
         /// </summary>
-        public ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; } = new HashSet<IdentityProviderRestriction>();
+        public IEnumerable<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether JWT access tokens should include an identifier
@@ -211,7 +212,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The claims.
         /// </value>
-        public ICollection<ClaimEntity> Claims { get; set; } = new HashSet<ClaimEntity>();
+        public IEnumerable<ClaimEntity> Claims { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether client claims should be always included in the access tokens - or only for client credentials flow.
@@ -235,7 +236,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <value>
         ///     The allowed CORS origins.
         /// </value>
-        public ICollection<CorsOrigin> AllowedCorsOrigins { get; set; } = new HashSet<CorsOrigin>();
+        public IEnumerable<CorsOrigin> AllowedCorsOrigins { get; set; }
 
         /// <summary>
         ///     Converts the POCO into something that can be used by Identity Server

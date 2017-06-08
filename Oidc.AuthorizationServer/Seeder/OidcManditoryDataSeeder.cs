@@ -34,7 +34,7 @@ namespace lvl.Oidc.AuthorizationServer.Seeder
                 {
                     Name = JwtClaimTypes.Role,
                     DisplayName = "Roles",
-                    UserClaims = { new UserClaim { Name = JwtClaimTypes.Role} }
+                    UserClaims = new []{ new UserClaim { Name = JwtClaimTypes.Role} }
                 }
             };
 

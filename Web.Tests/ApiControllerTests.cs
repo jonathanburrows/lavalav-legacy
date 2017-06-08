@@ -1,5 +1,4 @@
-﻿using lvl.Ontology;
-using lvl.Repositories;
+﻿using lvl.Repositories;
 using lvl.TestDomain;
 using lvl.Web.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using lvl.TestWebSite.Fixtures;
 using Xunit;
+using FluentNHibernate.Data;
 
 namespace lvl.Web.Tests
 {

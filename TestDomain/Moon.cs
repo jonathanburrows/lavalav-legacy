@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Ontology.Conventions;
 
 namespace lvl.TestDomain
@@ -13,6 +14,6 @@ namespace lvl.TestDomain
         public Planet Planet { get; set; }
 
         [ForeignKeyId(typeof(Astronaut))]
-        public int? FirstPersonToStepFootId { get; set; }
+        public long? FirstPersonToStepFootId { get; set; }
     }
 }

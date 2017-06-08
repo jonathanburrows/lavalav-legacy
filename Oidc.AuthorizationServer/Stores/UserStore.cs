@@ -127,7 +127,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
             var usernameClaim = new ClaimEntity { Type = JwtClaimTypes.Name, Value = adding.Username };
             var defaultClaims = Options.NewUserRoles.Select(role => new ClaimEntity { Type = JwtClaimTypes.Role, Value = role });
 
-            adding.Claims = existingClaims.Union(new[] { usernameClaim }).Union(defaultClaims).ToList();
+            adding.Claims = existingClaims.Concat(new[] { usernameClaim }).Concat(defaultClaims).ToList();
 
             adding.Salt = PasswordHasher.GetSalt();
             adding.HashedPassword = PasswordHasher.Hash(adding.HashedPassword, adding.Salt);
@@ -198,7 +198,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
 
             var defaultClaims = Options.NewUserRoles.Select(role => new ClaimEntity { Type = JwtClaimTypes.Role, Value = role });
             var usernameClaim = new ClaimEntity { Type = JwtClaimTypes.Name, Value = username };
-            var claims = defaultClaims.Union(new[] { usernameClaim }).ToList();
+            var claims = defaultClaims.Concat(new[] { usernameClaim }).ToList();
 
             var salt = PasswordHasher.GetSalt();
             var hashedPassword = PasswordHasher.Hash(password, salt);
@@ -265,7 +265,7 @@ namespace lvl.Oidc.AuthorizationServer.Stores
                 ValueType = c.ValueType
             });
             var defaultClaims = Options.NewUserRoles.Select(role => new ClaimEntity { Type = JwtClaimTypes.Role, Value = role });
-            var allClaims = claimEntities.Union(defaultClaims).ToList();
+            var allClaims = claimEntities.Concat(defaultClaims).ToList();
 
             var externalUser = new User
             {

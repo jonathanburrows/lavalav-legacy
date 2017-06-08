@@ -70,7 +70,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = Guid.NewGuid().ToString(),
                 Username = Guid.NewGuid().ToString(),
-                Claims =
+                Claims = new[]
                 {
                     new ClaimEntity { Type = JwtClaimTypes.Email, Value = "other-email" }
                 }
@@ -89,7 +89,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = Guid.NewGuid().ToString(),
                 Username = Guid.NewGuid().ToString(),
-                Claims =
+                Claims = new[]
                 {
                     new ClaimEntity { Type = JwtClaimTypes.Email, Value = email },
                     new ClaimEntity { Type = JwtClaimTypes.Email, Value = "other-email" }
@@ -109,7 +109,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = Guid.NewGuid().ToString(),
                 Username = Guid.NewGuid().ToString(),
-                Claims =
+                Claims = new[]
                 {
                     new ClaimEntity { Type = JwtClaimTypes.Email, Value = email },
                     new ClaimEntity { Type = JwtClaimTypes.Email, Value = email }
@@ -129,7 +129,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = Guid.NewGuid().ToString(),
                 Username = Guid.NewGuid().ToString(),
-                Claims =
+                Claims = new[]
                 {
                     new ClaimEntity { Type = JwtClaimTypes.PreferredUserName, Value = email }
                 }
@@ -148,7 +148,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = Guid.NewGuid().ToString(),
                 Username = Guid.NewGuid().ToString(),
-                Claims =
+                Claims = new[]
                 {
                     new ClaimEntity { Type = JwtClaimTypes.Email, Value = email.ToUpper() }
                 }

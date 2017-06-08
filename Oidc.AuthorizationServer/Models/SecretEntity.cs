@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using FluentNHibernate.Data;
+using IdentityServer4.Models;
 using lvl.Ontology;
 using lvl.Ontology.Authorization;
 using System;

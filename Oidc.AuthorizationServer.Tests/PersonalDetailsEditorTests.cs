@@ -92,7 +92,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = name,
                 Username = name,
-                Claims = { new ClaimEntity { Type = "sub", Value = name } }
+                Claims = new[] { new ClaimEntity { Type = "sub", Value = name } }
             });
             Impersonator.AsUser(name);
 
@@ -110,13 +110,13 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 SubjectId = differentName,
                 Username = differentName,
-                Claims = { new ClaimEntity { Type = "sub", Value = differentName } }
+                Claims = new[] { new ClaimEntity { Type = "sub", Value = differentName } }
             });
             var user = await UserRepository.CreateAsync(new User
             {
                 SubjectId = matchingName,
                 Username = matchingName,
-                Claims = { new ClaimEntity { Type = "sub", Value = matchingName } }
+                Claims = new[] { new ClaimEntity { Type = "sub", Value = matchingName } }
             });
             Impersonator.AsUser(matchingName);
 
@@ -146,7 +146,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "my-email" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "my-email" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -159,7 +159,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.GivenName, Value = "my-first-name" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.GivenName, Value = "my-first-name" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -172,7 +172,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.FamilyName, Value = "my-last-name" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.FamilyName, Value = "my-last-name" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -185,7 +185,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = "job", Value = "my-job" } }
+                Claims = new[] { new ClaimEntity { Type = "job", Value = "my-job" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -198,7 +198,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = "location", Value = "my-location" } }
+                Claims = new[] { new ClaimEntity { Type = "location", Value = "my-location" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -211,7 +211,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "1234567" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "1234567" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -224,7 +224,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -237,7 +237,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
         {
             var user = new User
             {
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "HELLO, WORLD!" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "HELLO, WORLD!" } }
             };
 
             var model = PersonalDetailsEditor.GetPersonalDetails(user);
@@ -279,7 +279,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { Email = "updated" };
@@ -298,7 +298,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel();
@@ -343,7 +343,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.GivenName, Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.GivenName, Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { FirstName = "updated" };
@@ -362,7 +362,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.GivenName, Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.GivenName, Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { FirstName = "" };
@@ -407,7 +407,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.FamilyName, Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.FamilyName, Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { LastName = "updated" };
@@ -426,7 +426,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.FamilyName, Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.FamilyName, Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel();
@@ -471,7 +471,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "1" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "1" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { PhoneNumber = 2 };
@@ -490,7 +490,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "1" } }
+                Claims = new[] { new ClaimEntity { Type = JwtClaimTypes.PhoneNumber, Value = "1" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel();
@@ -535,7 +535,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = "job", Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = "job", Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { Job = "updated" };
@@ -554,7 +554,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = "job", Value = "value" } }
+                Claims = new[] { new ClaimEntity { Type = "job", Value = "value" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel();
@@ -599,7 +599,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = "location", Value = "old" } }
+                Claims = new[] { new ClaimEntity { Type = "location", Value = "old" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel { Location = "updated" };
@@ -618,7 +618,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = "location", Value = "value" } }
+                Claims = new[] { new ClaimEntity { Type = "location", Value = "value" } }
             };
             await UserRepository.CreateAsync(user);
             var model = new PersonalDetailsViewModel();

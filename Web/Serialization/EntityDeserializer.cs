@@ -1,4 +1,4 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;

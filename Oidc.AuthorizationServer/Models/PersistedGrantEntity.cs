@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using lvl.Ontology.Conventions;
 using lvl.Ontology.Authorization;
+using FluentNHibernate.Data;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {

@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Repositories;
 using lvl.Repositories.Querying;
 using lvl.TestDomain;

@@ -70,7 +70,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "this email" } }
+                Claims = new []{ new ClaimEntity { Type = JwtClaimTypes.Email, Value = "this email" } }
             });
             var claims = new ClaimsIdentity(new[] { new Claim(JwtClaimTypes.Subject, username) });
             var context = new ProfileDataRequestContext(new ClaimsPrincipal(claims), new Client(), UserInfoEndpoint, new string[0]);
@@ -88,7 +88,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             {
                 Username = username,
                 SubjectId = username,
-                Claims = { new ClaimEntity { Type = JwtClaimTypes.Email, Value = "this email" } }
+                Claims = new []{ new ClaimEntity { Type = JwtClaimTypes.Email, Value = "this email" } }
             });
             var claims = new ClaimsIdentity(new[] { new Claim(JwtClaimTypes.Subject, username) });
             var identity = new ClaimsPrincipal(claims);

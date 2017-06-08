@@ -6,6 +6,7 @@ using lvl.Ontology;
 using lvl.Repositories.Tests.Fixtures;
 using lvl.Repositories.Tests.Configuration;
 using lvl.Repositories.Authorization;
+using FluentNHibernate.Data;
 
 namespace lvl.Repositories.Tests
 {

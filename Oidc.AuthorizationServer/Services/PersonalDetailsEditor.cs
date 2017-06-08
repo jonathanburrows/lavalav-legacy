@@ -85,7 +85,7 @@ namespace lvl.Oidc.AuthorizationServer.Services
             }
             else if (string.IsNullOrEmpty(value))
             {
-                user.Claims.Remove(matchingClaim);
+                user.Claims = user.Claims.Where(c => c.Type != type).ToList();
             }
             else
             {

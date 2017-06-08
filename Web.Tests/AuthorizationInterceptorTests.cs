@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Ontology.Authorization;
 using lvl.Repositories;
 using lvl.Web.Authorization;

@@ -1,4 +1,5 @@
-﻿using lvl.Ontology.Conventions;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology.Conventions;
 using lvl.Ontology.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Cfg;
@@ -29,7 +30,7 @@ namespace lvl.Ontology.Tests
         public class SingleChildParent : Entity, IAggregateRoot
         {
             [ForeignKeyId(typeof(ChildSon))]
-            public int ChildSonId { get; set; }
+            public long ChildSonId { get; set; }
         }
 
         [Fact]
@@ -44,10 +45,10 @@ namespace lvl.Ontology.Tests
         public class DoubleChildParent : Entity
         {
             [ForeignKeyId(typeof(ChildSon))]
-            public int ChildSonId { get; set; }
+            public long ChildSonId { get; set; }
 
             [ForeignKeyId(typeof(ChildDaughter))]
-            public int ChildDaughterId { get; set; }
+            public long ChildDaughterId { get; set; }
         }
 
         [Fact]
@@ -62,10 +63,10 @@ namespace lvl.Ontology.Tests
         public class DoubleChildSameClassParent : Entity
         {
             [ForeignKeyId(typeof(ChildSon))]
-            public int ChildSonId { get; set; }
+            public long ChildSonId { get; set; }
 
             [ForeignKeyId(typeof(ChildSon))]
-            public int SecondChildSonId { get; set; }
+            public long SecondChildSonId { get; set; }
         }
 
         [Fact]
@@ -80,7 +81,7 @@ namespace lvl.Ontology.Tests
         public class SelfReferencingParent : Entity
         {
             [ForeignKeyId(typeof(SelfReferencingParent))]
-            public int? SelfReferencingParentId { get; set; }
+            public long? SelfReferencingParentId { get; set; }
         }
 
         [Fact]
@@ -96,7 +97,7 @@ namespace lvl.Ontology.Tests
         public class UniquelyNamedParent : Entity
         {
             [ForeignKeyId(typeof(ChildSon))]
-            public int HelloWorld { get; set; }
+            public long HelloWorld { get; set; }
         }
 
         public class ChildSon : Entity { }

@@ -42,7 +42,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
                 ClientId = "no-matching-client",
                 ClientName = "client",
                 ClientUri = "localhost",
-                AllowedCorsOrigins = { new CorsOrigin { Name = "no-matching-client" } }
+                AllowedCorsOrigins = new[] { new CorsOrigin { Name = "no-matching-client" } }
             };
             await ClientRepository.CreateAsync(client);
 
@@ -57,7 +57,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
                 ClientId = "single-matching-client",
                 ClientName = "client",
                 ClientUri = "localhost",
-                AllowedCorsOrigins = { new CorsOrigin { Name = "single-matching-client" } }
+                AllowedCorsOrigins = new[] { new CorsOrigin { Name = "single-matching-client" } }
             };
             await ClientRepository.CreateAsync(client);
 
@@ -73,14 +73,14 @@ namespace lvl.Oidc.AuthorizationServer.Tests
                 ClientId = "one-matching-client1",
                 ClientUri = "localhost",
                 ClientName = "client",
-                AllowedCorsOrigins = { new CorsOrigin { Name = "one-matching-client" } }
+                AllowedCorsOrigins = new []{ new CorsOrigin { Name = "one-matching-client" } }
             });
             await ClientRepository.CreateAsync(new ClientEntity
             {
                 ClientId = "one-matching-client2",
                 ClientName = "client",
                 ClientUri = "localhost",
-                AllowedCorsOrigins = { new CorsOrigin { Name = "mismatched" } }
+                AllowedCorsOrigins = new[] { new CorsOrigin { Name = "mismatched" } }
             });
 
             var isAllowedOrigin = await CorsPolicyService.IsOriginAllowedAsync("one-matching-client");

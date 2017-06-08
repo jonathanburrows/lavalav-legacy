@@ -1,4 +1,5 @@
-﻿using lvl.Ontology;
+﻿using FluentNHibernate.Data;
+using lvl.Ontology;
 using lvl.Ontology.Authorization;
 using lvl.Ontology.Conventions;
 using System;
@@ -13,6 +14,6 @@ namespace lvl.Oidc.AuthorizationServer.Models
         public DateTime CreatedOn { get; set; }
 
         [ForeignKeyId(typeof(User))]
-        public int UserId { get; set; }
+        public long UserId { get; set; }
     }
 }

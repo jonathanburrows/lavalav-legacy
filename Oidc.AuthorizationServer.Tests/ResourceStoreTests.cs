@@ -68,9 +68,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             await ApiResourceRepository.CreateAsync(new ApiResourceEntity
             {
                 Name = name,
-                Scopes = {
-                    new ScopeEntity{ Name = name }
-                }
+                Scopes = new[] { new ScopeEntity { Name = name } }
             });
 
             var matchingApiResources = await ResourceStore.FindApiResourcesByScopeAsync(new[] { "non-existant" });
@@ -99,7 +97,8 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             await ApiResourceRepository.CreateAsync(new ApiResourceEntity
             {
                 Name = name,
-                Scopes = {
+                Scopes = new[]
+                {
                     new ScopeEntity{ Name = name },
                     new ScopeEntity{ Name = name }
                 }
@@ -117,9 +116,7 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             await ApiResourceRepository.CreateAsync(new ApiResourceEntity
             {
                 Name = name,
-                Scopes = {
-                    new ScopeEntity{ Name = name }
-                }
+                Scopes = new[] { new ScopeEntity { Name = name } }
             });
 
             var matchingApiResources = await ResourceStore.FindApiResourcesByScopeAsync(new[] { "non-existant", name });
@@ -134,16 +131,12 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             await ApiResourceRepository.CreateAsync(new ApiResourceEntity
             {
                 Name = $"{name}1",
-                Scopes = {
-                    new ScopeEntity{ Name = "another non matching" }
-                }
+                Scopes = new[] { new ScopeEntity { Name = "another non matching" } }
             });
             await ApiResourceRepository.CreateAsync(new ApiResourceEntity
             {
                 Name = $"{name}2",
-                Scopes = {
-                    new ScopeEntity{ Name = name }
-                }
+                Scopes = new[] { new ScopeEntity { Name = name } }
             });
 
             var matchingApiResources = await ResourceStore.FindApiResourcesByScopeAsync(new[] { name });
@@ -158,7 +151,8 @@ namespace lvl.Oidc.AuthorizationServer.Tests
             await ApiResourceRepository.CreateAsync(new ApiResourceEntity
             {
                 Name = name,
-                Scopes = {
+                Scopes = new[]
+                {
                     new ScopeEntity{ Name = "another-non-matching" },
                     new ScopeEntity{ Name = name }
                 }

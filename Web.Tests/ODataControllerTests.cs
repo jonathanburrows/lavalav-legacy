@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using lvl.TestWebSite.Fixtures;
 using Xunit;
+using FluentNHibernate.Data;
 
 namespace lvl.Web.Tests
 {

@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using lvl.Ontology.Conventions;
 using lvl.Ontology.Authorization;
+using FluentNHibernate.Data;
 
 namespace lvl.Oidc.AuthorizationServer.Models
 {
@@ -38,17 +39,17 @@ namespace lvl.Oidc.AuthorizationServer.Models
         /// <summary>
         ///     List of accociated user claims that should be included when this resource is requested.
         /// </summary>
-        public ICollection<UserClaim> UserClaims { get; set; } = new HashSet<UserClaim>();
+        public IEnumerable<UserClaim> UserClaims { get; set; }
 
         /// <summary>
         ///     The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret.
         /// </summary>
-        public ICollection<SecretEntity> ApiSecrets { get; set; }
+        public IEnumerable<SecretEntity> ApiSecrets { get; set; }
 
         /// <summary>
         ///     An API must have at least one scope. Each scope can have different settings.
         /// </summary>
-        public ICollection<ScopeEntity> Scopes { get; set; } = new HashSet<ScopeEntity>();
+        public IEnumerable<ScopeEntity> Scopes { get; set; }
 
         public ApiResourceEntity() { }
 
@@ -57,10 +58,7 @@ namespace lvl.Oidc.AuthorizationServer.Models
             Name = name ?? throw new ArgumentNullException(nameof(name));
             DisplayName = displayName ?? throw new ArgumentNullException(nameof(displayName));
 
-            Scopes = new HashSet<ScopeEntity>
-            {
-                new ScopeEntity{ Name = Name, DisplayName = DisplayName }
-            };
+            Scopes = new[] { new ScopeEntity { Name = Name, DisplayName = DisplayName } };
         }
 
         /// <summary>

@@ -2,13 +2,13 @@
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
-using lvl.Ontology;
 using System;
 using System.Linq;
 using System.Reflection;
 using lvl.Ontology.Database;
 using lvl.Ontology.Conventions;
 using NHibernate.Tool.hbm2ddl;
+using FluentNHibernate.Data;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
