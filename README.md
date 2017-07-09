@@ -63,7 +63,7 @@ When setting up a C# application, the combined microservices will have the follo
 ```
 
 
-
+```
 When setting up an angular projects, the environment.ts file should have the following options:
 {
     // Url to the api.
@@ -87,6 +87,7 @@ When setting up an angular projects, the environment.ts file should have the fol
 	// Roles which may be assigned by the administrator to users.
 	roles: string[]
 }
+```
 
 
 
