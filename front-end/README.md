@@ -25,7 +25,8 @@ When setting up an angular project, the following folder structure should be adh
 ----/styles
 ----module-name.module.ts
 ----module-name.router.module.ts
-----module-name.scss```
+----module-name.scss
+```
 
 
 
