@@ -1,25 +1,30 @@
-# lavalav
-A collection of libraries and DevOps products. These products aim to reduce the time it takes to code, maintain, and release other products.
+﻿# Oidc.AuthorizationServer
+## Goals
+Provide a microservice to issue and authenticate tokens.
 
 
+## Endpoints
+Supplies all endpoints required by openid (discovery, userinfo, ect).
+
+
+Additionally, for custom business logic, the additional endpoints are provided:
+
+`GET oidc/personal-details` fetches a flattened list of roles for a user.
+
+`PUT oidc/personal-details` updates a users roles from a flat model.
+
+`GET oidc/recover-username/<email>` will send an email to a user with their username.
+
+`GET oidc/reset-password/request/<username>` will send an email to a user with a link to reset their password.
+
+`PUT oidc/reset-password` will change a users password (if valid).
+
+
+*For security purposes, the domain models are not accessible from the api.*
 
 ## Config
-When setting up a C# application, the combined microservices will have the following configurations:
 ```
 {
-	domain: {
-		// Connection String to be used by all the application.
-		ConnectionString: string
-	},
-	logging: {
-		LogLevel: Trace | Debug | Information | Warning | Error | Critical | None
-	},
-	cors: {
-		AllowHeaders: string[],
-		AllowMethods: string[],
-		AllowOrigins: string[],
-		ExposedHeaders: string[]
-	},
 	oidc: {
 		authorization-server: {
 			// If true, will populate data used in development and unit tests.
@@ -62,9 +67,3 @@ When setting up a C# application, the combined microservices will have the follo
 }
 ```
 
-
-
-## Project Architecture
-<img src="docs/api-architecture.png" />
-
-For details on an project's architecture, see its specific README.md
