@@ -88,5 +88,18 @@ public class MyEntity: Entity, IAggregateRoot
 ```
 
 
+
+### Config
+Domain will have a single config, _ConnectionString_:
+```
+{
+	domain: {
+		// Connection String to be used by all the application.
+		ConnectionString: string
+	}
+}
+```
+
+
 ## Architecture
 <img src="docs\ontology-architecture.png" />

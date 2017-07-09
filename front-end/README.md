@@ -30,6 +30,20 @@ When setting up an angular project, the following folder structure should be adh
 
 
 
+## Config 
+front-end.module has the following options:
+```
+{
+    // Url to the api.
+	resourceServerUrl: string,
+
+    // required by angular cli
+	production: boolean
+}
+```
+
+
+
 ## Service Architecture
 (component and decorators have been omitted for brevity)
 <img src="docs\service-architecture.png" />
