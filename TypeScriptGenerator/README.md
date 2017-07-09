@@ -3,11 +3,11 @@ To provide a way of generating a set of TypeScript models for C# POCOs
 
 
 ## Synopsis
-lvl.TypeScriptGenerator --assembly-path=&gt;assembly-path&lt; --output-bin=&gt;output-bin&lt; [--decorator-path=&gt;decorator-path&lt;] [&gt;C# namespace&lt;=&gt;npm package&lt;[, &gt;C# namespace&lt;=&gt;npm package&lt;...]] 
+lvl.TypeScriptGenerator --assembly-path=&lt;assembly-path&gt; --output-bin=&lt;output-bin&gt; [--decorator-path=&lt;decorator-path&gt;] [&lt;C# namespace&gt;=&lt;npm package&gt;[, &lt;C# namespace&gt;=&lt;npm package&gt;...]] 
 
 
 ## Example
-lvl.TypeScriptGenerator --assembly-path=lvl.TestDomain.dll --output-bin=&gt;src/models&lt; lvl.Ontology=&gt;@lvl/front-end&lt;
+lvl.TypeScriptGenerator --assembly-path=lvl.TestDomain.dll --output-bin=&lt;src/models&gt; lvl.Ontology=&lt;@lvl/front-end&gt;
 
 
 ## Options
