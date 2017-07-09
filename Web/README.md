@@ -45,16 +45,16 @@ Logs are also added to the database table `LogEntry`.
 When setting up a appsettings.json, the options can be set:
 
 
-```json
+```
 {
 	logging: {
 		LogLevel: Trace | Debug | Information | Warning | Error | Critical | None
 	},
 	cors: {
-		AllowHeaders: [],
-		AllowMethods: [],
-		AllowOrigins: [],
-		ExposedHeaders: []
+		AllowHeaders: string[],
+		AllowMethods: string[],
+		AllowOrigins: string[],
+		ExposedHeaders: string[]
 	}
 }
 ```
