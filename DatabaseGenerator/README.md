@@ -1,8 +1,6 @@
 ﻿## Goals
 To provide a way of generating databases for an application dll and a connection string.
 
-## Architecture
-<img src="docs\database-generator-architecture.png" />
 
 ## Synopsis
 lvl.DatabaseGenerator 
@@ -12,6 +10,7 @@ lvl.DatabaseGenerator
 	[--pre-generation-script-bin 'path']
 	[--migrate] 
 	[--dry-run]
+
 
 ## Example
 lvl.DatabaseGenerator --connection-string "helloworld" --migrate --assembly-path "here" --pre-generation-script-bin 'there'
@@ -34,3 +33,8 @@ _--migrate_: Denotes that the database should not recreated from scratched, but 
 
 
 _--dry-run_: Will denote that no changes will be made, to report on any potential errors.
+
+
+
+## Architecture
+<img src="docs\database-generator-architecture.png" />
