@@ -8,7 +8,7 @@ import {
 import {
     AccountMenuComponent,
     ChangePasswordComponent,
-    PersonalDetailComponents,
+    PersonalDetailComponent,
     RecoverUsernameComponent,
     RegisterAccountComponent,
     RequestResetPasswordComponent,
@@ -49,7 +49,7 @@ import {
     declarations: [
         AccountMenuComponent,
         ChangePasswordComponent,
-        PersonalDetailComponents,
+        PersonalDetailComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,
@@ -61,7 +61,7 @@ import {
     exports: [
         AccountMenuComponent,
         ChangePasswordComponent,
-        PersonalDetailComponents,
+        PersonalDetailComponent,
         RecoverUsernameComponent,
         RegisterAccountComponent,
         RequestResetPasswordComponent,

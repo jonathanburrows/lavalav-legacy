@@ -10,6 +10,7 @@ import { FrontEndOptions } from '../front-end-options';
 /**
  *  Communicates with the Api endpoints on the configured resource server.
  */
+// tslint:disable:no-shadowed-variable
 @Injectable()
 export class ApiService {
     constructor(private http: Http, private headersService: HeadersService, private options: FrontEndOptions) { }

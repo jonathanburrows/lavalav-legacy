@@ -1,0 +1,22 @@
+﻿<!-- This page is for running tests and development in isolation from other projects. -->
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@lvl/oidc e2e tests</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- These styles were added for e2e testing. Angular doesnt yet support DisableAnimations in protractor. -->
+    <style>
+        .no-animations * {
+            -webkit-transition: none !important;
+            -o-transition: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+<body>
+    <lvl-oidc-demo-root>Loading...</lvl-oidc-demo-root>
+</body>
+</html>

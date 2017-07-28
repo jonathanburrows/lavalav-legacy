@@ -13,7 +13,7 @@
       "test": "../test.ts",
       "tsconfig": "../tsconfig.json",
       "testTsconfig": "../tsconfig.json",
-      "prefix": "lvl-oidc",
+      "prefix": "lvl-personal",
       "styles": [
         "global.scss"
       ],
@@ -32,8 +32,7 @@
   },
   "lint": [
     {
-      "project": "./tslint.json",
-      "exclude": "**/node_modules/**/*"
+      "project": "./tslint.json"
     }
   ],
   "test": {

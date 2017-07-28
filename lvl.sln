@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A6CC74E6-EDF6-4595-B136-E693229A9643}"
 	ProjectSection(SolutionItems) = preProject
@@ -51,6 +51,10 @@ EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "front-end", "front-end\front-end.njsproj", "{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "oidc", "oidc\oidc.njsproj", "{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "personal-site", "personal-site", "{4AC15FA6-9B02-4230-9EA2-70983857F1D0}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "personal-site", "personal-site\personal-site.njsproj", "{2AFE10F9-7A0D-429D-BE4D-778ACD74DEB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -212,6 +216,10 @@ Global
 		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|x64.ActiveCfg = Release|Any CPU
 		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD}.Release|x64.Build.0 = Release|Any CPU
+		{2AFE10F9-7A0D-429D-BE4D-778ACD74DEB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AFE10F9-7A0D-429D-BE4D-778ACD74DEB5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2AFE10F9-7A0D-429D-BE4D-778ACD74DEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AFE10F9-7A0D-429D-BE4D-778ACD74DEB5}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,5 +244,6 @@ Global
 		{501A56BA-58CA-44B6-B9D7-38DF3B6B3FC9} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
 		{7A9E4A68-AF5E-48E8-BEEF-37DEB1E23C22} = {1A372414-D015-48FD-86FF-99857346A49A}
 		{FFF1E4C5-F1E7-4F4D-ABAF-96233CD6C4BD} = {E7667283-9FF7-4708-8EAD-D6A0CA68BCBE}
+		{2AFE10F9-7A0D-429D-BE4D-778ACD74DEB5} = {4AC15FA6-9B02-4230-9EA2-70983857F1D0}
 	EndGlobalSection
 EndGlobal

@@ -1,24 +1,19 @@
 {
-  "name": "@lvl/front-end",
+  "name": "@lvl/personal-site",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/bundles/lvl-front-end.umd.js",
+  "main": "dist/bundles/lvl-personal-site.umd.js",
   "scripts": {
-    "generate-models": "dotnet run --project ../TypeScriptGenerator/TypeScriptGenerator.csproj -- --assembly-path=../Ontology/bin/Debug/net461/lvl.Ontology.dll --output-bin=./src/models --decorator-path=./src/decorators",
-
-    "build.dev": "ng build --progress=false--output-path=./dist/dev",
-    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open --port=5001",
+    "init.dev": "npm link ../front-end",
+    "build.dev": "ng build --progress=false --output-path=./dist/dev",
+    "serve.dev": "ng serve --progress=false --output-path=./dist/dev --open --port=5008",
 
     "build.prod": "ng build --progress=false --prod --aot --output-path=./dist/prod",
-    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open --port=5001",
+    "serve.prod": "ng serve --progress=false --prod --aot --output-path=./dist/prod --open --port=5008",
 
-    "serve.web": "dotnet run --project ../TestWebSite/TestWebSite.csproj",
+    "test": "ng test --single-run --progress=false",
 
-    "serve.test": "ng test --single-run --progress=false --port=5003",
-    "test": "npm-run-all -p -r serve.web serve.test",
-
-    "serve.e2e": "ng e2e --progress=false --prod --aot",
-    "e2e": "npm-run-all -p -r serve.web serve.e2e",
+    "e2e": "ng e2e --progress=false --aot --port=5009",
 
     "lint": "ng lint"
   },
@@ -33,6 +28,7 @@
     "@angular/platform-browser": "4.1.2",
     "@angular/platform-browser-dynamic": "4.1.2",
     "@angular/router": "4.1.2",
+    "@lvl/front-end": "file:../front-end",
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
     "normalize-scss": "6.0.0",
@@ -49,8 +45,8 @@
     "@types/jasmine": "2.5.38",
     "@types/node": "6.0.63",
     "@types/reflect-metadata": "0.0.5",
-    "codelyzer": "3.1.2",
-    "jasmine-core": "2.6.2",
+    "codelyzer": "2.0.0",
+    "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "3.2.0",
     "karma": "1.5.0",
     "karma-chrome-launcher": "2.0.0",
@@ -60,8 +56,8 @@
     "karma-coverage-istanbul-reporter": "0.2.0",
     "protractor": "5.1.0",
     "ts-node": "2.0.0",
-    "tslint": "5.5.0",
-    "typescript": "2.3.3"
+    "tslint": "4.5.0",
+    "typescript": "2.2.2"
   },
   "author": "jburrows",
   "license": "UNLISENCED"

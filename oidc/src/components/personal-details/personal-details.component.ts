@@ -25,7 +25,7 @@ import {
     title: 'Personal Details',
     roles: ['oidc']
 })
-export class PersonalDetailComponents {
+export class PersonalDetailComponent implements OnInit {
     form: ValidatableForm<PersonalDetailsViewModel>;
     model: PersonalDetailsViewModel;
 
