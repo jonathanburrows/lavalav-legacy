@@ -5,6 +5,9 @@ import {
     HeadersService,
     Navigation
 } from '@lvl/front-end';
+import {
+    PersonalityComponent
+} from './components';
 import { personalSiteRouterModule } from './personal-site.router.module';
 
 /**
@@ -12,8 +15,11 @@ import { personalSiteRouterModule } from './personal-site.router.module';
  */
 @NgModule({
     declarations: [
+        PersonalityComponent
     ],
     exports: [
+        PersonalityComponent,
+        FrontEndModule
     ],
     imports: [
         FrontEndModule,

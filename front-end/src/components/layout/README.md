@@ -17,6 +17,7 @@ Create a page structure which is compliant with material design, so applications
 | Name | Type | Description |
 | :--- | :--- | :--- |
 | siteTitle (optional) | string | The name which will appear on the toolbar |
+| siteLogo (optional) | string | The ligature which will be used for the icon next to the title. |
 
 
 

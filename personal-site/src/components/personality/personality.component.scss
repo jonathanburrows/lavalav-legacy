@@ -1,0 +1,22 @@
+﻿@import '~@lvl/front-end/theming';
+
+.mugshot {
+    $text-margin: 1em;
+
+    float: left;
+    margin-bottom: $text-margin;
+
+    @media #{$portrait-screen} {
+        width: 100%;
+    }
+
+    @media #{$landscape-screen} {
+        margin-right: $text-margin;
+        width: 50%;
+    }
+
+    @media #{$tablet-screen} {
+        margin-right: $text-margin;
+        width: 50%;
+    }
+}

@@ -1,8 +1,9 @@
-﻿@import '~@angular/material/theming';
+﻿/* Used by standalone site. */
+@import '~@angular/material/theming';
 @import '~@lvl/front-end/theming.scss';
-@import "../theming.scss";
+@import "../theming";
 
-$primary-color: mat-palette($mat-deep-purple);
+$primary-color: mat-palette($mat-amber);
 $accent-color: mat-palette($mat-pink);
 $warning-color: mat-palette($mat-red);
 $lvl-default-theme: mat-light-theme($primary-color, $accent-color, $warning-color);

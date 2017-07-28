@@ -34,36 +34,58 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".angular-cli.json" />
-    <Content Include="demo-app\components\root\root.component.html" />
-    <Content Include="demo-app\global.scss" />
-    <Content Include="demo-app\index.html" />
     <Content Include="package.json" />
+    <Content Include="src\components\personality\personality.component.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\personality\personality.component.scss">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\components\root\root.component.html" />
+    <Content Include="app\index.html" />
     <Content Include="src\styles\personal-site.theme.scss" />
-    <Content Include="theming.scss" />
+    <Content Include="app\global.scss" />
+    <Content Include="theming.scss">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="tsconfig.e2e.json" />
     <Content Include="tsconfig.json" />
     <Content Include="tslint.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="demo-app\" />
-    <Folder Include="demo-app\components\" />
-    <Folder Include="demo-app\components\root\" />
-    <Folder Include="demo-app\environments\" />
+    <Folder Include="app\" />
+    <Folder Include="app\components\" />
     <Folder Include="src\" />
     <Folder Include="src\components\" />
+    <Folder Include="app\components\root\" />
+    <Folder Include="src\components\personality\" />
+    <Folder Include="app\environments\" />
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="demo-app\components\index.ts" />
-    <TypeScriptCompile Include="demo-app\components\root\index.ts" />
-    <TypeScriptCompile Include="demo-app\components\root\root.component.ts" />
-    <TypeScriptCompile Include="demo-app\demo-app.module.ts" />
-    <TypeScriptCompile Include="demo-app\environments\environment.prod.ts" />
-    <TypeScriptCompile Include="demo-app\environments\environment.ts" />
-    <TypeScriptCompile Include="demo-app\environments\index.ts" />
-    <TypeScriptCompile Include="demo-app\main.ts" />
+    <TypeScriptCompile Include="app\app.module.ts" />
+    <TypeScriptCompile Include="app\components\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="index.ts" />
+    <TypeScriptCompile Include="src\components\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\personality\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\personality\personality.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="app\components\root\index.ts" />
+    <TypeScriptCompile Include="app\components\root\root.component.ts" />
+    <TypeScriptCompile Include="app\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="app\environments\environment.ts" />
+    <TypeScriptCompile Include="app\environments\index.ts" />
     <TypeScriptCompile Include="src\index.ts" />
+    <TypeScriptCompile Include="app\main.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\personal-site.module.ts" />
     <TypeScriptCompile Include="src\personal-site.router.module.ts" />
     <TypeScriptCompile Include="test.ts" />

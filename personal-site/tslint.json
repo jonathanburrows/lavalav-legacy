@@ -10,7 +10,7 @@
       "check-space"
     ],
     "component-class-suffix": true,
-    "component-selector": [ true, "element", "lvl", "kebab-case" ],
+    "component-selector": [ true, "element", "lvl-personal", "kebab-case" ],
     "curly": true,
     "directive-class-suffix": true,
     "directive-selector": [

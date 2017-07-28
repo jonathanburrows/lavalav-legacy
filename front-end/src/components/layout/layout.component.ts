@@ -31,6 +31,9 @@ export class LayoutComponent implements OnInit {
     /* Will display on the side nav. */
     @Input() siteTitle: string;
 
+    /* The icon which will be placed next to the site title. */
+    @Input() siteLogo: string;
+
     /* If on a smaller device, this will determine if navigation is show. */
     showSideNav = false;
 
@@ -68,7 +71,7 @@ export class LayoutComponent implements OnInit {
             }
             if (args instanceof NavigationEnd) {
                 const navItem = this.navigationService.getActiveNavigationItem();
-                this.title.setTitle(`${navItem.info.title} - ${this.siteTitle}`);
+
                 this.closeSideNav();
 
                 // Sometimes changing the route will update the menu. Make sure it refreshes.

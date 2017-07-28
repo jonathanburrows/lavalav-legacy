@@ -1,11 +1,11 @@
 ﻿{
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "@lvl/oidc"
+    "name": "@lvl/personal-site"
   },
   "apps": [
     {
-      "root": "demo-app",
+      "root": "app",
       "outDir": "dist",
       "index": "index.html",
       "main": "main.ts",
@@ -32,7 +32,8 @@
   },
   "lint": [
     {
-      "project": "./tslint.json"
+      "project": "./tslint.json",
+      "exclude": "**/node_modules/**/*"
     }
   ],
   "test": {
